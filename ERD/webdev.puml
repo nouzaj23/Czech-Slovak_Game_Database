@@ -1,0 +1,89 @@
+@startuml gamedev
+
+hide circle
+skinparam Linetype ortho
+skinparam Ranksep 60
+skinparam Nodesep 100
+
+entity Review {
+    * id: <<uuid>>
+    ---
+    * gameId: <<FK>>
+    * userId: <<FK>>
+    * title: string
+    * text: string
+    * createdAt: timestamp
+    * rating: int
+}
+
+entity Comment {
+    * id: <<uuid>>
+    ---
+    * gameId: <<FK>>
+    * commenterId: <<FK>>
+    * createdAt: timestamp
+    editedAt: timestamp
+    deletedAt: timestamp
+    * content: string
+}
+
+entity Game {
+    * id: <<uuid>>
+    ---
+    * name: string
+    * description: string
+}
+
+entity Developer {
+    * id: <<uuid>>
+    ---
+    * name: string
+    * avatar: URL
+    * description: string
+}
+
+entity GameDevelopment {
+    * id: <<uuid>>
+    ---
+    * gameId: <<FK>>
+    * developerId: <<FK>>
+}
+
+entity GameGenre {
+    * id: <<uuid>>
+    ---
+    * gameId: <<FK>>
+    * genreId: <<FK>>
+}
+
+entity User {
+    * id: <<uuid>>
+    ---
+    * userName: string
+    * email: string
+    * createdAt: timestamp
+    * hashedPassword: string
+    * salt: string
+    * avatar: URL
+    * wishList: Game[]
+}
+
+entity Genre {
+    * id: <<uuid>>
+    ---
+    * type: GenreType
+    * description: string
+}
+
+Developer||..o{GameDevelopment
+Game||..o{GameDevelopment
+Game||..o{GameGenre
+Genre||..o{GameGenre
+Review}o..||Game
+User||..o{Review
+Comment}o..||Game
+User||..o{Comment
+Comment||..o{Comment
+
+
+@enduml
