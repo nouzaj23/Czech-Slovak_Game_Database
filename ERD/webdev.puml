@@ -22,8 +22,6 @@ entity Comment {
     * gameId: <<FK>>
     * commenterId: <<FK>>
     * createdAt: timestamp
-    editedAt: timestamp
-    deletedAt: timestamp
     * content: string
 }
 
@@ -32,6 +30,10 @@ entity Game {
     ---
     * name: string
     * description: string
+    * releaseDate: timestamp
+    * cover: URL
+    * photos: URL[]
+    * videos: URL[]
 }
 
 entity Developer {
@@ -83,7 +85,6 @@ Review}o..||Game
 User||..o{Review
 Comment}o..||Game
 User||..o{Comment
-Comment||..o{Comment
 
 
 @enduml
