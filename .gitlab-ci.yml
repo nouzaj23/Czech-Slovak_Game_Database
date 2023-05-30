@@ -1,0 +1,16 @@
+image: docker:latest
+
+services:
+  - docker:dind
+
+build-job:
+  stage: build
+  tags:
+    - docker
+  script:
+    - docker compose build
+
+test-job1:
+  stage: test
+  script:
+    - echo "This job tests something"
