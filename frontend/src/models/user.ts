@@ -5,7 +5,7 @@ export interface User {
     username: string;
     email: string;
     avatar: string;
-    createdAt: Date;
+    createdAt: string;
     reviews: Review[];
     comments: Comment[];
     wishlist: Game[];

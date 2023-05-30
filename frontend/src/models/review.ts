@@ -7,5 +7,5 @@ export interface Review {
     rating: number;
     game: Game;
     user: User;
-    createdAt: Date;
+    createdAt: string;
 }

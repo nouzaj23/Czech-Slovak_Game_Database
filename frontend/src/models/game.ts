@@ -4,7 +4,7 @@ export interface Game {
     id: string;
     name: string;
     description: string;
-    releaseDate: Date;
+    releaseDate: string;
     developers: Developer[];
     genres: Genre[];
     reviews: Review[];

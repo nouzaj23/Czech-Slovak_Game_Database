@@ -6,5 +6,5 @@ export interface Comment {
     content: string;
     user: User;
     game: Game;
-    createdAt: Date;
+    createdAt: string;
 }
