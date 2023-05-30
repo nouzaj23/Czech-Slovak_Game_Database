@@ -6,15 +6,15 @@ WORKDIR /usr/app
 
 # Create a new user "appuser" and set as current user
 RUN addgroup appgroup && adduser -S -G appgroup appuser
-RUN chown -R appuser:appgroup /usr/app
-USER appuser
+# RUN chown -R appuser:appgroup /usr/app
+# USER appuser
 
 # Copy package.json and package-lock.json (if available)
-COPY --chown=appuser:appgroup package*.json ./
+COPY package*.json ./
 
 
 # Install app dependencies
-RUN npm install
+RUN npm install --include=dev
 
 # Bundle app source
 COPY --chown=appuser:appgroup . .
@@ -23,7 +23,7 @@ COPY --chown=appuser:appgroup . .
 RUN npm run build
 
 # Expose port 3000
-EXPOSE 3000
+EXPOSE 5173
 
 # Run the app when the container launches
-CMD [ "npm", "start" ]
+CMD [ "npm", "run", "dev" ]
