@@ -1,9 +1,12 @@
 import { BrowserRouter as Router } from 'react-router-dom';
+import { Homepage } from './pages/Homepage';
+import { Header } from './components/Header';
 
 function App() {
   return (
     <Router>
-      <div className='text-blue-600'>Hello World</div>
+      <Header />
+      <Homepage />
     </Router>
   );
 }
