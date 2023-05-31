@@ -1,13 +1,20 @@
-import { BrowserRouter as Router } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Homepage } from './pages/Homepage';
-import { Header } from './components/Header';
+import { Layout } from './components/Layout';
 
 function App() {
   return (
-    <Router>
-      <Header />
-      <Homepage />
-    </Router>
+    <div className="w-screen h-screen">
+      <Router>
+        <Layout>
+          <Switch>
+            <Route path="/">
+              <Homepage />
+            </Route>
+          </Switch>
+        </Layout>
+      </Router>
+    </div>
   );
 }
 
