@@ -1,156 +1,178 @@
-{
-    "games": [
-        {
-            "id": "1",
-            "name": "Dragon Destiny",
-            "description": "An epic RPG where you control the fate of your kingdom.",
-            "releaseDate": "2021-05-12",
-            "developers": [
-                {
-                    "id": "1",
-                    "name": "EpicSoft",
-                    "description": "An experienced gaming studio specialized in RPGs and Adventure games.",
-                    "avatar": "https://gravatar.com/avatar/epicsoft",
-                    "games": ["Dragon Destiny"]
-                }
-            ],
-            "genres": [
-                {
-                    "id": "1",
-                    "type": "RPG",
-                    "description": "Role-Playing Games focused on rich story and character development.",
-                    "games": ["Dragon Destiny"]
-                },
-                {
-                    "id": "2",
-                    "type": "Adventure",
-                    "description": "Adventurous journeys with challenging tasks.",
-                    "games": ["Dragon Destiny"]
-                }
-            ],
-            "reviews": [],
-            "comments": [],
-            "cover": "https://gravatar.com/avatar/dragondestiny",
-            "photos": [],
-            "videos": []
-        },
-        {
-            "id": "2",
-            "name": "Race Masters",
-            "description": "A thrilling racing game with cutting-edge graphics and physics.",
-            "releaseDate": "2022-03-01",
-            "developers": [
-                {
-                    "id": "2",
-                    "name": "SpeedyGames",
-                    "description": "A dynamic gaming studio famous for racing games.",
-                    "avatar": "https://gravatar.com/avatar/speedygames",
-                    "games": ["Race Masters"]
-                }
-            ],
-            "genres": [
-                {
-                    "id": "3",
-                    "type": "Racing",
-                    "description": "Fast-paced racing games, testing your control and speed.",
-                    "games": ["Race Masters"]
-                }
-            ],
-            "reviews": [],
-            "comments": [],
-            "cover": "https://gravatar.com/avatar/racemasters",
-            "photos": [],
-            "videos": []
-        },
-        {
-            "id": "3",
-            "name": "Puzzle Kingdom",
-            "description": "An engaging puzzle game with thousands of challenging levels.",
-            "releaseDate": "2022-07-15",
-            "developers": [
-                {
-                    "id": "3",
-                    "name": "ThinkGames",
-                    "description": "A creative gaming studio focusing on brain-teasing puzzle games.",
-                    "avatar": "https://gravatar.com/avatar/thinkgames",
-                    "games": ["Puzzle Kingdom"]
-                }
-            ],
-            "genres": [
-                {
-                    "id": "4",
-                    "type": "Puzzle",
-                    "description": "Games that challenge your problem-solving skills.",
-                    "games": ["Puzzle Kingdom"]
-                }
-            ],
-            "reviews": [],
-            "comments": [],
-            "cover": "https://gravatar.com/avatar/puzzlekingdom",
-            "photos": [],
-            "videos": []
-        },
-        {
-            "id": "4",
-            "name": "Battle Kingdom",
-            "description": "A strategic MMO game where players battle in epic wars.",
-            "releaseDate": "2021-10-23",
-            "developers": [
-                {
-                    "id": "4",
-                    "name": "BattleSoft",
-                    "description": "A top-tier gaming studio known for creating immersive MMO games.",
-                    "avatar": "https://gravatar.com/avatar/battlesoft",
-                    "games": ["Battle Kingdom"]
-                }
-            ],
-            "genres": [
-                {
-                    "id": "5",
-                    "type": "MMO",
-                    "description": "Massively Multiplayer Online games with huge persistent worlds.",
-                    "games": ["Battle Kingdom"]
-                },
-                {
-                    "id": "6",
-                    "type": "Strategy",
-                    "description": "Games that require strategic thinking and planning.",
-                    "games": ["Battle Kingdom"]
-                }
-            ],
-            "reviews": [],
-            "comments": [],
-            "cover": "https://gravatar.com/avatar/battlekingdom",
-            "photos": [],
-            "videos": []
-        },
-        {
-            "id": "5",
-            "name": "Horror Mansion",
-            "description": "A spine-chilling horror game with terrifying supernatural elements.",
-            "releaseDate": "2022-12-13",
-            "developers": [
-                {
-                    "id": "5",
-                    "name": "HorrorSoft",
-                    "description": "A gaming studio focused on crafting unforgettable horror experiences.",
-                    "avatar": "https://gravatar.com/avatar/horrorsoft",
-                    "games": ["Horror Mansion"]
-                }
-            ],
-            "genres": [
-                {
-                    "id": "7",
-                    "type": "Horror",
-                    "description": "Games that provide a frightening experience, often with a focus on survival.",
-                    "games": ["Horror Mansion"]
-                }
-            ],
-            "reviews": [],
-            "comments": [],
-            "cover": "https://gravatar/avatar/horrormansion",
-            "photos": [],
-            "videos": []
-        }
-    ]
-}
+[
+    {
+        "id": "1",
+        "name": "Dragon Destiny",
+        "description": "An epic RPG where you control the fate of your kingdom.",
+        "releaseDate": "2021-05-12",
+        "developers": [
+            {
+                "id": "1",
+                "name": "EpicSoft",
+                "description": "An experienced gaming studio specialized in RPGs and Adventure games.",
+                "avatar": "https://gravatar.com/avatar/epicsoft",
+                "games": [
+                    "Dragon Destiny"
+                ]
+            }
+        ],
+        "genres": [
+            {
+                "id": "1",
+                "type": "RPG",
+                "description": "Role-Playing Games focused on rich story and character development.",
+                "games": [
+                    "Dragon Destiny"
+                ]
+            },
+            {
+                "id": "2",
+                "type": "Adventure",
+                "description": "Adventurous journeys with challenging tasks.",
+                "games": [
+                    "Dragon Destiny"
+                ]
+            }
+        ],
+        "reviews": [],
+        "comments": [],
+        "cover": "https://gravatar.com/avatar/dragondestiny",
+        "photos": [],
+        "videos": []
+    },
+    {
+        "id": "2",
+        "name": "Race Masters",
+        "description": "A thrilling racing game with cutting-edge graphics and physics.",
+        "releaseDate": "2022-03-01",
+        "developers": [
+            {
+                "id": "2",
+                "name": "SpeedyGames",
+                "description": "A dynamic gaming studio famous for racing games.",
+                "avatar": "https://gravatar.com/avatar/speedygames",
+                "games": [
+                    "Race Masters"
+                ]
+            }
+        ],
+        "genres": [
+            {
+                "id": "3",
+                "type": "Racing",
+                "description": "Fast-paced racing games, testing your control and speed.",
+                "games": [
+                    "Race Masters"
+                ]
+            }
+        ],
+        "reviews": [],
+        "comments": [],
+        "cover": "https://gravatar.com/avatar/racemasters",
+        "photos": [],
+        "videos": []
+    },
+    {
+        "id": "3",
+        "name": "Puzzle Kingdom",
+        "description": "An engaging puzzle game with thousands of challenging levels.",
+        "releaseDate": "2022-07-15",
+        "developers": [
+            {
+                "id": "3",
+                "name": "ThinkGames",
+                "description": "A creative gaming studio focusing on brain-teasing puzzle games.",
+                "avatar": "https://gravatar.com/avatar/thinkgames",
+                "games": [
+                    "Puzzle Kingdom"
+                ]
+            }
+        ],
+        "genres": [
+            {
+                "id": "4",
+                "type": "Puzzle",
+                "description": "Games that challenge your problem-solving skills.",
+                "games": [
+                    "Puzzle Kingdom"
+                ]
+            }
+        ],
+        "reviews": [],
+        "comments": [],
+        "cover": "https://gravatar.com/avatar/puzzlekingdom",
+        "photos": [],
+        "videos": []
+    },
+    {
+        "id": "4",
+        "name": "Battle Kingdom",
+        "description": "A strategic MMO game where players battle in epic wars.",
+        "releaseDate": "2021-10-23",
+        "developers": [
+            {
+                "id": "4",
+                "name": "BattleSoft",
+                "description": "A top-tier gaming studio known for creating immersive MMO games.",
+                "avatar": "https://gravatar.com/avatar/battlesoft",
+                "games": [
+                    "Battle Kingdom"
+                ]
+            }
+        ],
+        "genres": [
+            {
+                "id": "5",
+                "type": "MMO",
+                "description": "Massively Multiplayer Online games with huge persistent worlds.",
+                "games": [
+                    "Battle Kingdom"
+                ]
+            },
+            {
+                "id": "6",
+                "type": "Strategy",
+                "description": "Games that require strategic thinking and planning.",
+                "games": [
+                    "Battle Kingdom"
+                ]
+            }
+        ],
+        "reviews": [],
+        "comments": [],
+        "cover": "https://gravatar.com/avatar/battlekingdom",
+        "photos": [],
+        "videos": []
+    },
+    {
+        "id": "5",
+        "name": "Horror Mansion",
+        "description": "A spine-chilling horror game with terrifying supernatural elements.",
+        "releaseDate": "2022-12-13",
+        "developers": [
+            {
+                "id": "5",
+                "name": "HorrorSoft",
+                "description": "A gaming studio focused on crafting unforgettable horror experiences.",
+                "avatar": "https://gravatar.com/avatar/horrorsoft",
+                "games": [
+                    "Horror Mansion"
+                ]
+            }
+        ],
+        "genres": [
+            {
+                "id": "7",
+                "type": "Horror",
+                "description": "Games that provide a frightening experience, often with a focus on survival.",
+                "games": [
+                    "Horror Mansion"
+                ]
+            }
+        ],
+        "reviews": [],
+        "comments": [],
+        "cover": "https://gravatar/avatar/horrormansion",
+        "photos": [],
+        "videos": []
+    }
+]
