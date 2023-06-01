@@ -2,7 +2,7 @@ import { Game } from ".";
 
 export interface Genre {
     id: string;
-    type: GenreType;
+    type: string | GenreType;
     description: string;
     games: Game[];
 }

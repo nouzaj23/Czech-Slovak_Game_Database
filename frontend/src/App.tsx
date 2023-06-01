@@ -1,10 +1,20 @@
-import { BrowserRouter as Router } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { Homepage } from './pages/Homepage';
+import { Layout } from './components/Layout';
 
 function App() {
   return (
-    <Router>
-      <div className='text-blue-600'>Hello World</div>
-    </Router>
+    <div className="w-screen h-screen">
+      <Router>
+        <Layout>
+          <Switch>
+            <Route path="/">
+              <Homepage />
+            </Route>
+          </Switch>
+        </Layout>
+      </Router>
+    </div>
   );
 }
 
