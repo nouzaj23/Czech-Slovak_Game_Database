@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Homepage } from './pages/Homepage';
 import { Layout } from './components/Layout';
+import { Games } from './pages/Games';
 
 function App() {
   return (
@@ -8,8 +9,11 @@ function App() {
       <Router>
         <Layout>
           <Switch>
-            <Route path="/">
+            <Route exact path="/">
               <Homepage />
+            </Route>
+            <Route path="/games">
+              <Games />
             </Route>
           </Switch>
         </Layout>
