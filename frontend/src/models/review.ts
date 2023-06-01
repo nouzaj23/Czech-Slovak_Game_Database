@@ -1,11 +1,9 @@
-import { Game, User } from ".";
-
 export interface Review {
     id: string;
     title: string;
     text: string;
     rating: number;
-    game: Game;
-    user: User;
+    game: string; // Game ID
+    user: string; // User ID
     createdAt: string;
 }

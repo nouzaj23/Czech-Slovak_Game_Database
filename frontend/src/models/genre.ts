@@ -1,10 +1,8 @@
-import { Game } from ".";
-
 export interface Genre {
     id: string;
     type: string | GenreType;
     description: string;
-    games: Game[];
+    games: string[]; // Game IDs
 }
 
 export enum GenreType {
