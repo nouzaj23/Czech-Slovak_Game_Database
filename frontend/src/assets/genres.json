@@ -1,0 +1,32 @@
+[
+    {
+        "id": "1",
+        "type": "Action",
+        "description": "Action games with fast-paced gameplay.",
+        "games": ["1", "3"]
+    },
+    {
+        "id": "2",
+        "type": "RPG",
+        "description": "Role-playing games with character development.",
+        "games": ["2", "5"]
+    },
+    {
+        "id": "3",
+        "type": "Strategy",
+        "description": "Strategy games with tactical decision-making elements.",
+        "games": ["4"]
+    },
+    {
+        "id": "4",
+        "type": "Adventure",
+        "description": "Adventure games with exciting stories.",
+        "games": ["3", "4", "5"]
+    },
+    {
+        "id": "5",
+        "type": "Puzzle",
+        "description": "Puzzle games that challenge the mind.",
+        "games": ["1", "2"]
+    }
+]
