@@ -1,0 +1,19 @@
+default:
+  image: docker:latest
+  tags:
+    - shell
+
+build-job:
+  stage: build
+  script:
+    - docker compose build
+
+test-job1:
+  stage: test
+  script:
+    - echo "This job tests something"
+
+deploy-job:
+  stage: deploy
+  script:
+    - docker compose up -d --force-recreate
