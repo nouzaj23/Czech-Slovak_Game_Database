@@ -2,6 +2,7 @@ import { useState } from 'react';
 import games from '../assets/games.json';
 import developers from '../assets/developers.json';
 import genres from '../assets/genres.json';
+import reviews from '../assets/reviews.json';
 import { GameItem } from '../components/GameItem';
 
 export const Games = () => {
@@ -28,6 +29,18 @@ export const Games = () => {
       return a.releaseDate.localeCompare(b.releaseDate);
     } else if (sortType === 'year-desc') {
       return b.releaseDate.localeCompare(a.releaseDate);
+    } else if (sortType === 'rating-asc') {
+      const aReviews = reviews.filter(review => review.game === a.id);
+      const bReviews = reviews.filter(review => review.game === b.id);
+      const aAverageRating = aReviews.reduce((total, review) => total + review.rating, 0) / aReviews.length;
+      const bAverageRating = bReviews.reduce((total, review) => total + review.rating, 0) / bReviews.length;
+      return aAverageRating - bAverageRating;
+    } else if (sortType === 'rating-desc') {
+      const aReviews = reviews.filter(review => review.game === a.id);
+      const bReviews = reviews.filter(review => review.game === b.id);
+      const aAverageRating = aReviews.reduce((total, review) => total + review.rating, 0) / aReviews.length;
+      const bAverageRating = bReviews.reduce((total, review) => total + review.rating, 0) / bReviews.length;
+      return bAverageRating - aAverageRating;
     } else {
       return 0;
     }
@@ -44,7 +57,6 @@ export const Games = () => {
             onChange={e => setFilter(e.target.value)}
             className="p-2 border-2 border-gray-300 rounded"
           />
-
           <select
             value={developerFilter}
             onChange={e => setDeveloperFilter(e.target.value)}
@@ -55,7 +67,6 @@ export const Games = () => {
               <option key={dev.id} value={dev.id}>{dev.name}</option>
             ))}
           </select>
-
           <select
             value={genreFilter}
             onChange={e => setGenreFilter(e.target.value)}
@@ -66,7 +77,6 @@ export const Games = () => {
               <option key={gen.id} value={gen.id}>{gen.type}</option>
             ))}
           </select>
-
           <input
             type="text"
             placeholder="Datum vydání (YYYY-MM-DD)"
@@ -74,17 +84,17 @@ export const Games = () => {
             onChange={e => setYearFilter(e.target.value)}
             className="p-2 border-2 border-gray-300 rounded"
           />
-
           <select
             value={sortType}
             onChange={e => setSortType(e.target.value)}
             className="p-2 border-2 border-gray-300 rounded"
           >
-
             <option value="name-asc">Abecedně (A-Z)</option>
             <option value="name-desc">Abecedně (Z-A)</option>
-            <option value="year-asc">Dle vydání (od nejstarších)</option>
-            <option value="year-desc">Dle vydání (od nejnovějších)</option>
+            <option value="year-asc">Datum vydání (od nejstarších)</option>
+            <option value="year-desc">Datum vydání (od nejnovějších)</option>
+            <option value="rating-asc">Hodnocení (od nejhorších)</option>
+            <option value="rating-desc">Hodnocení (od nejlepších)</option>
           </select>
         </div>
       </div>
@@ -96,6 +106,7 @@ export const Games = () => {
             game={game}
             developers={developers}
             genres={genres}
+            reviews={reviews.filter(review => review.game === game.id)}
           />
         ))}
       </div>
