@@ -3,7 +3,7 @@
         "id": "1",
         "title": "Awesome Game",
         "text": "This game is really awesome with cool features.",
-        "rating": 5,
+        "rating": 9,
         "game": "1",
         "user": "1",
         "createdAt": "2023-02-01"
@@ -12,7 +12,7 @@
         "id": "2",
         "title": "Could be better",
         "text": "The game is good but it could be better.",
-        "rating": 3,
+        "rating": 5,
         "game": "2",
         "user": "2",
         "createdAt": "2023-02-10"
@@ -21,7 +21,7 @@
         "id": "3",
         "title": "Fantastic",
         "text": "A fantastic game. Totally worth it.",
-        "rating": 4,
+        "rating": 10,
         "game": "3",
         "user": "3",
         "createdAt": "2023-03-01"
@@ -30,7 +30,7 @@
         "id": "4",
         "title": "Not my type",
         "text": "This game is not my type.",
-        "rating": 2,
+        "rating": 3,
         "game": "4",
         "user": "4",
         "createdAt": "2023-03-10"
@@ -39,7 +39,7 @@
         "id": "5",
         "title": "Loving it",
         "text": "I'm really loving this game. Great job!",
-        "rating": 4,
+        "rating": 7,
         "game": "5",
         "user": "5",
         "createdAt": "2023-04-01"
