@@ -1,8 +1,12 @@
 import { Game } from "../models";
+import developers from '../assets/developers.json';
+import genres from '../assets/genres.json';
 
 type GameCardProps = Game;
 
 export const GameCard: React.FC<GameCardProps> = ({ ...game }) => {
+    let gameDevelopers = developers.filter(developer => game.developers.includes(developer.id));
+    let gameGenres = genres.filter(genre => game.genres.includes(genre.id));
     return (
         <div className='flex flex-col w-1/2 h-full bg-white border-2 border-black rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 ease-in-out p-4 m-4'>
             <div className='flex flex-row'>
@@ -12,7 +16,7 @@ export const GameCard: React.FC<GameCardProps> = ({ ...game }) => {
                 <div className='flex flex-col w-auto pt-3 gap-1 pl-4'>
                     <h1 className='text-2xl font-bold text-gray-700'>{game.name}</h1>
                     <div className='text-gray-500'>
-                        {game.developers.map((developer, index) => {
+                        {gameDevelopers.map((developer, index) => {
                             return (
                                 <span key={index} className='text-lg font-medium'>{developer.name}</span>
                             );
@@ -20,7 +24,7 @@ export const GameCard: React.FC<GameCardProps> = ({ ...game }) => {
                     </div>
                     <h2 className='text-lg text-gray-600'>{game.releaseDate}</h2>
                     <div className='text-gray-500 mb-4'>
-                        {game.genres.map((genre, index) => {
+                        {gameGenres.map((genre, index) => {
                             return (
                                 <span key={index} className='text-base'>{genre.type}</span>
                             );

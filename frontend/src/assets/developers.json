@@ -1,0 +1,37 @@
+[
+    {
+        "id": "1",
+        "name": "Ubisoft",
+        "description": "A major French video game publisher and developer.",
+        "avatar": "https://gravatar.com/avatar/Ubisoft",
+        "games": ["1", "2"]
+    },
+    {
+        "id": "2",
+        "name": "EA",
+        "description": "An American video game company known for sports games.",
+        "avatar": "https://gravatar.com/avatar/EA",
+        "games": ["3", "5"]
+    },
+    {
+        "id": "3",
+        "name": "Activision",
+        "description": "An American video game publisher known for Call of Duty.",
+        "avatar": "https://gravatar.com/avatar/Activision",
+        "games": ["2", "4"]
+    },
+    {
+        "id": "4",
+        "name": "Nintendo",
+        "description": "A Japanese video game company known for Super Mario.",
+        "avatar": "https://gravatar.com/avatar/Nintendo",
+        "games": ["1", "5"]
+    },
+    {
+        "id": "5",
+        "name": "Sony",
+        "description": "A Japanese video game company known for PlayStation.",
+        "avatar": "https://gravatar.com/avatar/Sony",
+        "games": ["3", "4"]
+    }
+]
