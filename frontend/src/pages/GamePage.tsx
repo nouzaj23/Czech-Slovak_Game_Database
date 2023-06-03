@@ -59,7 +59,7 @@ export const GamePage = () => {
             case 'photos':
                 return (
                     <div>
-                        
+
                     </div>
                 );
             case 'videos':
@@ -81,12 +81,24 @@ export const GamePage = () => {
                 </div>
             </div>
 
-            <div className="mt-4 flex justify-around">
-                <button onClick={() => setSelectedTab('reviews')} className="px-3 py-2 bg-blue-500 text-white rounded">Recenze</button>
-                <button onClick={() => setSelectedTab('comments')} className="px-3 py-2 bg-blue-500 text-white rounded">Komentáře</button>
-                <button onClick={() => setSelectedTab('photos')} className="px-3 py-2 bg-blue-500 text-white rounded">Fotografie</button>
-                <button onClick={() => setSelectedTab('videos')} className="px-3 py-2 bg-blue-500 text-white rounded">Videa</button>
+            <div className="mt-4 flex justify-around gap-4">
+                <button onClick={() => setSelectedTab('reviews')} className="px-3 py-2 bg-blue-500 text-white w-full hover:bg-blue-600 transition-all duration-300 ease-in-out shadow-md hover:shadow-lg">
+                    Recenze
+                </button>
+                <button onClick={() => setSelectedTab('comments')} className="px-3 py-2 bg-blue-500 text-white w-full hover:bg-blue-600 transition-all duration-300 ease-in-out shadow-md hover:shadow-lg">
+                    Komentáře
+                </button>
+                <button onClick={() => setSelectedTab('photos')} className="px-3 py-2 bg-blue-500 text-white w-full hover:bg-blue-600 transition-all duration-300 ease-in-out shadow-md hover:shadow-lg">
+                    Fotografie
+                </button>
+                <button onClick={() => setSelectedTab('videos')} className="px-3 py-2 bg-blue-500 text-white w-full hover:bg-blue-600 transition-all duration-300 ease-in-out shadow-md hover:shadow-lg">
+                    Videa
+                </button>
             </div>
+
+
+
+
 
             <div className="mt-4">
                 {renderContent()}
