@@ -3,35 +3,35 @@
         "id": "1",
         "name": "Ubisoft",
         "description": "A major French video game publisher and developer.",
-        "avatar": "https://gravatar.com/avatar/Ubisoft",
+        "avatar": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Ubisoft_logo.svg/1000px-Ubisoft_logo.svg.png",
         "games": ["1", "2"]
     },
     {
         "id": "2",
         "name": "EA",
         "description": "An American video game company known for sports games.",
-        "avatar": "https://gravatar.com/avatar/EA",
+        "avatar": "https://jablickar.cz/wp-content/uploads/2020/05/EA-logo.png",
         "games": ["3", "5"]
     },
     {
         "id": "3",
         "name": "Activision",
         "description": "An American video game publisher known for Call of Duty.",
-        "avatar": "https://gravatar.com/avatar/Activision",
+        "avatar": "https://logos-world.net/wp-content/uploads/2022/05/Activision-Logo.png",
         "games": ["2", "4"]
     },
     {
         "id": "4",
         "name": "Nintendo",
         "description": "A Japanese video game company known for Super Mario.",
-        "avatar": "https://gravatar.com/avatar/Nintendo",
+        "avatar": "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/d2a7fa0d-5fd4-4d4d-a4c9-c673b80862d4/dbjyfvc-82c7a4e1-e499-4b97-9c60-aa94b16b4753.png/v1/fill/w_1024,h_387/nintendo_logo_transparent_by_epycwyn_dbjyfvc-fullview.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9Mzg3IiwicGF0aCI6IlwvZlwvZDJhN2ZhMGQtNWZkNC00ZDRkLWE0YzktYzY3M2I4MDg2MmQ0XC9kYmp5ZnZjLTgyYzdhNGUxLWU0OTktNGI5Ny05YzYwLWFhOTRiMTZiNDc1My5wbmciLCJ3aWR0aCI6Ijw9MTAyNCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.o4pFRxPxzxuj1PYgiQtuHG2A3T5RjGY2VUFI7EToHK4",
         "games": ["1", "5"]
     },
     {
         "id": "5",
         "name": "Sony",
         "description": "A Japanese video game company known for PlayStation.",
-        "avatar": "https://gravatar.com/avatar/Sony",
+        "avatar": "https://1000logos.net/wp-content/uploads/2017/06/Sony-Logo-1957.png",
         "games": ["3", "4"]
     }
 ]
