@@ -21,9 +21,11 @@ export const Header = () => {
                 <button className="px-3 py-1 rounded-md text-white bg-gray-700 hover:bg-gray-600 transition-colors duration-300 ease-in-out">
                     Žánry
                 </button>
-                <button className="px-3 py-1 rounded-md text-white bg-gray-700 hover:bg-gray-600 transition-colors duration-300 ease-in-out">
-                    Studia
-                </button>
+                <Link to="/developers">
+                    <button className="px-3 py-1 rounded-md text-white bg-gray-700 hover:bg-gray-600 transition-colors duration-300 ease-in-out">
+                        Studia
+                    </button>
+                </Link>
             </div>
 
             {/* Visible to anonymous user */}
