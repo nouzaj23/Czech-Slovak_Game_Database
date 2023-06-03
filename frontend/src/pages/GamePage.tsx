@@ -4,6 +4,8 @@ import { useParams } from "react-router-dom";
 import games from '../assets/games.json';
 import { ReviewItem } from '../components/Review';
 import { AddReviewForm } from '../components/AddReviewForm'
+import { CommentItem } from '../components/CommentItem';
+import { AddCommentForm } from '../components/AddCommentForm';
 
 
 export const GamePage = () => {
@@ -41,11 +43,27 @@ export const GamePage = () => {
                     </div>
                 );
             case 'comments':
-                return <p>Komentáře</p>; // Tady byste měl načíst skutečné komentáře
+                return (
+                    <div>
+                        <button onClick={handleAddReview} className="px-3 py-2 mb-5 mt-5 bg-blue-500 text-white rounded">Přidat komentář</button>
+                        <div>
+                            {isOpen && (
+                                <AddCommentForm />
+                            )}
+                        </div>
+                        <div className="review-list space-y-4">
+                            {game.comments.map((commentId) => <CommentItem commentId={commentId} />)}
+                        </div>
+                    </div>
+                );
             case 'photos':
-                return <p>Fotografie</p>; // Tady byste měl načíst skutečné fotografie
+                return (
+                    <div>
+                        
+                    </div>
+                );
             case 'videos':
-                return <p>Videa</p>; // Tady byste měl načíst skutečné videa
+                return <p>Videa</p>;
             default:
                 return <p>Recenze</p>;
         }
