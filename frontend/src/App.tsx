@@ -3,6 +3,7 @@ import { Homepage } from './pages/Homepage';
 import { Layout } from './components/Layout';
 import { Games } from './pages/Games';
 import { Developers } from './pages/Developers';
+import { GamePage } from './pages/GamePage'
 
 function App() {
   return (
@@ -18,6 +19,9 @@ function App() {
             </Route>
             <Route path="/developers">
               <Developers />
+            </Route>
+            <Route path="/game/:id">
+              <GamePage />
             </Route>
           </Switch>
         </Layout>
