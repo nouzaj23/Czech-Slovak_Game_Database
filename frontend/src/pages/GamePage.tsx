@@ -127,13 +127,18 @@ export const GamePage = () => {
                 );
             case 'videos':
                 return (
-                    <div className="w-full h-screen flex items-center justify-center">
-                        <ReactPlayer
-                            url='https://www.youtube.com/watch?v=0eIoTzIKZPI'
-                            controls={true}
-                            width='100%'
-                            height='100%'
-                        />
+                    <div className='container'>
+                        {game.videos.map(video =>
+                            <div className="w-full h-screen flex items-center justify-center mt-5">
+                                <ReactPlayer
+                                    url={video}
+                                    controls={true}
+                                    width='100%'
+                                    height='100%'
+                                />
+                            </div>
+                        )}
+
                     </div>
                 );
 
