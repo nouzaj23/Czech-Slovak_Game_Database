@@ -36,6 +36,58 @@ export const GamePage = () => {
         setIsOpen(!isOpen);
     }
 
+    const [selectedImage, setSelectedImage] = useState<string | null>(null);
+
+    const handleImageClick = (image: string) => {
+        setSelectedImage(image);
+    };
+
+    const handleModalClose = () => {
+        setSelectedImage(null);
+    };
+
+    const renderModal = () => {
+        if (!selectedImage) return null;
+
+        return (
+            <div
+                className="fixed inset-0 flex items-center justify-center z-50 bg-gray-900 bg-opacity-50"
+                onClick={handleModalClose}
+            >
+                <div className="max-w-5xl max-h-5xl bg-white p-4 flex justify-center items-center">
+                    <img src={selectedImage} alt="Zvětšený obrázek" className="w-auto h-auto max-w-full max-h-full" />
+                </div>
+            </div>
+        );
+    };
+
+    const MyGrid = () => {
+        const numColumns = 3;
+        const numRows = Math.ceil(game.photos.length / numColumns);
+
+        const gridItems = [];
+
+        for (let row = 0; row < numRows; row++) {
+            for (let col = 0; col < numColumns; col++) {
+                const index = row * numColumns + col;
+                if (index < game.photos.length) {
+                    const image = game.photos[index];
+                    gridItems.push(
+                        <div className="col-span-1 p-2" key={index}>
+                            <div
+                                className={`aspect-w-1 aspect-h-1 cursor-pointer`}
+                                onClick={() => handleImageClick(image)}
+                            >
+                                <img src={image} alt={`Obrázek ${index + 1}`} className="object-cover w-full h-full" />
+                            </div>
+                        </div>
+                    );
+                }
+            }
+        }
+        return gridItems;
+    }
+
     const renderContent = () => {
         switch (selectedTab) {
             case 'reviews':
@@ -68,8 +120,8 @@ export const GamePage = () => {
                 );
             case 'photos':
                 return (
-                    <div>
-
+                    <div className="container">
+                        <div className={`grid grid-cols-${3} gap-2`}>{MyGrid()}</div>
                     </div>
                 );
             case 'videos':
@@ -127,6 +179,7 @@ export const GamePage = () => {
             <div className="mt-4">
                 {renderContent()}
             </div>
+            {renderModal()}
         </div>
     );
 };
