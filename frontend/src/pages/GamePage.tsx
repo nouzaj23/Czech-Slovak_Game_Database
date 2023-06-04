@@ -11,6 +11,7 @@ import { AddCommentForm } from '../components/AddCommentForm';
 import { Developer, Genre, Game } from '../models';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import ReactPlayer from 'react-player';
 
 
 export const GamePage = () => {
@@ -125,7 +126,17 @@ export const GamePage = () => {
                     </div>
                 );
             case 'videos':
-                return <p>Videa</p>;
+                return (
+                    <div className="w-full h-screen flex items-center justify-center">
+                        <ReactPlayer
+                            url='https://www.youtube.com/watch?v=0eIoTzIKZPI'
+                            controls={true}
+                            width='100%'
+                            height='100%'
+                        />
+                    </div>
+                );
+
             default:
                 return <p>Recenze</p>;
         }
