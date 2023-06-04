@@ -74,14 +74,15 @@ export const GamePage = () => {
                 if (index < game.photos.length) {
                     const image = game.photos[index];
                     gridItems.push(
-                        <div className="col-span-1 p-2 border-4" key={index}>
+                        <div className="col-span-1 p-2 border-4" key={index} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                             <div
                                 className={`aspect-w-1 aspect-h-1 cursor-pointer`}
                                 onClick={() => handleImageClick(image)}
                             >
-                                <img src={image} alt={`Obrázek ${index + 1}`} className="object-cover w-full h-full" />
+                                <img src={image} alt={`Obrázek ${index + 1}`} className="object-cover" style={{ maxWidth: '100%', maxHeight: '100%' }} />
                             </div>
                         </div>
+
                     );
                 }
             }
@@ -94,21 +95,21 @@ export const GamePage = () => {
             case 'reviews':
                 return (
                     <div>
-                        <button onClick={handleAddReview} style={{background: ratingBg()}} className="px-3 py-2 mb-5 mt-5 text-white rounded">Přidat recenzi</button>
+                        <button onClick={handleAddReview} style={{ background: ratingBg() }} className="px-3 py-2 mb-5 mt-5 text-white rounded">Přidat recenzi</button>
                         <div>
                             {isOpen && (
                                 <AddReviewForm />
                             )}
                         </div>
                         <div className="review-list space-y-4">
-                            {game.reviews.map((reviewId) => <ReviewItem reviewId={reviewId} rating={rating}/>)}
+                            {game.reviews.map((reviewId) => <ReviewItem reviewId={reviewId} rating={rating} />)}
                         </div>
                     </div>
                 );
             case 'comments':
                 return (
                     <div>
-                        <button onClick={handleAddReview} style={{background: ratingBg()}} className="px-3 py-2 mb-5 mt-5 bg-blue-500 text-white rounded">Přidat komentář</button>
+                        <button onClick={handleAddReview} style={{ background: ratingBg() }} className="px-3 py-2 mb-5 mt-5 bg-blue-500 text-white rounded">Přidat komentář</button>
                         <div>
                             {isOpen && (
                                 <AddCommentForm />
@@ -179,16 +180,16 @@ export const GamePage = () => {
             </div>
 
             <div className="mt-4 flex justify-around gap-4">
-                <button onClick={() => setSelectedTab('reviews')} style={{background: ratingBg()}} className="px-3 py-2 text-white w-full hover:bg-blue-600 transition-all duration-300 ease-in-out shadow-md hover:shadow-lg">
+                <button onClick={() => setSelectedTab('reviews')} style={{ background: ratingBg() }} className="px-3 py-2 text-white w-full hover:bg-blue-600 transition-all duration-300 ease-in-out shadow-md hover:shadow-lg">
                     Recenze
                 </button>
-                <button onClick={() => setSelectedTab('comments')} style={{background: ratingBg()}} className="px-3 py-2 bg-blue-500 text-white w-full hover:bg-blue-600 transition-all duration-300 ease-in-out shadow-md hover:shadow-lg">
+                <button onClick={() => setSelectedTab('comments')} style={{ background: ratingBg() }} className="px-3 py-2 bg-blue-500 text-white w-full hover:bg-blue-600 transition-all duration-300 ease-in-out shadow-md hover:shadow-lg">
                     Komentáře
                 </button>
-                <button onClick={() => setSelectedTab('photos')} style={{background: ratingBg()}} className="px-3 py-2 bg-blue-500 text-white w-full hover:bg-blue-600 transition-all duration-300 ease-in-out shadow-md hover:shadow-lg">
+                <button onClick={() => setSelectedTab('photos')} style={{ background: ratingBg() }} className="px-3 py-2 bg-blue-500 text-white w-full hover:bg-blue-600 transition-all duration-300 ease-in-out shadow-md hover:shadow-lg">
                     Fotografie
                 </button>
-                <button onClick={() => setSelectedTab('videos')} style={{background: ratingBg()}} className="px-3 py-2 bg-blue-500 text-white w-full hover:bg-blue-600 transition-all duration-300 ease-in-out shadow-md hover:shadow-lg">
+                <button onClick={() => setSelectedTab('videos')} style={{ background: ratingBg() }} className="px-3 py-2 bg-blue-500 text-white w-full hover:bg-blue-600 transition-all duration-300 ease-in-out shadow-md hover:shadow-lg">
                     Videa
                 </button>
             </div>
