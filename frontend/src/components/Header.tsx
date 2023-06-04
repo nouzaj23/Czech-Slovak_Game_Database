@@ -6,7 +6,7 @@ import { faBars } from '@fortawesome/free-solid-svg-icons';
 export const Header = () => {
     const [isOpen, setIsOpen] = useState(false);
     return (
-        <div className="flex flex-col sm:flex-row w-full h-auto sm:h-16 fixed top-0 bg-gray-800 text-white justify-between items-center px-4 shadow-md">
+        <div style={{zIndex: "10"}} className="flex flex-col sm:flex-row w-full h-auto sm:h-16 fixed top-0 bg-gray-800 text-white justify-between items-center px-4 shadow-md">
             <div className="flex flex-row justify-between w-full sm:w-auto">
                 <Link to="/">
                     <img src="./../../logo-placeholder.png" className="h-10 w-auto mr-2 mt-3 sm:mt-0 mb-3 sm:mb-0" />
@@ -38,12 +38,12 @@ export const Header = () => {
                         Hry
                     </button>
                 </Link>
-                <Link to="/games" className="w-full text-center">
+                <Link to="/genres" className="w-full text-center">
                     <button className="sm:w-auto w-full px-3 py-1 rounded-md text-white sm:bg-gray-700 sm:hover:bg-gray-600 transition-colors duration-300 ease-in-out">
                         Žánry
                     </button>
                 </Link>
-                <Link to="/games" className="w-full text-center">
+                <Link to="/developers" className="w-full text-center">
                     <button className="sm:w-auto w-full px-3 py-1 rounded-md text-white sm:bg-gray-700 sm:hover:bg-gray-600 transition-colors duration-300 ease-in-out">
                         Studia
                     </button>
@@ -52,12 +52,12 @@ export const Header = () => {
 
             <div className="">
                 <div className={`${isOpen ? 'flex' : 'hidden'} sm:flex flex-col h-full justify-between w-full sm:w-auto items-center pl-2 pr-2 ${isOpen ? '' : 'sm:border-l-0'} mb-2 sm:mb-0`}>
-                    <Link to="/games">
+                    <Link to="/login">
                         <button className="sm:w-auto py-1 sm:py-0 w-full h-full flex items-center justify-center hover:text-gray-300 transition-colors duration-300 ease-in-out">
                             Přihlásit
                         </button>
                     </Link>
-                    <Link to="/games">
+                    <Link to="/register">
                         <button className="sm:w-auto py-1 sm:py-0 w-full h-full flex items-center justify-center hover:text-gray-300 transition-colors duration-300 ease-in-out">
                             Registrovat
                         </button>
@@ -67,12 +67,12 @@ export const Header = () => {
 
             <div className="hidden">
                 <div className={`${isOpen ? 'hidden' : 'hidden'} sm:flex flex-col h-full justify-between w-full sm:w-auto items-center pl-2 pr-2 ${isOpen ? '' : 'sm:border-l-0'}  mb-2 sm:mb-0`}>
-                    <Link to="/games">
+                    <Link to="/wishlist">
                         <button className="sm:w-auto py-1 sm:py-0 w-full h-full flex items-center justify-center hover:text-gray-300 transition-colors duration-300 ease-in-out">
                             Wishlist
                         </button>
                     </Link>
-                    <Link to="/games">
+                    <Link to="/signout">
                         <button className="sm:w-auto py-1 sm:py-0 w-full h-full flex items-center justify-center hover:text-gray-300 transition-colors duration-300 ease-in-out">
                             Odhlásit
                         </button>

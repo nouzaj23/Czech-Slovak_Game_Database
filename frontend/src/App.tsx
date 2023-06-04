@@ -3,6 +3,7 @@ import { Homepage } from './pages/Homepage';
 import { Layout } from './components/Layout';
 import { Games } from './pages/Games';
 import { Developers } from './pages/Developers';
+import { GamePage } from './pages/GamePage'
 
 function App() {
   return (
@@ -13,11 +14,17 @@ function App() {
             <Route exact path="/">
               <Homepage />
             </Route>
+            <Route path="/games/:id">
+              <GamePage />
+            </Route>
             <Route path="/games">
               <Games />
             </Route>
             <Route path="/developers">
               <Developers />
+            </Route>
+            <Route path="*">
+              <div>404</div>
             </Route>
           </Switch>
         </Layout>

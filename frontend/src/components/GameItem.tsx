@@ -1,4 +1,5 @@
 import { Game, Developer, Genre, Review } from '../models';
+import { Link } from 'react-router-dom';
 
 interface GameItemProps {
     game: Game;
@@ -29,8 +30,8 @@ export const GameItem: React.FC<GameItemProps> = ({ game, developers, genres, re
     }
 
     const ratingColor = avgRating >= 8 ? 'text-green-500'
-                        : avgRating >= 6 ? 'text-yellow-500'
-                        : 'text-red-500';
+        : avgRating >= 6 ? 'text-yellow-500'
+            : 'text-red-500';
 
     return (
         <div className="rounded overflow-hidden shadow-lg flex flex-col transform transition duration-500 ease-in-out hover:shadow-2xl hover:scale-105">
@@ -38,7 +39,9 @@ export const GameItem: React.FC<GameItemProps> = ({ game, developers, genres, re
                 <img className="w-2/3 h-full object-cover" src={game.cover} alt="Game cover" />
             </div>
             <div className="px-6 py-4 flex-grow">
-                <div className="font-bold text-xl mb-2">{game.name}</div>
+                <Link to={`games/${game.id}`}>
+                    <div className="font-bold text-xl mb-2">{game.name}</div>
+                </Link>
                 <p className="text-gray-700 text-base">
                     {game.description}
                 </p>
