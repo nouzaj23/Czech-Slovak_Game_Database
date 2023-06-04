@@ -1,10 +1,24 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar, faPoop } from '@fortawesome/free-solid-svg-icons';
 import { useEffect, useState } from 'react';
+import { Game } from '../models';
 
-export const AddReviewForm = () => {
+interface AddReviewProps {
+    gameId: string;
+    game: Game;
+}
 
+
+export const AddReviewForm: React.FC<AddReviewProps> = ({ gameId, game }) => {
     const [stars, setStars] = useState(3);
+
+    if (gameId == "") {
+        
+    }
+
+    if (!game) {
+        return <div>Hra není k dispozici</div>;
+    }
 
     function handleStarClick(rating: number) {
         setStars(rating);
@@ -35,26 +49,6 @@ export const AddReviewForm = () => {
         if (starElement5) {
             starElement5.style.color = starStyle(5);
         }
-        // const starElement6 = document.getElementById('star6');
-        // if (starElement6) {
-        //     starElement6.style.color = starStyle(6);
-        // }
-        // const starElement7 = document.getElementById('star7');
-        // if (starElement7) {
-        //     starElement7.style.color = starStyle(7);
-        // }
-        // const starElement8 = document.getElementById('star8');
-        // if (starElement8) {
-        //     starElement8.style.color = starStyle(8);
-        // }
-        // const starElement9 = document.getElementById('star9');
-        // if (starElement9) {
-        //     starElement9.style.color = starStyle(9);
-        // }
-        // const starElement10 = document.getElementById('star10');
-        // if (starElement10) {
-        //     starElement10.style.color = starStyle(10);            
-        // }
     });
 
     const ratingBg = (stars: number) => {
@@ -70,6 +64,34 @@ export const AddReviewForm = () => {
     function starStyle(starNum: number) {
         return stars >= starNum ? ratingBg(stars) : '#92a1b0';
     }
+
+    // const [reviewedGame, setReviewedGame] = useState<Game>(game);
+
+    // const handleSubmitReview = async () => {
+    //     try {
+    //         var nameElement = document.getElementById('name') as HTMLTextAreaElement;
+    //         var contentElement = document.getElementById('review') as HTMLTextAreaElement;
+    //         if (nameElement && contentElement) {
+
+    //             var newReview: Review = { createdAt: new Date().toISOString(), game: gameId, id: "100", rating: 2, text: "kokot", title: "kokot2", user: "1" };
+    //             if (reviewedGame) {
+    //                 setReviewedGame(oldGame => {
+    //                     if (oldGame) {
+    //                         return {
+    //                             ...oldGame,
+    //                             reviews: [...oldGame.reviews, newReview.id]
+    //                         };
+    //                     }
+    //                     return oldGame;
+    //                 });
+    //             }
+    //             contentElement.value = '';
+    //             nameElement.value = '';
+    //         }
+    //     } catch (error) {
+    //         console.error("Chyba při přidávání/odebírání recenze: ", error);
+    //     }
+    // };
 
     return (
         <div>
@@ -100,7 +122,7 @@ export const AddReviewForm = () => {
                     <FontAwesomeIcon icon={faStar} onClick={() => handleStarClick(10)} id="star10" /> */}
                 </div>
                 <div>
-                    <input type="submit" value="Odeslat" style={{ padding: '0.5em', backgroundColor: '#007BFF', color: 'white', border: 'none', cursor: 'pointer', borderRadius: '0.25em' }} />
+                    <button value="Odeslat" style={{ padding: '0.5em', backgroundColor: '#007BFF', color: 'white', border: 'none', cursor: 'pointer', borderRadius: '0.25em' }}>Odeslat</button>
                 </div>
             </form>
         </div>
