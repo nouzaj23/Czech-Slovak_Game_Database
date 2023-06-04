@@ -6,9 +6,10 @@ import { faStar, faPoop } from '@fortawesome/free-solid-svg-icons';
 
 interface ReviewProps {
     reviewId: string;
+    rating: number;
 }
 
-export const ReviewItem: React.FC<ReviewProps> = ({ reviewId }) => {
+export const ReviewItem: React.FC<ReviewProps> = ({ reviewId, rating }) => {
     const reviewsCopy: Review[] = reviews;
     const review = reviewsCopy.find(rev => rev.id === reviewId);
 
@@ -36,7 +37,7 @@ export const ReviewItem: React.FC<ReviewProps> = ({ reviewId }) => {
     return (
         <div>
             <div className="review p-4 bg-white rounded shadow-md space-y-2">
-                <h2 className="text-2xl font-bold text-blue-500">{review.title}</h2>
+                <h2 className="text-2xl font-bold" style={{color: ratingBg(rating)}}>{review.title}</h2>
                 <p className="text-gray-700">{review.text}</p>
                 <div className="font-medium text-gray-500">
                     <div>
