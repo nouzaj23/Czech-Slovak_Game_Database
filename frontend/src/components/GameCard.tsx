@@ -33,10 +33,10 @@ export const GameCard: React.FC<GameCardProps> = ({ ...game }) => {
 
     return (
         <div>
-            <div className="flex bg-white shadow-lg rounded-lg p-6 relative">
-            <img src={game.cover} alt="popis" className="w-1/4 object-contain object-top" />
+            <div className="bg-white shadow-lg rounded-lg p-6 relative" style={{ overflow: 'auto' }}>
+                <img src={game.cover} alt="popis" className="w-1/4 object-contain object-top float-left mr-4" />
 
-                <div className="ml-4 w-3/4">
+                <div>
                     <h2 className="text-xl font-bold">{game.name}</h2>
                     <p className="mt-2 text-gray-600">Developers: {gameDevelopers.map((developer, index) => <Link to="" key={index} className="text-blue-500 hover:underline">{developer.name}{index !== gameDevelopers.length - 1 && ', '}</Link>)}</p>
                     <p className="mt-2 text-gray-600">Release Date: {game.releaseDate}</p>
@@ -53,5 +53,7 @@ export const GameCard: React.FC<GameCardProps> = ({ ...game }) => {
                 </div>
             </div>
         </div>
+
+
     )
 }
