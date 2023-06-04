@@ -11,13 +11,13 @@ type GameCardProps = Game;
 export const GameCard: React.FC<GameCardProps> = ({ ...game }) => {
     let gameDevelopers = developers.filter(developer => game.developers.includes(developer.id));
     let gameGenres = genres.filter(genre => game.genres.includes(genre.id));
-    let gameReviews = reviews.filter(review => review.game === game.id);
+    // let gameReviews = reviews.filter(review => review.game === game.id);
 
-    let avgRating = 0;
-    if (gameReviews.length > 0) {
-        let totalRating = gameReviews.reduce((total, review) => total + review.rating, 0);
-        avgRating = totalRating / gameReviews.length;
-    }
+    // let avgRating = 0;
+    // if (gameReviews.length > 0) {
+    //     let totalRating = gameReviews.reduce((total, review) => total + review.rating, 0);
+    //     avgRating = totalRating / gameReviews.length;
+    // }
 
     const rating: number = reviews.filter(review => game.reviews.includes(review.id)).reduce((accumulator, currentValue) => accumulator + currentValue.rating, 0) / game.reviews.length;
 
