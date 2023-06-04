@@ -23,6 +23,9 @@ function App() {
             <Route path="/game/:id">
               <GamePage />
             </Route>
+            <Route path="*">
+              <div>404</div>
+            </Route>
           </Switch>
         </Layout>
       </Router>
