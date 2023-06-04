@@ -3,7 +3,7 @@
         "id": "1",
         "title": "Awesome Game",
         "text": "This game is really awesome with cool features.",
-        "rating": 9,
+        "rating": 2,
         "game": "1",
         "user": "1",
         "createdAt": "2023-02-01"

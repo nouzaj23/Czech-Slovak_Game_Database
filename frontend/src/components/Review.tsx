@@ -2,7 +2,7 @@ import { Review, User } from "../models";
 import reviews from '../assets/reviews.json';
 import users from '../assets/users.json';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faStar } from '@fortawesome/free-solid-svg-icons';
+import { faStar, faPoop } from '@fortawesome/free-solid-svg-icons';
 
 interface ReviewProps {
     reviewId: string;
@@ -23,6 +23,16 @@ export const ReviewItem: React.FC<ReviewProps> = ({ reviewId }) => {
         return <div>User není k dispozici</div>;
     }
 
+    const ratingBg = (rating: number) => {
+        if (rating > 7) {
+            return '#ad0e30';
+        }
+        else if (rating > 3) {
+            return '#3690eb';
+        }
+        return '#010203';
+    }
+
     return (
         <div>
             <div className="review p-4 bg-white rounded shadow-md space-y-2">
@@ -30,9 +40,9 @@ export const ReviewItem: React.FC<ReviewProps> = ({ reviewId }) => {
                 <p className="text-gray-700">{review.text}</p>
                 <div className="font-medium text-gray-500">
                     <div>
-                        {Array.from({ length: review.rating }).map((_, i) => (
-                            <FontAwesomeIcon key={i} icon={faStar} />
-                        ))}
+                        {review.rating >= 2 ? Array.from({ length: review.rating / 2 }).map((_, i) => (
+                            <FontAwesomeIcon key={i} icon={faStar} style={{color: ratingBg(review.rating)}} />
+                        )) : <FontAwesomeIcon icon={faPoop} style={{color: "green"}} />}
                     </div>
                 </div>
                 <div className="font-medium text-gray-500"><span className="font-bold text-gray-900">{user.username}</span></div>

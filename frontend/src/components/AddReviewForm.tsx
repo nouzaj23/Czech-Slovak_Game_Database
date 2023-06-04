@@ -1,16 +1,20 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faStar } from '@fortawesome/free-solid-svg-icons';
+import { faStar, faPoop } from '@fortawesome/free-solid-svg-icons';
 import { useEffect, useState } from 'react';
 
 export const AddReviewForm = () => {
 
-    const [stars, setStars] = useState(5);
+    const [stars, setStars] = useState(3);
 
     function handleStarClick(rating: number) {
         setStars(rating);
     }
 
     useEffect(() => {
+        const starElementPoop = document.getElementById('star0');
+        if (starElementPoop) {
+            starElementPoop.style.color = stars > 0 ? 'black' : 'green';;
+        }
         const starElement = document.getElementById('star1');
         if (starElement) {
             starElement.style.color = starStyle(1);
@@ -31,30 +35,40 @@ export const AddReviewForm = () => {
         if (starElement5) {
             starElement5.style.color = starStyle(5);
         }
-        const starElement6 = document.getElementById('star6');
-        if (starElement6) {
-            starElement6.style.color = starStyle(6);
-        }
-        const starElement7 = document.getElementById('star7');
-        if (starElement7) {
-            starElement7.style.color = starStyle(7);
-        }
-        const starElement8 = document.getElementById('star8');
-        if (starElement8) {
-            starElement8.style.color = starStyle(8);
-        }
-        const starElement9 = document.getElementById('star9');
-        if (starElement9) {
-            starElement9.style.color = starStyle(9);
-        }
-        const starElement10 = document.getElementById('star10');
-        if (starElement10) {
-            starElement10.style.color = starStyle(10);            
-        }
+        // const starElement6 = document.getElementById('star6');
+        // if (starElement6) {
+        //     starElement6.style.color = starStyle(6);
+        // }
+        // const starElement7 = document.getElementById('star7');
+        // if (starElement7) {
+        //     starElement7.style.color = starStyle(7);
+        // }
+        // const starElement8 = document.getElementById('star8');
+        // if (starElement8) {
+        //     starElement8.style.color = starStyle(8);
+        // }
+        // const starElement9 = document.getElementById('star9');
+        // if (starElement9) {
+        //     starElement9.style.color = starStyle(9);
+        // }
+        // const starElement10 = document.getElementById('star10');
+        // if (starElement10) {
+        //     starElement10.style.color = starStyle(10);            
+        // }
     });
 
+    const ratingBg = (stars: number) => {
+        if (stars > 3) {
+            return '#ad0e30';
+        }
+        else if (stars > 1) {
+            return '#3690eb';
+        }
+        return '#010203';
+    }
+
     function starStyle(starNum: number) {
-        return stars >= starNum ? 'red' : 'black';
+        return stars >= starNum ? ratingBg(stars) : '#92a1b0';
     }
 
     return (
@@ -73,16 +87,17 @@ export const AddReviewForm = () => {
                     </label>
                 </div>
                 <div>
+                    <FontAwesomeIcon icon={faPoop} onClick={() => handleStarClick(0)} id="star0" />
                     <FontAwesomeIcon icon={faStar} onClick={() => handleStarClick(1)} id="star1" />
                     <FontAwesomeIcon icon={faStar} onClick={() => handleStarClick(2)} id="star2" />
                     <FontAwesomeIcon icon={faStar} onClick={() => handleStarClick(3)} id="star3" />
                     <FontAwesomeIcon icon={faStar} onClick={() => handleStarClick(4)} id="star4" />
                     <FontAwesomeIcon icon={faStar} onClick={() => handleStarClick(5)} id="star5" />
-                    <FontAwesomeIcon icon={faStar} onClick={() => handleStarClick(6)} id="star6" />
+                    {/* <FontAwesomeIcon icon={faStar} onClick={() => handleStarClick(6)} id="star6" />
                     <FontAwesomeIcon icon={faStar} onClick={() => handleStarClick(7)} id="star7" />
                     <FontAwesomeIcon icon={faStar} onClick={() => handleStarClick(8)} id="star8" />
                     <FontAwesomeIcon icon={faStar} onClick={() => handleStarClick(9)} id="star9" />
-                    <FontAwesomeIcon icon={faStar} onClick={() => handleStarClick(10)} id="star10" />
+                    <FontAwesomeIcon icon={faStar} onClick={() => handleStarClick(10)} id="star10" /> */}
                 </div>
                 <div>
                     <input type="submit" value="Odeslat" style={{ padding: '0.5em', backgroundColor: '#007BFF', color: 'white', border: 'none', cursor: 'pointer', borderRadius: '0.25em' }} />

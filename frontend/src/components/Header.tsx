@@ -6,7 +6,7 @@ import { faBars } from '@fortawesome/free-solid-svg-icons';
 export const Header = () => {
     const [isOpen, setIsOpen] = useState(false);
     return (
-        <div className="flex flex-col sm:flex-row w-full h-auto sm:h-16 fixed top-0 bg-gray-800 text-white justify-between items-center px-4 shadow-md">
+        <div style={{zIndex: "10"}} className="flex flex-col sm:flex-row w-full h-auto sm:h-16 fixed top-0 bg-gray-800 text-white justify-between items-center px-4 shadow-md">
             <div className="flex flex-row justify-between w-full sm:w-auto">
                 <Link to="/">
                     <img src="./../../logo-placeholder.png" className="h-10 w-auto mr-2 mt-3 sm:mt-0 mb-3 sm:mb-0" />

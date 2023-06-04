@@ -1,22 +1,32 @@
 import { useState } from 'react';
-import { Game } from '../models/game';
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import games from '../assets/games.json';
+import developers from '../assets/developers.json';
+import genres from '../assets/genres.json';
+import reviews from '../assets/reviews.json';
 import { ReviewItem } from '../components/Review';
 import { AddReviewForm } from '../components/AddReviewForm'
 import { CommentItem } from '../components/CommentItem';
 import { AddCommentForm } from '../components/AddCommentForm';
+import { Developer, Genre, Game } from '../models';
+import { faHeart } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 
 export const GamePage = () => {
     const { id } = useParams<{ id: string }>();
 
-    let gamesCopy: Game[] = games;
+    const gamesCopy: Game[] = games;
     const game = gamesCopy.find(game => game.id === id);
 
     if (!game) {
         return <div>Hra není k dispozici</div>;
     }
+
+    const developersCopy: Developer[] = developers.filter(developer => game.developers.includes(developer.id));
+    const genresCopy: Genre[] = genres.filter(genre => game.genres.includes(genre.id));
+    const rating: number = reviews.filter(review => game.reviews.includes(review.id)).reduce((accumulator, currentValue) => accumulator + currentValue.rating, 0) / game.reviews.length;
+
 
     const [selectedTab, setSelectedTab] = useState('reviews');
 
@@ -69,15 +79,34 @@ export const GamePage = () => {
         }
     };
 
+    const ratingBg = () => {
+        if (rating > 7) {
+            return '#ad0e30';
+        }
+        else if (rating > 3) {
+            return '#3690eb';
+        }
+        return '#010203';
+    }
+
     return (
         <div className="w-3/4 mx-auto p-4 bg-white shadow rounded">
-            <div className="flex">
-                <img src={game.cover} alt="popis" className="w-1/4" />
+            <div className="flex bg-white shadow-lg rounded-lg p-6 relative">
+                <img src={game.cover} alt="popis" className="w-1/4 rounded-lg" />
                 <div className="ml-4 w-3/4">
                     <h2 className="text-xl font-bold">{game.name}</h2>
-                    <p>
+                    <p className="mt-2 text-gray-600">Developers: {developersCopy.map((developer, index) => <Link to="" key={index} className="text-blue-500 hover:underline">{developer.name}{index !== developersCopy.length - 1 && ', '}</Link>)}</p>
+                    <p className="mt-2 text-gray-600">Release Date: {game.releaseDate}</p>
+                    <p className="mt-2 text-gray-600">Genres: {genresCopy.map((genre, index) => <Link to="" key={index} className="text-blue-500 hover:underline">{genre.type}{index !== developersCopy.length - 1 && ', '}</Link>)}</p>
+                    <p className="mt-4 text-gray-700">
                         {game.description}
                     </p>
+                </div>
+                <div className="absolute top-2 right-2 text-white rounded-full px-3 py-1 shadow-md" style={{ background: ratingBg() }}>
+                    <p className="font-bold text-lg">{rating.toFixed(1)}</p>
+                </div>
+                <div className="absolute top-12 right-4">
+                    <FontAwesomeIcon icon={faHeart} size='2x' className='text-red-500' />
                 </div>
             </div>
 
@@ -95,11 +124,6 @@ export const GamePage = () => {
                     Videa
                 </button>
             </div>
-
-
-
-
-
             <div className="mt-4">
                 {renderContent()}
             </div>
