@@ -43,10 +43,6 @@ export const GameItem: React.FC<GameItemProps> = ({ game, developers, genres, re
         avgRating = totalRating / reviews.length;
     }
 
-    const ratingColor = avgRating >= 8 ? 'text-green-500'
-        : avgRating >= 6 ? 'text-yellow-500'
-            : 'text-red-500';
-
     return (
         <div className="rounded overflow-hidden shadow-lg flex flex-col transform transition duration-500 ease-in-out hover:shadow-2xl hover:scale-105">
             <div className="w-full h-48 bg-gray-300 flex justify-center">
