@@ -14,14 +14,14 @@ function App() {
             <Route exact path="/">
               <Homepage />
             </Route>
+            <Route path="/games/:id">
+              <GamePage />
+            </Route>
             <Route path="/games">
               <Games />
             </Route>
             <Route path="/developers">
               <Developers />
-            </Route>
-            <Route path="/game/:id">
-              <GamePage />
             </Route>
             <Route path="*">
               <div>404</div>

@@ -39,7 +39,7 @@ export const GameItem: React.FC<GameItemProps> = ({ game, developers, genres, re
                 <img className="w-2/3 h-full object-cover" src={game.cover} alt="Game cover" />
             </div>
             <div className="px-6 py-4 flex-grow">
-                <Link to={`game/${game.id}`}>
+                <Link to={`games/${game.id}`}>
                     <div className="font-bold text-xl mb-2">{game.name}</div>
                 </Link>
                 <p className="text-gray-700 text-base">
