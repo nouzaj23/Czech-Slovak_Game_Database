@@ -3,6 +3,8 @@ import developers from '../assets/developers.json';
 import genres from '../assets/genres.json';
 import reviews from '../assets/reviews.json';
 import { Link } from "react-router-dom";
+import { faHeart } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 type GameCardProps = Game;
 
@@ -17,40 +19,38 @@ export const GameCard: React.FC<GameCardProps> = ({ ...game }) => {
         avgRating = totalRating / gameReviews.length;
     }
 
-    const ratingColor = avgRating >= 8 ? 'text-green-500'
-        : avgRating >= 6 ? 'text-yellow-500'
-            : 'text-red-500';
+    const rating: number = reviews.filter(review => game.reviews.includes(review.id)).reduce((accumulator, currentValue) => accumulator + currentValue.rating, 0) / game.reviews.length;
+
+    const ratingBg = () => {
+        if (rating > 7) {
+            return '#ad0e30';
+        }
+        else if (rating > 3) {
+            return '#3690eb';
+        }
+        return '#010203';
+    }
 
     return (
-        <div className='flex flex-col w-1/2 h-full bg-white border-2 border-black rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 ease-in-out p-4 m-4'>
-            <div className='flex flex-row'>
-                <div className='inline-flex w-1/3'>
-                    <img src={game.cover} className='mx-auto my-2 object-cover rounded-md shadow-md' alt={game.name} />
+        <div>
+            <div className="flex bg-white shadow-lg rounded-lg p-6 relative">
+                <img src={game.cover} alt="popis" className="w-1/4 rounded-lg" />
+                <div className="ml-4 w-3/4">
+                    <h2 className="text-xl font-bold">{game.name}</h2>
+                    <p className="mt-2 text-gray-600">Developers: {gameDevelopers.map((developer, index) => <Link to="" key={index} className="text-blue-500 hover:underline">{developer.name}{index !== gameDevelopers.length - 1 && ', '}</Link>)}</p>
+                    <p className="mt-2 text-gray-600">Release Date: {game.releaseDate}</p>
+                    <p className="mt-2 text-gray-600">Genres: {gameGenres.map((genre, index) => <Link to="" key={index} className="text-blue-500 hover:underline">{genre.type}{index !== gameGenres.length - 1 && ', '}</Link>)}</p>
+                    <p className="mt-4 text-gray-700">
+                        {game.description}
+                    </p>
                 </div>
-                <div className='flex flex-col w-auto pt-3 gap-1 pl-4'>
-                    <Link to={`games/${game.id}`}>
-                        <h1 className='text-2xl font-bold text-gray-700'>{game.name}</h1>
-                    </Link>
-                    <div className='text-gray-500'>
-                        {gameDevelopers.map((developer, index) => {
-                            return (
-                                <span key={index} className='text-lg font-medium'>{developer.name}</span>
-                            );
-                        })}
-                    </div>
-                    <h2 className='text-lg text-gray-600'>{game.releaseDate}</h2>
-                    <div className='text-gray-500'>
-                        {gameGenres.map((genre, index) => {
-                            return (
-                                <span key={index} className='text-base'>{genre.type}</span>
-                            );
-                        })}
-                    </div>
-                    {/* Display the average rating with color */}
-                    <div className={`text-base ${ratingColor}` + ' mb-2'}>{avgRating.toFixed(2)}</div>
+                <div className="absolute top-2 right-2 text-white rounded-full px-3 py-1 shadow-md" style={{ background: ratingBg() }}>
+                    <p className="font-bold text-lg">{rating.toFixed(1)}</p>
+                </div>
+                <div className="absolute top-12 right-4">
+                    <FontAwesomeIcon icon={faHeart} size='2x' className='text-red-500' />
                 </div>
             </div>
-            <p className='text-base text-gray-700'>{game.description}</p>
         </div>
     )
 }
