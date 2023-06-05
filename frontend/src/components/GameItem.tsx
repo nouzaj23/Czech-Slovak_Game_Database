@@ -12,6 +12,7 @@ interface GameItemProps {
 
 export const GameItem: React.FC<GameItemProps> = ({ game, developers, genres, reviews }) => {
     const gameDevelopers = developers.filter(developer => game.developers.includes(developer.id));
+    const gameGenres = genres.filter(genre => game.genres.includes(genre.id));
 
     const rating: number = reviews.filter(review => game.reviews.includes(review.id)).reduce((accumulator, currentValue) => accumulator + currentValue.rating, 0) / game.reviews.length;
 
@@ -24,13 +25,6 @@ export const GameItem: React.FC<GameItemProps> = ({ game, developers, genres, re
         }
         return '#010203';
     }
-
-    const getGenreNames = (genreIds: string[]) => {
-        return genreIds.map(id => {
-            const genre = genres.find(gen => gen.id === id);
-            return genre ? genre.type : '';
-        }).join(', ');
-    };
 
     // let avgRating = 0;
     // if (reviews.length > 0) {
@@ -60,7 +54,7 @@ export const GameItem: React.FC<GameItemProps> = ({ game, developers, genres, re
                         <b>Vývojáři:</b> {gameDevelopers.map((developer, index) => <Link to={`/developers/${developer.id}`} key={index} className="text-blue-500 hover:underline">{developer.name}{index !== gameDevelopers.length - 1 && ', '}</Link>)}
                     </p>
                     <p className="text-gray-700 text-sm">
-                        <b>Žánry:</b> {getGenreNames(game.genres)}
+                        <b>Žánry:</b> {gameGenres.map((genre, index) => <Link reloadDocument to={`/games?genre=${genre.id}`} key={index} className="text-blue-500 hover:underline">{genre.type}{index !== gameGenres.length - 1 && ', '}</Link>)}
                     </p>
                 </div>
                 <div className="flex items-center">
