@@ -12,7 +12,7 @@ export const DeveloperPage = () => {
     }
 
     return (
-        <div className="w-3/4 mx-auto p-4 bg-white shadow rounded">
+        <div className="w-full md:w-3/4 mx-auto p-4 bg-white shadow rounded">
             <div className="bg-white shadow-lg rounded-lg p-6 relative" style={{ overflow: 'auto' }}>
                 <img src={developer.avatar} alt="Developer avatar" className="w-1/4 object-contain object-top float-left mr-4" />
                 <div>
@@ -20,7 +20,7 @@ export const DeveloperPage = () => {
                     <p className="mt-4 text-gray-600">{developer.description}</p>
                 </div>
             </div>
-            <div className="grid grid-cols-5 gap-4 p-4 mt-4">
+            <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-4 p-4 mt-4">
                 {devGames.map((game) => (
                     <Link to={`/games/${game.id}`} key={game.id}>
                         <div className="flex flex-col hover:underline">
