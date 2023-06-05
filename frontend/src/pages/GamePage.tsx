@@ -13,16 +13,13 @@ import { GameCard } from '../components/GameCard';
 
 export const GamePage = () => {
     const { id } = useParams<{ id: string }>();
-
-    const gamesCopy: Game[] = games;
-    const game = gamesCopy.find(game => game.id === id);
+    const game: Game | undefined = games.find(game => game.id === id);
 
     if (!game) {
         return <div>Hra není k dispozici</div>;
     }
 
     const rating: number = reviews.filter(review => game.reviews.includes(review.id)).reduce((accumulator, currentValue) => accumulator + currentValue.rating, 0) / game.reviews.length;
-
     const [selectedTab, setSelectedTab] = useState('reviews');
 
     const [isOpen, setIsOpen] = useState(false);
@@ -41,7 +38,7 @@ export const GamePage = () => {
         setSelectedImage(null);
     };
 
-    const renderModal = () => {
+    const renderEnlargedImage = () => {
         if (!selectedImage) return null;
 
         return (
@@ -56,13 +53,12 @@ export const GamePage = () => {
         );
     };
 
-    const MyGrid = () => {
-        const numColumns = 3;
-        const numRows = Math.ceil(game.photos.length / numColumns);
+    const ImagesGrid = (numColumns: number) => {
+        const numRows: number = Math.ceil(game.photos.length / numColumns);
 
         const gridItems = [];
 
-        for (let row = 0; row < numRows; row++) {
+        for (let row: number = 0; row < numRows; row++) {
             for (let col = 0; col < numColumns; col++) {
                 const index = row * numColumns + col;
                 if (index < game.photos.length) {
@@ -117,7 +113,14 @@ export const GamePage = () => {
             case 'photos':
                 return (
                     <div className="container">
-                        <div className={`grid grid-cols-${3} gap-2`}>{MyGrid()}</div>
+                        {/* Hidden on small screens - photos in grid */}
+                        <div className="hidden sm:block">
+                            <div className={`grid grid-cols-${3} gap-2`}>{ImagesGrid(3)}</div>
+                        </div>
+                        {/* Hidden on big screens - photos in one column */}
+                        <div className='block sm:hidden'>
+                            <div className={`grid grid-cols-${1} gap-2`}>{ImagesGrid(1)}</div>
+                        </div>
                     </div>
                 );
             case 'videos':
@@ -133,47 +136,37 @@ export const GamePage = () => {
                                 />
                             </div>
                         )}
-
                     </div>
                 );
-
             default:
-                return <p>Recenze</p>;
+                return <p></p>;
         }
     };
 
-    const ratingBg = () => {
-        if (rating > 7) {
-            return '#ad0e30';
-        }
-        else if (rating > 3) {
-            return '#3690eb';
-        }
-        return '#010203';
-    }
+    const ratingBg = () => rating > 7 ? '#ad0e30' : rating > 3 ? '#3690eb' : '#010203';
 
     return (
-        <div className="w-3/4 mx-auto p-4 bg-white shadow rounded">
-            <GameCard {...game}/>
+        <div className="w-full sm:w-3/4 mx-auto p-4 bg-white shadow rounded">
+            <GameCard {...game} />
 
-            <div className="mt-4 flex justify-around gap-4">
+            <div className="mt-4 flex justify-around gap-1 sm:gap-4">
                 <button onClick={() => setSelectedTab('reviews')} style={{ background: ratingBg() }} className="px-3 py-2 text-white w-full hover:bg-blue-600 transition-all duration-300 ease-in-out shadow-md hover:shadow-lg">
                     Recenze
                 </button>
-                <button onClick={() => setSelectedTab('comments')} style={{ background: ratingBg() }} className="px-3 py-2 bg-blue-500 text-white w-full hover:bg-blue-600 transition-all duration-300 ease-in-out shadow-md hover:shadow-lg">
+                <button onClick={() => setSelectedTab('comments')} style={{ background: ratingBg() }} className="px-3 py-2 text-white w-full hover:bg-blue-600 transition-all duration-300 ease-in-out shadow-md hover:shadow-lg">
                     Komentáře
                 </button>
-                <button onClick={() => setSelectedTab('photos')} style={{ background: ratingBg() }} className="px-3 py-2 bg-blue-500 text-white w-full hover:bg-blue-600 transition-all duration-300 ease-in-out shadow-md hover:shadow-lg">
+                <button onClick={() => setSelectedTab('photos')} style={{ background: ratingBg() }} className="px-3 py-2 text-white w-full hover:bg-blue-600 transition-all duration-300 ease-in-out shadow-md hover:shadow-lg">
                     Fotografie
                 </button>
-                <button onClick={() => setSelectedTab('videos')} style={{ background: ratingBg() }} className="px-3 py-2 bg-blue-500 text-white w-full hover:bg-blue-600 transition-all duration-300 ease-in-out shadow-md hover:shadow-lg">
+                <button onClick={() => setSelectedTab('videos')} style={{ background: ratingBg() }} className="px-3 py-2 text-white w-full hover:bg-blue-600 transition-all duration-300 ease-in-out shadow-md hover:shadow-lg">
                     Videa
                 </button>
             </div>
             <div className="mt-4">
                 {renderContent()}
             </div>
-            {renderModal()}
+            {renderEnlargedImage()}
         </div>
     );
 };
