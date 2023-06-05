@@ -5,6 +5,7 @@ import { Games } from './pages/Games';
 import { Developers } from './pages/Developers';
 import { GamePage } from './pages/GamePage'
 import { DeveloperPage } from './pages/DeveloperPage';
+import { Genres } from './pages/Genres';
 
 function App() {
   return (
@@ -27,6 +28,9 @@ function App() {
             <Route path="/developers">
               <Developers />
             </Route>
+            <Route path="/genres">
+                <Genres />
+              </Route>
             <Route path="*">
               <div>404</div>
             </Route>
