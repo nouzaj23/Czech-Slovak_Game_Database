@@ -146,9 +146,10 @@ export const GamePage = () => {
     const ratingBg = () => rating > 7 ? '#ad0e30' : rating > 3 ? '#3690eb' : '#010203';
 
     return (
-        <div className="w-full sm:w-3/4 mx-auto p-4 bg-white shadow rounded">
-            <GameCard {...game} />
-
+        <div className="w-full md:w-3/4 mx-auto p-4 bg-white shadow rounded">
+            <div className="bg-white shadow-lg rounded-lg">
+                <GameCard {...game} />
+            </div>
             <div className="mt-4 flex justify-around gap-1 sm:gap-4">
                 <button onClick={() => setSelectedTab('reviews')} style={{ background: ratingBg() }} className="px-3 py-2 text-sm sm:text-lg text-white w-full hover:bg-blue-600 transition-all duration-300 ease-in-out shadow-md hover:shadow-lg">
                     Recenze
