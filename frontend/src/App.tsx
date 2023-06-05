@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { Homepage } from './pages/Homepage';
 import { Layout } from './components/Layout';
 import { Games } from './pages/Games';
@@ -12,29 +12,15 @@ function App() {
     <div className="w-screen h-screen">
       <Router>
         <Layout>
-          <Switch>
-            <Route exact path="/">
-              <Homepage />
-            </Route>
-            <Route path="/games/:id">
-              <GamePage />
-            </Route>
-            <Route path="/games">
-              <Games />
-            </Route>
-            <Route path="/developers/:id">
-              <DeveloperPage />
-            </Route>
-            <Route path="/developers">
-              <Developers />
-            </Route>
-            <Route path="/genres">
-                <Genres />
-              </Route>
-            <Route path="*">
-              <div>404</div>
-            </Route>
-          </Switch>
+          <Routes>
+            <Route path="/" element={<Homepage />} />
+            <Route path="/games/:id" element={<GamePage />} />
+            <Route path="/games" element={<Games />} />
+            <Route path="/developers/:id" element={<DeveloperPage />} />
+            <Route path="/developers" element={<Developers />} />
+            <Route path="/genres" element={<Genres />} />
+            <Route path="*" element={<div>404</div>} />
+          </Routes>
         </Layout>
       </Router>
     </div>

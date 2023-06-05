@@ -33,7 +33,7 @@ export const Header = () => {
 
 
             <div className={`${isOpen ? 'flex' : 'hidden'} sm:flex flex-col sm:flex-row justify-center items-center w-full sm:w-1/3 mt-2 sm:mt-0 bg-transparent`}>
-                <Link to="/games" className="w-full text-center">
+                <Link reloadDocument to="/games" className="w-full text-center">
                     <button className="sm:w-auto w-full px-3 py-1 rounded-md text-white sm:bg-gray-700 sm:hover:bg-gray-600 transition-colors duration-300 ease-in-out">
                         Hry
                     </button>
