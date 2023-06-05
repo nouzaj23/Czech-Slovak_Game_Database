@@ -20,7 +20,7 @@ export const DeveloperPage = () => {
                     <p className="mt-4 text-gray-600">{developer.description}</p>
                 </div>
             </div>
-            <div className="grid grid-cols-3 gap-4 p-4 mt-4">
+            <div className="grid grid-cols-5 gap-4 p-4 mt-4">
                 {devGames.map((game) => (
                     <Link to={`/games/${game.id}`} key={game.id}>
                         <div className="flex flex-col hover:underline">
