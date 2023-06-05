@@ -37,10 +37,12 @@ export const GameCard: React.FC<GameCardProps> = ({ ...game }) => {
                 <img src={game.cover} alt="popis" className="w-1/4 object-contain object-top float-left mr-4" />
 
                 <div>
-                    <h2 className="text-xl font-bold">{game.name}</h2>
-                    <p className="mt-2 text-gray-600">Developers: {gameDevelopers.map((developer, index) => <Link to="" key={index} className="text-blue-500 hover:underline">{developer.name}{index !== gameDevelopers.length - 1 && ', '}</Link>)}</p>
-                    <p className="mt-2 text-gray-600">Release Date: {game.releaseDate}</p>
-                    <p className="mt-2 text-gray-600">Genres: {gameGenres.map((genre, index) => <Link to="" key={index} className="text-blue-500 hover:underline">{genre.type}{index !== gameGenres.length - 1 && ', '}</Link>)}</p>
+                    <Link to={`/games/${game.id}`}>
+                        <h2 className="text-xl font-bold hover:underline">{game.name}</h2>
+                    </Link>
+                    <p className="mt-2 text-gray-600"><b>Vývojáři:</b> {gameDevelopers.map((developer, index) => <Link to={`/developers/${developer.id}`} key={index} className="text-blue-500 hover:underline">{developer.name}{index !== gameDevelopers.length - 1 && ', '}</Link>)}</p>
+                    <p className="mt-2 text-gray-600"><b>Datum vydání:</b> {game.releaseDate}</p>
+                    <p className="mt-2 text-gray-600"><b>Žánry:</b> {gameGenres.map((genre, index) => <Link to="" key={index} className="text-blue-500 hover:underline">{genre.type}{index !== gameGenres.length - 1 && ', '}</Link>)}</p>
                     <p className="mt-4 text-gray-700">
                         {game.description}
                     </p>

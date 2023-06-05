@@ -4,6 +4,7 @@ import { Layout } from './components/Layout';
 import { Games } from './pages/Games';
 import { Developers } from './pages/Developers';
 import { GamePage } from './pages/GamePage'
+import { DeveloperPage } from './pages/DeveloperPage';
 
 function App() {
   return (
@@ -19,6 +20,9 @@ function App() {
             </Route>
             <Route path="/games">
               <Games />
+            </Route>
+            <Route path="/developers/:id">
+              <DeveloperPage />
             </Route>
             <Route path="/developers">
               <Developers />
