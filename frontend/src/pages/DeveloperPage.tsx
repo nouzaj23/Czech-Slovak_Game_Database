@@ -6,7 +6,7 @@ import { Game } from "../models";
 export const DeveloperPage = () => {
     const { id } = useParams<{ id: string }>();
     const developer = developers.find(developer => developer.id === id);
-    const devGames: Game[] = games.filter(game => game.developers.includes(id));
+    const devGames: Game[] = games.filter(game => game.developers.includes(id!));
     if (!developer) {
         return <div>Vývojář není k dispozici</div>;
     }

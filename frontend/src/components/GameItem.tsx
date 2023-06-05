@@ -12,6 +12,7 @@ interface GameItemProps {
 
 export const GameItem: React.FC<GameItemProps> = ({ game, developers, genres, reviews }) => {
     const gameDevelopers = developers.filter(developer => game.developers.includes(developer.id));
+    const gameGenres = genres.filter(genre => game.genres.includes(genre.id));
 
     const rating: number = reviews.filter(review => game.reviews.includes(review.id)).reduce((accumulator, currentValue) => accumulator + currentValue.rating, 0) / game.reviews.length;
 
@@ -25,13 +26,6 @@ export const GameItem: React.FC<GameItemProps> = ({ game, developers, genres, re
         return '#010203';
     }
 
-    const getGenreNames = (genreIds: string[]) => {
-        return genreIds.map(id => {
-            const genre = genres.find(gen => gen.id === id);
-            return genre ? genre.type : '';
-        }).join(', ');
-    };
-
     // let avgRating = 0;
     // if (reviews.length > 0) {
     //     let totalRating = reviews.reduce((total, review) => total + review.rating, 0);
@@ -44,7 +38,7 @@ export const GameItem: React.FC<GameItemProps> = ({ game, developers, genres, re
                 <img className="object-cover max-h-full" src={game.cover} alt="Game cover" />
             </div>
             <div className="px-6 py-4 flex-grow">
-                <Link to={`games/${game.id}`}>
+                <Link to={`/games/${game.id}`}>
                     <div className="font-bold text-xl mb-2 hover:underline">{game.name}</div>
                 </Link>
                 <p className="text-gray-700 text-base">
@@ -60,7 +54,7 @@ export const GameItem: React.FC<GameItemProps> = ({ game, developers, genres, re
                         <b>Vývojáři:</b> {gameDevelopers.map((developer, index) => <Link to={`/developers/${developer.id}`} key={index} className="text-blue-500 hover:underline">{developer.name}{index !== gameDevelopers.length - 1 && ', '}</Link>)}
                     </p>
                     <p className="text-gray-700 text-sm">
-                        <b>Žánry:</b> {getGenreNames(game.genres)}
+                        <b>Žánry:</b> {gameGenres.map((genre, index) => <Link reloadDocument to={`/games?genre=${genre.id}`} key={index} className="text-blue-500 hover:underline">{genre.type}{index !== gameGenres.length - 1 && ', '}</Link>)}
                     </p>
                 </div>
                 <div className="flex items-center">
