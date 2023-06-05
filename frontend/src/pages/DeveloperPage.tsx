@@ -12,7 +12,7 @@ export const DeveloperPage = () => {
     }
 
     return (
-        <div className="w-3/4 mx-auto p-4 bg-white shadow rounded">
+        <div className="w-full md:w-3/4 mx-auto p-4 bg-white shadow rounded">
             <div className="bg-white shadow-lg rounded-lg p-6 relative" style={{ overflow: 'auto' }}>
                 <img src={developer.avatar} alt="Developer avatar" className="w-1/4 object-contain object-top float-left mr-4" />
                 <div>
