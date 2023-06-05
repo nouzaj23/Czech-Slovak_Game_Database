@@ -4,12 +4,17 @@ import developers from '../assets/developers.json';
 import genres from '../assets/genres.json';
 import reviews from '../assets/reviews.json';
 import { GameItem } from '../components/GameItem';
+import { useLocation } from 'react-router-dom';
 
 export const Games = () => {
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const genre = queryParams.get('genre');
+
   const [filter, setFilter] = useState('');
   const [yearFilter, setYearFilter] = useState('');
   const [developerFilter, setDeveloperFilter] = useState('');
-  const [genreFilter, setGenreFilter] = useState('');
+  const [genreFilter, setGenreFilter] = useState(genre || '');
   const [sortType, setSortType] = useState('name-asc');
 
   let filteredGames = games.filter(game => {
