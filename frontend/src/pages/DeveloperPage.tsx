@@ -23,7 +23,7 @@ export const DeveloperPage = () => {
             <div className="grid grid-cols-3 gap-4 p-4 mt-4">
                 {devGames.map((game) => (
                     <Link to={`/games/${game.id}`} key={game.id}>
-                        <div className="flex flex-col">
+                        <div className="flex flex-col hover:underline">
                             <img src={game.cover} alt="Game cover" className="w-full my-auto" />
                             <h2 className="text-xl font-bold text-center">{game.name}</h2>
                         </div>
