@@ -38,9 +38,9 @@ export const GameCard: React.FC<GameCardProps> = ({ ...game }) => {
 
                 <div>
                     <h2 className="text-xl font-bold">{game.name}</h2>
-                    <p className="mt-2 text-gray-600">Developers: {gameDevelopers.map((developer, index) => <Link to="" key={index} className="text-blue-500 hover:underline">{developer.name}{index !== gameDevelopers.length - 1 && ', '}</Link>)}</p>
-                    <p className="mt-2 text-gray-600">Release Date: {game.releaseDate}</p>
-                    <p className="mt-2 text-gray-600">Genres: {gameGenres.map((genre, index) => <Link to="" key={index} className="text-blue-500 hover:underline">{genre.type}{index !== gameGenres.length - 1 && ', '}</Link>)}</p>
+                    <p className="mt-2 text-gray-600">Vývojáři: {gameDevelopers.map((developer, index) => <Link to={`/developers/${developer.id}`} key={index} className="text-blue-500 hover:underline">{developer.name}{index !== gameDevelopers.length - 1 && ', '}</Link>)}</p>
+                    <p className="mt-2 text-gray-600">Datum vydání: {game.releaseDate}</p>
+                    <p className="mt-2 text-gray-600">Žánry: {gameGenres.map((genre, index) => <Link to="" key={index} className="text-blue-500 hover:underline">{genre.type}{index !== gameGenres.length - 1 && ', '}</Link>)}</p>
                     <p className="mt-4 text-gray-700">
                         {game.description}
                     </p>
