@@ -147,8 +147,9 @@ export const GamePage = () => {
 
     return (
         <div className="w-full md:w-3/4 mx-auto p-4 bg-white shadow rounded">
-            <GameCard {...game} />
-
+            <div className="bg-white shadow-lg rounded-lg">
+                <GameCard {...game} />
+            </div>
             <div className="mt-4 flex justify-around gap-1 sm:gap-4">
                 <button onClick={() => setSelectedTab('reviews')} style={{ background: ratingBg() }} className="px-3 py-2 text-sm sm:text-lg text-white w-full hover:bg-blue-600 transition-all duration-300 ease-in-out shadow-md hover:shadow-lg">
                     Recenze
