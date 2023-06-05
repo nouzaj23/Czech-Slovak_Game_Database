@@ -11,12 +11,7 @@ interface GameItemProps {
 }
 
 export const GameItem: React.FC<GameItemProps> = ({ game, developers, genres, reviews }) => {
-    const getDeveloperNames = (developerIds: string[]) => {
-        return developerIds.map(id => {
-            const developer = developers.find(dev => dev.id === id);
-            return developer ? developer.name : '';
-        }).join(', ');
-    };
+    const gameDevelopers = developers.filter(developer => game.developers.includes(developer.id));
 
     const rating: number = reviews.filter(review => game.reviews.includes(review.id)).reduce((accumulator, currentValue) => accumulator + currentValue.rating, 0) / game.reviews.length;
 
@@ -50,7 +45,7 @@ export const GameItem: React.FC<GameItemProps> = ({ game, developers, genres, re
             </div>
             <div className="px-6 py-4 flex-grow">
                 <Link to={`games/${game.id}`}>
-                    <div className="font-bold text-xl mb-2">{game.name}</div>
+                    <div className="font-bold text-xl mb-2 hover:underline">{game.name}</div>
                 </Link>
                 <p className="text-gray-700 text-base">
                     {game.description}
@@ -62,7 +57,7 @@ export const GameItem: React.FC<GameItemProps> = ({ game, developers, genres, re
                         <b>Datum vydání:</b> {game.releaseDate}
                     </p>
                     <p className="text-gray-700 text-sm">
-                        <b>Vývojáři:</b> {getDeveloperNames(game.developers)}
+                        <b>Vývojáři:</b> {gameDevelopers.map((developer, index) => <Link to={`/developers/${developer.id}`} key={index} className="text-blue-500 hover:underline">{developer.name}{index !== gameDevelopers.length - 1 && ', '}</Link>)}
                     </p>
                     <p className="text-gray-700 text-sm">
                         <b>Žánry:</b> {getGenreNames(game.genres)}
