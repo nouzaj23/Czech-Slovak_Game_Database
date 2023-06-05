@@ -38,32 +38,30 @@ export const GameCard: React.FC<GameCardProps> = ({ ...game }) => {
 
                 <div>
                     <Link to={`/games/${game.id}`}>
-                        <h2 className="text-xl font-bold hover:underline">{game.name}</h2>
+                        <h2 className="pr-10 text-xl font-bold hover:underline">{game.name}</h2>
                     </Link>
-                    <div className="sm:hidden flex inline-block">
+                    {/* <div className="sm:hidden flex inline-block">
                         <div className="text-white inline-block rounded-full px-3 py-1 shadow-md mr-2" style={{ background: ratingBg() }}>
                             <p className="font-bold text-lg">{rating.toFixed(1)}</p>
                         </div>
                         <div className="inline-block mt-1">
                             <FontAwesomeIcon icon={faHeart} size='2x' className='text-red-500' />
                         </div>
-                    </div>
-                    <p className="mt-2 text-gray-600"><b>Vývojáři:</b> {gameDevelopers.map((developer, index) => <Link to={`/developers/${developer.id}`} key={index} className="text-blue-500 hover:underline">{developer.name}{index !== gameDevelopers.length - 1 && ', '}</Link>)}</p>
+                    </div> */}
+                    <p className="pr-10 mt-2 text-gray-600"><b>Vývojáři:</b> {gameDevelopers.map((developer, index) => <Link to={`/developers/${developer.id}`} key={index} className="text-blue-500 hover:underline">{developer.name}{index !== gameDevelopers.length - 1 && ', '}</Link>)}</p>
                     <p className="mt-2 text-gray-600"><b>Datum vydání:</b> {game.releaseDate}</p>
                     <p className="mt-2 text-gray-600"><b>Žánry:</b> {gameGenres.map((genre, index) => <Link to="" key={index} className="text-blue-500 hover:underline">{genre.type}{index !== gameGenres.length - 1 && ', '}</Link>)}</p>
                     <p className="mt-4 text-gray-700">
                         {game.description}
                     </p>
                 </div>
-                <div className="hidden sm:block absolute top-2 right-2 text-white rounded-full px-3 py-1 shadow-md" style={{ background: ratingBg() }}>
+                <div className="absolute top-2 right-2 text-white rounded-full px-3 py-1 shadow-md" style={{ background: ratingBg() }}>
                     <p className="font-bold text-lg">{rating.toFixed(1)}</p>
                 </div>
-                <div className="hidden sm:block absolute top-12 right-4">
+                <div className="absolute top-12 right-4">
                     <FontAwesomeIcon icon={faHeart} size='2x' className='text-red-500' />
                 </div>
             </div>
         </div>
-
-
     )
 }

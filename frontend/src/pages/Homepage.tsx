@@ -23,7 +23,7 @@ export const Homepage = () => {
             </div>
             <div className='flex flex-col md:flex-row justify-between items-stretch gap-6'>
                 <div className="w-full md:w-1/2 p-4 bg-white shadow rounded">
-                    <div className="flex-auto">
+                    <div className="flex-auto h-full">
                         <GameCard {...recentGames[2]} />
                     </div>
                 </div>

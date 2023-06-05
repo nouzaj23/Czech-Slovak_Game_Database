@@ -146,7 +146,7 @@ export const GamePage = () => {
     const ratingBg = () => rating > 7 ? '#ad0e30' : rating > 3 ? '#3690eb' : '#010203';
 
     return (
-        <div className="w-full sm:w-3/4 mx-auto p-4 bg-white shadow rounded">
+        <div className="w-full md:w-3/4 mx-auto p-4 bg-white shadow rounded">
             <GameCard {...game} />
 
             <div className="mt-4 flex justify-around gap-1 sm:gap-4">
