@@ -7,13 +7,19 @@ build-job:
   stage: build
   script:
     - docker compose build
+  only:
+    - main
 
 test-job1:
   stage: test
   script:
     - echo "This job tests something"
+  only:
+    - main
 
 deploy-job:
   stage: deploy
   script:
     - docker compose up -d --force-recreate
+  only:
+    - main
