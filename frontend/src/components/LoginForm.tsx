@@ -15,13 +15,13 @@ export const LoginForm: React.FC<LoginFormProps> = ({ handleClose }) => {
             <div className="mb-4">
                 <label className="block text-sm font-bold mb-2">
                     Přezdívka
-                    <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" name="nickname" placeholder="nickname" required />
+                    <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" name="nickname" placeholder="Přezdívka" required />
                 </label>
             </div>
             <div className="mb-6">
                 <label className="block text-sm font-bold mb-2">
                     Heslo
-                    <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" type="password" name="password" placeholder="password" required />
+                    <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" type="password" name="password" placeholder="Heslo" required />
                 </label>
             </div>
             <div className="flex items-center justify-between">
