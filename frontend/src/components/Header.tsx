@@ -2,11 +2,22 @@ import { Link } from "react-router-dom";
 import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from "react-router-dom";
 
 export const Header = () => {
+    const navigate = useNavigate();
+    const [searchQuery, setSearchQuery] = useState("");
     const [isOpen, setIsOpen] = useState(false);
+
+    const handleSearch = () => {
+        if (searchQuery != "") {
+            navigate(`/search/${searchQuery}`);
+            setSearchQuery("");
+        }
+    }
+
     return (
-        <div style={{zIndex: "10"}} className="flex flex-col sm:flex-row w-full h-auto sm:h-16 fixed top-0 bg-gray-800 text-white justify-between items-center px-4 shadow-md">
+        <div style={{ zIndex: "10" }} className="flex flex-col sm:flex-row w-full h-auto sm:h-16 fixed top-0 bg-gray-800 text-white justify-between items-center px-4 shadow-md">
             <div className="flex flex-row justify-between w-full sm:w-auto">
                 <Link to="/">
                     <img src="./../../logo-placeholder.png" className="h-10 w-auto mr-2 mt-3 sm:mt-0 mb-3 sm:mb-0" />
@@ -21,9 +32,10 @@ export const Header = () => {
 
             <div className={`${isOpen ? 'flex' : 'hidden'} sm:flex flex-col sm:flex-row w-full sm:w-1/3 items-center border-2 border-gray-600 rounded-full mt-2 sm:mt-0`}>
                 <div className="flex w-full items-center">
-                    <input type="text" placeholder="Hledat" className="flex-grow rounded-l-full h-full pl-2 bg-gray-800 outline-none text-white" />
+                    <input type="text" placeholder="Hledat" className="flex-grow rounded-l-full h-full pl-2 bg-gray-800 outline-none text-white"
+                        value={searchQuery} onChange={e => setSearchQuery(e.target.value)} />
                     <div className="rounded-r-full overflow-hidden">
-                        <button className="p-2 bg-gray-700 hover:bg-gray-600 transition-colors duration-300 ease-in-out">
+                        <button onClick={handleSearch} className="p-2 bg-gray-700 hover:bg-gray-600 transition-colors duration-300 ease-in-out">
                             <img src="./../../mag_glass.png" className="h-6 w-6" />
                         </button>
                     </div>
@@ -38,14 +50,14 @@ export const Header = () => {
                         Hry
                     </button>
                 </Link>
+                <Link to="/developers" className="w-full text-center">
+                    <button className="sm:w-auto w-full px-3 py-1 rounded-md text-white sm:bg-gray-700 sm:hover:bg-gray-600 transition-colors duration-300 ease-in-out">
+                        Vývojáři
+                    </button>
+                </Link>
                 <Link to="/genres" className="w-full text-center">
                     <button className="sm:w-auto w-full px-3 py-1 rounded-md text-white sm:bg-gray-700 sm:hover:bg-gray-600 transition-colors duration-300 ease-in-out">
                         Žánry
-                    </button>
-                </Link>
-                <Link to="/developers" className="w-full text-center">
-                    <button className="sm:w-auto w-full px-3 py-1 rounded-md text-white sm:bg-gray-700 sm:hover:bg-gray-600 transition-colors duration-300 ease-in-out">
-                        Studia
                     </button>
                 </Link>
             </div>
