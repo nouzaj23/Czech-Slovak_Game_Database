@@ -17,7 +17,7 @@ export const DeveloperItem: React.FC<DeveloperItemProps> = ({ developer }) => {
             </div>
             <div className="px-6 py-4 flex-grow">
                 <Link to={`/developers/${developer.id}`}>
-                    <div className="font-bold text-xl mb-2">{developer.name}</div>
+                    <div className="font-bold text-xl mb-2 hover:underline">{developer.name}</div>
                 </Link>
                 <p className="text-gray-700 text-base">
                     {developer.description}
