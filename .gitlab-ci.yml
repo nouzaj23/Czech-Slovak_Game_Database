@@ -1,7 +1,7 @@
 default:
   image: docker:latest
   tags:
-    - gwenlian
+    - shell
 
 build-job:
   stage: build
