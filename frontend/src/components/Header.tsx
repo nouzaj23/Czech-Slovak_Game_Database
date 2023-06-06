@@ -2,12 +2,14 @@ import { Link } from "react-router-dom";
 import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
+import { LoginForm } from "./LoginForm";
 import { useNavigate } from "react-router-dom";
 
 export const Header = () => {
     const navigate = useNavigate();
     const [searchQuery, setSearchQuery] = useState("");
     const [isOpen, setIsOpen] = useState(false);
+    const [showLogin, setShowLogin] = useState(false);
 
     const handleSearch = () => {
         if (searchQuery != "") {
@@ -42,8 +44,6 @@ export const Header = () => {
                 </div>
             </div>
 
-
-
             <div className={`${isOpen ? 'flex' : 'hidden'} sm:flex flex-col sm:flex-row justify-center items-center w-full sm:w-1/3 mt-2 sm:mt-0 bg-transparent`}>
                 <Link reloadDocument to="/games" className="w-full text-center">
                     <button className="sm:w-auto w-full px-3 py-1 rounded-md text-white sm:bg-gray-700 sm:hover:bg-gray-600 transition-colors duration-300 ease-in-out">
@@ -64,11 +64,12 @@ export const Header = () => {
 
             <div className="">
                 <div className={`${isOpen ? 'flex' : 'hidden'} sm:flex flex-col h-full justify-between w-full sm:w-auto items-center pl-2 pr-2 ${isOpen ? '' : 'sm:border-l-0'} mb-2 sm:mb-0`}>
-                    <Link to="/login">
-                        <button className="sm:w-auto py-1 sm:py-0 w-full h-full flex items-center justify-center hover:text-gray-300 transition-colors duration-300 ease-in-out">
-                            Přihlásit
-                        </button>
-                    </Link>
+                    <button className="sm:w-auto py-1 sm:py-0 w-full h-full flex items-center justify-center hover:text-gray-300 transition-colors duration-300 ease-in-out" onClick={() => setShowLogin(true)}>Přihlásit se</button>
+                    {showLogin && (
+                        <div className="fixed top-0 bottom-0 left-0 right-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                            <LoginForm handleClose={() => setShowLogin(false)} />
+                        </div>
+                    )}
                     <Link to="/register">
                         <button className="sm:w-auto py-1 sm:py-0 w-full h-full flex items-center justify-center hover:text-gray-300 transition-colors duration-300 ease-in-out">
                             Registrovat
