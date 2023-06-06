@@ -7,6 +7,7 @@ import { GamePage } from './pages/GamePage'
 import { DeveloperPage } from './pages/DeveloperPage';
 import { Genres } from './pages/Genres';
 import { SearchResults } from './pages/SearchResults';
+import { WishList } from './pages/Wishlist';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
             <Route path="/genres" element={<Genres />} />
             <Route path="/search/:query" element={<SearchResults />} />
             <Route path="*" element={<div>404</div>} />
+            <Route path="/wishlist" element={<WishList />} />
           </Routes>
         </Layout>
       </Router>
