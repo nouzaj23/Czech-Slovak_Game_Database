@@ -30,7 +30,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ handleClose }) => {
             <div className="mb-4 flex items-center">
                 <input className="mr-2" type="checkbox" name="terms" required />
                 <label className="text-sm font-bold" htmlFor="terms">
-                    <div className='text-black'>Souhlasím, že nejsem kokot</div>
+                    <div className='text-black'>Souhlasím</div>
                 </label>
             </div>
             <div className="flex items-center justify-between">
