@@ -4,12 +4,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { LoginForm } from "./LoginForm";
 import { useNavigate } from "react-router-dom";
+import { RegisterForm } from "./RegisterForm";
 
 export const Header = () => {
     const navigate = useNavigate();
     const [searchQuery, setSearchQuery] = useState("");
     const [isOpen, setIsOpen] = useState(false);
     const [showLogin, setShowLogin] = useState(false);
+    const [showRegister, setShowRegister] = useState(false);
 
     const handleSearch = () => {
         if (searchQuery != "") {
@@ -70,11 +72,14 @@ export const Header = () => {
                             <LoginForm handleClose={() => setShowLogin(false)} />
                         </div>
                     )}
-                    <Link to="/register">
-                        <button className="sm:w-auto py-1 sm:py-0 w-full h-full flex items-center justify-center hover:text-gray-300 transition-colors duration-300 ease-in-out">
+                        <button className="sm:w-auto py-1 sm:py-0 w-full h-full flex items-center justify-center hover:text-gray-300 transition-colors duration-300 ease-in-out" onClick={() => setShowRegister(true)}>
                             Registrovat
                         </button>
-                    </Link>
+                        {showRegister && (
+                        <div className="fixed top-0 bottom-0 left-0 right-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                            <RegisterForm handleClose={() => setShowRegister(false)} />
+                        </div>
+                    )}
                 </div>
             </div>
 
