@@ -6,6 +6,7 @@ import { Developers } from './pages/Developers';
 import { GamePage } from './pages/GamePage'
 import { DeveloperPage } from './pages/DeveloperPage';
 import { Genres } from './pages/Genres';
+import { SearchResults } from './pages/SearchResults';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
             <Route path="/developers/:id" element={<DeveloperPage />} />
             <Route path="/developers" element={<Developers />} />
             <Route path="/genres" element={<Genres />} />
+            <Route path="/search/:query" element={<SearchResults />} />
             <Route path="*" element={<div>404</div>} />
           </Routes>
         </Layout>
