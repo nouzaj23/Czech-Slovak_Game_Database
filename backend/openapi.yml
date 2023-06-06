@@ -67,6 +67,8 @@ components:
             oneOf:
               - $ref: "#/components/schemas/Comment"
               - type: string
+        rating:
+          type: number
     Genre:
       type: object
       properties:
