@@ -2,9 +2,9 @@ import { Link } from "react-router-dom";
 import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
-import { LoginForm } from "./LoginForm";
+import { LoginForm } from "./Login&Register/LoginForm";
 import { useNavigate } from "react-router-dom";
-import { RegisterForm } from "./RegisterForm";
+import { RegisterForm } from "./Login&Register/RegisterForm";
 
 export const Header = () => {
     const navigate = useNavigate();

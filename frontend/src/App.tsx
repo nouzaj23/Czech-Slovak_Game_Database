@@ -8,6 +8,7 @@ import { DeveloperPage } from './pages/DeveloperPage';
 import { Genres } from './pages/Genres';
 import { SearchResults } from './pages/SearchResults';
 import { WishList } from './pages/Wishlist';
+import { AdminPage } from './pages/AdminPage';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
             <Route path="/search/:query" element={<SearchResults />} />
             <Route path="*" element={<div>404</div>} />
             <Route path="/wishlist" element={<WishList />} />
+            <Route path="/adminpage" element={<AdminPage />} />
           </Routes>
         </Layout>
       </Router>
