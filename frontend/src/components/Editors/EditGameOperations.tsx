@@ -180,15 +180,20 @@ export const EditGameDevelopers: React.FC<EditGameProps> = ({ game, updateGame }
         const newDev = developers.find(dev => dev.name == devName.value);
         if (newDev && !game.developers.includes(newDev.id)) {
             updateGame({ ...game, developers: [...game.developers, newDev.id] });
+            developerNames.filter(devName => devName != newDev.name);
         }
         devName.value = "";
     }
 
     const deleteDeveloper = (id: string) => {
         updateGame({ ...game, developers: game.developers.filter(dev => dev != id) })
+        const devName = developers.find(dev => dev.id == id)?.name;
+        if (devName) {
+            developerNames.push(devName);
+        }
     }
 
-    const developerNames = developers.map(developer => developer.name);
+    const developerNames = developers.filter(dev => !game.developers.includes(dev.id)).map(developer => developer.name);
 
     const [inputValue, setInputValue] = useState("");
     const [suggestion, setSuggestion] = useState("");
@@ -230,13 +235,13 @@ export const EditGameDevelopers: React.FC<EditGameProps> = ({ game, updateGame }
                 <input
                     type="text"
                     value={suggestion}
-                    id="newDeveloper"
                     disabled
                     className="absolute w-full z-1 text-gray-300 flex-grow px-4 py-2 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-5"
                 />
                 <input
                     type="text"
                     value={inputValue}
+                    id="newDeveloper"
                     onChange={handleInputChange}
                     onKeyDown={handleKeyDown}
                     className="absolute z-2 bg-transparent text-black w-full flex-grow px-4 py-2 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-5"
