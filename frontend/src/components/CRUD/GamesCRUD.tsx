@@ -36,12 +36,18 @@ export const GamesCRUD = () => {
         game.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
+    const addGame = () => {
+        const newId = "noveId"; // backend udělá nové ID
+        const newGame: Game = {comments: [], cover: "", description: "Nejvetsi kokotina", developers: [], genres: [], id: newId, name: "New Game", photos: [], releaseDate: "", reviews: [], videos: []}
+        setGames([newGame, ...games])
+    }
+
     return (
         <div className='flex justify-center'>
             <div className="p-6 space-y-4 w-3/4">
                 <div className="flex justify-between">
                     <h1 className="text-2xl font-semibold">Games</h1>
-                    <button className="px-4 py-2 text-white bg-gray-600 hover:bg-gray-800 rounded-md">Add new</button>
+                    <button className="px-4 py-2 text-white bg-gray-600 hover:bg-gray-800 rounded-md" onClick={addGame}>Add new</button>
                 </div>
                 <input
                     className="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none"

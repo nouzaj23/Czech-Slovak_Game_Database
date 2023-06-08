@@ -1,6 +1,6 @@
 import { Game } from "../../models";
 import genresList from "../../assets/genres.json"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import developers from "../../assets/developers.json"
 
 interface EditGameProps {
@@ -62,7 +62,7 @@ export const EditGamePhotos: React.FC<EditGameProps> = ({ game, updateGame }) =>
 
     return (
         <div>
-            <label className="font-bold text-gray-800">Photos</label>
+            <label className="font-bold text-gray-800 mr-3">Photos</label>
             {game.photos.map((photo, index) =>
                 <div key={index}>
                     <input
@@ -106,7 +106,7 @@ export const EditGameVideos: React.FC<EditGameProps> = ({ game, updateGame }) =>
 
     return (
         <div>
-            <label className="font-bold text-gray-800">Videos</label>
+            <label className="font-bold text-gray-800 mr-3">Videos</label>
             {game.videos.map((video, index) =>
                 <div key={index}>
                     <input
@@ -180,42 +180,78 @@ export const EditGameDevelopers: React.FC<EditGameProps> = ({ game, updateGame }
         const devName = (document.getElementById("newDeveloper") as HTMLInputElement);
         const newDev = developers.find(dev => dev.name == devName.value);
         if (newDev) {
-            updateGame({...game, developers: [...game.developers, newDev.id]});
+            updateGame({ ...game, developers: [...game.developers, newDev.id] });
         }
         devName.value = "";
     }
 
     const deleteDeveloper = (id: string) => {
-        updateGame({...game, developers: game.developers.filter(dev => dev != id)})
+        updateGame({ ...game, developers: game.developers.filter(dev => dev != id) })
     }
+
+    const developerNames = developers.map(developer => developer.name);
+
+    const [inputValue, setInputValue] = useState("");
+    const [suggestion, setSuggestion] = useState("");
+
+    useEffect(() => {
+        const matchingSuggestion = developerNames.find(name => name.toLowerCase().startsWith(inputValue.toLowerCase()));
+        setSuggestion(matchingSuggestion || "");
+    }, [inputValue, developerNames]);
+
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setInputValue(e.target.value);
+    };
+
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === 'Tab' && suggestion) {
+            e.preventDefault();
+            setInputValue(suggestion);
+        }
+    };
 
     return (
         <div>
             <label className="font-bold text-gray-600">Developers</label>
             <div className="grid grid-cols-3">
                 {game.developers.map(dev => (
-                    <div>
-                        <div key={dev}>
-                            {developers.find(d => d.id === dev)?.name}
-                            <button
-                                type="button"
-                                className="ml-5 mt-3 px-4 py-1 bg-red-500 text-white rounded-md hover:bg-red-600 transition-colors duration-200"
-                                onClick={() => deleteDeveloper(dev)}
-                            >
-                                X
-                            </button>
-                        </div>
+                    <div key={dev}>
+                        {developers.find(d => d.id === dev)?.name}
+                        <button
+                            type="button"
+                            className="ml-5 mt-3 px-4 py-1 bg-red-500 text-white rounded-md hover:bg-red-600 transition-colors duration-200"
+                            onClick={() => deleteDeveloper(dev)}
+                        >
+                            X
+                        </button>
                     </div>
                 ))}
             </div>
-            <input className="mt-3" id="newDeveloper"></input>
-            <button
-                onClick={() => addDeveloper()}
-                type="button"
-                className="ml-5 mt-3 px-4 py-1 text-white rounded-md bg-gray-600 hover:bg-gray-800 transition-colors duration-200"
-            >
-                Add Developer
-            </button>
+            <div className="relative w-64 mt-4">
+                <input
+                    type="text"
+                    value={suggestion}
+                    id="newDeveloper"
+                    disabled
+                    className="absolute w-full z-1 text-gray-300 flex-grow px-4 py-2 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-5"
+                />
+                <input
+                    type="text"
+                    value={inputValue}
+                    onChange={handleInputChange}
+                    onKeyDown={handleKeyDown}
+                    className="absolute z-2 bg-transparent text-black w-full flex-grow px-4 py-2 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-5"
+                />
+            </div>
+            <div className="mt-10">
+                <button
+                    onClick={() => addDeveloper()}
+                    type="button"
+                    className="mt-8 px-4 py-1 text-white rounded-md bg-gray-600 hover:bg-gray-800 transition-colors duration-200"
+                >
+                    Add Developer
+                </button>
+            </div>
         </div>
     )
 }
