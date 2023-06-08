@@ -48,8 +48,8 @@ export const GamesCRUD = () => {
         <div className='flex justify-center'>
             <div className="p-6 space-y-4 w-full md:w-3/4">
                 <div className="flex justify-between">
-                    <h1 className="text-2xl font-semibold">Games</h1>
-                    <button className="px-4 py-2 text-white bg-gray-600 hover:bg-gray-800 rounded-md" onClick={addGame}>Add new</button>
+                    <h1 className="text-2xl font-semibold">Hry</h1>
+                    <button className="px-4 py-2 text-white bg-gray-600 hover:bg-gray-800 rounded-md" onClick={addGame}>Přidat hru</button>
                 </div>
                 <input
                     className="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none"
@@ -68,9 +68,9 @@ export const GamesCRUD = () => {
                                 className="w-auto px-4 py-2 text-white bg-gray-600 hover:bg-gray-800 rounded-md"
                                 onClick={() => setEditedGameId(editedGameId === game.id ? null : game.id)}
                             >
-                                Edit
+                                Upravit
                             </button>
-                            <button className="w-auto px-4 py-2 text-white bg-red-500 rounded-md border-red-800" onClick={() => setGameToDelete(game.id)}>Delete</button>
+                            <button className="w-auto px-4 py-2 text-white bg-red-500 rounded-md border-red-800" onClick={() => setGameToDelete(game.id)}>Smazat</button>
                             {gameToDelete === game.id && (
                                 <div className="fixed top-0 bottom-0 left-0 right-0 flex items-center justify-center z-50">
                                     <DeleteGameConfirm handleClose={() => setGameToDelete(null)} gameId={game.id} updateGames={setGames} games={games} />

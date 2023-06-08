@@ -14,25 +14,25 @@ export const AdminPage = () => {
                     className="w-full p-4 text-white bg-gray-800 rounded-md"
                     onClick={() => setVisibleComponent('Games')}
                 >
-                    Games
+                    Hry
                 </button>
                 <button
                     className="w-full p-4 text-white bg-gray-800 rounded-md"
                     onClick={() => setVisibleComponent('Developers')}
                 >
-                    Developers
+                    Studia
                 </button>
                 <button
                     className="w-full p-4 text-white bg-gray-800 rounded-md"
                     onClick={() => setVisibleComponent('Users')}
                 >
-                    Users
+                    Useři
                 </button>
                 <button
                     className="w-full p-4 text-white bg-gray-800 rounded-md"
                     onClick={() => setVisibleComponent('Genres')}
                 >
-                    Genres
+                    Žánry
                 </button>
             </div>
 

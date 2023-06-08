@@ -11,7 +11,7 @@ interface EditGameProps {
 export const EditGameName: React.FC<EditGameProps> = ({ game, updateGame }) => {
     return (
         <div>
-            <label className="font-bold text-gray-800">Game Name</label>
+            <label className="font-bold text-gray-800">Jméno! Nestyďťě sě! Prostě to řěkňěťě"</label>
             <input
                 type="text"
                 className="block w-full mt-1 px-4 py-2 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
@@ -25,7 +25,7 @@ export const EditGameName: React.FC<EditGameProps> = ({ game, updateGame }) => {
 export const EditGameDescribtion: React.FC<EditGameProps> = ({ game, updateGame }) => {
     return (
         <div>
-            <label className="font-bold text-gray-800">Game Description</label>
+            <label className="font-bold text-gray-800">Popis hry</label>
             <textarea
                 className="block w-full mt-1 px-4 py-2 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
                 value={game.description}
@@ -38,7 +38,7 @@ export const EditGameDescribtion: React.FC<EditGameProps> = ({ game, updateGame 
 export const EditGameCover: React.FC<EditGameProps> = ({ game, updateGame }) => {
     return (
         <div>
-            <label className="font-bold text-gray-800">Image</label>
+            <label className="font-bold text-gray-800">Obálka</label>
             <input
                 className="block w-full mt-1 px-4 py-2 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
                 value={game.cover}
@@ -62,7 +62,7 @@ export const EditGamePhotos: React.FC<EditGameProps> = ({ game, updateGame }) =>
 
     return (
         <div>
-            <label className="font-bold text-gray-800 mr-3">Photos</label>
+            <label className="font-bold text-gray-800 mr-3">Obrázky</label>
             {game.photos.map((photo, index) =>
                 <div key={index} className="flex flex-row items-center justify-between w-full mt-3">
                     <input
@@ -84,7 +84,7 @@ export const EditGamePhotos: React.FC<EditGameProps> = ({ game, updateGame }) =>
                 className="mt-4 px-4 py-2 bg-gray-600 hover:bg-gray-800 text-white rounded-md hover:bg-blue-600 transition-colors duration-200"
                 onClick={addPhoto}
             >
-                Add photo
+                Přidat obrázek
             </button>
         </div>
 
@@ -106,7 +106,7 @@ export const EditGameVideos: React.FC<EditGameProps> = ({ game, updateGame }) =>
 
     return (
         <div>
-            <label className="font-bold text-gray-800 mr-3">Videos</label>
+            <label className="font-bold text-gray-800 mr-3">Videa</label>
             {game.videos.map((video, index) =>
                 <div key={index} className="flex flex-row items-center justify-between w-full mt-3">
                     <input
@@ -128,7 +128,7 @@ export const EditGameVideos: React.FC<EditGameProps> = ({ game, updateGame }) =>
                 className="mt-4 px-4 py-2 bg-gray-600 hover:bg-gray-800 text-white rounded-md hover:bg-blue-600 transition-colors duration-200"
                 onClick={addVideo}
             >
-                Add video
+                Přidat video
             </button>
         </div>
     )
@@ -157,7 +157,7 @@ export const EditGameGenres: React.FC<EditGameProps> = ({ game, updateGame }) =>
 
     return (
         <div>
-            <label className="font-bold text-gray-600">Genres</label>
+            <label className="font-bold text-gray-600">Žánry</label>
             <div className="grid grid-cols-2 md:grid-cols-3">
                 {
                     genres.map(genre =>
@@ -216,7 +216,7 @@ export const EditGameDevelopers: React.FC<EditGameProps> = ({ game, updateGame }
 
     return (
         <div>
-            <label className="font-bold text-gray-600">Developers</label>
+            <label className="font-bold text-gray-600">Vývojáři</label>
             <div className="grid sm:grid-cols-2 md:grid-cols-3">
                 {game.developers.map(dev => (
                     <div key={dev}>
@@ -254,7 +254,7 @@ export const EditGameDevelopers: React.FC<EditGameProps> = ({ game, updateGame }
                     type="button"
                     className="mt-8 px-4 py-1 text-white rounded-md bg-gray-600 hover:bg-gray-800 transition-colors duration-200"
                 >
-                    Add Developer
+                    Přidat vývojáře
                 </button>
             </div>
         </div>

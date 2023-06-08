@@ -15,7 +15,7 @@ export const EditGame: React.FC<EditGameProps> = ({ gameProp, editedGameId }) =>
         <div>
             {editedGameId === game.id && (
                 <form className="bg-gray-200 p-6 rounded-md shadow-md">
-                    <h3 className="text-lg font-semibold mb-4 text-black">Edit game</h3>
+                    <h3 className="text-lg font-semibold mb-4 text-black">Upravit hru</h3>
                     <div className="space-y-5">
                         <EditGameName game={game} updateGame={setGame}/>
                         <EditGameDescribtion game={game} updateGame={setGame}/>
@@ -29,7 +29,7 @@ export const EditGame: React.FC<EditGameProps> = ({ gameProp, editedGameId }) =>
                         className="mt-4 px-4 py-2 text-white rounded-md bg-gray-600 hover:bg-gray-800 transition-colors duration-200"
                         type="submit"
                     >
-                        Save Changes
+                        Uložit změny
                     </button>
                 </form>
             )}
