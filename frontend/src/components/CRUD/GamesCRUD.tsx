@@ -40,7 +40,7 @@ export const GamesCRUD = () => {
 
     const addGame = () => {
         const newId = "noveId"; // backend udělá nové ID
-        const newGame: Game = { comments: [], cover: "", description: "Nejvetsi kokotina", developers: [], genres: [], id: newId, name: "New Game", photos: [], releaseDate: "", reviews: [], videos: [] }
+        const newGame: Game = { comments: [], cover: "", description: "New Game Describtion", developers: [], genres: [], id: newId, name: "New Game", photos: [], releaseDate: "", reviews: [], videos: [] }
         setGames([newGame, ...games])
     }
 
