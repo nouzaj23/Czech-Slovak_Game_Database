@@ -16,13 +16,15 @@ export const DeleteGameConfirm: React.FC<DeleteGameProps> = ({ handleClose, game
     };
 
     return (
-        <form className="p-6 bg-white rounded shadow-md">
-            <p>Opravdu chcete smazat hru?</p>
-            <div className="flex items-center justify-between mt-4">
-                <button className="bg-gray-600 hover:bg-gray-800 text-white font-bold py-2 px-4 rounded" type="button" onClick={(event) => { deleteGame(); handleClose(event); }}  >Potvrdit</button>
-                <button className="ml-5 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" type="button" onClick={handleClose}>Storno</button>
-            </div>
-        </form>
+        <div className='border border-2 border-black-1000'>
+            <form className="p-6 bg-white rounded shadow-md">
+                <p>Opravdu chcete smazat hru?</p>
+                <div className="flex items-center justify-between mt-4">
+                    <button className="bg-gray-600 hover:bg-gray-800 text-white font-bold py-2 px-4 rounded" type="button" onClick={(event) => { deleteGame(); handleClose(event); }}  >Potvrdit</button>
+                    <button className="ml-5 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" type="button" onClick={handleClose}>Storno</button>
+                </div>
+            </form>
+        </div>
     );
 };
 
@@ -31,14 +33,14 @@ export const GamesCRUD = () => {
     const [editedGameId, setEditedGameId] = useState<string | null>(null);
     const [gameToDelete, setGameToDelete] = useState<string | null>(null);
     const [games, setGames] = useState(gamesList);
-    
+
     const filteredGames = games.filter(game =>
         game.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
     const addGame = () => {
         const newId = "noveId"; // backend udělá nové ID
-        const newGame: Game = {comments: [], cover: "", description: "Nejvetsi kokotina", developers: [], genres: [], id: newId, name: "New Game", photos: [], releaseDate: "", reviews: [], videos: []}
+        const newGame: Game = { comments: [], cover: "", description: "Nejvetsi kokotina", developers: [], genres: [], id: newId, name: "New Game", photos: [], releaseDate: "", reviews: [], videos: [] }
         setGames([newGame, ...games])
     }
 
@@ -68,7 +70,7 @@ export const GamesCRUD = () => {
                             >
                                 Edit
                             </button>
-                            <button className="w-auto px-4 py-2 text-white bg-red-500 rounded-md" onClick={() => setGameToDelete(game.id)}>Delete</button>
+                            <button className="w-auto px-4 py-2 text-white bg-red-500 rounded-md border-red-800" onClick={() => setGameToDelete(game.id)}>Delete</button>
                             {gameToDelete === game.id && (
                                 <div className="fixed top-0 bottom-0 left-0 right-0 flex items-center justify-center z-50">
                                     <DeleteGameConfirm handleClose={() => setGameToDelete(null)} gameId={game.id} updateGames={setGames} games={games} />
