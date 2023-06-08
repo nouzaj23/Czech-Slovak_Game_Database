@@ -64,16 +64,15 @@ export const EditGamePhotos: React.FC<EditGameProps> = ({ game, updateGame }) =>
         <div>
             <label className="font-bold text-gray-800 mr-3">Photos</label>
             {game.photos.map((photo, index) =>
-                <div key={index}>
+                <div key={index} className="flex flex-row items-center justify-between w-full mt-3">
                     <input
-                        className="w-11/12 mt-3 flex-grow px-4 py-2 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+                        className="w-11/12 px-4 py-2 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
                         value={photo}
                         onChange={(event) => updatePhoto(index, event.target.value)}
-                    >
-                    </input>
+                    />
                     <button
                         type="button"
-                        className="ml-5 mt-3 px-4 py-1 bg-red-500 text-white rounded-md hover:bg-red-600 transition-colors duration-200"
+                        className="px-4 py-1 bg-red-500 text-white rounded-md hover:bg-red-600 transition-colors duration-200"
                         onClick={() => deletePhoto(photo)}
                     >
                         X
@@ -88,6 +87,7 @@ export const EditGamePhotos: React.FC<EditGameProps> = ({ game, updateGame }) =>
                 Add photo
             </button>
         </div>
+
     )
 }
 
@@ -108,16 +108,15 @@ export const EditGameVideos: React.FC<EditGameProps> = ({ game, updateGame }) =>
         <div>
             <label className="font-bold text-gray-800 mr-3">Videos</label>
             {game.videos.map((video, index) =>
-                <div key={index}>
+                <div key={index} className="flex flex-row items-center justify-between w-full mt-3">
                     <input
-                        className="w-11/12 mt-3 flex-grow px-4 py-2 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+                        className="w-11/12 px-4 py-2 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
                         value={video}
                         onChange={(event) => updateVideo(index, event.target.value)}
-                    >
-                    </input>
+                    />
                     <button
                         type="button"
-                        className="ml-5 mt-3 px-4 py-1 bg-red-500 text-white rounded-md hover:bg-red-600 transition-colors duration-200"
+                        className="ml-3 px-4 py-1 bg-red-500 text-white rounded-md hover:bg-red-600 transition-colors duration-200"
                         onClick={() => deleteVideo(index)}
                     >
                         X
@@ -159,7 +158,7 @@ export const EditGameGenres: React.FC<EditGameProps> = ({ game, updateGame }) =>
     return (
         <div>
             <label className="font-bold text-gray-600">Genres</label>
-            <div className="grid grid-cols-3">
+            <div className="grid grid-cols-2 md:grid-cols-3">
                 {
                     genres.map(genre =>
                         <div>
@@ -213,7 +212,7 @@ export const EditGameDevelopers: React.FC<EditGameProps> = ({ game, updateGame }
     return (
         <div>
             <label className="font-bold text-gray-600">Developers</label>
-            <div className="grid grid-cols-3">
+            <div className="grid grid-cols-2 md:grid-cols-3">
                 {game.developers.map(dev => (
                     <div key={dev}>
                         {developers.find(d => d.id === dev)?.name}
