@@ -19,7 +19,6 @@ export const EditGenreName: React.FC<EditGameProps> = ({ genre, updateGenre }) =
     )
 }
 
-
 export const EditGenreDescribtion: React.FC<EditGameProps> = ({ genre, updateGenre }) => {
     return (
         <div>

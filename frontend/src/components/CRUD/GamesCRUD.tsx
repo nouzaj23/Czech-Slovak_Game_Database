@@ -54,7 +54,7 @@ export const GamesCRUD = () => {
                 <input
                     className="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none"
                     type="text"
-                    placeholder="Search games..."
+                    placeholder="Hledat hry..."
                     onChange={(event) => setSearchTerm(event.target.value)}
                 />
                 {filteredGames.map(game => (

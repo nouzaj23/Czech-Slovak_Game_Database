@@ -1,7 +1,6 @@
 import { MouseEventHandler, useState } from 'react';
 import genresList from '../../assets/genres.json';
-import { EditGame } from '../Editors/EditGame';
-import { Game, Genre } from '../../models';
+import { Genre } from '../../models';
 import { EditGenre } from '../Editors/EditGenres';
 
 interface DeleteGenreProps {
@@ -55,7 +54,7 @@ export const GenresCRUD = () => {
                 <input
                     className="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none"
                     type="text"
-                    placeholder="Search games..."
+                    placeholder="Hledat žánry..."
                     onChange={(event) => setSearchTerm(event.target.value)}
                 />
                 {filteredGenres.map(genre => (
