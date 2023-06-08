@@ -182,7 +182,7 @@ export const EditGameDevelopers: React.FC<EditGameProps> = ({ game, updateGame }
             updateGame({ ...game, developers: [...game.developers, newDev.id] });
             developerNames.filter(devName => devName != newDev.name);
         }
-        devName.value = "";
+        setInputValue("");
     }
 
     const deleteDeveloper = (id: string) => {
@@ -217,7 +217,7 @@ export const EditGameDevelopers: React.FC<EditGameProps> = ({ game, updateGame }
     return (
         <div>
             <label className="font-bold text-gray-600">Developers</label>
-            <div className="grid grid-cols-2 md:grid-cols-3">
+            <div className="grid sm:grid-cols-2 md:grid-cols-3">
                 {game.developers.map(dev => (
                     <div key={dev}>
                         {developers.find(d => d.id === dev)?.name}
@@ -235,6 +235,7 @@ export const EditGameDevelopers: React.FC<EditGameProps> = ({ game, updateGame }
                 <input
                     type="text"
                     value={suggestion}
+                    id="newDeveloperSuggestion"
                     disabled
                     className="absolute w-full z-1 text-gray-300 flex-grow px-4 py-2 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-5"
                 />
@@ -249,7 +250,7 @@ export const EditGameDevelopers: React.FC<EditGameProps> = ({ game, updateGame }
             </div>
             <div className="mt-10">
                 <button
-                    onClick={() => addDeveloper()}
+                    onClick={() => { addDeveloper(); }}
                     type="button"
                     className="mt-8 px-4 py-1 text-white rounded-md bg-gray-600 hover:bg-gray-800 transition-colors duration-200"
                 >
