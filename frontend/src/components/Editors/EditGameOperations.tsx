@@ -161,7 +161,7 @@ export const EditGameGenres: React.FC<EditGameProps> = ({ game, updateGame }) =>
             <div className="grid grid-cols-2 md:grid-cols-3">
                 {
                     genres.map(genre =>
-                        <div>
+                        <div key={genre.id}>
                             {genre.type} <input
                                 type="checkbox"
                                 checked={game.genres.includes(genre.id)}

@@ -1,5 +1,4 @@
 import { Review, User } from "../models";
-import reviews from '../assets/reviews.json';
 import users from '../assets/users.json';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar, faPoop } from '@fortawesome/free-solid-svg-icons';
@@ -7,9 +6,10 @@ import { faStar, faPoop } from '@fortawesome/free-solid-svg-icons';
 interface ReviewProps {
     reviewId: string;
     rating: number;
+    reviews: Review[];
 }
 
-export const ReviewItem: React.FC<ReviewProps> = ({ reviewId, rating }) => {
+export const ReviewItem: React.FC<ReviewProps> = ({ reviewId, rating, reviews }) => {
     const reviewsCopy: Review[] = reviews;
     const review = reviewsCopy.find(rev => rev.id === reviewId);
 

@@ -2,11 +2,12 @@ import { useState } from 'react';
 import { useParams } from "react-router-dom";
 import games from '../assets/games.json';
 import reviews from '../assets/reviews.json';
+import comments from '../assets/comments.json';
 import { ReviewItem } from '../components/Review';
 import { AddReviewForm } from '../components/AddReviewForm'
 import { CommentItem } from '../components/CommentItem';
 import { AddCommentForm } from '../components/AddCommentForm';
-import { Game } from '../models';
+import { Game, Review, Comment } from '../models';
 import ReactPlayer from 'react-player';
 import { GameCard } from '../components/GameCard';
 
@@ -80,6 +81,11 @@ export const GamePage = () => {
         return gridItems;
     }
 
+    const [gameReviews, setGameReviews] = useState<string[]>(game.reviews);
+    const [gameComments, setGameComments] = useState<string[]>(game.comments);
+    const [allReviews, setAllReviews] = useState<Review[]>(reviews);
+    const [allComments, setAllComments] = useState<Comment[]>(comments);
+
     const renderContent = () => {
         switch (selectedTab) {
             case 'reviews':
@@ -88,11 +94,11 @@ export const GamePage = () => {
                         <button onClick={handleAddReview} style={{ background: ratingBg() }} className="px-3 py-2 mb-5 mt-5 text-white rounded">Přidat recenzi</button>
                         <div>
                             {isOpen && (
-                                <AddReviewForm gameId={game.id} game={game} />
+                                <AddReviewForm gameId={game.id} game={game} setGameReviews={setGameReviews} setReviews={setAllReviews} reviews={allReviews}/>
                             )}
                         </div>
                         <div className="review-list space-y-4">
-                            {game.reviews.map((reviewId) => <ReviewItem reviewId={reviewId} rating={rating} />)}
+                            {gameReviews.map((reviewId, key) => <ReviewItem reviewId={reviewId} key={key} rating={rating} reviews={allReviews} />)}
                         </div>
                     </div>
                 );
@@ -102,11 +108,11 @@ export const GamePage = () => {
                         <button onClick={handleAddReview} style={{ background: ratingBg() }} className="px-3 py-2 mb-5 mt-5 bg-blue-500 text-white rounded">Přidat komentář</button>
                         <div>
                             {isOpen && (
-                                <AddCommentForm />
+                                <AddCommentForm comments={allComments} game={game}  setComments={setAllComments} setGameComments={setGameComments}/>
                             )}
                         </div>
                         <div className="review-list space-y-4">
-                            {game.comments.map((commentId) => <CommentItem commentId={commentId} />)}
+                            {gameComments.map((commentId, index) => <CommentItem commentId={commentId} key={index} comments={allComments}/>)}
                         </div>
                     </div>
                 );
@@ -126,8 +132,8 @@ export const GamePage = () => {
             case 'videos':
                 return (
                     <div className='container'>
-                        {game.videos.map(video =>
-                            <div className="w-full h-screen flex items-center justify-center mt-5">
+                        {game.videos.map((video, index) =>
+                            <div key={index} className="w-full h-screen flex items-center justify-center mt-5">
                                 <ReactPlayer
                                     url={video}
                                     controls={true}

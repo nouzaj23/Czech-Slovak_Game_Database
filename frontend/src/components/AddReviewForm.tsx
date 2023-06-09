@@ -1,19 +1,22 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar, faPoop } from '@fortawesome/free-solid-svg-icons';
 import { useEffect, useState } from 'react';
-import { Game } from '../models';
+import { Game, Review } from '../models';
 
 interface AddReviewProps {
     gameId: string;
     game: Game;
+    setGameReviews: Function;
+    setReviews: Function;
+    reviews: Review[];
 }
 
 
-export const AddReviewForm: React.FC<AddReviewProps> = ({ gameId, game }) => {
+export const AddReviewForm: React.FC<AddReviewProps> = ({ gameId, game, setGameReviews, setReviews, reviews }) => {
     const [stars, setStars] = useState(3);
 
     if (gameId == "") {
-        
+
     }
 
     if (!game) {
@@ -65,66 +68,51 @@ export const AddReviewForm: React.FC<AddReviewProps> = ({ gameId, game }) => {
         return stars >= starNum ? ratingBg(stars) : '#92a1b0';
     }
 
-    // const [reviewedGame, setReviewedGame] = useState<Game>(game);
-
-    // const handleSubmitReview = async () => {
-    //     try {
-    //         var nameElement = document.getElementById('name') as HTMLTextAreaElement;
-    //         var contentElement = document.getElementById('review') as HTMLTextAreaElement;
-    //         if (nameElement && contentElement) {
-
-    //             var newReview: Review = { createdAt: new Date().toISOString(), game: gameId, id: "100", rating: 2, text: "kokot", title: "kokot2", user: "1" };
-    //             if (reviewedGame) {
-    //                 setReviewedGame(oldGame => {
-    //                     if (oldGame) {
-    //                         return {
-    //                             ...oldGame,
-    //                             reviews: [...oldGame.reviews, newReview.id]
-    //                         };
-    //                     }
-    //                     return oldGame;
-    //                 });
-    //             }
-    //             contentElement.value = '';
-    //             nameElement.value = '';
-    //         }
-    //     } catch (error) {
-    //         console.error("Chyba při přidávání/odebírání recenze: ", error);
-    //     }
-    // };
+    const handleSubmitReview = async () => {
+        try {
+            const nameElement = document.getElementById('title') as HTMLTextAreaElement;
+            const contentElement = document.getElementById('reviewText') as HTMLTextAreaElement;
+            if (nameElement && contentElement) {
+                const newReview: Review = { createdAt: new Date().toISOString(), game: gameId, id: "101", rating: stars * 2, text: contentElement.value, title: nameElement.value, user: "1" };
+                if (game) {
+                    setGameReviews([newReview.id, ...game.reviews]);
+                    setReviews([newReview, ...reviews]);
+                }
+                contentElement.value = '';
+                nameElement.value = '';
+            }
+        } catch (error) {
+            console.error("Chyba při přidávání/odebírání recenze: ", error);
+        }
+    };
 
     return (
-        <div>
-            <form style={{ display: 'flex', flexDirection: 'column', gap: '1em', maxWidth: '500px', margin: 'auto', backgroundColor: '#f0f0f0', padding: '1em', borderRadius: '0.5em' }}>
-                <div>
-                    <label style={{ display: 'flex', flexDirection: 'column', gap: '0.5em' }}>
-                        Title:
-                        <input type="text" name="name" style={{ padding: '0.5em', borderRadius: '0.25em', border: '1px solid #ccc' }} />
-                    </label>
-                </div>
-                <div>
-                    <label style={{ display: 'flex', flexDirection: 'column', gap: '0.5em' }}>
-                        Review:
-                        <textarea name="review" style={{ padding: '0.5em', borderRadius: '0.25em', border: '1px solid #ccc', minHeight: '100px' }}></textarea>
-                    </label>
-                </div>
-                <div>
-                    <FontAwesomeIcon icon={faPoop} onClick={() => handleStarClick(0)} id="star0" />
-                    <FontAwesomeIcon icon={faStar} onClick={() => handleStarClick(1)} id="star1" />
-                    <FontAwesomeIcon icon={faStar} onClick={() => handleStarClick(2)} id="star2" />
-                    <FontAwesomeIcon icon={faStar} onClick={() => handleStarClick(3)} id="star3" />
-                    <FontAwesomeIcon icon={faStar} onClick={() => handleStarClick(4)} id="star4" />
-                    <FontAwesomeIcon icon={faStar} onClick={() => handleStarClick(5)} id="star5" />
-                    {/* <FontAwesomeIcon icon={faStar} onClick={() => handleStarClick(6)} id="star6" />
-                    <FontAwesomeIcon icon={faStar} onClick={() => handleStarClick(7)} id="star7" />
-                    <FontAwesomeIcon icon={faStar} onClick={() => handleStarClick(8)} id="star8" />
-                    <FontAwesomeIcon icon={faStar} onClick={() => handleStarClick(9)} id="star9" />
-                    <FontAwesomeIcon icon={faStar} onClick={() => handleStarClick(10)} id="star10" /> */}
-                </div>
-                <div>
-                    <button value="Odeslat" style={{ padding: '0.5em', backgroundColor: '#007BFF', color: 'white', border: 'none', cursor: 'pointer', borderRadius: '0.25em' }}>Odeslat</button>
-                </div>
-            </form>
+        <div className="flex flex-col space-y-4 w-full md:w-1/2 mx-auto bg-gray-200 p-4 rounded-md">
+            <div>
+                <label className="flex flex-col space-y-2">
+                    Nadpis:
+                    <input type="text" name="name" className="p-2 rounded border-gray-300" id="title" />
+                </label>
+            </div>
+            <div>
+                <label className="flex flex-col space-y-2">
+                    Recenze:
+                    <textarea name="review" id="reviewText" className="p-2 rounded border-gray-300 min-h-[100px]"></textarea>
+                </label>
+            </div>
+            <div>
+                <FontAwesomeIcon icon={faPoop} onClick={() => handleStarClick(0)} id="star0" />
+                <FontAwesomeIcon icon={faStar} onClick={() => handleStarClick(1)} id="star1" />
+                <FontAwesomeIcon icon={faStar} onClick={() => handleStarClick(2)} id="star2" />
+                <FontAwesomeIcon icon={faStar} onClick={() => handleStarClick(3)} id="star3" />
+                <FontAwesomeIcon icon={faStar} onClick={() => handleStarClick(4)} id="star4" />
+                <FontAwesomeIcon icon={faStar} onClick={() => handleStarClick(5)} id="star5" />
+            </div>
+            <div>
+                <button value="Odeslat" className="p-2 bg-blue-500 text-white border-none cursor-pointer rounded"
+                    onClick={(event) => { event.preventDefault(); handleSubmitReview(); }}>Přidat recenzi</button>
+            </div>
         </div>
+
     );
 }

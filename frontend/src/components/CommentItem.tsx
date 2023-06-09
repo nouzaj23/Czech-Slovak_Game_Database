@@ -1,14 +1,13 @@
 import { Comment, User } from "../models";
-import comments from '../assets/comments.json';
 import users from '../assets/users.json';
 
 interface CommentProps {
     commentId: string;
+    comments: Comment[];
 }
 
-export const CommentItem: React.FC<CommentProps> = ({ commentId }) => {
-    const commentsCopy: Comment[] = comments;
-    const comment = commentsCopy.find(comment => comment.id === commentId);
+export const CommentItem: React.FC<CommentProps> = ({ commentId, comments }) => {
+    const comment = comments.find(comment => comment.id === commentId);
 
     if (!comment) {
         return <div>Recenze není k dispozici</div>;
