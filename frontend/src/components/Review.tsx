@@ -7,11 +7,13 @@ interface ReviewProps {
     reviewId: string;
     rating: number;
     reviews: Review[];
+    setReviews: Function;
+    setGameReviews: Function;
+    gameReviews: string[];
 }
 
-export const ReviewItem: React.FC<ReviewProps> = ({ reviewId, rating, reviews }) => {
-    const reviewsCopy: Review[] = reviews;
-    const review = reviewsCopy.find(rev => rev.id === reviewId);
+export const ReviewItem: React.FC<ReviewProps> = ({ reviewId, rating, reviews, setGameReviews, setReviews, gameReviews }) => {
+    const review = reviews.find(rev => rev.id === reviewId);
 
     if (!review) {
         return <div>Recenze není k dispozici</div>;
@@ -34,6 +36,11 @@ export const ReviewItem: React.FC<ReviewProps> = ({ reviewId, rating, reviews })
         return '#010203';
     }
 
+    const handleDelete = () => {
+        setGameReviews(gameReviews.filter(revId => revId != review.id));
+        setReviews(reviews.filter(rev => rev.id != review.id));
+    }
+
     return (
         <div className="relative">
             <div className="review p-4 bg-white rounded shadow-md space-y-2">
@@ -52,7 +59,7 @@ export const ReviewItem: React.FC<ReviewProps> = ({ reviewId, rating, reviews })
                 <div className="font-medium text-gray-500">
                     Created At: <span className="font-bold text-gray-900">{new Date(review.createdAt).toLocaleDateString()}</span>
                 </div>
-                <FontAwesomeIcon icon={faTimes} className="absolute top-2 right-2 cursor-pointer" />
+                <FontAwesomeIcon icon={faTimes} className="absolute top-2 right-2 cursor-pointer" onClick={() => handleDelete()}/>
             </div>
         </div>
     );

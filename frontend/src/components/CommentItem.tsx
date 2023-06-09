@@ -6,9 +6,12 @@ import { faTimes } from "@fortawesome/free-solid-svg-icons";
 interface CommentProps {
     commentId: string;
     comments: Comment[];
+    setComments: Function;
+    setGameComments: Function;
+    gameComments: string[];
 }
 
-export const CommentItem: React.FC<CommentProps> = ({ commentId, comments }) => {
+export const CommentItem: React.FC<CommentProps> = ({ commentId, comments, setComments, setGameComments, gameComments }) => {
     const comment = comments.find(comment => comment.id === commentId);
 
     if (!comment) {
@@ -22,6 +25,11 @@ export const CommentItem: React.FC<CommentProps> = ({ commentId, comments }) => 
         return <div>User není k dispozici</div>;
     }
 
+    const handleDelete = () => {
+        setGameComments(gameComments.filter(com => com != comment.id));
+        setComments(comments.filter(com => com.id != comment.id));
+    }
+
     return (
         <div className="relative">
             <div className="review p-4 bg-white rounded shadow-md space-y-2">
@@ -32,7 +40,7 @@ export const CommentItem: React.FC<CommentProps> = ({ commentId, comments }) => 
                 <div className="font-medium text-gray-500">
                     Created At: <span className="font-bold text-gray-900">{new Date(comment.createdAt).toLocaleDateString()}</span>
                 </div>
-                <FontAwesomeIcon icon={faTimes} className="absolute top-2 right-2 cursor-pointer" />
+                <FontAwesomeIcon icon={faTimes} className="absolute top-2 right-2 cursor-pointer" onClick={() => handleDelete()}/>
             </div>
         </div>
     );

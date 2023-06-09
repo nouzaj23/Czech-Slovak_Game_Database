@@ -98,7 +98,7 @@ export const GamePage = () => {
                             )}
                         </div>
                         <div className="review-list space-y-4">
-                            {gameReviews.map((reviewId, key) => <ReviewItem reviewId={reviewId} key={key} rating={rating} reviews={allReviews} />)}
+                            {gameReviews.map((reviewId, key) => <ReviewItem reviewId={reviewId} key={key} rating={rating} reviews={allReviews} setGameReviews={setGameReviews} setReviews={setAllReviews} gameReviews={gameReviews}/>)}
                         </div>
                     </div>
                 );
@@ -112,7 +112,7 @@ export const GamePage = () => {
                             )}
                         </div>
                         <div className="review-list space-y-4">
-                            {gameComments.map((commentId, index) => <CommentItem commentId={commentId} key={index} comments={allComments}/>)}
+                            {gameComments.map((commentId, index) => <CommentItem commentId={commentId} key={index} comments={allComments} gameComments={gameComments} setComments={setAllComments} setGameComments={setGameComments}/>)}
                         </div>
                     </div>
                 );
