@@ -1,6 +1,6 @@
 import { MouseEventHandler, useState } from 'react';
 import developersList from '../../assets/developers.json';
-import { Developer, Genre } from '../../models';
+import { Developer } from '../../models';
 import { EditDeveloper } from '../Editors/EditDeveloper';
 
 interface DeleteDeveloperProps {
