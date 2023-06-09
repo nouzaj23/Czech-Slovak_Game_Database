@@ -40,7 +40,7 @@ export const UsersCRUD = () => {
         <div className='flex justify-center'>
             <div className="p-6 space-y-4 w-full md:w-3/4">
                 <div className="flex justify-between">
-                    <h1 className="text-2xl font-semibold">Žánry</h1>
+                    <h1 className="text-2xl font-semibold">Uživatelé</h1>
                 </div>
                 <input
                     className="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none"
