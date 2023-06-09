@@ -1,11 +1,11 @@
 import { Genre } from "../../models";
 
-interface EditGameProps {
+interface EditGenreProps {
     genre: Genre ;
     updateGenre: Function;
 }
 
-export const EditGenreName: React.FC<EditGameProps> = ({ genre, updateGenre }) => {
+export const EditGenreName: React.FC<EditGenreProps> = ({ genre, updateGenre }) => {
     return (
         <div>
             <label className="font-bold text-gray-800">Název žánru</label>
@@ -19,7 +19,7 @@ export const EditGenreName: React.FC<EditGameProps> = ({ genre, updateGenre }) =
     )
 }
 
-export const EditGenreDescribtion: React.FC<EditGameProps> = ({ genre, updateGenre }) => {
+export const EditGenreDescribtion: React.FC<EditGenreProps> = ({ genre, updateGenre }) => {
     return (
         <div>
             <label className="font-bold text-gray-800">Popis žánru</label>

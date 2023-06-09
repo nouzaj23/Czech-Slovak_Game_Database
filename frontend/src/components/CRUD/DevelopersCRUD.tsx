@@ -1,18 +1,18 @@
 import { MouseEventHandler, useState } from 'react';
-import genresList from '../../assets/genres.json';
-import { Genre } from '../../models';
-import { EditGenre } from '../Editors/EditGenres';
+import developersList from '../../assets/developers.json';
+import { Developer, Genre } from '../../models';
+import { EditDeveloper } from '../Editors/EditDeveloper';
 
-interface DeleteDevProps {
+interface DeleteDeveloperProps {
     handleClose: MouseEventHandler;
-    genreId: string,
-    updateGenres: Function,
-    genres: Genre[],
+    developerId: string,
+    updateDevelopers: Function,
+    developers: Developer[],
 }
 
-export const DeleteDevConfirm: React.FC<DeleteDevProps> = ({ handleClose, genreId, updateGenres, genres }) => {
+export const DeleteDevConfirm: React.FC<DeleteDeveloperProps> = ({ handleClose, developerId, updateDevelopers, developers }) => {
     const deleteDev = () => {
-        updateGenres(genres.filter(genre => genre.id !== genreId));
+        updateDevelopers(developers.filter(dev => dev.id !== developerId));
     };
 
     return (
@@ -30,56 +30,56 @@ export const DeleteDevConfirm: React.FC<DeleteDevProps> = ({ handleClose, genreI
 
 export const DevelopersCRUD = () => {
     const [searchTerm, setSearchTerm] = useState("");
-    const [editedGenreId, setEditedGenreId] = useState<string | null>(null);
-    const [genreToDelete, setGenreToDelete] = useState<string | null>(null);
-    const [genres, setGenres] = useState(genresList);
+    const [editedDeveloperId, setEditedDeveloperId] = useState<string | null>(null);
+    const [developerToDelete, setDeveloperToDelete] = useState<string | null>(null);
+    const [developers, setDevelopers] = useState(developersList);
 
-    const filteredGenres = genres.filter(genre =>
-        genre.type.toLowerCase().includes(searchTerm.toLowerCase())
+    const filteredDevelopers = developers.filter(dev =>
+        dev.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
     const addGenre = () => {
         const newId = "noveId"; // backend udělá nové ID
-        const newGenre: Genre = {description: "Popis nového žánru", games: [], id: newId, type: "Nový žánr"}
-        setGenres([newGenre, ...genres])
+        const newDeveloper: Developer = {avatar: "", description: "Nové studio popis", games: [], id: newId, name: "Nové studio"}
+        setDevelopers([newDeveloper, ...developers])
     }
 
     return (
         <div className='flex justify-center'>
             <div className="p-6 space-y-4 w-full md:w-3/4">
                 <div className="flex justify-between">
-                    <h1 className="text-2xl font-semibold">Žánry</h1>
-                    <button className="px-4 py-2 text-white bg-gray-600 hover:bg-gray-800 rounded-md" onClick={addGenre}>Přidat žánr</button>
+                    <h1 className="text-2xl font-semibold">Studia</h1>
+                    <button className="px-4 py-2 text-white bg-gray-600 hover:bg-gray-800 rounded-md" onClick={addGenre}>Přidat studio</button>
                 </div>
                 <input
                     className="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none"
                     type="text"
-                    placeholder="Hledat žánry..."
+                    placeholder="Hledat studio..."
                     onChange={(event) => setSearchTerm(event.target.value)}
                 />
-                {filteredGenres.map(genre => (
-                    <div key={genre.id} className="p-4 bg-white rounded shadow">
-                        <h2 className="text-xl font-semibold">{genre.type}</h2>
+                {filteredDevelopers.map(dev => (
+                    <div key={dev.id} className="p-4 bg-white rounded shadow">
+                        <h2 className="text-xl font-semibold">{dev.name}</h2>
                         <div className="mt-2 space-y-2">
-                            <p>{genre.description}</p>
+                            <p>{dev.description}</p>
                         </div>
                         <div className="mt-4 space-x-4">
                             <button
                                 className="w-auto px-4 py-2 text-white bg-gray-600 hover:bg-gray-800 rounded-md"
-                                onClick={() => setEditedGenreId(editedGenreId === genre.id ? null : genre.id)}
+                                onClick={() => setEditedDeveloperId(editedDeveloperId === dev.id ? null : dev.id)}
                             >
                                 Upravit
                             </button>
-                            <button className="w-auto px-4 py-2 text-white bg-red-500 rounded-md border-red-800" onClick={() => setGenreToDelete(genre.id)}>Smazat</button>
-                            {genreToDelete === genre.id && (
+                            <button className="w-auto px-4 py-2 text-white bg-red-500 rounded-md border-red-800" onClick={() => setDeveloperToDelete(dev.id)}>Smazat</button>
+                            {developerToDelete === dev.id && (
                                 <div className="fixed top-0 bottom-0 left-0 right-0 flex items-center justify-center z-50">
-                                    <DeleteDevConfirm handleClose={() => setGenreToDelete(null)} genreId={genre.id} updateGenres={setGenres} genres={genres} />
+                                    <DeleteDevConfirm handleClose={() => setDeveloperToDelete(null)} developerId={dev.id} updateDevelopers={setDevelopers} developers={developers} />
                                 </div>
                             )}
                         </div>
-                        {editedGenreId === genre.id && (
+                        {editedDeveloperId === dev.id && (
                             <div className='mt-5'>
-                                <EditGenre editedGenreId={genre.id} genreProp={genre} />
+                                <EditDeveloper editedDeveloperId={dev.id} developerProp={dev} />
                             </div>
                         )}
                     </div>
