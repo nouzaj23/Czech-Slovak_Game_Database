@@ -28,7 +28,7 @@ export const DeleteDevConfirm: React.FC<DeleteDevProps> = ({ handleClose, genreI
     );
 };
 
-export const GenresCRUD = () => {
+export const DevelopersCRUD = () => {
     const [searchTerm, setSearchTerm] = useState("");
     const [editedGenreId, setEditedGenreId] = useState<string | null>(null);
     const [genreToDelete, setGenreToDelete] = useState<string | null>(null);
