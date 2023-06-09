@@ -29,7 +29,6 @@ export const DeleteUserConfirm: React.FC<DeleteUserProps> = ({ handleClose, user
 
 export const UsersCRUD = () => {
     const [searchTerm, setSearchTerm] = useState("");
-    const [editedUserId, setEditedUserId] = useState<string | null>(null);
     const [userToDelete, setUserToDelete] = useState<string | null>(null);
     const [users, setUsers] = useState(usersList);
 

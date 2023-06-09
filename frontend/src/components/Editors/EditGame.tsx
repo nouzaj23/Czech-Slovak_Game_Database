@@ -27,7 +27,7 @@ export const EditGame: React.FC<EditGameProps> = ({ gameProp, editedGameId }) =>
                     </div>
                     <button
                         className="mt-4 px-4 py-2 text-white rounded-md bg-gray-600 hover:bg-gray-800 transition-colors duration-200"
-                        type="submit"
+                        type="submit" onClick={(event) => {event.preventDefault();}}
                     >
                         Uložit změny
                     </button>
