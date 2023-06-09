@@ -32,7 +32,7 @@ export const AddCommentForm: React.FC<AddCommentProps> = ({ setComments, game, s
                 </label>
             </div>
             <div>
-                <input type="submit" value="Odeslat" onClick={(event) => { event.preventDefault(); handleSubmitComment(); }} className="p-2 bg-blue-500 text-white border-none cursor-pointer rounded" />
+                <input type="submit" value="Přidat komentář" onClick={(event) => { event.preventDefault(); handleSubmitComment(); }} className="p-2 bg-blue-500 text-white border-none cursor-pointer rounded" />
             </div>
         </div>
     );
