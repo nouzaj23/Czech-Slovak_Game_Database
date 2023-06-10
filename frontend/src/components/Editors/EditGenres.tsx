@@ -1,4 +1,3 @@
-//import { useState } from "react";
 import { useState } from "react";
 import { Genre } from "../../models";
 import { EditGenreDescribtion, EditGenreName } from "./EditGenreOperations";
