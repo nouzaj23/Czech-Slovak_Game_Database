@@ -26,12 +26,6 @@ export const GameItem: React.FC<GameItemProps> = ({ game, developers, genres, re
         return '#010203';
     }
 
-    // let avgRating = 0;
-    // if (reviews.length > 0) {
-    //     let totalRating = reviews.reduce((total, review) => total + review.rating, 0);
-    //     avgRating = totalRating / reviews.length;
-    // }
-
     return (
         <div className="rounded overflow-hidden shadow-lg flex flex-col transform transition duration-500 ease-in-out hover:shadow-2xl hover:scale-105">
             <div className="w-full h-48 bg-gray-300 flex justify-center border-b-2 border-black">
