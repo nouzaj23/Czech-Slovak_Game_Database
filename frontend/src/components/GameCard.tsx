@@ -11,13 +11,6 @@ type GameCardProps = Game;
 export const GameCard: React.FC<GameCardProps> = ({ ...game }) => {
     let gameDevelopers = developers.filter(developer => game.developers.includes(developer.id));
     let gameGenres = genres.filter(genre => game.genres.includes(genre.id));
-    // let gameReviews = reviews.filter(review => review.game === game.id);
-
-    // let avgRating = 0;
-    // if (gameReviews.length > 0) {
-    //     let totalRating = gameReviews.reduce((total, review) => total + review.rating, 0);
-    //     avgRating = totalRating / gameReviews.length;
-    // }
 
     const rating: number = reviews.filter(review => game.reviews.includes(review.id)).reduce((accumulator, currentValue) => accumulator + currentValue.rating, 0) / game.reviews.length;
 
@@ -39,14 +32,6 @@ export const GameCard: React.FC<GameCardProps> = ({ ...game }) => {
                 <Link to={`/games/${game.id}`}>
                     <h2 className="pr-10 text-xl font-bold hover:underline">{game.name}</h2>
                 </Link>
-                {/* <div className="sm:hidden flex inline-block">
-                        <div className="text-white inline-block rounded-full px-3 py-1 shadow-md mr-2" style={{ background: ratingBg() }}>
-                            <p className="font-bold text-lg">{rating.toFixed(1)}</p>
-                        </div>
-                        <div className="inline-block mt-1">
-                            <FontAwesomeIcon icon={faHeart} size='2x' className='text-red-500' />
-                        </div>
-                    </div> */}
                 <p className="pr-10 mt-2 text-gray-600"><b>Vývojáři:</b> {gameDevelopers.map((developer, index) => <Link to={`/developers/${developer.id}`} key={index} className="text-blue-500 hover:underline">{developer.name}{index !== gameDevelopers.length - 1 && ', '}</Link>)}</p>
                 <p className="mt-2 text-gray-600"><b>Datum vydání:</b> {game.releaseDate}</p>
                 <p className="mt-2 text-gray-600"><b>Žánry:</b> {gameGenres.map((genre, index) => <Link to={`/games?genre=${genre.id}`} key={index} className="text-blue-500 hover:underline">{genre.type}{index !== gameGenres.length - 1 && ', '}</Link>)}</p>
