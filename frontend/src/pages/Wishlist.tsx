@@ -15,7 +15,7 @@ export const WishList = () => {
 
     function removeGameFromWishlist(index: number) {
         if (index == 0) {
-
+            // TODO: Remove game from wishlist
         }
     }
 
