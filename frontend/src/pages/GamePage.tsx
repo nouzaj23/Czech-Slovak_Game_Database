@@ -87,9 +87,7 @@ export const GamePage = () => {
                     <div>
                         <button onClick={handleAddReview} style={{ background: ratingBg() }} className="px-3 py-2 mb-5 mt-5 text-white rounded">Přidat recenzi</button>
                         <div>
-                            {isOpen && (
-                                <AddReviewForm gameId={game.id} game={game} />
-                            )}
+                            {isOpen ? <AddReviewForm gameId={game.id} game={game} /> : null}
                         </div>
                         <div className="review-list space-y-4">
                             {game.reviews.map((reviewId) => <ReviewItem reviewId={reviewId} rating={rating} />)}
@@ -101,9 +99,7 @@ export const GamePage = () => {
                     <div>
                         <button onClick={handleAddReview} style={{ background: ratingBg() }} className="px-3 py-2 mb-5 mt-5 bg-blue-500 text-white rounded">Přidat komentář</button>
                         <div>
-                            {isOpen && (
-                                <AddCommentForm />
-                            )}
+                            {isOpen ? <AddCommentForm />: null}
                         </div>
                         <div className="review-list space-y-4">
                             {game.comments.map((commentId) => <CommentItem commentId={commentId} />)}
