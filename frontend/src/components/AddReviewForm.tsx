@@ -13,7 +13,7 @@ export const AddReviewForm: React.FC<AddReviewProps> = ({ gameId, game }) => {
     const [stars, setStars] = useState(3);
 
     if (gameId == "") {
-        
+        <div>404</div>
     }
 
     if (!game) {
