@@ -115,11 +115,6 @@ export const AddReviewForm: React.FC<AddReviewProps> = ({ gameId, game }) => {
                     <FontAwesomeIcon icon={faStar} onClick={() => handleStarClick(3)} id="star3" />
                     <FontAwesomeIcon icon={faStar} onClick={() => handleStarClick(4)} id="star4" />
                     <FontAwesomeIcon icon={faStar} onClick={() => handleStarClick(5)} id="star5" />
-                    {/* <FontAwesomeIcon icon={faStar} onClick={() => handleStarClick(6)} id="star6" />
-                    <FontAwesomeIcon icon={faStar} onClick={() => handleStarClick(7)} id="star7" />
-                    <FontAwesomeIcon icon={faStar} onClick={() => handleStarClick(8)} id="star8" />
-                    <FontAwesomeIcon icon={faStar} onClick={() => handleStarClick(9)} id="star9" />
-                    <FontAwesomeIcon icon={faStar} onClick={() => handleStarClick(10)} id="star10" /> */}
                 </div>
                 <div>
                     <button value="Odeslat" style={{ padding: '0.5em', backgroundColor: '#007BFF', color: 'white', border: 'none', cursor: 'pointer', borderRadius: '0.25em' }}>Odeslat</button>
