@@ -36,10 +36,10 @@ export const AdminPage = () => {
                 </button>
             </div>
 
-            {visibleComponent === 'Games' && <GamesCRUD />}
-            {visibleComponent === 'Developers' && <DevelopersCRUD />}
-            {visibleComponent === 'Users' && <UsersCRUD />}
-            {visibleComponent === 'Genres' && <GenresCRUD />}
+            {visibleComponent === 'Games' ? <GamesCRUD /> : null}
+            {visibleComponent === 'Developers' ? <DevelopersCRUD /> : null}
+            {visibleComponent === 'Users' ? <UsersCRUD /> : null}
+            {visibleComponent === 'Genres' ? <GenresCRUD /> : null}
         </div>
     );
 }

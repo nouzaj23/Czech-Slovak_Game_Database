@@ -26,30 +26,39 @@ export const Games = () => {
   });
 
   filteredGames.sort((a, b) => {
-    if (sortType === 'name-asc') {
-      return a.name.localeCompare(b.name);
-    } else if (sortType === 'name-desc') {
-      return b.name.localeCompare(a.name);
-    } else if (sortType === 'year-asc') {
-      return a.releaseDate.localeCompare(b.releaseDate);
-    } else if (sortType === 'year-desc') {
-      return b.releaseDate.localeCompare(a.releaseDate);
-    } else if (sortType === 'rating-asc') {
-      const aReviews = reviews.filter(review => review.game === a.id);
-      const bReviews = reviews.filter(review => review.game === b.id);
-      const aAverageRating = aReviews.reduce((total, review) => total + review.rating, 0) / aReviews.length;
-      const bAverageRating = bReviews.reduce((total, review) => total + review.rating, 0) / bReviews.length;
-      return aAverageRating - bAverageRating;
-    } else if (sortType === 'rating-desc') {
-      const aReviews = reviews.filter(review => review.game === a.id);
-      const bReviews = reviews.filter(review => review.game === b.id);
-      const aAverageRating = aReviews.reduce((total, review) => total + review.rating, 0) / aReviews.length;
-      const bAverageRating = bReviews.reduce((total, review) => total + review.rating, 0) / bReviews.length;
-      return bAverageRating - aAverageRating;
-    } else {
-      return 0;
+    let result = 0;
+  
+    const getAverageRating = (gameId: string) => {
+      const gameReviews = reviews.filter(review => review.game === gameId);
+      return gameReviews.reduce((total, review) => total + review.rating, 0) / gameReviews.length;
+    };
+  
+    switch (sortType) {
+      case 'name-asc':
+        result = a.name.localeCompare(b.name);
+        break;
+      case 'name-desc':
+        result = b.name.localeCompare(a.name);
+        break;
+      case 'year-asc':
+        result = a.releaseDate.localeCompare(b.releaseDate);
+        break;
+      case 'year-desc':
+        result = b.releaseDate.localeCompare(a.releaseDate);
+        break;
+      case 'rating-asc':
+        result = getAverageRating(a.id) - getAverageRating(b.id);
+        break;
+      case 'rating-desc':
+        result = getAverageRating(b.id) - getAverageRating(a.id);
+        break;
+      default:
+        result = 0;
     }
+  
+    return result;
   });
+  
 
   return (
     <div>

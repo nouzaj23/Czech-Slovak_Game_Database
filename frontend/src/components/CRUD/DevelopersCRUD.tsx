@@ -16,7 +16,7 @@ export const DeleteDevConfirm: React.FC<DeleteDeveloperProps> = ({ handleClose, 
     };
 
     return (
-        <div className='border border-2 border-black-1000'>
+        <div className='border-2 border-black-1000'>
             <form className="p-6 bg-white rounded shadow-md">
                 <p>Opravdu chcete smazat žánr?</p>
                 <div className="flex items-center justify-between mt-4">

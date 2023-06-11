@@ -1,4 +1,3 @@
-//import { useState } from "react";
 import { useState } from "react";
 import { Developer } from "../../models";
 import { EditDeveloperAvatar, EditDeveloperDescribtion, EditDeveloperName } from "./EditDeveloperOperations";
