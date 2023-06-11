@@ -1,4 +1,3 @@
-//import { useState } from "react";
 import { useState } from "react";
 import { Game } from "../../models";
 import { EditGameCover, EditGameDescribtion, EditGameDevelopers, EditGameGenres, EditGameName, EditGamePhotos, EditGameVideos } from "./EditGameOperations";

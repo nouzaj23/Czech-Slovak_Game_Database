@@ -37,7 +37,7 @@ export const SearchResults = () => {
         <div className="p-8">
             <h1 className="text-3xl font-bold mb-4">Výsledky hledání pro "{query}"</h1>
 
-            {results.games.length > 0 &&
+            {results.games.length > 0 ? (
                 <div className="mt-6">
                     <h2 className="text-2xl font-semibold mb-2">Hry</h2>
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -54,9 +54,10 @@ export const SearchResults = () => {
                         ))}
                     </div>
                 </div>
+            ) : null
             }
 
-            {results.developers.length > 0 &&
+            {results.developers.length > 0 ? (
                 <div className="mt-6">
                     <h2 className="text-2xl font-semibold mb-2">Vývojáři</h2>
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -71,9 +72,10 @@ export const SearchResults = () => {
                         ))}
                     </div>
                 </div>
+            ) : null
             }
 
-            {results.genres.length > 0 &&
+            {results.genres.length > 0 ? (
                 <div className="mt-6">
                     <h2 className="text-2xl font-semibold mb-2">Žánry</h2>
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -85,6 +87,7 @@ export const SearchResults = () => {
                         ))}
                     </div>
                 </div>
+            ) : null
             }
         </div>
     );
