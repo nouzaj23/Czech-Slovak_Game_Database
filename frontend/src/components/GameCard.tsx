@@ -5,6 +5,7 @@ import reviews from '../assets/reviews.json';
 import { Link } from "react-router-dom";
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { AddToFavourite, RemoveFromFavourite } from './Authorized';
 
 type GameCardProps = Game;
 
@@ -43,8 +44,13 @@ export const GameCard: React.FC<GameCardProps> = ({ ...game }) => {
                 <p className="font-bold text-lg">{rating.toFixed(1)}</p>
             </div>
             <div className="absolute top-12 right-4">
-                <FontAwesomeIcon icon={faHeart} size='2x' className='text-red-500' />
+                <AddToFavourite id={game.id}>
+                    <FontAwesomeIcon icon={faHeart} size='2x' className='text-red-500' />
+                </AddToFavourite>
+                <RemoveFromFavourite id={game.id}>
+                    <FontAwesomeIcon icon={faHeart} size='2x' className='text-black-500' />
+                </RemoveFromFavourite>
             </div>
-        </div>
+        </div >
     )
 }

@@ -2,6 +2,7 @@ import { Review, User } from "../models";
 import users from '../assets/users.json';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar, faPoop, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { CanDeleteReview } from '../components/Authorized'
 
 interface ReviewProps {
     reviewId: string;
@@ -59,7 +60,9 @@ export const ReviewItem: React.FC<ReviewProps> = ({ reviewId, rating, reviews, s
                 <div className="font-medium text-gray-500">
                     Created At: <span className="font-bold text-gray-900">{new Date(review.createdAt).toLocaleDateString()}</span>
                 </div>
-                <FontAwesomeIcon icon={faTimes} className="absolute top-2 right-2 cursor-pointer" onClick={() => handleDelete()}/>
+                <CanDeleteReview id={reviewId} >
+                    <FontAwesomeIcon icon={faTimes} className="absolute top-2 right-2 cursor-pointer" onClick={() => handleDelete()} />
+                </CanDeleteReview>
             </div>
         </div>
     );
