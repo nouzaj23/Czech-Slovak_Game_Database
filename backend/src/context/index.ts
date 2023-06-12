@@ -4,8 +4,8 @@ import { Application } from 'express'
 import { DataSource } from 'typeorm'
 
 export enum Enviroment {
-  Development = 'development',
-  Production = 'production',
+  development = 'development',
+  production = 'production',
 }
 
 export interface Context {

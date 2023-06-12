@@ -17,9 +17,11 @@ RUN npm install
 
 # Bundle app source inside Docker image
 COPY --chown=appuser:appgroup . .
+RUN rm -rf dist
+RUN npm run build
 
 # Make port 8080 available to the world outside this container
-EXPOSE 8080
+EXPOSE 3000
 
 # Run the app when the container launches
-CMD [ "node", "app.js" ]
+CMD [ "npm", "run", "start" ]

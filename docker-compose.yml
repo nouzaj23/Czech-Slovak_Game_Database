@@ -8,11 +8,15 @@ services:
       - ./backend:/usr/src/app
       - /usr/src/app/node_modules
     ports:
-      - 8080:8080
+      - ${BE_PORT}:${BE_PORT}
     depends_on: 
       - db
     environment:
-      DATABASE_URL: postgres://admin:password@db:5432/mydatabase
+      DATABASE_URL: postgres://${DB_USER}:${DB_PASSWORD}@db:$5432/${DB_NAME}
+      PORT: ${BE_PORT}
+      SESSION_SECRET: ${SESSION_SECRET}
+      NODE_ENV: ${ENVIRONMENT}
+
 
   frontend:
     build: 
@@ -22,19 +26,19 @@ services:
       - ./frontend:/usr/app
       - /usr/app/node_modules
     ports:
-      - 5173:5173
+      - ${FE_PORT}:5173
+    environment:
+      BE_ADDRESS: ${BE_HOST}
 
   db:
     image: postgres:13
     restart: always
     environment:
-      POSTGRES_USER: admin
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: mydatabase
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
     volumes:
       - postgres_data:/var/lib/postgresql/data/
-    ports:
-      - 5432:5432
 
 volumes:
   postgres_data:

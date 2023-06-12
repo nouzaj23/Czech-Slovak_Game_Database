@@ -1,6 +1,6 @@
 import 'reflect-metadata'
 
-import { Context, Enviroment } from '@/context'
+import { Context, Enviroment as Environment } from '@/context'
 import { getRepositories } from '@/repositories'
 import { makeRouter } from '@/routes'
 import { getControllers } from '@/controllers'
@@ -13,11 +13,13 @@ import Express from 'express'
 import Session from 'express-session'
 import * as process from 'process'
 
-configEnv()
+if (!process.env.NODE_ENV)
+  configEnv()
 
-const enviroment: Enviroment = env.NODE_ENV as Enviroment || Enviroment.Development
+const enviroment: Environment = Environment[env.NODE_ENV as keyof typeof Environment] || Environment.development
+const entitiesPath = process.cwd() + '/dist/entities/*.{js,ts}'
 const dataSource
-  = enviroment === Enviroment.Production
+  = enviroment === Environment.production
     ? new DataSource({
       type: 'postgres',
       host: env.DB_HOST,
@@ -25,16 +27,18 @@ const dataSource
       username: env.DB_USERNAME,
       password: env.DB_PASSWORD,
       database: env.DB_DATABASE,
-      entities: [__dirname + '/dist/entities/*.{js,ts}'],
+      entities: [entitiesPath],
     })
     : new DataSource({
       type: 'sqlite',
       database: 'database.sqlite',
       synchronize: true,
-      entities: [process.cwd() + '/dist/entities/*.{js,ts}'],
+      entities: [entitiesPath],
     })
 
-console.log(process.cwd() + '/dist/entities/*.{js,ts}')
+console.log(`starting in ${enviroment} mode`)
+console.log(`entities are located in: ${entitiesPath}`)
+console.log(`env variables:: ${JSON.stringify(process.env, null, 2)}`)
 
 if (!env.SESSION_SECRET)
   throw new Error('SESSION_SECRET not set')
