@@ -20,7 +20,7 @@ test-job1:
 deploy-job:
   stage: deploy
   script:
-    - echo $DOTENV > .env
+    - echo $DOTENV | tr " " "\n" > .env
     - docker compose up -d --force-recreate
   only:
     - main
