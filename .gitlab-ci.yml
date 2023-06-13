@@ -21,6 +21,6 @@ deploy-job:
   stage: deploy
   script:
     - echo $DOTNEV > .env
-    - docker compose up -d --force-recreate -e DOTNEV=$DOTNEV
+    - docker compose up -d --force-recreate
   only:
     - main
