@@ -6,8 +6,7 @@ default:
 build-job:
   stage: build
   script:
-    - docker compose build
-    - echo ${DOTNEV} > .env
+    - docker compose build -e DOTNEV=$DOTNEV
   only:
     - main
 
@@ -21,7 +20,6 @@ test-job1:
 deploy-job:
   stage: deploy
   script:
-    - docker compose up -d --force-recreate
-    - echo ${DOTNEV} > .env
+    - docker compose up -d --force-recreate -e DOTNEV=$DOTNEV
   only:
     - main
