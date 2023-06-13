@@ -5,6 +5,7 @@ import * as game from './game.js'
 import * as review from './review.js'
 // import * as session from './session.js'
 import * as user from './user.js'
+import * as auth from './auth.js'
 
 import { Context } from '@/context'
 
@@ -20,6 +21,7 @@ export function makeRouter(context: Context) {
   router.use('/review', review.makeRouter(context))
   // router.use('/session', session.makeRouter(context))
   router.use('/user', user.makeRouter(context))
+  router.use('/auth', auth.makeRouter(context))
 
   return router
 }

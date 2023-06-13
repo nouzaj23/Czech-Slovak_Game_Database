@@ -1,4 +1,5 @@
 import 'reflect-metadata'
+import * as ormconfig from './ormconfig.js'
 
 import { Context, Enviroment as Environment } from '@/context'
 import { getRepositories } from '@/repositories'
@@ -11,34 +12,20 @@ import { TypeormStore } from 'connect-typeorm'
 import { env } from 'process'
 import Express from 'express'
 import Session from 'express-session'
+import cors from 'cors'
 import * as process from 'process'
 
 if (!process.env.NODE_ENV)
   configEnv()
 
 const enviroment: Environment = Environment[env.NODE_ENV as keyof typeof Environment] || Environment.development
-const entitiesPath = process.cwd() + '/dist/entities/*.{js,ts}'
+
 const dataSource
   = enviroment === Environment.production
-    ? new DataSource({
-      type: 'postgres',
-      host: env.DB_HOST,
-      port: Number(env.DB_PORT),
-      username: env.DB_USERNAME,
-      password: env.DB_PASSWORD,
-      database: env.DB_DATABASE,
-      entities: [entitiesPath],
-    })
-    : new DataSource({
-      type: 'sqlite',
-      database: 'database.sqlite',
-      synchronize: true,
-      entities: [entitiesPath],
-    })
+    ? ormconfig.production
+    : ormconfig.development
 
 console.log(`starting in ${enviroment} mode`)
-console.log(`entities are located in: ${entitiesPath}`)
-console.log(`env variables:: ${JSON.stringify(process.env, null, 2)}`)
 
 if (!env.SESSION_SECRET)
   throw new Error('SESSION_SECRET not set')
@@ -58,7 +45,7 @@ const context: Context = {
 await context.dataSource.initialize()
 
 context.app.use(Express.json())
-context.app.use(makeRouter(context))
+context.app.use(cors())
 context.app.use(Session({
   store: new TypeormStore({
     cleanupLimit: 2,
@@ -69,7 +56,13 @@ context.app.use(Session({
   resave: true,
   saveUninitialized: false,
   secret: sessionSecret,
+  cookie: {
+    secure: true,
+    signed: true,
+  }
 }))
+
+context.app.use(makeRouter(context))
 
 context.app.listen(3000, () => {
   console.log('Server running on port 3000')

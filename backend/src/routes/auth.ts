@@ -24,7 +24,7 @@ export function makeRouter(context: Context) {
         userId: user.id,
         isAdmin: user.isAdmin,
       }
-      res.status(200)
+      res.status(200).send()
     } else
       res.status(401).json({
         message: 'Invalid username or password'
