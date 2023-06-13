@@ -64,6 +64,6 @@ context.app.use(Session({
 
 context.app.use(makeRouter(context))
 
-context.app.listen(3000, () => {
-  console.log('Server running on port 3000')
+context.app.listen(env.PORT, () => {
+  console.log(`Server running on port ${env.PORT}`)
 })
