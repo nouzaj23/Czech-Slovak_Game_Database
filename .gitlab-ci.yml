@@ -6,7 +6,7 @@ default:
 build-job:
   stage: build
   script:
-    - docker compose build -e DOTNEV=$DOTNEV
+    - docker compose build
   only:
     - main
 
