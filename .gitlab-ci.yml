@@ -6,6 +6,7 @@ default:
 build-job:
   stage: build
   script:
+    - echo $DOTENV | tr " " "\n" > .env
     - docker compose build
   only:
     - main
@@ -20,6 +21,8 @@ test-job1:
 deploy-job:
   stage: deploy
   script:
+    - echo $DOTENV | tr " " "\n" > .env
+    - docker compose down
     - docker compose up -d --force-recreate
   only:
     - main

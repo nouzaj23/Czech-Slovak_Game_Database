@@ -14,6 +14,8 @@ services:
       SESSION_SECRET: ${SESSION_SECRET}
       NODE_ENV: ${ENVIRONMENT}
     restart: on-failure
+    env_file:
+      - .env
 
   frontend:
     build: 
@@ -23,6 +25,8 @@ services:
       - ${FE_PORT}:5173
     environment:
       BE_ADDRESS: ${BE_HOST}
+    env_file:
+      - .env
 
   db:
     image: postgres:13
