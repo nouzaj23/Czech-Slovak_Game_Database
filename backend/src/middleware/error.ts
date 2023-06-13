@@ -5,7 +5,8 @@ import { Request, Response, NextFunction } from 'express'
 
 export function makeErrorMiddleware(context: Context) {
   return (error: any, req: Request, res: Response, next: NextFunction) => {
-    const stack = context.enviroment === Enviroment.development ? { stack: error.stack } : null;
+    const stack = true ? { stack: error.stack } : null;
+    console.error(error)
     if (error instanceof Errs.RequestError) {
       res.status(error.status).json({ error: error.message, ...stack })
     } else if (error instanceof Errs.SystemError) {
