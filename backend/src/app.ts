@@ -14,6 +14,7 @@ import Express from 'express'
 import Session from 'express-session'
 import cors from 'cors'
 import * as process from 'process'
+import { makeErrorMiddleware } from './middleware/error.js'
 
 if (!process.env.NODE_ENV)
   configEnv()
@@ -63,6 +64,8 @@ context.app.use(Session({
 }))
 
 context.app.use(makeRouter(context))
+
+context.app.use(makeErrorMiddleware(context))
 
 context.app.listen(env.PORT, () => {
   console.log(`Server running on port ${env.PORT}`)

@@ -44,7 +44,7 @@ export class Game extends Base {
   // TODO: Cache this value in the database and update it whenever a new review is added.
   @VirtualColumn({
     query: (alias: string) =>
-      `SELECT AVG(rating) FROM "review" WHERE "game" = ${alias}.id`
+      `SELECT AVG(rating) FROM "review" WHERE "gameId" = ${alias}.id`
   })
   readonly score!: number
 
