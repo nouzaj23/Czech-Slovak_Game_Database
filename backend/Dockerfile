@@ -1,25 +1,23 @@
-# Use official Node.js runtime as a parent image
 FROM node:19-alpine
 
-# Create app directory
 WORKDIR /usr/src/app
 
-# Create a new user "appuser" and set as current user
-RUN addgroup appgroup && adduser -S -G appgroup appuser
-RUN chown -R appuser:appgroup /usr/src/app
-USER appuser
-
 # Copy package.json and package-lock.json to the working directory
-COPY --chown=appuser:appgroup package*.json ./
+COPY package*.json ./
 
 # Install app dependencies
 RUN npm install
 
 # Bundle app source inside Docker image
-COPY --chown=appuser:appgroup . .
+COPY . .
+RUN rm -rf dist
 
-# Make port 8080 available to the world outside this container
-EXPOSE 8080
+RUN npm run build
+
+EXPOSE 3000
 
 # Run the app when the container launches
-CMD [ "node", "app.js" ]
+# CMD npm run build && ls -ls && ls -ls dist
+# CMD ls -ls && ls -ls dist
+# CMD pwd && find . -type f | grep -v "node_modules" && npm run start
+CMD npm run start

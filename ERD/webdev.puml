@@ -5,17 +5,6 @@ skinparam Linetype ortho
 skinparam Ranksep 60
 skinparam Nodesep 100
 
-entity Review {
-    * id: <<uuid>>
-    ---
-    * gameId: <<FK>>
-    * userId: <<FK>>
-    * title: string
-    * text: string
-    * createdAt: timestamp
-    * rating: int
-}
-
 entity Comment {
     * id: <<uuid>>
     ---
@@ -23,6 +12,14 @@ entity Comment {
     * commenterId: <<FK>>
     * createdAt: timestamp
     * content: string
+}
+
+entity Developer {
+    * id: <<uuid>>
+    ---
+    * name: string
+    * avatar: URL
+    * description: string
 }
 
 entity Game {
@@ -36,26 +33,22 @@ entity Game {
     * videos: URL[]
 }
 
-entity Developer {
+entity Genre {
     * id: <<uuid>>
     ---
-    * name: string
-    * avatar: URL
+    * type: GenreType
     * description: string
 }
 
-entity GameDevelopment {
+entity Review {
     * id: <<uuid>>
     ---
     * gameId: <<FK>>
-    * developerId: <<FK>>
-}
-
-entity GameGenre {
-    * id: <<uuid>>
-    ---
-    * gameId: <<FK>>
-    * genreId: <<FK>>
+    * userId: <<FK>>
+    * title: string
+    * text: string
+    * createdAt: timestamp
+    * rating: int
 }
 
 entity User {
@@ -70,11 +63,18 @@ entity User {
     * wishList: Game[]
 }
 
-entity Genre {
+entity GameDevelopment {
     * id: <<uuid>>
     ---
-    * type: GenreType
-    * description: string
+    * gameId: <<FK>>
+    * developerId: <<FK>>
+}
+
+entity GameGenre {
+    * id: <<uuid>>
+    ---
+    * gameId: <<FK>>
+    * genreId: <<FK>>
 }
 
 Developer||..o{GameDevelopment
