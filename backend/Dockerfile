@@ -11,6 +11,7 @@ RUN npm install
 # Bundle app source inside Docker image
 COPY . .
 RUN rm -rf dist
+RUN echo $DOTENV > .env
 
 RUN npm run build
 

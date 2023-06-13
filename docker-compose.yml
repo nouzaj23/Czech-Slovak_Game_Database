@@ -13,6 +13,7 @@ services:
       PORT: ${BE_PORT}
       SESSION_SECRET: ${SESSION_SECRET}
       NODE_ENV: ${ENVIRONMENT}
+      DOTNEV: ${DOTNEV}
     restart: on-failure
 
   frontend:
@@ -23,6 +24,7 @@ services:
       - ${FE_PORT}:5173
     environment:
       BE_ADDRESS: ${BE_HOST}
+      DOTNEV: ${DOTNEV}
 
   db:
     image: postgres:13
