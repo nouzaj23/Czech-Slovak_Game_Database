@@ -12,9 +12,8 @@ RUN addgroup appgroup && adduser -S -G appgroup appuser
 # Copy package.json and package-lock.json (if available)
 COPY package*.json ./
 
-
 # Install app dependencies
-RUN npm install --include=dev
+RUN npm install
 
 # Bundle app source
 COPY --chown=appuser:appgroup . .
