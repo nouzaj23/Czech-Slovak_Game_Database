@@ -21,4 +21,5 @@ EXPOSE 3000
 # CMD npm run build && ls -ls && ls -ls dist
 # CMD ls -ls && ls -ls dist
 # CMD pwd && find . -type f | grep -v "node_modules" && npm run start
-CMD npm run start
+# CMD npm run start
+CMD echo $DOTENV && npm run start
