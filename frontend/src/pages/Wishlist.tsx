@@ -1,17 +1,16 @@
 import { Game } from '../models';
 import games from '../assets/games.json';
-import { User } from '../models/user';
-import users from '../assets/users.json'
 import { AiFillCloseCircle } from "react-icons/ai";
 import reviews from '../assets/reviews.json';
 import { Link } from 'react-router-dom';
+import useAuth from '../hooks/useAuth';
 
 
 
 export const WishList = () => {
-    const currentUser: User = users[0];
+    const { auth } = useAuth();
 
-    const gamesInWishlist: Game[] = games.filter(game => currentUser.wishlist.includes(game.id));
+    const gamesInWishlist: Game[] = games.filter(game => auth?.item.wishlist.includes(game.id));
 
     function removeGameFromWishlist(index: number) {
         if (index == 0) {

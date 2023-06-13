@@ -5,6 +5,7 @@ import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { LoginForm } from "./Login&Register/LoginForm";
 import { useNavigate } from "react-router-dom";
 import { RegisterForm } from "./Login&Register/RegisterForm";
+import { CanManageCSHD, IsLogged, IsNotLogged } from '../components/Authorized';
 
 export const Header = () => {
     const navigate = useNavigate();
@@ -62,9 +63,16 @@ export const Header = () => {
                         Žánry
                     </button>
                 </Link>
+                <CanManageCSHD>
+                    <Link to="/adminpage" className="w-full text-center">
+                        <button className="sm:w-auto w-full px-3 py-1 rounded-md text-white sm:bg-gray-700 sm:hover:bg-gray-600 transition-colors duration-300 ease-in-out">
+                            Admin
+                        </button>
+                    </Link>
+                </CanManageCSHD>
             </div>
 
-            <div className="">
+            <IsNotLogged>
                 <div className={`${isOpen ? 'flex' : 'hidden'} sm:flex flex-col h-full justify-between w-full sm:w-auto items-center pl-2 pr-2 ${isOpen ? '' : 'sm:border-l-0'} mb-2 sm:mb-0`}>
                     <button className="sm:w-auto py-1 sm:py-0 w-full h-full flex items-center justify-center hover:text-gray-300 transition-colors duration-300 ease-in-out" onClick={() => setShowLogin(true)}>Přihlásit se</button>
                     {showLogin ? (
@@ -83,9 +91,9 @@ export const Header = () => {
                     ) : null
                     }
                 </div>
-            </div>
+            </IsNotLogged>
 
-            <div className="hidden">
+            <IsLogged>
                 <div className={`${isOpen ? 'hidden' : 'hidden'} sm:flex flex-col h-full justify-between w-full sm:w-auto items-center pl-2 pr-2 ${isOpen ? '' : 'sm:border-l-0'}  mb-2 sm:mb-0`}>
                     <Link to="/wishlist">
                         <button className="sm:w-auto py-1 sm:py-0 w-full h-full flex items-center justify-center hover:text-gray-300 transition-colors duration-300 ease-in-out">
@@ -98,7 +106,7 @@ export const Header = () => {
                         </button>
                     </Link>
                 </div>
-            </div>
+            </IsLogged>
         </div>
     )
 }

@@ -2,6 +2,7 @@ import { Game, Developer, Genre, Review } from '../models';
 import { Link } from 'react-router-dom';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { AddToFavourite, RemoveFromFavourite } from './Authorized';
 
 interface GameItemProps {
     game: Game;
@@ -53,7 +54,12 @@ export const GameItem: React.FC<GameItemProps> = ({ game, developers, genres, re
                 </div>
                 <div className="flex items-center">
                     <div>
-                        <FontAwesomeIcon icon={faHeart} size='2x' className='text-red-500' />
+                        <AddToFavourite id={game.id}>
+                            <FontAwesomeIcon icon={faHeart} size='2x' className='text-red-500' />
+                        </AddToFavourite>
+                        <RemoveFromFavourite id={game.id}>
+                            <FontAwesomeIcon icon={faHeart} size='2x' className='text-black-500' />
+                        </RemoveFromFavourite>
                     </div>
                     <div className="ml-2 text-white rounded-full px-3 py-1 shadow-md" style={{ background: ratingBg() }}>
                         <p className="font-bold text-lg">{rating.toFixed(1)}</p>
