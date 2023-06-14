@@ -1,5 +1,7 @@
 import { FC, ReactNode } from 'react';
 import useAuth from '../hooks/useAuth';
+import { useQuery } from '@tanstack/react-query';
+import { UserApi } from '../services';
 
 type AuthorizedProps = {
     children: ReactNode,
@@ -35,19 +37,30 @@ export const CanDeleteReview:  FC<CanDeleteReviewAuthorizedProps> = ({ children,
 
 export const AddToFavourite: FC<CanDeleteReviewAuthorizedProps> = ({ children, id }) => {
     const { auth } = useAuth();
+    const { data: user } = useQuery({
+        queryKey: ['user'],
+        queryFn: () => UserApi.retrieve(auth.item.id),
+        enabled: !!auth,
+    })
 
     if (!auth) return null;
-    if (auth.item.wishlist.includes(id)) return <>{children}</>;
+    if (user.wishlist.includes(id)) return <>{children}</>;
     return null;
 }
 
 export const RemoveFromFavourite: FC<CanDeleteReviewAuthorizedProps> = ({ children, id }) => {
     const { auth } = useAuth();
+    const { data: user } = useQuery({
+        queryKey: ['user'],
+        queryFn: () => UserApi.retrieve(auth.item.id),
+        enabled: !!auth,
+    })
 
     if (!auth) return null;
-    if (!auth.item.wishlist.includes(id)) return <>{children}</>;
+    if (!user.wishlist.includes(id)) return <>{children}</>;
     return null;
 }
+
 
 export const CanManageCSHD: FC<AuthorizedProps> = ({ children }) => {
     const { auth } = useAuth();
