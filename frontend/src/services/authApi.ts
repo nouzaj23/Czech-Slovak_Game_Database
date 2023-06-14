@@ -10,6 +10,7 @@ export const login = async (username: string, password: string) => {
 }
 
 export const auth = async () => {
+    return null;
     const resp = await axiosInstance.get('/auth', {});
     return resp.data;
 }
