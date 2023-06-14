@@ -5,8 +5,8 @@ import { config as configEnv } from 'dotenv';
 configEnv();
 
 const axiosInstance = axios.create({
-    // baseURL: 'https://cshd.gwenlian.eu/api/',
-    baseURL: process.env.BE_HOST,
+    baseURL: 'https://cshd.gwenlian.eu/api/',
+    // baseURL: process.env.BE_HOST,
     headers: {
         "Access-Control-Allow-Credentials": true,
     },
