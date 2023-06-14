@@ -5,9 +5,9 @@ export const add = async (name: string, description: string, releaseDate: string
     const response = await axiosInstance.post('/game', {
         name,
         description,
+        genres,
         releaseDate,
         developers,
-        genres,
         cover,
         photos,
         videos
@@ -30,9 +30,9 @@ export const update = async (id: string, name: string, description: string, rele
     const response = await axiosInstance.patch(`/game/${id}`, {
         name,
         description,
+        genres,
         releaseDate,
         developers,
-        genres,
         cover,
         photos,
         videos
@@ -50,26 +50,21 @@ export const retrieveGameReviews = async (id: string) => {
     return response.data
 }
 
-export const addReview = async (title: string, text: string, rating: number, gameId: string, userId: string, date: string) => {
+export const addReview = async (title: string, text: string, rating: number, gameId: string, userId: string) => {
     const response = await axiosInstance.post(`/game/${gameId}/review`, {
-        title,
-        text,
-        rating,
-        gameId,
         userId,
-        date,
+        rating,
+        text,
+        title,
     });
     return response.data;
 }
 
-export const updateReview = async (reviewId: string, title: string, text: string, rating: number, gameId: string, userId: string, date: string) => {
+export const updateReview = async (reviewId: string, title: string, text: string, rating: number, gameId: string) => {
     const response = await axiosInstance.patch(`/game/${gameId}/review/${reviewId}`, {
+        rating,
         title,
         text,
-        rating,
-        gameId,
-        userId,
-        date,
     });
     return response.data;
 }
@@ -84,27 +79,34 @@ export const retrieveGameComments = async (id: string) => {
     return response.data
 }
 
-export const addComment = async (content: string, userId: string, gameId: string, date: string) => {
+export const addComment = async (content: string, userId: string, gameId: string) => {
     const response = await axiosInstance.post(`/game/${gameId}/comment`, {
-        content,
         userId,
-        gameId,
-        date,
+        content,
     });
     return response.data;
 }
 
-export const updateComment = async (commentId: string, content: string, userId: string, gameId: string, date: string) => {
+export const updateComment = async (commentId: string, content: string, gameId: string) => {
     const response = await axiosInstance.patch(`/game/${gameId}/comment/${commentId}`, {
         content,
-        userId,
-        gameId,
-        date,
     });
     return response.data;
 }
 
 export const deleteComment = async (commentId: string, gameId: string) => {
     const response = await axiosInstance.delete(`/game/${gameId}/comment/${commentId}`);
+    return response.data;
+}
+
+export const addDeveloper = async (developerId: string, gameId: string) => {
+    const response = await axiosInstance.post(`/game/${gameId}/developer`, {
+        developerId,
+    });
+    return response.data;
+}
+
+export const removeDeveloper = async (developerId: string, gameId: string) => {
+    const response = await axiosInstance.delete(`/game/${gameId}/developer/${developerId}`);
     return response.data;
 }
