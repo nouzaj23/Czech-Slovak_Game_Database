@@ -47,6 +47,7 @@ await context.dataSource.initialize()
 
 context.app.use(Express.json())
 context.app.use(cors({
+  origin: 'cshd.gwenlian.eu',
   credentials: true,
 }))
 context.app.use(Session({
