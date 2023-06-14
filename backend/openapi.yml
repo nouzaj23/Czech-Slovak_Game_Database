@@ -271,11 +271,6 @@ paths:
                   type: string
                 avatar:
                   type: string
-                private:
-                  anyOf:
-                    - type: boolean
-                    - type: string
-                      enum: [reviews, wishlist]
       responses:
         "200":
           description: Successful operation
@@ -543,12 +538,20 @@ paths:
                     type: string
                 releaseDate:
                   type: string
-                developer:
-                  type: string
-                publisher:
-                  type: string
+                developers:
+                  type: array
+                  items:
+                    type: string
                 cover:
                   type: string
+                photos:
+                  type: array
+                  items:
+                    type: string
+                videos:
+                  type: array
+                  items:
+                    type: string
       responses:
         "200":
           description: Successful operation
