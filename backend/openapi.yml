@@ -914,6 +914,8 @@ paths:
                 properties:
                   name:
                     type: string
+                  description:
+                    type: string
                   games:
                     type: array
                     items:
