@@ -14,6 +14,12 @@ components:
           type: string
         name:
           type: string
+        description:
+          type: string
+        avatar:
+          type: string
+        isStudio:
+          type: boolean
         games:
           type: array
           items:
@@ -42,7 +48,10 @@ components:
         genres:
           type: array
           items:
-            type: string
+            type: object
+            oneOf:
+              - $ref: "#/components/schemas/Genre"
+              - type: string
         cover:
           type: string
         photos:
@@ -98,7 +107,7 @@ components:
           type: string
         rating:
           type: number
-        review:
+        content:
           type: string
         user:
           type: object
@@ -244,7 +253,7 @@ paths:
           description: Profile is private
         "404":
           description: User not found
-    put:
+    patch:
       summary: Updates a user's profile information
       parameters:
         - name: userId
@@ -320,7 +329,7 @@ paths:
           description: Profile is private
         "404":
           description: User not found
-    put:
+    patch:
       summary: Updates a user's password or email
       parameters:
         - name: userId
@@ -475,7 +484,7 @@ paths:
                 $ref: "#/components/schemas/Game"
         "404":
           description: Game not found
-    put:
+    patch:
       summary: Updates a game
       parameters:
         - name: gameId
@@ -531,7 +540,7 @@ paths:
           description: Unauthorized
         "403":
           description: User is not an admin
-  /games/{gameId}/review:
+  /game/{gameId}/review:
     post:
       summary: Add a review to a game
       parameters:
@@ -560,8 +569,8 @@ paths:
           description: User already reviewed this game
         "401":
           description: Unauthorized
-  /games/{gameId}/review/{reviewId}:
-    put:
+  /game/{gameId}/review/{reviewId}:
+    patch:
       summary: Updates a review
       parameters:
         - name: gameId
@@ -617,7 +626,7 @@ paths:
           description: User is not the author of the review
         "404":
           description: Review not found
-  /games/{gameId}/comment:
+  /game/{gameId}/comment:
     get:
       summary: Retrieves a list of all comments of a game
       parameters:
@@ -660,7 +669,7 @@ paths:
           description: Successful operation
         "401":
           description: Unauthorized
-  /games/{gameId}/comment/{commentId}:
+  /game/{gameId}/comment/{commentId}:
     get:
       summary: Retrieves a comment
       parameters:
@@ -684,7 +693,7 @@ paths:
                 $ref: "#/components/schemas/Comment"
         "404":
           description: Comment not found
-    put:
+    patch:
       summary: Updates a comment
       parameters:
         - name: gameId
@@ -716,12 +725,93 @@ paths:
           description: User is not the author of the comment
         "404":
           description: Comment not found
+    delete:
+      summary: Deletes a comment
+      parameters:
+        - name: gameId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: commentId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successful operation
+        "401":
+          description: Unauthorized
+        "403":
+          description: User is not the author of the comment
+        "404":
+          description: Comment not found
+  /game/{gameId}/developer/:
+    post:
+      summary: Add a developer to a game
+      parameters:
+        - name: gameId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                developerId:
+                  type: string
+                  description: Developer's id
+      responses:
+        "201":
+          description: Successful operation
+        "400":
+          description: Developer already exists
+        "401":
+          description: Unauthorized
+        "403":
+          description: User is not an admin
+        "404":
+          description: Game not found
+  /game/{gameId}/developer/{developerId}:
+    delete:
+      summary: Deletes a developer from a game
+      parameters:
+        - name: gameId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: developerId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successful operation
+        "401":
+          description: Unauthorized
+        "403":
+          description: User is not an admin
+        "404":
+          description: Game not found
   /genre:
     get:
       summary: Retrieves a list of all genres
       responses:
         "200":
           description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  $ref: "#/components/schemas/Genre"
     post:
       summary: Creates a new genre
       requestBody:
@@ -731,6 +821,8 @@ paths:
               type: object
               properties:
                 name:
+                  type: string
+                description:
                   type: string
       responses:
         "200":
@@ -766,7 +858,7 @@ paths:
                       type: string
         "404":
           description: Genre not found
-    put:
+    patch:
       summary: Updates a genre
       parameters:
         - name: genreId
@@ -781,6 +873,8 @@ paths:
               type: object
               properties:
                 name:
+                  type: string
+                description:
                   type: string
       responses:
         "200":
@@ -826,6 +920,12 @@ paths:
               properties:
                 name:
                   type: string
+                description:
+                  type: string
+                avatar:
+                  type: string
+                isStudio:
+                  type: boolean
       responses:
         "200":
           description: Successful operation
@@ -849,7 +949,7 @@ paths:
           description: Successful operation
         "404":
           description: Developer not found
-    put:
+    patch:
       summary: Updates a developer
       parameters:
         - name: developerId
@@ -865,6 +965,12 @@ paths:
               properties:
                 name:
                   type: string
+                description:
+                  type: string
+                avatar:
+                  type: string
+                isStudio:
+                  type: boolean
       responses:
         "200":
           description: Successful operation
