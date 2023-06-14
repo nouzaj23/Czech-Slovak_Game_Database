@@ -618,7 +618,7 @@ paths:
                   description: User's id
                 rating:
                   type: number
-                review:
+                text:
                   type: string
                 title:
                   type: string
@@ -651,7 +651,7 @@ paths:
               properties:
                 rating:
                   type: number
-                review:
+                title:
                   type: string
                 text:
                   type: string
