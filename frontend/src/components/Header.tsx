@@ -6,6 +6,7 @@ import { LoginForm } from "./Login&Register/LoginForm";
 import { useNavigate } from "react-router-dom";
 import { RegisterForm } from "./Login&Register/RegisterForm";
 import { CanManageCSHD, IsLogged, IsNotLogged } from '../components/Authorized';
+import { AuthApi } from "../services";
 
 export const Header = () => {
     const navigate = useNavigate();
@@ -19,6 +20,10 @@ export const Header = () => {
             navigate(`/search/${searchQuery}`);
             setSearchQuery("");
         }
+    }
+
+    const handleLogout = () => {
+        AuthApi.logout();
     }
 
     return (
@@ -100,8 +105,8 @@ export const Header = () => {
                             Wishlist
                         </button>
                     </Link>
-                    <Link to="/signout">
-                        <button className="sm:w-auto py-1 sm:py-0 w-full h-full flex items-center justify-center hover:text-gray-300 transition-colors duration-300 ease-in-out">
+                    <Link to="/">
+                        <button onClick={handleLogout} className="sm:w-auto py-1 sm:py-0 w-full h-full flex items-center justify-center hover:text-gray-300 transition-colors duration-300 ease-in-out">
                             Odhlásit
                         </button>
                     </Link>
