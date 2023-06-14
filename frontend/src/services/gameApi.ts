@@ -1,10 +1,10 @@
 import axiosInstance from "./base";
 
-export const add = async (name: string, describtion: string, releaseDate: string, developers: string[],
+export const add = async (name: string, description: string, releaseDate: string, developers: string[],
     genres: string[], cover: string, photos: string[], videos: string[]) => {
     const response = await axiosInstance.post('/game', {
         name,
-        describtion,
+        description,
         releaseDate,
         developers,
         genres,
@@ -25,11 +25,11 @@ export const retrieveGame = async (id: string) => {
     return response.data;
 }
 
-export const update = async (id: string, name: string, describtion: string, releaseDate: string, developers: string[],
+export const update = async (id: string, name: string, description: string, releaseDate: string, developers: string[],
     genres: string[], cover: string, photos: string[], videos: string[]) => {
     const response = await axiosInstance.put(`/game/${id}`, {
         name,
-        describtion,
+        description,
         releaseDate,
         developers,
         genres,
