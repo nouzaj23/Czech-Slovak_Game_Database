@@ -46,6 +46,7 @@ const context: Context = {
 await context.dataSource.initialize()
 
 context.app.use(Express.json())
+context.app.set('trust proxy', true)
 context.app.use(cors({
   origin: 'cshd.gwenlian.eu',
   credentials: true,
@@ -60,6 +61,7 @@ context.app.use(Session({
   resave: true,
   saveUninitialized: false,
   secret: sessionSecret,
+  proxy: true,
   cookie: {
     secure: true,
     signed: true,
