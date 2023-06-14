@@ -2,7 +2,7 @@ import axios from 'axios';
 import * as process from 'process';
 import { config as configEnv } from 'dotenv';
 
-configEnv();
+//configEnv();
 
 const axiosInstance = axios.create({
     baseURL: 'https://cshd.gwenlian.eu/api/',
