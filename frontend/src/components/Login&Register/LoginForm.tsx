@@ -15,7 +15,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ handleClose }) => {
     }, [login]);
 
     return (
-        <form className="p-6 bg-white rounded shadow-md">
+        <form className="p-6 bg-white rounded shadow-md"  onClick={() => handleSubmit}>
             <div className="mb-4">
                 <label className="block text-sm font-bold mb-2">
                     <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" name="nickname" placeholder="Přezdívka" required />
@@ -27,7 +27,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ handleClose }) => {
                 </label>
             </div>
             <div className="flex items-center justify-between">
-                <button onClick={() => handleSubmit} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">Přihlásit se</button>
+                <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">Přihlásit se</button>
                 <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button" onClick={handleClose}>X</button>
             </div>
         </form>
