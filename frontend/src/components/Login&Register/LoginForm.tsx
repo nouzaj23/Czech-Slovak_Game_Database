@@ -1,4 +1,4 @@
-import {  FormEventHandler, MouseEventHandler, useCallback } from 'react';
+import { FormEventHandler, MouseEventHandler, useCallback } from 'react';
 import useLogin from '../../hooks/useLogin';
 
 
@@ -11,19 +11,23 @@ export const LoginForm: React.FC<LoginFormProps> = ({ handleClose }) => {
 
     const handleSubmit: FormEventHandler<HTMLFormElement> = useCallback((e) => {
         e.preventDefault();
-        login();
+        const username = document.getElementById("username") as HTMLInputElement;
+        const password = document.getElementById("password") as HTMLInputElement;
+        if (username != undefined && password != undefined) {
+            login({username: username.value, password: password.value});
+        }
     }, [login]);
 
     return (
-        <form className="p-6 bg-white rounded shadow-md"  onSubmit={handleSubmit}>
+        <form className="p-6 bg-white rounded shadow-md" onSubmit={handleSubmit}>
             <div className="mb-4">
                 <label className="block text-sm font-bold mb-2">
-                    <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" name="nickname" placeholder="Přezdívka" required />
+                    <input id="nickname" className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" name="nickname" placeholder="Přezdívka" required />
                 </label>
             </div>
             <div className="mb-6">
-                <label className="block text-sm font-bold mb-2">                
-                    <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" type="password" name="password" placeholder="Heslo" required />
+                <label className="block text-sm font-bold mb-2">
+                    <input id="password" className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" type="password" name="password" placeholder="Heslo" required />
                 </label>
             </div>
             <div className="flex items-center justify-between">
