@@ -15,7 +15,7 @@ export const retrieve = async (id: string) => {
 }
 
 export const update = async (id: string, username: string, avatar: string) => {
-    const response = await axiosInstance.put(`/user/${id}`, {
+    const response = await axiosInstance.patch(`/user/${id}`, {
         username,
         avatar,
     });
@@ -33,7 +33,7 @@ export const authenticate = async (id: string) => {
 }
 
 export const updateAuth = async (id: string, password: string, newPassword: string, email: string) => {
-    const response = await axiosInstance.put(`/user/${id}/auth`, {
+    const response = await axiosInstance.patch(`/user/${id}/auth`, {
         password,
         newPassword,
         email,

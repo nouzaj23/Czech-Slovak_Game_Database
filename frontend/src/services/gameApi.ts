@@ -27,7 +27,7 @@ export const retrieveGame = async (id: string) => {
 
 export const update = async (id: string, name: string, description: string, releaseDate: string, developers: string[],
     genres: string[], cover: string, photos: string[], videos: string[]) => {
-    const response = await axiosInstance.put(`/game/${id}`, {
+    const response = await axiosInstance.patch(`/game/${id}`, {
         name,
         description,
         releaseDate,
@@ -63,7 +63,7 @@ export const addReview = async (title: string, text: string, rating: number, gam
 }
 
 export const updateReview = async (reviewId: string, title: string, text: string, rating: number, gameId: string, userId: string, date: string) => {
-    const response = await axiosInstance.put(`/game/${gameId}/review/${reviewId}`, {
+    const response = await axiosInstance.patch(`/game/${gameId}/review/${reviewId}`, {
         title,
         text,
         rating,
@@ -95,7 +95,7 @@ export const addComment = async (content: string, userId: string, gameId: string
 }
 
 export const updateComment = async (commentId: string, content: string, userId: string, gameId: string, date: string) => {
-    const response = await axiosInstance.put(`/game/${gameId}/comment/${commentId}`, {
+    const response = await axiosInstance.patch(`/game/${gameId}/comment/${commentId}`, {
         content,
         userId,
         gameId,

@@ -20,7 +20,7 @@ export const retrieveDeveloper = async (id: string) => {
 }
 
 export const update = async (id: string, name: string, description: string, avatar:string, games:string[]) => {
-    const response = await axiosInstance.put(`/developer/${id}`, {
+    const response = await axiosInstance.patch(`/developer/${id}`, {
         name,
         description,
         avatar,

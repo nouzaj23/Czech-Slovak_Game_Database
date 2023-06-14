@@ -19,7 +19,7 @@ export const retrieveGenre = async (id: string) => {
 }
 
 export const update = async (id: string, name: string, description: string) => {
-    const response = await axiosInstance.put(`/genre/${id}`, {
+    const response = await axiosInstance.patch(`/genre/${id}`, {
         name,
         description,
     });
