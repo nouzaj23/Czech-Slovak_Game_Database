@@ -360,6 +360,41 @@ paths:
           description: Only user can change their password
         "404":
           description: User not found
+  /user/{userId}/admin:
+    post:
+      summary: Makes a user an admin
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successful operation
+        "401":
+          description: Unauthorized
+        "403":
+          description: User is not an admin
+        "404":
+          description: User not found
+    delete:
+      summary: Removes a user's admin privileges
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successful operation
+        "401":
+          description: Unauthorized
+        "403":
+          description: User is not an admin
+        "404":
+          description: User not found
   /user/{userId}/wishlist:
     get:
       summary: Retrieves user's wishlist
