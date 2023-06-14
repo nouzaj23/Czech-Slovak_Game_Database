@@ -201,6 +201,8 @@ paths:
                 properties:
                   userId:
                     type: string
+                  isAdmin:
+                    type: boolean
         "401":
           description: Unauthorized
     delete:
