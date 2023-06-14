@@ -4,7 +4,8 @@ export const add = async (name: string, description: string, avatar:string) => {
     const response = await axiosInstance.post('/developer', {
         name,
         description,
-        avatar
+        avatar,
+        isStudio: true
     });
     return response.data;
 }
@@ -19,12 +20,12 @@ export const retrieveDeveloper = async (id: string) => {
     return response.data;
 }
 
-export const update = async (id: string, name: string, description: string, avatar:string, games:string[]) => {
+export const update = async (id: string, name: string, description: string, avatar:string) => {
     const response = await axiosInstance.patch(`/developer/${id}`, {
         name,
         description,
         avatar,
-        games
+        isStudio: true
     });
     return response.data;
 }
