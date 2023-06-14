@@ -27,7 +27,7 @@ type CanDeleteReviewAuthorizedProps = {
     id: string,
 }
 
-export const CanDeleteReview:  FC<CanDeleteReviewAuthorizedProps> = ({ children, id }) => {
+export const CanDeleteReview: FC<CanDeleteReviewAuthorizedProps> = ({ children, id }) => {
     const { auth } = useAuth();
 
     if (!auth) return null;
@@ -38,7 +38,7 @@ export const CanDeleteReview:  FC<CanDeleteReviewAuthorizedProps> = ({ children,
 export const AddToFavourite: FC<CanDeleteReviewAuthorizedProps> = ({ children, id }) => {
     const { auth } = useAuth();
     const { data: user } = useQuery(['user', auth?.userId], () => UserApi.retrieve(auth?.userId), {
-      enabled: !!auth,
+        enabled: !!auth,
     });
 
     if (!auth || !user) return null;
@@ -47,14 +47,14 @@ export const AddToFavourite: FC<CanDeleteReviewAuthorizedProps> = ({ children, i
 }
 
 export const RemoveFromFavourite: FC<CanDeleteReviewAuthorizedProps> = ({ children, id }) => {
-        const { auth } = useAuth();
-        const { data: user } = useQuery(['user', auth?.userId], () => UserApi.retrieve(auth?.userId), {
-          enabled: !!auth,
-        });
-    
-        if (!auth || !user) return null;
-        if (!user.wishlist.includes(id)) return <>{children}</>;
-        return null;
+    const { auth } = useAuth();
+    const { data: user } = useQuery(['user', auth?.userId], () => UserApi.retrieve(auth?.userId), {
+        enabled: !!auth,
+    });
+
+    if (!auth || !user) return null;
+    if (!user.wishlist.includes(id)) return <>{children}</>;
+    return null;
 }
 
 
