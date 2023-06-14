@@ -7,7 +7,7 @@ const USER = 'sherlock.holmes@example.com';
 const PASSWORD = 'sherlock';
 
 export const login = async () => {
-    const resp = await baseApi.post('/auth/login', { email: USER, password: PASSWORD });
+    const resp = await baseApi.post('/auth', { username: USER, password: PASSWORD });
     return resp.data;
 }
 
@@ -21,6 +21,6 @@ export const auth = async () => {
 }
 
 export const logout = async () => {
-    const resp = await baseApi.post<ResponseSingle<User>>('/auth/logout', {});
+    const resp = await baseApi.delete<ResponseSingle<User>>('/auth', {});
     return resp.data;
 }
