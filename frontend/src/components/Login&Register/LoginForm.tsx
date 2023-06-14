@@ -15,7 +15,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ handleClose }) => {
     }, [login]);
 
     return (
-        <form className="p-6 bg-white rounded shadow-md"  onClick={() => handleSubmit}>
+        <form className="p-6 bg-white rounded shadow-md"  onSubmit={() => handleSubmit}>
             <div className="mb-4">
                 <label className="block text-sm font-bold mb-2">
                     <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" name="nickname" placeholder="Přezdívka" required />
