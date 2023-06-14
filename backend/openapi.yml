@@ -581,6 +581,24 @@ paths:
         "403":
           description: User is not an admin
   /game/{gameId}/review:
+    get:
+      summary: Retrieves a list of all reviews of a game
+      parameters:
+        - name: gameId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  $ref: "#/components/schemas/Review"
     post:
       summary: Add a review to a game
       parameters:
