@@ -1,4 +1,5 @@
-import {  MouseEventHandler } from 'react';
+import {  FormEventHandler, MouseEventHandler, useCallback } from 'react';
+import useLogin from '../../hooks/useLogin';
 
 
 interface LoginFormProps {
@@ -6,9 +7,12 @@ interface LoginFormProps {
 }
 
 export const LoginForm: React.FC<LoginFormProps> = ({ handleClose }) => {
-    //   const handleSubmit = () => {
-    //      tady prijde backend sracky
-    //   };
+    const { login } = useLogin({ redirect: '/' })
+
+    const handleSubmit: FormEventHandler<HTMLFormElement> = useCallback((e) => {
+        e.preventDefault();
+        login();
+    }, [login]);
 
     return (
         <form className="p-6 bg-white rounded shadow-md">
@@ -23,7 +27,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ handleClose }) => {
                 </label>
             </div>
             <div className="flex items-center justify-between">
-                <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">Přihlásit se</button>
+                <button onClick={() => handleSubmit} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">Přihlásit se</button>
                 <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button" onClick={handleClose}>X</button>
             </div>
         </form>

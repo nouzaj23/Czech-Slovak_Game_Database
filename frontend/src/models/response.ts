@@ -1,4 +1,4 @@
-export type ResponseSingle<T> = {
-    item: T,
-    message: string
+export type ResponseSingle = {
+    userId: string;
+    isAdmin: boolean;
 } 

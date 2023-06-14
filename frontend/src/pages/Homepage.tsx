@@ -6,6 +6,7 @@ export const Homepage = () => {
     let gamesCopy: Game[] = games;
     gamesCopy.sort((a, b) => b.releaseDate.localeCompare(a.releaseDate));
     let recentGames: Game[] = gamesCopy.slice(0, 4);
+
     return (
         <div className="flex flex-col h-full w-full p-8 bg-gray-100">
             <h1 className="text-4xl font-semibold mb-8 text-gray-700">Poslední vydané hry:</h1>

@@ -29,7 +29,7 @@ export const CanDeleteReview:  FC<CanDeleteReviewAuthorizedProps> = ({ children,
     const { auth } = useAuth();
 
     if (!auth) return null;
-    if (auth.message == "ADMIN" || auth.item.reviews.includes(id)) return <>{children}</>;
+    if (auth.isAdmin || auth.item.reviews.includes(id)) return <>{children}</>;
     return null;
 }
 
@@ -53,6 +53,6 @@ export const CanManageCSHD: FC<AuthorizedProps> = ({ children }) => {
     const { auth } = useAuth();
 
     if (!auth) return null;
-    if (auth.message == "ADMIN") return <>{children}</>;
+    if (auth.isAdmin) return <>{children}</>;
     return null;
 }
