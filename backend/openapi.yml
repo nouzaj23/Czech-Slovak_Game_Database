@@ -107,7 +107,7 @@ components:
           type: string
         rating:
           type: number
-        content:
+        text:
           type: string
         user:
           type: object
@@ -620,6 +620,8 @@ paths:
                   type: number
                 review:
                   type: string
+                title:
+                  type: string
       responses:
         "201":
           description: Successful operation
@@ -650,6 +652,8 @@ paths:
                 rating:
                   type: number
                 review:
+                  type: string
+                text:
                   type: string
       responses:
         "200":
