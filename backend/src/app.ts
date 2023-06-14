@@ -46,7 +46,9 @@ const context: Context = {
 await context.dataSource.initialize()
 
 context.app.use(Express.json())
-context.app.use(cors())
+context.app.use(cors({
+  credentials: true,
+}))
 context.app.use(Session({
   store: new TypeormStore({
     cleanupLimit: 2,
