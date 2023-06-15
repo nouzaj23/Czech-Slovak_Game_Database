@@ -10,7 +10,8 @@ const useLogin = ({ redirect }: UseLoginProps) => {
     const navigate = useNavigate();
     const queryClient = useQueryClient();
 
-    const { mutateAsync: login, isLoading, isError } = useMutation((credentials: {username: string, password: string}) => AuthApi.login(credentials.username, credentials.password), {
+    const { mutateAsync: login, isLoading, isError } = useMutation({
+        mutationFn: (credentials: {username: string, password: string}) => AuthApi.login(credentials.username, credentials.password),
         retry: false,
         onSuccess: () => {
             navigate(redirect);

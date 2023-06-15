@@ -7,11 +7,11 @@ interface LoginFormProps {
 }
 
 export const LoginForm: React.FC<LoginFormProps> = ({ handleClose }) => {
-    const { login } = useLogin({ redirect: '/' })
+    const { login } = useLogin({ redirect: '/games' })
 
     const handleSubmit: FormEventHandler<HTMLFormElement> = useCallback((e) => {
         e.preventDefault();
-        const username = document.getElementById("username") as HTMLInputElement;
+        const username = document.getElementById("nickname") as HTMLInputElement;
         const password = document.getElementById("password") as HTMLInputElement;
         if (username != undefined && password != undefined) {
             login({username: username.value, password: password.value});
@@ -19,7 +19,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ handleClose }) => {
     }, [login]);
 
     return (
-        <form className="p-6 bg-white rounded shadow-md">
+        <form className="p-6 bg-white rounded shadow-md" onSubmit={handleSubmit}>
             <div className="mb-4">
                 <label className="block text-sm font-bold mb-2">
                     <input id="nickname" className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" name="nickname" placeholder="Přezdívka" required />
@@ -31,7 +31,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ handleClose }) => {
                 </label>
             </div>
             <div className="flex items-center justify-between">
-                <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button" onClick={() => handleSubmit}>Přihlásit se</button>
+                <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">Přihlásit se</button>
                 <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button" onClick={handleClose}>X</button>
             </div>
         </form>
