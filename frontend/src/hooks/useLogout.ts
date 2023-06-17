@@ -14,10 +14,11 @@ const useLogout = ({ redirect }: UseLoginProps) => {
         mutationFn: () => AuthApi.logout(),
         onSuccess: () => {
             navigate(redirect);
-            queryClient.invalidateQueries(['auth']);
-            // queryClient.resetQueries(['auth']);
+            // queryClient.invalidateQueries(['auth']);
+            queryClient.resetQueries(['auth']);
         },
     })
+    console.log("odhlaseno");
 
     return { logout, isLoading, isError };
 }
