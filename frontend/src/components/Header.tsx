@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useState } from 'react';
+import { FormEventHandler, useCallback, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { LoginForm } from "./Login&Register/LoginForm";
@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { RegisterForm } from "./Login&Register/RegisterForm";
 import { CanManageCSHD, IsLogged, IsNotLogged } from '../components/Authorized';
 import { AuthApi } from "../services";
+import useLogout from "../hooks/useLogout";
 
 export const Header = () => {
     const navigate = useNavigate();
@@ -22,10 +23,13 @@ export const Header = () => {
         }
     }
 
-    const handleLogout = () => {
-        AuthApi.logout();
-    }
+    const { logout } = useLogout({ redirect: '/' })
 
+    const handleLogout: FormEventHandler<HTMLFormElement> = useCallback((e) => {
+        e.preventDefault();
+        AuthApi.logout();
+    }, [logout])
+    
     return (
         <div style={{ zIndex: "10" }} className="flex flex-col sm:flex-row w-full h-auto sm:h-16 fixed top-0 bg-gray-800 text-white justify-between items-center px-4 shadow-md">
             <div className="flex flex-row justify-between w-full sm:w-auto">
@@ -106,7 +110,7 @@ export const Header = () => {
                         </button>
                     </Link>
                     <Link to="/">
-                        <button onClick={handleLogout} className="sm:w-auto py-1 sm:py-0 w-full h-full flex items-center justify-center hover:text-gray-300 transition-colors duration-300 ease-in-out">
+                        <button onClick={() => handleLogout} className="sm:w-auto py-1 sm:py-0 w-full h-full flex items-center justify-center hover:text-gray-300 transition-colors duration-300 ease-in-out">
                             Odhlásit
                         </button>
                     </Link>
