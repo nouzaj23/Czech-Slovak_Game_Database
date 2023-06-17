@@ -13,6 +13,7 @@ export const auth = async () => {
 
 export const logout = async () => {
     const resp = await axiosInstance.delete('/auth', {});
+    console.log("LogOut");
     if (resp.status) {
         console.log("eee");
         console.log(resp.statusText);
