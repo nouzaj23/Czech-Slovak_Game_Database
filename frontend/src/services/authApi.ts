@@ -12,5 +12,6 @@ export const auth = async () => {
 }
 
 export const logout = async () => {
+    console.log("logout called");
     await axiosInstance.delete('/auth', {});
 }
