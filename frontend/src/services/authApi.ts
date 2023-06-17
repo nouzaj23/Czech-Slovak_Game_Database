@@ -2,9 +2,6 @@
 // import { ResponseSingle } from "../models/response";
 import axiosInstance from "./base";
 
-// const USER = 'admin';
-// const PASSWORD = 'admin';
-
 export const login = async (username: string, password: string) => { 
     await axiosInstance.post('/auth', { username, password });
 }
