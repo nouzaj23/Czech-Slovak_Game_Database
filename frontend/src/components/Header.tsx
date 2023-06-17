@@ -6,7 +6,6 @@ import { LoginForm } from "./Login&Register/LoginForm";
 import { useNavigate } from "react-router-dom";
 import { RegisterForm } from "./Login&Register/RegisterForm";
 import { CanManageCSHD, IsLogged, IsNotLogged } from '../components/Authorized';
-import { AuthApi } from "../services";
 import useLogout from "../hooks/useLogout";
 
 export const Header = () => {
@@ -27,7 +26,7 @@ export const Header = () => {
 
     const handleLogout: FormEventHandler<HTMLFormElement> = useCallback((e) => {
         e.preventDefault();
-        AuthApi.logout();
+        logout();
     }, [logout])
     
     return (
