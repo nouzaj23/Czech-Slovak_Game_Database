@@ -15,12 +15,11 @@ export const logout = async () => {
     try {
         await axiosInstance.delete('/auth', {});
     } catch (error: any) {
-        // Zachycení chyby 504
+        console.log("problem");
         if (error.response && error.response.status === 504) {
             console.log("Server didn't respond in time, but we'll continue as if the logout was successful.");
-            return; // Ukončení funkce bez dalšího zpracování
+            return;
         }
-        // Zde můžete přidat další zachycení a zpracování chyb
-        throw error; // Pokud se jedná o jinou chybu, necháme ji vyvolat
+        throw error;
     }
 }
