@@ -25,7 +25,6 @@ export const Header = () => {
     const { logout } = useLogout({ redirect: '/' })
 
     const handleLogout: FormEventHandler<HTMLFormElement> = useCallback((e) => {
-        console.log("g");
         e.preventDefault();
         logout();
     }, [logout])

@@ -11,7 +11,10 @@ const useLogout = ({ redirect }: UseLoginProps) => {
     const queryClient = useQueryClient();
     
     const { mutateAsync: logout, isLoading, isError } = useMutation({
-        mutationFn: () => AuthApi.logout(),
+        mutationFn: () => {
+            console.log("volám AuthApi.logout");
+            return AuthApi.logout();
+        },
         onSuccess: () => {
             navigate(redirect);
             console.log("odhlaseno");
