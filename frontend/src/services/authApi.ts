@@ -12,5 +12,8 @@ export const auth = async () => {
 }
 
 export const logout = async () => {
-    await axiosInstance.delete('/auth', {});
+    const resp = await axiosInstance.delete('/auth', {});
+    if (resp.data.message) {
+        console.log(resp.data.message);
+    }
 }
