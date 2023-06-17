@@ -14,7 +14,8 @@ const useLogout = ({ redirect }: UseLoginProps) => {
         mutationFn: () => AuthApi.logout(),
         onSuccess: () => {
             navigate(redirect);
-            queryClient.resetQueries(['auth']);
+            queryClient.invalidateQueries(['auth']);
+            // queryClient.resetQueries(['auth']);
         },
     })
 
