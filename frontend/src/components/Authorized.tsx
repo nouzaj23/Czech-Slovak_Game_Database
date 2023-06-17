@@ -9,8 +9,6 @@ type AuthorizedProps = {
 
 export const IsLogged: FC<AuthorizedProps> = ({ children }) => {
     const { auth } = useAuth();
-
-    // if (!auth || !roles.includes(auth.item.role)) return null;
     if (!auth) return null;
     return <>{children}</>;
 }
