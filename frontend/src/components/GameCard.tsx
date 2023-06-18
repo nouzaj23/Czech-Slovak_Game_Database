@@ -1,7 +1,7 @@
 import { Developer, Game, Genre } from "../models";
 // import developers from '../assets/developers.json';
 // import genres from '../assets/genres.json';
-import reviews from '../assets/reviews.json';
+// import reviews from '../assets/reviews.json';
 import { Link } from "react-router-dom";
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -23,7 +23,9 @@ export const GameCard: React.FC<GameCardProps> = ({ developers, game, genres }) 
     let gameDevelopers = developers.filter(developer => game.developers.includes(developer.id));
     let gameGenres = genres.filter(genre => game.genres.includes(genre.id));
 
-    const rating: number = reviews.filter(review => game.reviews.includes(review.id)).reduce((accumulator, currentValue) => accumulator + currentValue.rating, 0) / game.reviews.length;
+    const rating: number = 10;
+
+    // const rating: number = reviews.filter(review => game.reviews.includes(review.id)).reduce((accumulator, currentValue) => accumulator + currentValue.rating, 0) / game.reviews.length;
 
     const ratingBg = () => {
         if (rating > 7) {
