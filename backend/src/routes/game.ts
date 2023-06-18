@@ -28,7 +28,7 @@ export function makeRouter(context: Context) {
       }
     })
 
-  router.route('/:gameId')
+  router.route('/:id')
     .get(async (req, res, next) => {
       try {
         const game = await context.controllers.game.readSingle({...req.params, ...req.body}, req.session.auth?.userId)
