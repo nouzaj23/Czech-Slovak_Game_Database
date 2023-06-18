@@ -1,8 +1,6 @@
 import 'reflect-metadata'
 import * as ormconfig from './ormconfig.js'
 
-import { setupDemoDatabase } from './demo.js'
-
 import { Context, Enviroment as Environment } from '@/context'
 import { getRepositories } from '@/repositories'
 import { makeRouter } from '@/routes'
@@ -46,9 +44,6 @@ const context: Context = {
 }
 
 await context.dataSource.initialize()
-
-if (process.env.DEMO_DB)
-  await setupDemoDatabase(context.repositories)
 
 context.app.use(Express.json())
 context.app.set('trust proxy', true)
