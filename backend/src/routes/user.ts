@@ -7,20 +7,29 @@ import Express from 'express'
 
 export function makeRouter(context: Context) {
   const router = Express.Router({ mergeParams: true })
-
-  router.post('/', async (req, res, next) => {
-    try {
-      const user = await context.controllers.user.create({...req.params, ...req.body}, req.session.auth?.userId)
-      res.json(user)
-    } catch (error) {
-      next(error)
-    }
-  })
+  router.route('/')
+    .get(makeAdminAuthMiddleware())
+    .get(async (req, res, next) => {
+      try {
+        const users = await context.controllers.user.readMultiple({ ...req.params, ...req.body }, req.session.auth?.userId)
+        res.json(users)
+      } catch (error) {
+        next(error)
+      }
+    })
+    .post(async (req, res, next) => {
+      try {
+        const user = await context.controllers.user.create({ ...req.params, ...req.body }, req.session.auth?.userId)
+        res.json(user)
+      } catch (error) {
+        next(error)
+      }
+    })
 
   router.route('/:id')
     .get(async (req, res, next) => {
       try {
-        const user = await context.controllers.user.readSingle({...req.params, ...req.body}, req.session.auth?.userId)
+        const user = await context.controllers.user.readSingle({ ...req.params, ...req.body }, req.session.auth?.userId)
         res.json(user)
       } catch (error) {
         next(error)
@@ -29,7 +38,7 @@ export function makeRouter(context: Context) {
     .patch(makeUserAuthMiddleware((req) => req.params.userId))
     .patch(async (req, res, next) => {
       try {
-        const user = await context.controllers.user.update({...req.params, ...req.body}, req.session.auth?.userId)
+        const user = await context.controllers.user.update({ ...req.params, ...req.body }, req.session.auth?.userId)
         res.json(user)
       } catch (error) {
         next(error)
@@ -39,7 +48,7 @@ export function makeRouter(context: Context) {
     .delete(makeUserAuthMiddleware((req) => req.params.userId))
     .delete(async (req, res, next) => {
       try {
-        const user = await context.controllers.user.delete({...req.params, ...req.body}, req.session.auth?.userId)
+        const user = await context.controllers.user.delete({ ...req.params, ...req.body }, req.session.auth?.userId)
         res.json(user)
       } catch (error) {
         next(error)
@@ -50,7 +59,7 @@ export function makeRouter(context: Context) {
     .all(makeUserAuthMiddleware((req) => req.params.userId))
     .get(async (req, res, next) => {
       try {
-        const user = await context.controllers.user.readSingleFull({...req.params, ...req.body}, req.session.auth?.userId)
+        const user = await context.controllers.user.readSingleFull({ ...req.params, ...req.body }, req.session.auth?.userId)
         res.json(user)
       } catch (error) {
         next(error)
@@ -58,13 +67,13 @@ export function makeRouter(context: Context) {
     })
     .patch(async (req, res, next) => {
       try {
-        const user = await context.controllers.user.updateAuth({...req.params, ...req.body}, req.session.auth?.userId)
+        const user = await context.controllers.user.updateAuth({ ...req.params, ...req.body }, req.session.auth?.userId)
         res.json(user)
       } catch (error) {
         next(error)
       }
     })
-  
+
   router.use('/:userId/wishlist', makeWishlistRouter(context))
 
   return router
