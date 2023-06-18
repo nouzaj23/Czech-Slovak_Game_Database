@@ -18,7 +18,6 @@ const useLogout = ({ redirect }: UseLoginProps) => {
         onSuccess: () => {
             navigate(redirect);
             console.log("odhlaseno");
-            // queryClient.invalidateQueries(['auth']);
             queryClient.resetQueries(['auth']);
         },
     })
