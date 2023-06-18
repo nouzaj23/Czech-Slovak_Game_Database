@@ -8,7 +8,10 @@ export function makeErrorMiddleware(context: Context) {
     const stack = true ? { stack: error.stack } : null;
     console.error(error)
     if (error instanceof Errs.RequestError) {
-      res.status(error.status).json({ error: error.message, ...stack })
+      if (error instanceof Errs.InvalidData)
+        res.status(error.status).json({ error: error.message, ...stack, original: error.original })
+      else
+        res.status(error.status).json({ error: error.message, ...stack })
     } else if (error instanceof Errs.SystemError) {
       res.status(error.status).json({ error: error.message, ...stack })
     } else {

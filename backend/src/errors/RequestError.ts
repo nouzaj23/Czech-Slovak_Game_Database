@@ -38,9 +38,9 @@ export class NotFound extends RequestError {
   }
 }
 
-export class InvalidData extends RequestError {
+export class InvalidData<Original extends Error> extends RequestError {
   readonly original?: Error
-  constructor(original?: Error) {
+  constructor(original?: Original) {
     super('Invalid data!', 400)
     this.original = original
   }
