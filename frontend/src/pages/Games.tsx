@@ -1,12 +1,33 @@
-import { useState } from 'react';
-import games from '../assets/games.json';
-import developers from '../assets/developers.json';
-import genres from '../assets/genres.json';
+import { useEffect, useState } from 'react';
+// import games from '../assets/games.json';
+// import developers from '../assets/developers.json';
+// import genres from '../assets/genres.json';
 import reviews from '../assets/reviews.json';
 import { GameItem } from '../components/GameItem';
 import { useLocation } from 'react-router-dom';
+import { Developer, Game, Genre } from '../models';
+import { DeveloperApi, GameApi, GenreApi } from '../services';
 
 export const Games = () => {
+  const [games, setGames] = useState<Game[]>([]);
+  const [developers, setDevelopers] = useState<Developer[]>([]);
+  const [genres, setGenres] = useState<Genre[]>([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+        try {
+            const loadedGames = await GameApi.retrieveAllGames();
+            setGames(loadedGames);
+            setDevelopers(await DeveloperApi.retrieveAllDevelopers());
+            setGenres(await GenreApi.retrieveAllGenres());
+        }
+        catch (error) {
+            console.log("Games was not loaded");
+        }
+    }
+    fetchData();
+}, []);
+
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const genre = queryParams.get('genre');
