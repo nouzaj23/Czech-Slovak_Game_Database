@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from "react-router-dom";
 import games from '../assets/games.json';
 import reviews from '../assets/reviews.json';
@@ -7,9 +7,10 @@ import { ReviewItem } from '../components/Review';
 import { AddReviewForm } from '../components/AddReviewForm'
 import { CommentItem } from '../components/CommentItem';
 import { AddCommentForm } from '../components/AddCommentForm';
-import { Game, Review, Comment } from '../models';
+import { Game, Review, Comment, Developer, Genre } from '../models';
 import ReactPlayer from 'react-player';
 import { GameCard } from '../components/GameCard';
+import { DeveloperApi, GenreApi } from '../services';
 
 
 export const GamePage = () => {
@@ -197,10 +198,26 @@ export const GamePage = () => {
 
     const ratingBg = () => rating > 7 ? '#ad0e30' : rating > 3 ? '#3690eb' : '#010203';
 
+    const [developers, setDevelopers] = useState<Developer[]>([]);
+    const [genres, setGenres] = useState<Genre[]>([]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {                
+                setDevelopers(await DeveloperApi.retrieveAllDevelopers());
+                setGenres(await GenreApi.retrieveAllGenres());
+            }
+            catch (error) {
+                console.log("Games was not loaded");
+            }
+        }
+        fetchData();
+    }, []);
+
     return (
         <div className="w-full md:w-3/4 mx-auto p-4 bg-white shadow rounded">
             <div className="bg-white shadow-lg rounded-lg">
-                <GameCard {...game} />
+                <GameCard developers={developers} genres={genres} game={game}/>
             </div>
             <div className="mt-4 flex justify-around gap-1 sm:gap-4">
                 <button onClick={() => setSelectedTab('reviews')} style={{ background: ratingBg() }} className="px-3 py-2 text-sm sm:text-lg text-white w-full hover:bg-blue-600 transition-all duration-300 ease-in-out shadow-md hover:shadow-lg">
