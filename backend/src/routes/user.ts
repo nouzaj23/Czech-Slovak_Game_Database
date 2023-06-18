@@ -17,7 +17,7 @@ export function makeRouter(context: Context) {
     }
   })
 
-  router.route('/:userId')
+  router.route('/:id')
     .get(async (req, res, next) => {
       try {
         const user = await context.controllers.user.readSingle({...req.params, ...req.body}, req.session.auth?.userId)
@@ -46,7 +46,7 @@ export function makeRouter(context: Context) {
       }
     })
 
-  router.route('/:userId/auth')
+  router.route('/:id/auth')
     .all(makeUserAuthMiddleware((req) => req.params.userId))
     .get(async (req, res, next) => {
       try {
