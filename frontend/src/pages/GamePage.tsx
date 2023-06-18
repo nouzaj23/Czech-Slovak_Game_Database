@@ -65,12 +65,12 @@ export const GamePage = () => {
                 if (index < game.photos.length) {
                     const image = game.photos[index];
                     gridItems.push(
-                        <div className="col-span-1 p-2 border-4" key={index} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <div className="col-span-1 p-2 border-4 flex items-center justify-center" key={index}>
                             <div
                                 className={`aspect-w-1 aspect-h-1 cursor-pointer`}
                                 onClick={() => handleImageClick(image)}
                             >
-                                <img src={image} alt={`Obrázek ${index + 1}`} className="object-cover" style={{ maxWidth: '100%', maxHeight: '100%' }} />
+                                <img src={image} alt={`Obrázek ${index + 1}`} className="object-cover max-w-full max-h-full" />
                             </div>
                         </div>
 
@@ -86,6 +86,19 @@ export const GamePage = () => {
     const [allReviews, setAllReviews] = useState<Review[]>(reviews);
     const [allComments, setAllComments] = useState<Comment[]>(comments);
 
+    const itemsPerPage = 5;
+    const [page, setPage] = useState(0);
+    const handleNextPage = () => {
+        setPage(page + 1);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+    const handlePreviousPage = () => {
+        if (page > 0) {
+            setPage(page - 1);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    };
+
     const renderContent = () => {
         switch (selectedTab) {
             case 'reviews':
@@ -94,11 +107,44 @@ export const GamePage = () => {
                         <button onClick={handleAddReview} style={{ background: ratingBg() }} className="px-3 py-2 mb-5 mt-5 text-white rounded">Přidat recenzi</button>
                         <div>
                             {isOpen && (
-                                <AddReviewForm gameId={game.id} game={game} setGameReviews={setGameReviews} setReviews={setAllReviews} reviews={allReviews}/>
+                                <AddReviewForm gameId={game.id} game={game} setGameReviews={setGameReviews} setReviews={setAllReviews} reviews={allReviews} />
                             )}
                         </div>
-                        <div className="review-list space-y-4">
-                            {gameReviews.map((reviewId, key) => <ReviewItem reviewId={reviewId} key={key} rating={rating} reviews={allReviews} setGameReviews={setGameReviews} setReviews={setAllReviews} gameReviews={gameReviews}/>)}
+                        {/* <div className="review-list space-y-4">
+                            {gameReviews.map((reviewId, key) => <ReviewItem reviewId={reviewId} key={key} rating={rating} reviews={allReviews} setGameReviews={setGameReviews} setReviews={setAllReviews} gameReviews={gameReviews} />)}
+                        </div> */}
+                        <div>
+                            <div className="review-list space-y-4">
+                                {gameReviews.slice(page * itemsPerPage, (page + 1) * itemsPerPage).map((reviewId, key) => (
+                                    <ReviewItem
+                                        reviewId={reviewId}
+                                        key={key}
+                                        rating={rating}
+                                        reviews={allReviews}
+                                        setGameReviews={setGameReviews}
+                                        setReviews={setAllReviews}
+                                        gameReviews={gameReviews}
+                                    />
+                                ))}
+                            </div>
+                            <div className="flex justify-between mt-4">
+                                <button
+                                    onClick={handlePreviousPage}
+                                    style={{ background: ratingBg()}}
+                                    className={`px-4 py-2 text-white rounded ${page === 0 && 'opacity-50 cursor-not-allowed'}`}
+                                    disabled={page === 0}
+                                >
+                                    Předchozí
+                                </button>
+                                <button
+                                    onClick={handleNextPage}
+                                    style={{ background: ratingBg()}}
+                                    className={`px-4 py-2 text-white rounded ${gameReviews.length <= (page + 1) * itemsPerPage && 'opacity-50 cursor-not-allowed'}`}
+                                    disabled={gameReviews.length <= (page + 1) * itemsPerPage}
+                                >
+                                    Další
+                                </button>
+                            </div>
                         </div>
                     </div>
                 );
@@ -108,11 +154,11 @@ export const GamePage = () => {
                         <button onClick={handleAddReview} style={{ background: ratingBg() }} className="px-3 py-2 mb-5 mt-5 bg-blue-500 text-white rounded">Přidat komentář</button>
                         <div>
                             {isOpen && (
-                                <AddCommentForm comments={allComments} game={game}  setComments={setAllComments} setGameComments={setGameComments}/>
+                                <AddCommentForm comments={allComments} game={game} setComments={setAllComments} setGameComments={setGameComments} />
                             )}
                         </div>
                         <div className="review-list space-y-4">
-                            {gameComments.map((commentId, index) => <CommentItem commentId={commentId} key={index} comments={allComments} gameComments={gameComments} setComments={setAllComments} setGameComments={setGameComments}/>)}
+                            {gameComments.map((commentId, index) => <CommentItem commentId={commentId} key={index} comments={allComments} gameComments={gameComments} setComments={setAllComments} setGameComments={setGameComments} />)}
                         </div>
                     </div>
                 );
