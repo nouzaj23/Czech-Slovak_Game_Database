@@ -1,7 +1,11 @@
+import { Comment, Review, Wishlist } from "@/entities"
+
 export type UUID = string
 export type URL = string
 
 export type OrderType = 'ASC' | 'DESC'
+
+export type Resolvable<T> = T | UUID
 
 export interface CommentReadSingleData {
   id: UUID
@@ -233,6 +237,9 @@ export interface UserPublic {
   username: string
   avatar: URL | null
   bio: string | null
+  reviews: Resolvable<Review>[]
+  comments: Resolvable<Comment>[]
+  wishlist: Resolvable<Wishlist>[]
 }
 
 export interface UserDeleteData {

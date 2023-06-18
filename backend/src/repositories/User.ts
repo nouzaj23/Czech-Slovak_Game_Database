@@ -10,15 +10,11 @@ import * as Bcrypt from 'bcrypt'
 export function getRepository(dataSource: DataSource) {
   return makeRepository(dataSource, User, {
     async readSingle(data: UserReadSingleData, authorId: UUID | undefined): Promise<UserPublic> {
-      const user = await this.findOneBy(data)
+      const user = await this.findOne({where: data, select: ['id', 'username', 'avatar', 'bio', 'wishlist', 'comments', 'reviews'], relations: ['wishlist', 'comments', 'reviews']})
       if (!user)
         throw new NotFound()
-      return {
-        id: user.id,
-        username: user.username,
-        avatar: user.avatar,
-        bio: user.bio,
-      }
+
+      return user
     },
 
     async readMultiple(data: UserReadMultipleData, authorId: UUID | undefined): Promise<UserPublic[]> {
