@@ -10,7 +10,7 @@ import * as Bcrypt from 'bcrypt'
 export function getRepository(dataSource: DataSource) {
   return makeRepository(dataSource, User, {
     async readSingle(data: UserReadSingleData, authorId: UUID | undefined): Promise<UserPublic> {
-      const user = await this.findOne({where: data, select: ['id', 'username', 'avatar', 'bio', 'wishlist', 'comments', 'reviews'], relations: ['wishlist', 'comments', 'reviews']})
+      const user = await this.findOne({ where: data, select: ['id', 'username', 'avatar', 'bio', 'wishlist', 'comments', 'reviews'], relations: ['wishlist', 'comments', 'reviews'] })
       if (!user)
         throw new NotFound()
 
@@ -22,7 +22,7 @@ export function getRepository(dataSource: DataSource) {
         .select(['user.id', 'user.username', 'user.avatar', 'user.bio'])
         .where(data.ids ? { id: data.ids } : {})
         .orderBy(data.order || {})
-        
+
       if (data.usernameContains)
         query.andWhere(`user.username LIKE :usernameContains`, { usernameContains: `%${data.usernameContains}%` })
 
@@ -79,7 +79,7 @@ export function getRepository(dataSource: DataSource) {
 
         const { id, ...change } = data
 
-        await repository.update(id, change)
+        await repository.update({ id }, change)
       })
     },
 

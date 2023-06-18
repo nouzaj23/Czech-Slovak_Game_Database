@@ -23,14 +23,14 @@ export async function setupDemoDatabase(repositories: Repositories) {
   const userIds: UUID[] = await Promise.all(userData.map(async (data) => await userRepository.createUser(data, admin.id)).map(async (user) => (await user).id))
 
   const userUpdateData = [
-    { avatar: 'https://gravatar.com/avatar/player1', },
-    { avatar: 'https://gravatar.com/avatar/player2', },
-    { avatar: 'https://gravatar.com/avatar/player3', },
-    { avatar: 'https://gravatar.com/avatar/player4', },
-    { avatar: 'https://gravatar.com/avatar/player5', },
+    { id: userIds[0], avatar: 'https://gravatar.com/avatar/player1', },
+    { id: userIds[1], avatar: 'https://gravatar.com/avatar/player2', },
+    { id: userIds[2], avatar: 'https://gravatar.com/avatar/player3', },
+    { id: userIds[3], avatar: 'https://gravatar.com/avatar/player4', },
+    { id: userIds[4], avatar: 'https://gravatar.com/avatar/player5', },
   ]
 
-  await Promise.all(userIds.map(async (id, index) => await userRepository.updateUser({ id, ...userUpdateData[index] }, admin.id)))
+  await Promise.all(userUpdateData.map(async (data) => await userRepository.updateUser(data, admin.id)))
 
   const genreData: GenreCreationData[] = [
     { name: 'Action', description: 'Action games with fast-paced gameplay.', },
