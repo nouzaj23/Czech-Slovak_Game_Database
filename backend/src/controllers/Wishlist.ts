@@ -55,7 +55,7 @@ export class Wishlist extends Base {
       gameId: z.string().uuid().optional(),
       order: z.object({
         createdAt: z.enum(['ASC', 'DESC']).optional(),
-      }),
+      }).optional(),
       groupBy: z.enum(['user', 'game']).optional(),
     })
 
