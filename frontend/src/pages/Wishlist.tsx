@@ -4,13 +4,15 @@ import { AiFillCloseCircle } from "react-icons/ai";
 import reviews from '../assets/reviews.json';
 import { Link } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
+import { UserApi } from '../services';
 
 
 
-export const WishList = () => {
+export const WishList = async () => {
     const { auth } = useAuth();
 
-    const gamesInWishlist: Game[] = games.filter(game => auth?.item.wishlist.includes(game.id));
+    const gamesInWishlistIds: string[] = await UserApi.getWishlist(auth.userId);
+    const gamesInWishlist: Game[] = games.filter(game => gamesInWishlistIds.includes(game.id));
 
     function removeGameFromWishlist(index: number) {
         if (index == 0) {
