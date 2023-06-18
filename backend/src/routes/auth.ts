@@ -18,7 +18,7 @@ export function makeRouter(context: Context) {
   })
 
   router.post('/', async (req, res) => {
-    const user = await context.controllers.user.login(req.body)
+    const user = await context.controllers.user.login({...req.params, ...req.body}, req.session.auth?.userId)
     if (user) {
       req.session.auth = {
         userId: user.id,
@@ -38,7 +38,7 @@ export function makeRouter(context: Context) {
           message: 'Internal server error'
         })
       else
-        res.status(200)
+        res.status(200).send()
     })
   })
 
