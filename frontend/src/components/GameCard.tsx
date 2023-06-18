@@ -47,7 +47,7 @@ export const GameCard: React.FC<GameCardProps> = ({ developers, game, genres }) 
 
     return (
         <div className="p-6 relative" style={{ overflow: 'auto' }}>
-            <img src={game.cover != undefined ? game.cover : ""} alt="popis" className="w-1/4 object-contain object-top float-left mr-4" />
+            {/* <img src={game.cover != undefined ? game.cover : ""} alt="popis" className="w-1/4 object-contain object-top float-left mr-4" /> */}
 
             <div>
                 <Link to={`/games/${game.id}`}>
