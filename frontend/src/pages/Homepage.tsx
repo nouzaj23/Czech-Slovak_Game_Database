@@ -1,11 +1,30 @@
 import { Game } from '../models';
-import games from '../assets/games.json';
 import { GameCard } from '../components/GameCard';
+import { useEffect, useState } from 'react';
+import { GameApi } from '../services';
 
 export const Homepage = () => {
-    let gamesCopy: Game[] = games;
-    gamesCopy.sort((a, b) => b.releaseDate.localeCompare(a.releaseDate));
-    let recentGames: Game[] = gamesCopy.slice(0, 4);
+
+    const [recentGames, setRecentGames] = useState<Game[]>([]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const loadedGames = await GameApi.retrieveAllGames();
+                loadedGames.sort((a: Game, b: Game) => b.releaseDate.localeCompare(a.releaseDate));
+                setRecentGames(loadedGames.slice(0, 4));
+            }
+            catch (error) {
+                console.log("Games was not loaded");
+            }
+        }
+        fetchData();
+    }, []);
+
+
+    // let gamesCopy: Game[] = games;
+    // gamesCopy.sort((a, b) => b.releaseDate.localeCompare(a.releaseDate));
+    // let recentGames: Game[] = gamesCopy.slice(0, 4);
 
 
 
