@@ -5,14 +5,28 @@ import reviews from '../assets/reviews.json';
 import { Link } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
 import { UserApi } from '../services';
+import { useEffect, useState } from 'react';
 
 
 
-export const WishList = async () => {
+export const WishList = () => {
     const { auth } = useAuth();
 
-    const gamesInWishlistIds: string[] = await UserApi.getWishlist(auth.userId);
-    const gamesInWishlist: Game[] = games.filter(game => gamesInWishlistIds.includes(game.id));
+    const [wishlist, setWishlist] = useState<Game[]>([]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const gamesInWishlistIds = await UserApi.getWishlist(auth.userId);
+                const gamesInWishlist: Game[] = games.filter(game => gamesInWishlistIds.includes(game.id));
+                setWishlist(gamesInWishlist);
+            }
+            catch (error) {
+                console.log("WishList was not loaded");
+            }
+        }
+        fetchData();
+    }, []);
 
     function removeGameFromWishlist(index: number) {
         if (index == 0) {
@@ -27,7 +41,7 @@ export const WishList = async () => {
             <div className="w-full md:w-3/4">
                 <h1 className="text-4xl m-6">WishList</h1>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 m-6">
-                    {gamesInWishlist.map((game, index) => (
+                    {wishlist.map((game, index) => (
                         <div key={index} className="relative rounded overflow-hidden shadow-lg p-6 bg-white">
                             <AiFillCloseCircle className="absolute bottom-2 right-2 text-2xl cursor-pointer" onClick={() => removeGameFromWishlist(index)} />
                             <img className="w-full h-auto object-cover" src={game.cover} alt={game.name} />
