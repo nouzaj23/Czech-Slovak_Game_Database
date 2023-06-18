@@ -1,6 +1,6 @@
-import { Game } from "../models";
-import developers from '../assets/developers.json';
-import genres from '../assets/genres.json';
+import { Developer, Game, Genre } from "../models";
+// import developers from '../assets/developers.json';
+// import genres from '../assets/genres.json';
 import reviews from '../assets/reviews.json';
 import { Link } from "react-router-dom";
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
@@ -9,9 +9,15 @@ import { AddToFavourite, RemoveFromFavourite } from './Authorized';
 import { UserApi } from "../services";
 import useAuth from "../hooks/useAuth";
 
-type GameCardProps = Game;
+interface GameCardProps {
+    game: Game;
+    developers: Developer[];
+    genres: Genre[];
+}
 
-export const GameCard: React.FC<GameCardProps> = ({ ...game }) => {
+// type GameCardProps = Game;
+
+export const GameCard: React.FC<GameCardProps> = ({ developers, game, genres }) => {
     const { auth } = useAuth();
 
     let gameDevelopers = developers.filter(developer => game.developers.includes(developer.id));
