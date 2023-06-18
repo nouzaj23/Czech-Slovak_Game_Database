@@ -1,17 +1,61 @@
-import { Base, saltRounds } from './Base.js'
+import { Base, assertSameType, saltRounds } from './Base.js'
 
 import type { Repositories } from '@/repositories'
 import { InvalidData, NotFound } from '@/errors'
 
 import * as z from 'zod'
-import * as Bcrypt from 'bcrypt'
+import { UUID, UserPublic, UserReadMultipleData } from '@/repositories/types.js'
 
 export class User extends Base {
   constructor(repositories: Repositories) {
     super(repositories)
   }
 
-  async create(data: any) {
+  async readSingle(data: any, authorId: UUID | undefined): Promise<UserPublic> {
+    const schema = z.object({
+      id: z.string().uuid()
+    })
+
+    const parsed = schema.safeParse(data)
+    if (!parsed.success)
+      throw new InvalidData(parsed.error)
+
+    return this.repositories.user.readSingle(parsed.data, authorId)
+  }
+
+  async readSingleFull(data: any, authorId: UUID | undefined) {
+    const schema = z.object({
+      id: z.string().uuid()
+    })
+
+    const parsed = schema.safeParse(data)
+    if (!parsed.success)
+      throw new InvalidData(parsed.error)
+
+    return this.repositories.user.readSingleFull(parsed.data, authorId)
+  }
+
+  async readMultiple(data: any, authorId: UUID | undefined) {
+    const schema = z.object({
+      ids: z.array(z.string().uuid()).optional(),
+      usernameContains: z.string().optional(),
+      order: z.object({
+        username: z.enum(['ASC', 'DESC']).optional(),
+        createdAt: z.enum(['ASC', 'DESC']).optional(),
+        updatedAt: z.enum(['ASC', 'DESC']).optional(),
+      }).optional(),
+    })
+
+    const parsed = schema.safeParse(data)
+    if (!parsed.success)
+      throw new InvalidData(parsed.error)
+
+    assertSameType<typeof parsed.data, UserReadMultipleData>(parsed.data)
+
+    return this.repositories.user.readMultiple(parsed.data, authorId)
+  }
+
+  async create(data: any, authorId: UUID | undefined) {
     const schema = z.object({
       username: z.string(),
       email: z.string().email(),
@@ -22,12 +66,10 @@ export class User extends Base {
     if (!parsed.success)
       throw new InvalidData(parsed.error)
 
-    const { username, email, password } = parsed.data
-    const hash = await Bcrypt.hash(password, saltRounds)
-    await this.repositories.user.createUser(username, email, hash)
+    await this.repositories.user.createUser(parsed.data, authorId)
   }
 
-  async login(data: any) {
+  async login(data: any, authorId: UUID | undefined) {
     const schema = z.object({
       email: z.string().email().optional(),
       username: z.string().optional(),
@@ -41,35 +83,12 @@ export class User extends Base {
     if (!parsed.success)
       throw new InvalidData(parsed.error)
 
-    const { email, username, password } = parsed.data
-    let user;
-    if (email) 
-      user = await this.repositories.user.findByEmail(email)
-    else if (username) 
-      user = await this.repositories.user.findByUsername(username)
-    else
-      throw new InvalidData()
-
-    if (!user)
-      throw new NotFound()
-
-    const match = await Bcrypt.compare(password, user.auth.hash)
-    if (!match)
-      throw new InvalidData()
-
-    return user
+    return this.repositories.user.login(parsed.data, authorId)
   }
 
-  async read(userId: string) {
-    const user = await this.repositories.user.findById(userId)
-    if (!user)
-      throw new NotFound()
-    
-    return user.public
-  }
-
-  async update(userId: string, data: any) {
+  async update(data: any, authorId: UUID | undefined) {
     const schema = z.object({
+      id: z.string().uuid(),
       avatar: z.string().optional(),
       bio: z.string().optional(),
     })
@@ -78,23 +97,25 @@ export class User extends Base {
     if (!parsed.success)
       throw new InvalidData(parsed.error)
 
-    await this.repositories.user.update(userId, parsed.data)
+    await this.repositories.user.updateUser(parsed.data, authorId)
   }
 
-  async delete(userId: string) {
-    await this.repositories.user.deleteById(userId)
-  }
-
-  async readAuth(userId: string) {
-    const user = await this.repositories.user.findById(userId)
-    if (!user)
-      throw new NotFound()
-    
-    return user.auth
-  }
-
-  async updateAuth(userId: string, data: any) {
+  async delete(data: any, authorId: UUID | undefined) {
     const schema = z.object({
+      id: z.string().uuid(),
+    })
+
+    const parsed = schema.safeParse(data)
+    if (!parsed.success)
+      throw new InvalidData(parsed.error)
+
+    await this.repositories.user.deleteUser(parsed.data, authorId)
+  }
+
+  async updateAuth(data: any, authorId: UUID | undefined) {
+    const schema = z.object({
+      id: z.string().uuid(),
+      username: z.string().optional(),
       email: z.string().email().optional(),
       password: z.string().min(8).optional(),
     })
@@ -103,13 +124,6 @@ export class User extends Base {
     if (!parsed.success)
       throw new InvalidData(parsed.error)
 
-    const { password } = parsed.data
-    if (password) {
-      const hash = await Bcrypt.hash(password, saltRounds)
-      await this.repositories.user.update(userId, { hash })
-    }
-    else {
-      await this.repositories.user.update(userId, parsed.data)
-    }
+    return this.repositories.user.updateUserAuth(parsed.data, authorId)
   }
 }

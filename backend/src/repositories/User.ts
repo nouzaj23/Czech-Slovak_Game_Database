@@ -1,69 +1,145 @@
-import { makeRepository } from './Base.js'
+import { checkPermissions, makeRepository } from './Base.js'
+import { UUID, UserCreationData, UserLoginData, UserPublic, UserReadMultipleData, UserReadSingleData, UserUpdateAuthData, UserUpdateData } from './types.js'
 
 import { User, Game } from '@/entities'
-import { AlreadyExists, NotFound } from '@/errors'
+import { AlreadyExists, InsufficientPermissions, InvalidData, NotFound, NotLoggedIn, RequestError } from '@/errors'
 
-import { DataSource } from 'typeorm'
+import { DataSource, FindOptionsWhere } from 'typeorm'
+import * as Bcrypt from 'bcrypt'
 
 export function getRepository(dataSource: DataSource) {
   return makeRepository(dataSource, User, {
-    findByUsername(username: string) {
-      return this.createQueryBuilder('user')
-        .where('user.username = :username', { username })
-        .getOne()
+    async readSingle(data: UserReadSingleData, authorId: UUID | undefined): Promise<UserPublic> {
+      const user = await this.findOneBy(data)
+      if (!user)
+        throw new NotFound()
+      return {
+        id: user.id,
+        username: user.username,
+        avatar: user.avatar,
+        bio: user.bio,
+      }
     },
 
-    findByEmail(email: string) {
-      return this.createQueryBuilder('user')
-        .where('user.email = :email', { email })
-        .getOne()
+    async readMultiple(data: UserReadMultipleData, authorId: UUID | undefined): Promise<UserPublic[]> {
+      const query = this.createQueryBuilder('user')
+        .select(['user.id', 'user.username', 'user.avatar', 'user.bio'])
+        .where(data.ids ? { id: data.ids } : {})
+        .orderBy(data.order || {})
+        
+      if (data.usernameContains)
+        query.andWhere(`user.username LIKE :usernameContains`, { usernameContains: `%${data.usernameContains}%` })
+
+      return query.getMany()
     },
 
-    createUser(username: string, email: string, hash: string) {
+    async readSingleFull(data: UserReadSingleData, authorId: UUID | undefined): Promise<User> {
+      if (!authorId)
+        throw new NotLoggedIn()
       return this.manager.transaction(async manager => {
-        const usernameConflict = await manager.findOneBy(User, { username });
-        if (usernameConflict) {
-          throw new AlreadyExists('username')
-        }
+        const repository = manager.withRepository(this)
 
-        const emailConflict = await manager.findOneBy(User, { email });
-        if (emailConflict) {
-          throw new AlreadyExists('email')
-        }
+        await checkPermissions(manager.getRepository(User), authorId, data.id)
 
-        return manager.createQueryBuilder()
-          .insert()
-          .values({ username, email, hash })
-          .execute()
+        const user = await repository.findOneBy(data)
+        if (!user)
+          throw new NotFound()
+
+        return user
       })
     },
 
-    deleteById(id: string) {
-      return this.createQueryBuilder('user')
-        .softDelete()
-        .where('user.id = :id', { id })
-        .execute()
+    async createUser(data: UserCreationData, authorId: UUID | undefined): Promise<User> {
+      return this.manager.transaction(async manager => {
+        const repository = manager.withRepository(this)
+
+        const { username, email, password } = data
+
+        const conflicts = await repository.findBy([{ username }, { email }]);
+        if (conflicts.length !== 0) {
+          const conflict = conflicts[0]
+          if (conflict.username === username)
+            throw new AlreadyExists("Username")
+          else
+            throw new AlreadyExists("Email")
+        }
+
+        const hash = await Bcrypt.hash(password, 10)
+        return repository.create({
+          username,
+          email,
+          hash,
+        })
+      })
     },
 
-    readWishlist(userId: string) {
-      return this.createQueryBuilder('user')
-        .relation(User, 'wishlist')
-        .of(userId)
-        .loadMany()
+    async updateUser(data: UserUpdateData, authorId: UUID | undefined): Promise<void> {
+      if (!authorId)
+        throw new NotLoggedIn()
+      return this.manager.transaction(async manager => {
+        const repository = manager.withRepository(this)
+
+        await checkPermissions(manager.getRepository(User), authorId, data.id)
+
+        const { id, ...change } = data
+
+        await repository.update(id, change)
+      })
     },
 
-    readComments(userId: string) {
-      return this.createQueryBuilder('user')
-        .relation(User, 'comments')
-        .of(userId)
-        .loadMany()
+    async updateUserAuth(data: UserUpdateAuthData, authorId: UUID | undefined): Promise<void> {
+      if (!authorId)
+        throw new NotLoggedIn()
+      return this.manager.transaction(async manager => {
+        const repository = manager.withRepository(this)
+
+        await checkPermissions(manager.getRepository(User), authorId, data.id)
+
+        const { id, ...change } = data
+
+        await repository.update(id, change)
+      })
     },
 
-    readReviews(userId: string) {
-      return this.createQueryBuilder('user')
-        .relation(User, 'reviews')
-        .of(userId)
-        .loadMany()
+    async deleteUser(data: UserUpdateData, authorId: UUID | undefined): Promise<void> {
+      if (!authorId)
+        throw new NotLoggedIn()
+      return this.manager.transaction(async manager => {
+        const repository = manager.withRepository(this)
+
+        await checkPermissions(manager.getRepository(User), authorId, data.id)
+
+        const user = await repository.findOne({ where: { id: data.id }, relations: ['wishlist', 'comments', 'reviews'] })
+        if (!user)
+          throw new NotFound("User")
+
+        await repository.softRemove(user)
+      })
     },
+
+    async login(data: UserLoginData, authorId: UUID | undefined): Promise<User> {
+      if (authorId)
+        throw new AlreadyExists("Already logged in")
+      return this.manager.transaction(async manager => {
+        const repository = manager.withRepository(this)
+
+        const { username, email, password } = data
+        if ((!username && !email) || (username && email))
+          throw new RequestError("Username xor email required")
+
+        const params = username ? { username } : { email }
+
+        const user = await repository.findOneBy(params)
+        if (!user)
+          throw new RequestError("Password or username/email mismatch")
+
+        const match = await Bcrypt.compare(password, user.hash)
+        if (!match)
+          throw new RequestError("Password or username/email mismatch")
+
+        return user
+      })
+    }
   })
 }
+

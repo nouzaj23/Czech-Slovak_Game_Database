@@ -13,6 +13,7 @@ import { Developer } from './Developer.js'
 import { Genre } from './Genre.js'
 import { Comment } from './Comment.js'
 import { Review } from './Review.js'
+import { Wishlist } from './Wishlist.js'
 
 @Entity()
 export class Game extends Base {
@@ -34,11 +35,14 @@ export class Game extends Base {
   @ManyToOne(() => Genre, (genre: Genre) => genre.games)
   genres!: Relation<Genre>[]
 
-  @OneToMany(() => Comment, (comment: Comment) => comment.commenter)
+  @OneToMany(() => Comment, (comment: Comment) => comment.commenter, {cascade: true})
   comments!: Relation<Comment>[]
 
-  @OneToMany(() => Review, (review: Review) => review.user)
+  @OneToMany(() => Review, (review: Review) => review.user, {cascade: true})
   reviews!: Relation<Review>[]
+
+  @OneToMany(() => Wishlist, (wishlist: Wishlist) => wishlist.user, {cascade: true})
+  wishlists!: Relation<Wishlist>[]
 
   // For now, we'll calculate the average score of a game by querying the database every time we need it.
   // TODO: Cache this value in the database and update it whenever a new review is added.

@@ -3,7 +3,11 @@ import {
   Column,
   ManyToOne,
   OneToMany,
-  Relation
+  Relation,
+  RelationId,
+  Tree,
+  TreeChildren,
+  TreeParent
 } from 'typeorm'
 
 import { Base } from './Base.js'
@@ -11,6 +15,7 @@ import { Game } from './Game.js'
 import { User } from './User.js'
 
 @Entity()
+@Tree('closure-table')
 export class Comment extends Base {
   @ManyToOne(() => Game, (game: Game) => game.comments)
   game!: Relation<Game>
@@ -18,12 +23,18 @@ export class Comment extends Base {
   @ManyToOne(()=> User, (user: User) => user.comments)
   commenter!: Relation<User>
 
+  @RelationId((comment: Comment) => comment.commenter)
+  commenterId!: string
+
+  @RelationId((comment: Comment) => comment.game)
+  gameId!: string
+
   @Column()
   content!: string
 
-  @ManyToOne(() => Comment, (comment: Comment) => comment.replies, { nullable: true })
+  @TreeParent()
   replyTo!: Comment | null
 
-  @OneToMany(() => Comment, (comment: Comment) => comment.replyTo)
+  @TreeChildren()
   replies!: Comment[]
 }

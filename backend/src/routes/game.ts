@@ -13,7 +13,7 @@ export function makeRouter(context: Context) {
     .post(makeAdminAuthMiddleware())
     .post(async (req, res, next) => {
       try {
-        const game = await context.controllers.game.create(req.body)
+        const game = await context.controllers.game.create({...req.params, ...req.body}, req.session.auth?.userId)
         res.json(game)
       } catch (error) {
         next(error)
@@ -21,7 +21,7 @@ export function makeRouter(context: Context) {
     })
     .get(async (req, res, next) => {
       try {
-        const games = await context.controllers.game.read()
+        const games = await context.controllers.game.readMultiple({...req.params, ...req.body}, req.session.auth?.userId)
         res.json(games)
       } catch (error) {
         next(error)
@@ -31,16 +31,16 @@ export function makeRouter(context: Context) {
   router.route('/:gameId')
     .get(async (req, res, next) => {
       try {
-        const game = await context.controllers.game.read(req.params.gameId)
+        const game = await context.controllers.game.readSingle({...req.params, ...req.body}, req.session.auth?.userId)
         res.json(game)
       } catch (error) {
         next(error)
       }
     })
-    .put(makeAdminAuthMiddleware())
-    .put(async (req, res, next) => {
+    .patch(makeAdminAuthMiddleware())
+    .patch(async (req, res, next) => {
       try {
-        const game = await context.controllers.game.update(req.params.gameId, req.body)
+        const game = await context.controllers.game.update({...req.params, ...req.body}, req.session.auth?.userId)
         res.json(game)
       } catch (error) {
         next(error)
@@ -49,7 +49,7 @@ export function makeRouter(context: Context) {
     .delete(makeAdminAuthMiddleware())
     .delete(async (req, res, next) => {
       try {
-        const game = await context.controllers.game.delete(req.params.gameId)
+        const game = await context.controllers.game.delete({...req.params, ...req.body}, req.session.auth?.userId)
         res.json(game)
       } catch (error) {
         next(error)

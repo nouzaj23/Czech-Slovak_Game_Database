@@ -10,7 +10,7 @@ export function makeRouter(context: Context) {
 
   router.post('/', async (req, res, next) => {
     try {
-      const user = await context.controllers.user.create(req.body)
+      const user = await context.controllers.user.create({...req.params, ...req.body}, req.session.auth?.userId)
       res.json(user)
     } catch (error) {
       next(error)
@@ -20,16 +20,16 @@ export function makeRouter(context: Context) {
   router.route('/:userId')
     .get(async (req, res, next) => {
       try {
-        const user = await context.controllers.user.read(req.params.userId)
+        const user = await context.controllers.user.readSingle({...req.params, ...req.body}, req.session.auth?.userId)
         res.json(user)
       } catch (error) {
         next(error)
       }
     })
-    .put(makeUserAuthMiddleware((req) => req.params.userId))
-    .put(async (req, res, next) => {
+    .patch(makeUserAuthMiddleware((req) => req.params.userId))
+    .patch(async (req, res, next) => {
       try {
-        const user = await context.controllers.user.update(req.params.userId, req.body)
+        const user = await context.controllers.user.update({...req.params, ...req.body}, req.session.auth?.userId)
         res.json(user)
       } catch (error) {
         next(error)
@@ -39,7 +39,7 @@ export function makeRouter(context: Context) {
     .delete(makeUserAuthMiddleware((req) => req.params.userId))
     .delete(async (req, res, next) => {
       try {
-        const user = await context.controllers.user.delete(req.params.userId)
+        const user = await context.controllers.user.delete({...req.params, ...req.body}, req.session.auth?.userId)
         res.json(user)
       } catch (error) {
         next(error)
@@ -50,15 +50,15 @@ export function makeRouter(context: Context) {
     .all(makeUserAuthMiddleware((req) => req.params.userId))
     .get(async (req, res, next) => {
       try {
-        const user = await context.controllers.user.readAuth(req.params.userId)
+        const user = await context.controllers.user.readSingleFull({...req.params, ...req.body}, req.session.auth?.userId)
         res.json(user)
       } catch (error) {
         next(error)
       }
     })
-    .put(async (req, res, next) => {
+    .patch(async (req, res, next) => {
       try {
-        const user = await context.controllers.user.updateAuth(req.params.userId, req.body)
+        const user = await context.controllers.user.updateAuth({...req.params, ...req.body}, req.session.auth?.userId)
         res.json(user)
       } catch (error) {
         next(error)

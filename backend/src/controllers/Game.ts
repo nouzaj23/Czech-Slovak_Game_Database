@@ -1,23 +1,62 @@
-import { Base } from './Base.js'
+import { Base, assertSameType } from './Base.js'
 
 import { Repositories } from '@/repositories'
 import { InvalidData } from '@/errors'
 
 import * as z from 'zod'
+import { GameReadMultipleData, UUID } from '@/repositories/types.js'
 
 export class Game extends Base {
   constructor(repositories: Repositories) {
     super(repositories)
   }
 
-  async create(data: any) {
+  async readSingle(data: any, authorId: UUID | undefined) {
+    const schema = z.object({
+      id: z.string().uuid(),
+    })
+
+    const parsed = schema.safeParse(data)
+    if (!parsed.success)
+      throw new InvalidData(parsed.error)
+
+    return this.repositories.game.readSingle(parsed.data, authorId)
+  }
+
+  async readMultiple(data: any, authorId: UUID | undefined) {
+    const schema = z.object({
+      ids: z.array(z.string().uuid()).optional(),
+      nameContains: z.string().optional(),
+      developerId: z.string().uuid().optional(),
+      genreId: z.string().optional(),
+      releaseDate: z.object({
+        from: z.date().optional(),
+        to: z.date().optional(),
+      }).optional(),
+      order: z.object({
+        name: z.enum(['ASC', 'DESC']).optional(),
+        releaseDate: z.enum(['ASC', 'DESC']).optional(),
+      }).optional(),
+      groupBy: z.enum(['developer', 'genre']).optional(),
+    })
+
+    const parsed = schema.safeParse(data)
+    if (!parsed.success)
+      throw new InvalidData(parsed.error)
+
+    assertSameType<typeof parsed.data, GameReadMultipleData>(parsed.data)
+
+    return this.repositories.game.readMultiple(parsed.data, authorId)
+  }
+
+  async create(data: any, authorId: UUID | undefined) {
     const schema = z.object({
       name: z.string(),
-      description: z.string().optional(),
-      genres: z.array(z.string()).optional(),
+      description: z.string(),
       releaseDate: z.date().optional(),
-      developer: z.string().optional(),
       cover: z.string().optional(),
+      developerIds: z.array(z.string().uuid()),
+      genreIds: z.array(z.string()),
       photos: z.array(z.string()).optional(),
       videos: z.array(z.string()).optional(),
     })
@@ -26,17 +65,12 @@ export class Game extends Base {
     if (!parsed.success)
       throw new InvalidData(parsed.error)
 
-    return this.repositories.game.createGame(parsed.data)
+    return this.repositories.game.createGame(parsed.data, authorId)
   }
 
-  async read(gameId?: string) {
-    return gameId
-      ? this.repositories.game.findOneByIdOrFail(gameId)
-      : this.repositories.game.find()
-  }
-
-  async update(gameId: string, data: any) {
+  async update(data: any, authorId: UUID | undefined) {
     const schema = z.object({
+      id: z.string().uuid(),
       name: z.string().optional(),
       description: z.string().optional(),
       genres: z.array(z.string()).optional(),
@@ -51,10 +85,18 @@ export class Game extends Base {
     if (!parsed.success)
       throw new InvalidData(parsed.error)
 
-    await this.repositories.game.updateGame(gameId, parsed.data)
+    await this.repositories.game.updateGame(parsed.data, authorId)
   }
 
-  async delete(gameId: string) {
-    await this.repositories.game.deleteById(gameId)
+  async delete(data: any, authorId: UUID | undefined) {
+    const schema = z.object({
+      id: z.string().uuid(),
+    })
+
+    const parsed = schema.safeParse(data)
+    if (!parsed.success)
+      throw new InvalidData(parsed.error)
+
+    await this.repositories.game.deleteGame(parsed.data, authorId)
   }
 }

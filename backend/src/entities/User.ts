@@ -33,13 +33,13 @@ export class User extends Base {
   @Column()
   isAdmin!: boolean
 
-  @ManyToOne(() => Wishlist, (wishlist: Wishlist) => wishlist.user)
+  @ManyToOne(() => Wishlist, (wishlist: Wishlist) => wishlist.user, { cascade: true })
   wishlist!: Relation<Wishlist>[]
 
-  @OneToMany(() => Comment, (comment: Comment) => comment.commenter)
+  @OneToMany(() => Comment, (comment: Comment) => comment.commenter, { cascade: true })
   comments!: Relation<Comment>[]
 
-  @OneToMany(() => Review, (review: Review) => review.user)
+  @OneToMany(() => Review, (review: Review) => review.user, { cascade: true })
   reviews!: Relation<Review>[]
 
   get public() {

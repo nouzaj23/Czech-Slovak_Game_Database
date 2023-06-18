@@ -10,7 +10,7 @@ export function makeRouter(context: Context) {
     .post(makeUserAuthMiddleware((req) => req.params.userId))
     .post(async (req, res, next) => {
       try {
-        const wishlist = await context.controllers.wishlist.addToWishlist((req.params as any).userId as string, req.body)
+        const wishlist = await context.controllers.wishlist.addToWishlist({...req.params, ...req.body}, req.session.auth?.userId)
         res.json(wishlist)
       } catch (error) {
         next(error)
@@ -18,7 +18,7 @@ export function makeRouter(context: Context) {
     })
     .get(async (req, res, next) => {
       try {
-        const wishlists = await context.controllers.wishlist.readWishlist((req.params as any).userId)
+        const wishlists = await context.controllers.wishlist.readMultiple({...req.params, ...req.body}, req.session.auth?.userId)
         res.json(wishlists)
       } catch (error) {
         next(error)
@@ -29,7 +29,7 @@ export function makeRouter(context: Context) {
     .all(makeUserAuthMiddleware((req) => req.params.userId))
     .delete(async (req, res, next) => {
       try {
-        const wishlist = await context.controllers.wishlist.removeFromWishlist((req.params as any).userId, req.params.gameId)
+        const wishlist = await context.controllers.wishlist.removeFromWishlist({...req.params, ...req.body}, req.session.auth?.userId)
         res.json(wishlist)
       } catch (error) {
         next(error)

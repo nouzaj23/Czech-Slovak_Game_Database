@@ -1,104 +1,112 @@
-import { makeRepository } from './Base.js'
-import { Developer, Game, Genre } from '@/entities'
-import { NotFound } from '@/errors'
+import { checkPermissions, makeRepository } from './Base.js'
+import { Developer, Game, Genre, User } from '@/entities'
+import { NotFound, NotLoggedIn } from '@/errors'
 
-import { DataSource } from 'typeorm'
-
-interface Data {
-  name: string,
-  description?: string,
-  releaseDate?: Date,
-  genres?: string[],
-  developers?: string[],
-  cover?: string,
-  photos?: string[],
-  videos?: string[],
-}
+import { DataSource, FindOptionsWhere, In } from 'typeorm'
+import { GameCreationData, GameDeleteData, GameReadMultipleData, GameReadSingleData, GameUpdateData, UUID } from './types.js'
 
 export function getRepository(dataSource: DataSource) {
   return makeRepository(dataSource, Game, {
-    findByTitle(title: string) {
-      return this.createQueryBuilder('game')
-        .where('game.title = :title', { title })
-        .getOne()
+    async readSingle(data: GameReadSingleData, authorId: UUID | undefined): Promise<Game> {
+      const game = await this.findOneBy({ id: data.id })
+      if (!game)
+        throw new NotFound()
+      return game
     },
 
-    findByGenreId(genreId: string) {
-      return this.createQueryBuilder('game')
-        .leftJoinAndSelect('game.genres', 'genre')
-        .where('genre.id = :genreId', { genreId })
-        .getMany()
-    },
+    async readMultiple(data: GameReadMultipleData, authorId: UUID | undefined): Promise<Game[]> {
+      const query = this.createQueryBuilder('game')
+        .where(data.ids ? { id: data.ids } : {})
+        .andWhere(data.developerId ? { developer: data.developerId } : {})
+        .andWhere(data.genreId ? { genre: data.genreId } : {})
+        .orderBy(data.order || {})
 
-    findByDeveloperId(developerId: string) {
-      return this.createQueryBuilder('game')
-        .leftJoinAndSelect('game.developers', 'developer')
-        .where('developer.id = :developerId', { developerId })
-        .getMany()
-    },
+      if (data.nameContains)
+        query.andWhere(`game.name LIKE :name`, { name: `%${data.nameContains}%` })
+      
+      if (data.groupBy)
+        query.groupBy(`game.${data.groupBy}`)
 
-    createGame(data: Data) {
+      if (data.releaseDate?.from)
+        query.andWhere(`game.releaseDate >= :from`, { from: data.releaseDate.from })
+
+      if (data.releaseDate?.to)
+        query.andWhere(`game.releaseDate <= :to`, { to: data.releaseDate.to })
+
+      return query.getMany()
+    },
+    
+    async createGame(data: GameCreationData, authorId: UUID | undefined): Promise<Game> {
+      if (!authorId)
+        throw new NotLoggedIn()
       return this.manager.transaction(async manager => {
+        await checkPermissions(manager.getRepository(User), authorId)
+
         const gameRepository = manager.withRepository(this)
+        const developerRepository = manager.getRepository(Developer)
+        const genreRepository = manager.getRepository(Genre)
 
-        try {
-          const genres = await manager.createQueryBuilder(Genre, 'genre')
-            .where('genre.id IN (:...genreIds)', { genreIds: data.genres })
-            .getMany()
-
-          const developers = await manager.createQueryBuilder(Genre, 'developer')
-            .where('developer.id IN (:...developerIds)', { developerIds: data.developers })
-            .getMany()
-
-          return gameRepository.create({
-            name: data.name,
-            description: data.description,
-            releaseDate: data.releaseDate,
-            genres,
-            developers
-          })
-        } catch (error) {
-          throw error
-        }
-
-      })
-    },
-
-    updateGame(id: string, data: Partial<Data>) {
-      return this.manager.transaction(async manager => {
-        const gameRepository = manager.withRepository(this)
-
-        const game = await gameRepository.findOneBy({ id })
-
-        if (!game)
-          throw new NotFound("Game");
-
-        let genres: Genre[] = []
-        try {
-          genres = await manager.createQueryBuilder(Genre, 'genre')
-            .where('genre.id IN (:...genreIds)', { genreIds: data.genres })
-            .getMany()
-        } catch (error) {
+        const genres = await genreRepository.findBy({ id: In(data.genreIds) })
+        if (genres.length !== data.genreIds.length)
           throw new NotFound("Genre")
-        }
 
-        let developers: Developer[] = []
-        try {
-          developers = await manager.createQueryBuilder(Developer, 'developer')
-            .where('developer.id IN (:...developerIds)', { developerIds: data.developers })
-            .getMany()
-        } catch (error) {
+        const developers = await developerRepository.findBy({ id: In(data.developerIds) })
+        if (developers.length !== data.developerIds.length)
           throw new NotFound("Developer")
-        }
 
-        return gameRepository.save({
-          ...game,
+        return gameRepository.create({
           name: data.name,
           description: data.description,
           releaseDate: data.releaseDate,
           genres,
           developers
         })
+      })
+    },
+
+    async updateGame(data: GameUpdateData, authorId: UUID | undefined): Promise<void> {
+      if (!authorId)
+        throw new NotLoggedIn()
+      return this.manager.transaction(async manager => {
+        await checkPermissions(manager.getRepository(User), authorId)
+
+        const gameRepository = manager.withRepository(this)
+        const developerRepository = manager.getRepository(Developer)
+        const genreRepository = manager.getRepository(Genre)
+
+        const { id, genreIds: genres, developerIds: developers, ...change } = data
+
+        const genresResolved = genres ? await genreRepository.findBy({ id: In(genres) }) : undefined
+        if (genres && genresResolved && genres.length !== genresResolved.length)
+          throw new NotFound("Genre")
+
+        const developersResolved = developers ? await developerRepository.findBy({ id: In(developers) }) : undefined
+        if (developers && developersResolved && developers.length !== developersResolved.length)
+          throw new NotFound("Developer")
+
+        gameRepository.update({ id: data.id }, {
+          genres: genresResolved,
+          developers: developersResolved,
+          ...change
+        })
+      })
+    },
+
+    async deleteGame(data: GameDeleteData, authorId: UUID | undefined): Promise<void> {
+      if (!authorId)
+        throw new NotLoggedIn()
+      this.manager.transaction(async manager => {
+        await checkPermissions(manager.getRepository(User), authorId)
+
+        const repository = manager.withRepository(this)
+        const game = await repository.findOne({
+          where: { id: data.id },
+          relations: [ 'comments', 'reviews', 'wishlists' ]
+        })
+        if (!game)
+          throw new NotFound("Game")
+        
+        repository.softRemove(game)
       })
     }
   })

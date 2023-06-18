@@ -1,41 +1,57 @@
-import { makeRepository } from './Base.js'
+import { checkPermissions, makeRepository } from './Base.js'
 
-import { Wishlist } from '@/entities'
-import { AlreadyExists, NotFound } from '@/errors'
+import { User, Wishlist } from '@/entities'
+import { AlreadyExists, NotFound, NotLoggedIn } from '@/errors'
 
-import { DataSource, Repository } from 'typeorm'
+import { DataSource, FindOptionsWhere } from 'typeorm'
+import { UUID, WishlistCreationData, WishlistDeleteData, WishlistReadMultipleData } from './types.js'
 
 export function getRepository(dataSource: DataSource) {
   return makeRepository(dataSource, Wishlist, {
-    addToWishlist(userId: string, gameId: string) {
+    async readSingle(data: WishlistDeleteData, authorId: UUID | undefined): Promise<Wishlist> {
+      const wishlist = await this.findOneBy(data)
+      if (!wishlist)
+        throw new NotFound()
+      return wishlist
+    },
+
+    async readMultiple(data: WishlistReadMultipleData, authorId: UUID | undefined): Promise<Wishlist[]> {
+      const query = this.createQueryBuilder('wishlist')
+        .where(data.ids ? { id: data.ids } : {})
+        .andWhere(data.gameId ? { game: data.gameId } : {})
+        .andWhere(data.userId ? { user: data.userId } : {})
+        .orderBy(data.order || {})
+    
+      if (data.groupBy)
+        query.groupBy(`wishlist.${data.groupBy}`)
+
+      return query.getMany()
+    },
+
+    async createWishlist(data: WishlistCreationData, authorId: UUID | undefined): Promise<Wishlist> {
+      if (!authorId)
+        throw new NotLoggedIn()
       return this.manager.transaction(async manager => {
-        const wishlistRepo = manager.getRepository(Wishlist)
+        const repository = manager.withRepository(this)
 
-        const wishlist = await wishlistRepo.findOneBy({ userId, gameId })
-        if (wishlist) {
-          throw new AlreadyExists('wishlist')
-        }
+        const wishlist = await repository.findOneBy(data)
+        if (wishlist)
+          throw new AlreadyExists("Wishlist")
 
-        return manager.createQueryBuilder()
-          .insert()
-          .values({ userId, gameId })
-          .execute()
+        return repository.create(data)
       })
     },
 
-    removeFromWishlist(userId: string, gameId: string) {
-      return this.createQueryBuilder('wishlist')
-        .softDelete()
-        .where('wishlist.userId = :userId', { userId })
-        .andWhere('wishlist.gameId = :gameId', { gameId })
-        .execute()
-    },
+    async deleteWishlist(data: WishlistDeleteData, authorId: UUID | undefined): Promise<void> {
+      if (!authorId)
+        throw new NotLoggedIn()
+      this.manager.transaction(async manager => {
+        const repository = manager.withRepository(this)
 
-    findByUserId(userId: string) {
-      return this.createQueryBuilder('wishlist')
-        .leftJoinAndSelect('wishlist.game', 'game')
-        .where('wishlist.userId = :userId', { userId })
-        .getMany()
-    }
+        await checkPermissions(manager.getRepository(User), authorId)
+
+        repository.softDelete(data)
+      })
+    },
   })
 }

@@ -38,7 +38,7 @@ export function makeRouter(context: Context) {
   //       next(error)
   //     }
   //   })
-  //   .put(async (req, res, next) => {
+  //   .patch(async (req, res, next) => {
   //     try {
   //       const userId = req.session.auth?.userId
   //       if (!userId)
