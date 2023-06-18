@@ -51,8 +51,8 @@ export class Wishlist extends Base {
   async readMultiple(data: any, authorId: UUID | undefined) {
     const schema = z.object({
       ids: z.array(z.string().uuid()).optional(),
-      userId: z.string().uuid(),
-      gameId: z.string().uuid(),
+      userId: z.string().uuid().optional(),
+      gameId: z.string().uuid().optional(),
       order: z.object({
         createdAt: z.enum(['ASC', 'DESC']).optional(),
       }),
