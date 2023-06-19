@@ -317,6 +317,12 @@ paths:
   /user/{userId}:
     get:
       summary: Retrieves user's profile information
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
       responses:
         "200":
           description: Successful operation
@@ -588,20 +594,20 @@ paths:
         content:
           application/json:
             schema:
-              required: [name]
+              required: [name, description, cover]
               type: object
               properties:
                 name:
                   type: string
                 description:
                   type: string
-                genres:
+                genreIds:
                   type: array
                   items:
                     type: string
                 releaseDate:
                   type: string
-                developers:
+                developerIds:
                   type: array
                   items:
                     type: string
@@ -663,13 +669,13 @@ paths:
                   type: string
                 description:
                   type: string
-                genres:
+                genreIds:
                   type: array
                   items:
                     type: string
                 releaseDate:
                   type: string
-                developers:
+                developerIds:
                   type: array
                   items:
                     type: string
@@ -775,7 +781,7 @@ paths:
             schema:
               type: object
               properties:
-                user:
+                userId:
                   type: string
                   description: User's id
                 rating:
@@ -918,11 +924,14 @@ paths:
           application/json:
             schema:
               type: object
+              required: [userId, content]
               properties:
-                user:
+                userId:
                   type: string
                   description: User's id
-                comment:
+                content:
+                  type: string
+                replyToId:
                   type: string
       responses:
         "201":
