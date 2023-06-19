@@ -20,12 +20,17 @@ export const DeleteDevConfirm: React.FC<DeleteDeveloperProps> = ({ handleClose, 
         }
     };
 
+    const handleDeleteAndClose = async (event: React.MouseEvent) => {
+        await deleteDev();
+        handleClose(event);
+    };
+
     return (
         <div className='border-2 border-black-1000'>
             <form className="p-6 bg-white rounded shadow-md">
                 <p>Opravdu chcete smazat žánr?</p>
                 <div className="flex items-center justify-between mt-4">
-                    <button className="bg-gray-600 hover:bg-gray-800 text-white font-bold py-2 px-4 rounded" type="button" onClick={(event) => { deleteDev(); handleClose(event); }}  >Potvrdit</button>
+                    <button className="bg-gray-600 hover:bg-gray-800 text-white font-bold py-2 px-4 rounded" type="button" onClick={handleDeleteAndClose}  >Potvrdit</button>
                     <button className="ml-5 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" type="button" onClick={handleClose}>Storno</button>
                 </div>
             </form>
