@@ -57,7 +57,7 @@ export const GamesCRUD: React.FC<GamesCRUDProps> = ({ developers, games, genres,
         const releaseDate = '2023-06-19';
         const developers: string[] = [];
         const genres: string[] = [];
-        const cover = '';
+        const cover = "";
         const photos: string[] = [];
         const videos: string[] = [];
 
