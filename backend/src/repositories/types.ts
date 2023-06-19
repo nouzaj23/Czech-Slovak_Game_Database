@@ -109,8 +109,8 @@ export interface GameCreationData {
   description: string
   releaseDate?: Date
   cover?: URL
-  developerIds: UUID[]
-  genreIds: UUID[]
+  developerIds?: UUID[]
+  genreIds?: UUID[]
   photos?: URL[]
   videos?: URL[]
 }
