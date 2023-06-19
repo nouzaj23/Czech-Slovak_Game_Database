@@ -1,6 +1,6 @@
 export interface Genre {
     id: string;
-    type: string | GenreType;
+    name: string | GenreType;
     description: string;
     games: string[]; // Game IDs
 }

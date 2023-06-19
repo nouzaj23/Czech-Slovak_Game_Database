@@ -41,7 +41,7 @@ export const GenresCRUD: React.FC<GenresCRUDProps> = ({genres, setGenres}) => {
     const [genreToDelete, setGenreToDelete] = useState<string | null>(null);
 
     const filteredGenres = genres.filter(genre =>
-        genre.type.toLowerCase().includes(searchTerm.toLowerCase())
+        genre.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
     // const addGenre = () => {
@@ -76,7 +76,7 @@ export const GenresCRUD: React.FC<GenresCRUDProps> = ({genres, setGenres}) => {
                 />
                 {filteredGenres.map(genre => (
                     <div key={genre.id} className="p-4 bg-white rounded shadow">
-                        <h2 className="text-xl font-semibold">{genre.type}</h2>
+                        <h2 className="text-xl font-semibold">{genre.name}</h2>
                         <div className="mt-2 space-y-2">
                             <p>{genre.description}</p>
                         </div>
