@@ -21,7 +21,7 @@ export class Wishlist extends Base {
     if (!parsed.success)
       throw new InvalidData(parsed.error)
 
-    await this.repositories.wishlist.createWishlist(parsed.data, authorId)
+    return await this.repositories.wishlist.createWishlist(parsed.data, authorId)
   }
 
   async removeFromWishlist(data: any, authorId: UUID | undefined) {
@@ -33,7 +33,7 @@ export class Wishlist extends Base {
     if (!parsed.success)
       throw new InvalidData(parsed.error)
 
-    await this.repositories.wishlist.deleteWishlist(parsed.data, authorId)
+    return await this.repositories.wishlist.deleteWishlist(parsed.data, authorId)
   }
 
   async readSingle(data: any, authorId: UUID | undefined) {

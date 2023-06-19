@@ -66,7 +66,7 @@ export class User extends Base {
     if (!parsed.success)
       throw new InvalidData(parsed.error)
 
-    await this.repositories.user.createUser(parsed.data, authorId)
+    return await this.repositories.user.createUser(parsed.data, authorId)
   }
 
   async login(data: any, authorId: UUID | undefined) {
@@ -97,7 +97,7 @@ export class User extends Base {
     if (!parsed.success)
       throw new InvalidData(parsed.error)
 
-    await this.repositories.user.updateUser(parsed.data, authorId)
+    return await this.repositories.user.updateUser(parsed.data, authorId)
   }
 
   async delete(data: any, authorId: UUID | undefined) {
@@ -109,7 +109,7 @@ export class User extends Base {
     if (!parsed.success)
       throw new InvalidData(parsed.error)
 
-    await this.repositories.user.deleteUser(parsed.data, authorId)
+    return await this.repositories.user.deleteUser(parsed.data, authorId)
   }
 
   async updateAuth(data: any, authorId: UUID | undefined) {

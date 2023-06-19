@@ -85,7 +85,7 @@ export class Game extends Base {
     if (!parsed.success)
       throw new InvalidData(parsed.error)
 
-    await this.repositories.game.updateGame(parsed.data, authorId)
+    return await this.repositories.game.updateGame(parsed.data, authorId)
   }
 
   async delete(data: any, authorId: UUID | undefined) {
@@ -97,6 +97,6 @@ export class Game extends Base {
     if (!parsed.success)
       throw new InvalidData(parsed.error)
 
-    await this.repositories.game.deleteGame(parsed.data, authorId)
+    return await this.repositories.game.deleteGame(parsed.data, authorId)
   }
 }
