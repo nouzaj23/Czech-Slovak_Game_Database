@@ -45,7 +45,7 @@ export function getRepository(dataSource: DataSource) {
       })
     },
 
-    async createUser(data: UserCreationData, authorId: UUID | undefined): Promise<User> {
+    async createUser(data: UserCreationData, authorId: UUID | undefined) : Promise<User> {
       return this.manager.transaction(async manager => {
         const repository = manager.withRepository(this)
 
@@ -61,12 +61,14 @@ export function getRepository(dataSource: DataSource) {
         }
 
         const hash = await Bcrypt.hash(password, 10)
-        return repository.create({
+        const user = repository.create({
           username,
           email,
           hash,
           isAdmin: false,
         })
+
+        return await repository.save(user)
       })
     },
 
