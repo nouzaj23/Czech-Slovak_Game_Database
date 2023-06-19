@@ -22,7 +22,6 @@ export const retrieveDeveloper = async (id: string) => {
 
 export const update = async (id: string, name: string, description: string, avatar:string) => {
     const response = await axiosInstance.patch(`/developer/${id}`, {
-        id,
         name,
         description,
         avatar,
