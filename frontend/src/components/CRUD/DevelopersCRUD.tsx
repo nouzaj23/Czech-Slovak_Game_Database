@@ -15,7 +15,8 @@ export const DeleteDevConfirm: React.FC<DeleteDeveloperProps> = ({ handleClose, 
     const deleteDev = async (event: React.MouseEvent) => {
         try {
             await DeveloperApi.remove(developerId);
-            updateDevelopers(developers.filter(dev => dev.id !== developerId));
+            console.log("DELETED");
+            updateDevelopers(developers.filter(dev => dev.id !== developerId)); 
         }
         catch (error) {
             console.log("Developer cannot be deleted", error)
