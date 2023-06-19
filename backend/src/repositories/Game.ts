@@ -19,8 +19,8 @@ export function getRepository(dataSource: DataSource) {
         .where(data.ids ? { id: data.ids } : {})
         .andWhere(data.developerId ? { developer: data.developerId } : {})
         .andWhere(data.genreId ? { genre: data.genreId } : {})
-        // .innerJoinAndSelect('game.developers', 'developer')
-        // .innerJoinAndSelect('game.genres', 'genre')
+        .leftJoinAndSelect('game.developers', 'developer')
+        .leftJoinAndSelect('game.genres', 'genre')
         .orderBy(data.order || {})
 
       if (data.nameContains)
