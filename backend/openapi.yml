@@ -6,6 +6,11 @@ servers:
   - url: http://cshd.gwenlian.eu/api
     description: Production server
 components:
+  securitySchemes:
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: connect.sid
   schemas:
     Developer:
       type: object
@@ -180,19 +185,41 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                username:
-                  type: string
-                password:
-                  type: string
+              allOf:
+                - type: object
+                  properties:
+                    password:
+                      type: string
+                  required: [password]
+                - oneOf:
+                  - type: object
+                    properties:
+                      email:
+                        type: string
+                    required: [email]
+                  - type: object
+                    properties:
+                      username:
+                        type: string
+                    required: [username]
       responses:
         "200":
           description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  userId:
+                    type: string
+                  isAdmin:
+                    type: boolean
         "400":
           description: Invalid username or password
     get:
       summary: Retrieves the current user's id
+      security:
+        - cookieAuth: []
       responses:
         "200":
           description: Successful operation
@@ -209,12 +236,56 @@ paths:
           description: Unauthorized
     delete:
       summary: Logs out the current user
+      security:
+        - cookieAuth: []
       responses:
         "200":
           description: Successful operation
         "401":
           description: Unauthorized
   /user:
+    get:
+      summary: Retrieves a list of users
+      security:
+        - cookieAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                ids:
+                  type: array
+                  items:
+                    type: string
+                usernameContains:
+                  type: string
+                order:
+                  type: object
+                  properties:
+                    username:
+                      type: string
+                      enum: [ASC, DESC]
+                    createdAt:
+                      type: string
+                      enum: [ASC, DESC]
+                    updatedAt:
+                      type: string
+                      enum: [ASC, DESC]
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  $ref: "#/components/schemas/User"
+        "401":
+          description: Unauthenticated"
+        "403":
+          description: Unauthorized
     post:
       summary: Registers a new user
       requestBody:
@@ -222,6 +293,7 @@ paths:
           application/json:
             schema:
               type: object
+              required: [username, password, email]
               properties:
                 username:
                   type: string
@@ -259,6 +331,8 @@ paths:
           description: User not found
     patch:
       summary: Updates a user's profile information
+      security:
+        - cookieAuth: []
       parameters:
         - name: userId
           in: path
@@ -288,6 +362,8 @@ paths:
           description: User not found
     delete:
       summary: Deletes a user
+      security:
+        - cookieAuth: []
       parameters:
         - name: userId
           in: path
@@ -306,6 +382,8 @@ paths:
   /user/{userId}/auth:
     get:
       summary: Retrieves a user's authentication information
+      security:
+        - cookieAuth: []
       parameters:
         - name: userId
           in: path
@@ -330,6 +408,8 @@ paths:
           description: User not found
     patch:
       summary: Updates a user's password or email
+      security:
+        - cookieAuth: []
       parameters:
         - name: userId
           in: path
@@ -362,6 +442,8 @@ paths:
   /user/{userId}/admin:
     post:
       summary: Makes a user an admin
+      security:
+        - cookieAuth: []
       parameters:
         - name: userId
           in: path
@@ -379,6 +461,8 @@ paths:
           description: User not found
     delete:
       summary: Removes a user's admin privileges
+      security:
+        - cookieAuth: []
       parameters:
         - name: userId
           in: path
@@ -413,6 +497,8 @@ paths:
           description: User not found
     post:
       summary: Adds a game to the user's wishlist
+      security:
+        - cookieAuth: []
       requestBody:
         content:
           application/json:
@@ -433,6 +519,8 @@ paths:
   /user/{userId}/wishlist/{gameId}:
     delete:
       summary: Removes a game from the user's wishlist
+      security:
+        - cookieAuth: []
       parameters:
         - name: gameId
           in: path
@@ -447,6 +535,41 @@ paths:
   /game:
     get:
       summary: Retrieves a list of all games
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                ids:
+                  type: array
+                  items:
+                    type: string
+                nameContains:
+                  type: string
+                developerId:
+                  type: string
+                genreId:
+                  type: string
+                releaseDate:
+                  type: object
+                  properties:
+                    from:
+                      type: string
+                    to:
+                      type: string
+                order:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      enum: [ASC, DESC]
+                    releaseDate:
+                      type: string
+                      enum: [ASC, DESC]
+                group:
+                  type: string
+                  enum: [genre, developer]
       responses:
         "200":
           description: Successful operation
@@ -459,6 +582,8 @@ paths:
                   $ref: "#/components/schemas/Game"
     post:
       summary: Creates a new game
+      security:
+        - cookieAuth: []
       requestBody:
         content:
           application/json:
@@ -520,6 +645,8 @@ paths:
           description: Game not found
     patch:
       summary: Updates a game
+      security:
+        - cookieAuth: []
       parameters:
         - name: gameId
           in: path
@@ -567,6 +694,8 @@ paths:
           description: Game not found
     delete:
       summary: Deletes a game
+      security:
+        - cookieAuth: []
       parameters:
         - name: gameId
           in: path
@@ -591,6 +720,35 @@ paths:
           required: true
           schema:
             type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                ids:
+                  type: array
+                  items:
+                    type: string
+                gameId:
+                  type: string
+                userId:
+                  type: string
+                order:
+                  type: object
+                  properties:
+                    rating:
+                      type: string
+                      enum: [ASC, DESC]
+                    createdAt:
+                      type: string
+                      enum: [ASC, DESC]
+                    updatedAt:
+                      type: string
+                      enum: [ASC, DESC]
+                groupBy:
+                  type: string
+                  enum: [user, game]
       responses:
         "200":
           description: Successful operation
@@ -603,6 +761,8 @@ paths:
                   $ref: "#/components/schemas/Review"
     post:
       summary: Add a review to a game
+      security:
+        - cookieAuth: []
       parameters:
         - name: gameId
           in: path
@@ -634,6 +794,8 @@ paths:
   /game/{gameId}/review/{reviewId}:
     patch:
       summary: Updates a review
+      security:
+        - cookieAuth: []
       parameters:
         - name: gameId
           in: path
@@ -670,6 +832,8 @@ paths:
           description: Review not found
     delete:
       summary: Deletes a review
+      security:
+        - cookieAuth: []
       parameters:
         - name: gameId
           in: path
@@ -699,6 +863,36 @@ paths:
           required: true
           schema:
             type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                ids:
+                  type: array
+                  items:
+                    type: string
+                gameId:
+                  type: string
+                userId:
+                  type: string
+                replyToId:
+                  type: string
+                recurse:
+                  type: boolean
+                order:
+                  type: object
+                  properties:
+                    createdAt:
+                      type: string
+                      enum: [ASC, DESC]
+                    updatedAt:
+                      type: string
+                      enum: [ASC, DESC]
+                groupBy:
+                  type: string
+                  enum: [user, game]
       responses:
         "200":
           description: Successful operation
@@ -711,6 +905,8 @@ paths:
                   $ref: "#/components/schemas/Comment"
     post:
       summary: Add a comment to a game
+      security:
+        - cookieAuth: []
       parameters:
         - name: gameId
           in: path
@@ -759,6 +955,8 @@ paths:
           description: Comment not found
     patch:
       summary: Updates a comment
+      security:
+        - cookieAuth: []
       parameters:
         - name: gameId
           in: path
@@ -791,6 +989,8 @@ paths:
           description: Comment not found
     delete:
       summary: Deletes a comment
+      security:
+        - cookieAuth: []
       parameters:
         - name: gameId
           in: path
@@ -811,24 +1011,17 @@ paths:
           description: User is not the author of the comment
         "404":
           description: Comment not found
-  /game/{gameId}/developer/:
+  /game/{gameId}/developer:
     post:
       summary: Add a developer to a game
+      security:
+        - cookieAuth: []
       parameters:
         - name: gameId
           in: path
           required: true
           schema:
             type: string
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                developerId:
-                  type: string
-                  description: Developer's id
       responses:
         "201":
           description: Successful operation
@@ -843,6 +1036,8 @@ paths:
   /game/{gameId}/developer/{developerId}:
     delete:
       summary: Deletes a developer from a game
+      security:
+        - cookieAuth: []
       parameters:
         - name: gameId
           in: path
@@ -878,16 +1073,26 @@ paths:
                   $ref: "#/components/schemas/Genre"
     post:
       summary: Creates a new genre
+      security:
+        - cookieAuth: []
       requestBody:
         content:
           application/json:
             schema:
               type: object
               properties:
-                name:
+                ids:
+                  type: array
+                  items:
+                    type: string
+                nameContains:
                   type: string
-                description:
-                  type: string
+                order:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      enum: [ASC, DESC]
       responses:
         "200":
           description: Successful operation
@@ -926,6 +1131,8 @@ paths:
           description: Genre not found
     patch:
       summary: Updates a genre
+      security:
+        - cookieAuth: []
       parameters:
         - name: genreId
           in: path
@@ -955,6 +1162,8 @@ paths:
           description: Genre not found
     delete:
       summary: Deletes a genre
+      security:
+        - cookieAuth: []
       parameters:
         - name: genreId
           in: path
@@ -973,11 +1182,34 @@ paths:
   /developer:
     get:
       summary: Retrieves a list of all developers
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                ids:
+                  type: array
+                  items:
+                    type: string
+                nameContains:
+                  type: string
+                order:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      enum: [ASC, DESC]
+                groupBy:
+                  type: string
+                  enum: [game]
       responses:
         "200":
           description: Successful operation
     post:
       summary: Creates a new developer
+      security:
+        - cookieAuth: []
       requestBody:
         content:
           application/json:
@@ -1017,6 +1249,8 @@ paths:
           description: Developer not found
     patch:
       summary: Updates a developer
+      security:
+        - cookieAuth: []
       parameters:
         - name: developerId
           in: path
@@ -1050,6 +1284,8 @@ paths:
           description: Developer not found
     delete:
       summary: Deletes a developer
+      security:
+        - cookieAuth: []
       parameters:
         - name: developerId
           in: path
