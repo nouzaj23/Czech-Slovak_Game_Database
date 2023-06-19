@@ -1,10 +1,10 @@
-import { MouseEventHandler, useState } from 'react';
+import { useState } from 'react';
 import { Developer } from '../../models';
 import { EditDeveloper } from '../Editors/EditDeveloper';
 import { DeveloperApi } from '../../services';
 
 interface DeleteDeveloperProps {
-    handleClose: (event?: MouseEventHandler) => void;
+    handleClose: () => void;
     developerId: string,
     updateDevelopers: Function,
     developers: Developer[],
