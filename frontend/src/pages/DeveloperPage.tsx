@@ -1,12 +1,37 @@
 import { Link, useParams } from "react-router-dom";
-import developers from '../assets/developers.json';
-import games from '../assets/games.json';
-import { Game } from "../models";
+// import developers from '../assets/developers.json';
+// import games from '../assets/games.json';
+import { Developer, Game } from "../models";
+import { useEffect, useState } from "react";
+import { DeveloperApi, GameApi } from "../services";
+
 
 export const DeveloperPage = () => {
     const { id } = useParams<{ id: string }>();
-    const developer = developers.find(developer => developer.id === id);
+
+    const [games, setGames] = useState<Game[]>([]);
+    const [developer, setDeveloper] = useState<Developer | undefined>(undefined);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                if (id !== undefined) {
+                    setDeveloper(await DeveloperApi.retrieveDeveloper(id));
+                }
+                if (developer !== undefined) {
+                    const allGames: Game[] = await GameApi.retrieveAllGames();
+                    setGames(allGames.filter(game => game.developers.includes(developer.id)))
+                }
+            }
+            catch (error) {
+                console.log("Games was not loaded");
+            }
+        }
+        fetchData();
+    }, []);
+
     const devGames: Game[] = games.filter(game => game.developers.includes(id!));
+
     if (!developer) {
         return <div>Vývojář není k dispozici</div>;
     }
