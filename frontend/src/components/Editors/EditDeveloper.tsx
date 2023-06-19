@@ -6,14 +6,16 @@ import { DeveloperApi } from "../../services";
 interface EditDeveloperProps {
     developerProp: Developer;
     editedDeveloperId: string;
+    setDevelopers: Function;
 }
 
-export const EditDeveloper: React.FC<EditDeveloperProps> = ({ developerProp, editedDeveloperId }) => {
+export const EditDeveloper: React.FC<EditDeveloperProps> = ({ developerProp, editedDeveloperId, setDevelopers }) => {
     const [developer, setDeveloper] = useState(developerProp);
 
     const updateDeveloper = useCallback(async () => {
         try {
             await DeveloperApi.update(developer.id, developer.name, developer.description, developer.avatar);
+            setDevelopers((devs: Developer[]) => devs.map(dev => dev.id === developer.id ? { ...dev, name: developer.name, avatar: developer.avatar } : dev));
         } catch (error) {
             console.error('Failed to update the developer:', error);
         }
@@ -25,7 +27,6 @@ export const EditDeveloper: React.FC<EditDeveloperProps> = ({ developerProp, edi
                 <form className="bg-gray-200 p-6 rounded-md shadow-md">
                     <h3 className="text-lg font-semibold mb-4 text-black">Upravit studio</h3>
                     <div className="space-y-5">
-
                         <EditDeveloperName developer={developer} updateDeveloper={setDeveloper} />
                         <EditDeveloperDescribtion developer={developer} updateDeveloper={setDeveloper} />
                         <EditDeveloperAvatar developer={developer} updateDeveloper={setDeveloper} />

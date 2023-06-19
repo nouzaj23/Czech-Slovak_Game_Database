@@ -94,7 +94,7 @@ export const DevelopersCRUD: React.FC<DevelopersCRUDProps> = ({developersList}) 
                         </div>
                         {editedDeveloperId === dev.id && (
                             <div className='mt-5'>
-                                <EditDeveloper editedDeveloperId={dev.id} developerProp={dev} />
+                                <EditDeveloper editedDeveloperId={dev.id} developerProp={dev} setDevelopers={setDevelopers} />
                             </div>
                         )}
                     </div>
