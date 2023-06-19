@@ -53,12 +53,6 @@ export const DevelopersCRUD: React.FC<DevelopersCRUDProps> = ({ developers, setD
         dev.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
-    // const addDeveloper = () => {
-    //     const newId = "noveId"; // backend udělá nové ID
-    //     const newDeveloper: Developer = {avatar: "", description: "Nové studio popis", games: [], id: newId, name: "Nové studio"}
-    //     setDevelopers([newDeveloper, ...developers])
-    // }
-
     const addDeveloper = async () => {
         const name = 'New Developer';
         const description = 'Describtion';

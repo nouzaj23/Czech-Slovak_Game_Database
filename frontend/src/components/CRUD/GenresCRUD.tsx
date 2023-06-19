@@ -44,12 +44,6 @@ export const GenresCRUD: React.FC<GenresCRUDProps> = ({genres, setGenres}) => {
         genre.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
-    // const addGenre = () => {
-    //     const newId = "noveId"; // backend udělá nové ID
-    //     const newGenre: Genre = {description: "Popis nového žánru", games: [], id: newId, type: "Nový žánr"}
-    //     setGenres([newGenre, ...genres])
-    // }
-
     const addGenre = async () => {
         const name = 'New Genre';
         const description = 'Description';
@@ -96,7 +90,7 @@ export const GenresCRUD: React.FC<GenresCRUDProps> = ({genres, setGenres}) => {
                         </div>
                         {editedGenreId === genre.id && (
                             <div className='mt-5'>
-                                <EditGenre editedGenreId={genre.id} genreProp={genre} />
+                                <EditGenre editedGenreId={genre.id} genreProp={genre} setGenres={setGenres} />
                             </div>
                         )}
                     </div>

@@ -8,15 +8,15 @@ export const Genres = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-        try {
-            setGenres(await GenreApi.retrieveAllGenres());
-        }
-        catch (error) {
-            console.log("Games was not loaded");
-        }
+      try {
+        setGenres(await GenreApi.retrieveAllGenres());
+      }
+      catch (error) {
+        console.log("Games was not loaded");
+      }
     }
     fetchData();
-}, []);
+  }, []);
 
   return (
     <div className="p-4 bg-white shadow rounded-lg mb-6">
