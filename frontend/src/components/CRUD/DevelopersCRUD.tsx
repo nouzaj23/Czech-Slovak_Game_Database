@@ -11,8 +11,13 @@ interface DeleteDeveloperProps {
 }
 
 export const DeleteDevConfirm: React.FC<DeleteDeveloperProps> = ({ handleClose, developerId, updateDevelopers, developers }) => {
-    const deleteDev = () => {
-        updateDevelopers(developers.filter(dev => dev.id !== developerId));
+    const deleteDev = async () => { 
+        try {
+            await DeveloperApi.remove(developerId);
+            updateDevelopers(developers.filter(dev => dev.id !== developerId));
+        } catch (error) {
+            console.error('Failed to add the developer:', error);
+        }
     };
 
     return (
@@ -32,7 +37,7 @@ interface DevelopersCRUDProps {
     developersList: Developer[];
 }
 
-export const DevelopersCRUD: React.FC<DevelopersCRUDProps> = ({developersList}) => {
+export const DevelopersCRUD: React.FC<DevelopersCRUDProps> = ({ developersList }) => {
     const [searchTerm, setSearchTerm] = useState("");
     const [editedDeveloperId, setEditedDeveloperId] = useState<string | null>(null);
     const [developerToDelete, setDeveloperToDelete] = useState<string | null>(null);
