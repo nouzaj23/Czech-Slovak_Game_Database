@@ -12,9 +12,9 @@ interface DeleteDeveloperProps {
 }
 
 export const DeleteDevConfirm: React.FC<DeleteDeveloperProps> = ({ handleClose, developerId, updateDevelopers, developers }) => {
-    const deleteDev = (event: React.MouseEvent) => {
+    const deleteDev = async (event: React.MouseEvent) => {
         try {
-
+            await DeveloperApi.remove(developerId);
             updateDevelopers(developers.filter(dev => dev.id !== developerId));
         }
         catch (error) {
