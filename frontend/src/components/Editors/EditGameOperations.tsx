@@ -1,7 +1,7 @@
-import { Game } from "../../models";
-import genresList from "../../assets/genres.json"
+import { Developer, Game, Genre } from "../../models";
+// import genresList from "../../assets/genres.json"
 import { useEffect, useState } from "react";
-import developers from "../../assets/developers.json"
+// import developers from "../../assets/developers.json"
 
 interface EditGameProps {
     game: Game;
@@ -134,7 +134,13 @@ export const EditGameVideos: React.FC<EditGameProps> = ({ game, updateGame }) =>
     )
 }
 
-export const EditGameGenres: React.FC<EditGameProps> = ({ game, updateGame }) => {
+interface EditGameGenresProps {
+    game: Game;
+    updateGame: Function;
+    genresList: Genre[];
+}
+
+export const EditGameGenres: React.FC<EditGameGenresProps> = ({ game, updateGame,  genresList}) => {
     const [genres, setGenres] = useState(genresList);
 
     const handleGenreChange = (genreId: string) => {
@@ -174,7 +180,13 @@ export const EditGameGenres: React.FC<EditGameProps> = ({ game, updateGame }) =>
     )
 }
 
-export const EditGameDevelopers: React.FC<EditGameProps> = ({ game, updateGame }) => {
+interface EditGameDevelopersProps {
+    game: Game;
+    updateGame: Function;
+    developers: Developer[];
+}
+
+export const EditGameDevelopers: React.FC<EditGameDevelopersProps> = ({ game, updateGame, developers }) => {
     const addDeveloper = () => {
         const devName = (document.getElementById("newDeveloper") as HTMLInputElement);
         const newDev = developers.find(dev => dev.name == devName.value);

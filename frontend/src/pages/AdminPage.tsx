@@ -1,11 +1,31 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { GamesCRUD } from "../components/CRUD/GamesCRUD";
 import { DevelopersCRUD } from "../components/CRUD/DevelopersCRUD";
 import { UsersCRUD } from "../components/CRUD/UsersCRUD";
 import { GenresCRUD } from "../components/CRUD/GenresCRUD";
+import { Developer, Game, Genre } from "../models";
+import { DeveloperApi, GameApi, GenreApi } from "../services";
 
 export const AdminPage = () => {
     const [visibleComponent, setVisibleComponent] = useState('');
+
+    const [games, setGames] = useState<Game[]>([]);
+    const [developers, setDevelopers] = useState<Developer[]>([]);
+    const [genres, setGenres] = useState<Genre[]>([]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                setGames(await GameApi.retrieveAllGames());
+                setDevelopers(await DeveloperApi.retrieveAllDevelopers());
+                setGenres(await GenreApi.retrieveAllGenres());
+            }
+            catch (error) {
+                console.log("Games was not loaded");
+            }
+        }
+        fetchData();
+    }, []);
 
     return (
         <div className="p-6 max-w-screen overflow-x-hidden">
@@ -36,7 +56,7 @@ export const AdminPage = () => {
                 </button>
             </div>
 
-            {visibleComponent === 'Games' ? <GamesCRUD /> : null}
+            {visibleComponent === 'Games' ? <GamesCRUD developers={developers} games={games} genres={genres} setGames={setGames}/> : null}
             {visibleComponent === 'Developers' ? <DevelopersCRUD /> : null}
             {visibleComponent === 'Users' ? <UsersCRUD /> : null}
             {visibleComponent === 'Genres' ? <GenresCRUD /> : null}

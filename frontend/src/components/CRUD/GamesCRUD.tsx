@@ -1,7 +1,8 @@
 import { MouseEventHandler, useState } from 'react';
-import gamesList from '../../assets/games.json';
+// import gamesList from '../../assets/games.json';
 import { EditGame } from '../Editors/EditGame';
-import { Game } from '../../models';
+import { Developer, Game, Genre } from '../../models';
+import { GameApi } from '../../services';
 
 interface DeleteGameProps {
     handleClose: MouseEventHandler;
@@ -28,20 +29,44 @@ export const DeleteGameConfirm: React.FC<DeleteGameProps> = ({ handleClose, game
     );
 };
 
-export const GamesCRUD = () => {
+interface GamesCRUDProps {
+    games: Game[];
+    setGames: Function;
+    developers: Developer[];
+    genres: Genre[];
+}
+
+export const GamesCRUD: React.FC<GamesCRUDProps> = ({ developers, games, genres, setGames }) => {
     const [searchTerm, setSearchTerm] = useState("");
     const [editedGameId, setEditedGameId] = useState<string | null>(null);
     const [gameToDelete, setGameToDelete] = useState<string | null>(null);
-    const [games, setGames] = useState(gamesList);
 
     const filteredGames = games.filter(game =>
         game.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
-    const addGame = () => {
-        const newId = "noveId"; // backend udělá nové ID
-        const newGame: Game = { comments: [], cover: "", description: "New Game Describtion", developers: [], genres: [], id: newId, name: "New Game", photos: [], releaseDate: "", reviews: [], videos: [] }
-        setGames([newGame, ...games])
+    // const addGame = () => {
+    //     const newId = "noveId"; // backend udělá nové ID
+    //     const newGame: Game = { comments: [], cover: "", description: "New Game Describtion", developers: [], genres: [], id: newId, name: "New Game", photos: [], releaseDate: "", reviews: [], videos: [] }
+    //     setGames([newGame, ...games])
+    // }
+
+    const addGame = async () => {
+        const name = 'New Game';
+        const description = 'Describtion';
+        const releaseDate = '2023-06-19';
+        const developers: string[] = [];
+        const genres: string[] = [];
+        const cover = '';
+        const photos: string[] = [];
+        const videos: string[] = [];
+
+        try {
+            const newGame = await GameApi.add(name, description, releaseDate, developers, genres, cover, photos, videos);
+            setGames([newGame, ...games]);
+        } catch (error) {
+            console.error('Failed to add the game:', error);
+        }
     }
 
     return (
@@ -79,7 +104,7 @@ export const GamesCRUD = () => {
                         </div>
                         {editedGameId === game.id && (
                             <div className='mt-5'>
-                                <EditGame gameProp={game} editedGameId={editedGameId} />
+                                <EditGame gameProp={game} editedGameId={editedGameId} developers={developers} genres={genres}/>
                             </div>
                         )}
                     </div>
