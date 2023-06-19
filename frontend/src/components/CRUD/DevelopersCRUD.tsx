@@ -15,7 +15,6 @@ export const DeleteDevConfirm: React.FC<DeleteDeveloperProps> = ({ handleClose, 
     const deleteDev = async (event: React.MouseEvent) => {
         try {
             await DeveloperApi.remove(developerId);
-            console.log("DELETED");
             updateDevelopers(developers.filter(dev => dev.id !== developerId)); 
         }
         catch (error) {
@@ -25,7 +24,6 @@ export const DeleteDevConfirm: React.FC<DeleteDeveloperProps> = ({ handleClose, 
             handleClose(event);
         }
     };
-
 
     return (
         <div className='border-2 border-black-1000'>
@@ -42,14 +40,14 @@ export const DeleteDevConfirm: React.FC<DeleteDeveloperProps> = ({ handleClose, 
 
 
 interface DevelopersCRUDProps {
-    developersList: Developer[];
+    developers: Developer[];
+    setDevelopers: Function;
 }
 
-export const DevelopersCRUD: React.FC<DevelopersCRUDProps> = ({ developersList }) => {
+export const DevelopersCRUD: React.FC<DevelopersCRUDProps> = ({ developers, setDevelopers }) => {
     const [searchTerm, setSearchTerm] = useState("");
     const [editedDeveloperId, setEditedDeveloperId] = useState<string | null>(null);
     const [developerToDelete, setDeveloperToDelete] = useState<string | null>(null);
-    const [developers, setDevelopers] = useState(developersList);
 
     const filteredDevelopers = developers.filter(dev =>
         dev.name.toLowerCase().includes(searchTerm.toLowerCase())
