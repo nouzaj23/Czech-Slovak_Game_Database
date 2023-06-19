@@ -48,20 +48,20 @@ export function getRepository(dataSource: DataSource) {
         const developerRepository = manager.getRepository(Developer)
         const genreRepository = manager.getRepository(Genre)
 
-        const genres = data.genreIds ? await genreRepository.findBy({ id: In(data.genreIds) }) : undefined
-        if (genres?.length !== data.genreIds?.length)
+        const {genreIds, developerIds, ...rest} = data
+
+        const genres = genreIds ? await genreRepository.findBy({ id: In(genreIds) }) : undefined
+        if (genres?.length !== genreIds?.length)
           throw new NotFound("Genre")
 
-        const developers = data.developerIds ? await developerRepository.findBy({ id: In(data.developerIds) }) : undefined
-        if (developers?.length !== data.developerIds?.length)
+        const developers = developerIds ? await developerRepository.findBy({ id: In(developerIds) }) : undefined
+        if (developers?.length !== developerIds?.length)
           throw new NotFound("Developer")
 
         const game = gameRepository.create({
-          name: data.name,
-          description: data.description,
-          releaseDate: data.releaseDate,
           genres,
-          developers
+          developers,
+          ...rest
         })
 
         return gameRepository.save(game)
