@@ -65,6 +65,7 @@ export function getRepository(dataSource: DataSource) {
           username,
           email,
           hash,
+          isAdmin: false,
         })
       })
     },
