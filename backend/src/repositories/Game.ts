@@ -19,6 +19,8 @@ export function getRepository(dataSource: DataSource) {
         .where(data.ids ? { id: data.ids } : {})
         .andWhere(data.developerId ? { developer: data.developerId } : {})
         .andWhere(data.genreId ? { genre: data.genreId } : {})
+        .innerJoinAndSelect('game.developers', 'developer')
+        .innerJoinAndSelect('game.genres', 'genre')
         .orderBy(data.order || {})
 
       if (data.nameContains)
@@ -54,13 +56,15 @@ export function getRepository(dataSource: DataSource) {
         if (developers?.length !== data.developerIds?.length)
           throw new NotFound("Developer")
 
-        return gameRepository.create({
+        const game = gameRepository.create({
           name: data.name,
           description: data.description,
           releaseDate: data.releaseDate,
           genres,
           developers
         })
+
+        return gameRepository.save(game)
       })
     },
 
