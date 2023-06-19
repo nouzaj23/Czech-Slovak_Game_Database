@@ -8,7 +8,7 @@ import { GameCreationData, GameDeleteData, GameReadMultipleData, GameReadSingleD
 export function getRepository(dataSource: DataSource) {
   return makeRepository(dataSource, Game, {
     async readSingle(data: GameReadSingleData, authorId: UUID | undefined): Promise<Game> {
-      const game = await this.findOneBy({ id: data.id })
+      const game = await this.findOne({where: data, relations: ['developers', 'genres']})
       if (!game)
         throw new NotFound()
       return game
@@ -46,12 +46,12 @@ export function getRepository(dataSource: DataSource) {
         const developerRepository = manager.getRepository(Developer)
         const genreRepository = manager.getRepository(Genre)
 
-        const genres = await genreRepository.findBy({ id: In(data.genreIds) })
-        if (genres.length !== data.genreIds.length)
+        const genres = data.genreIds ? await genreRepository.findBy({ id: In(data.genreIds) }) : undefined
+        if (genres?.length !== data.genreIds?.length)
           throw new NotFound("Genre")
 
-        const developers = await developerRepository.findBy({ id: In(data.developerIds) })
-        if (developers.length !== data.developerIds.length)
+        const developers = data.developerIds ? await developerRepository.findBy({ id: In(data.developerIds) }) : undefined
+        if (developers?.length !== data.developerIds?.length)
           throw new NotFound("Developer")
 
         return gameRepository.create({
