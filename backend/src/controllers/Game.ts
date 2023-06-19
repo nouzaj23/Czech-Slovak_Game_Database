@@ -54,7 +54,7 @@ export class Game extends Base {
       name: z.string(),
       description: z.string(),
       releaseDate: z.coerce.date().optional(),
-      cover: z.string().optional(),
+      cover: z.string(),
       developerIds: z.array(z.string().uuid()).optional(),
       genreIds: z.array(z.string().uuid()).optional(),
       photos: z.array(z.string()).optional(),
