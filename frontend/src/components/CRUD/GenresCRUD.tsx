@@ -12,8 +12,17 @@ interface DeleteGenreProps {
 }
 
 export const DeleteGenreConfirm: React.FC<DeleteGenreProps> = ({ handleClose, genreId, updateGenres, genres }) => {
-    const deleteGenre = () => {
-        updateGenres(genres.filter(genre => genre.id !== genreId));
+    const deleteGenre = async (event: React.MouseEvent) => {
+        try {
+            await GenreApi.remove(genreId);
+            updateGenres(genres.filter(genre => genre.id !== genreId)); 
+        }
+        catch (error) {
+            console.log("Genre cannot be deleted", error)
+        }
+        finally {
+            handleClose(event);
+        }
     };
 
     return (
@@ -21,7 +30,7 @@ export const DeleteGenreConfirm: React.FC<DeleteGenreProps> = ({ handleClose, ge
             <form className="p-6 bg-white rounded shadow-md">
                 <p>Opravdu chcete smazat žánr?</p>
                 <div className="flex items-center justify-between mt-4">
-                    <button className="bg-gray-600 hover:bg-gray-800 text-white font-bold py-2 px-4 rounded" type="button" onClick={(event) => { deleteGenre(); handleClose(event); }}  >Potvrdit</button>
+                    <button className="bg-gray-600 hover:bg-gray-800 text-white font-bold py-2 px-4 rounded" type="button" onClick={(event) => { deleteGenre(event); handleClose(event); }}  >Potvrdit</button>
                     <button className="ml-5 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" type="button" onClick={handleClose}>Storno</button>
                 </div>
             </form>
