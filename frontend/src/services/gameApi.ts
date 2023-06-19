@@ -1,13 +1,13 @@
 import axiosInstance from "./base";
 
-export const add = async (name: string, description: string, releaseDate: string, developers: string[],
-    genres: string[], cover: string, photos: string[], videos: string[]) => {
+export const add = async (name: string, description: string, releaseDate: string, developerIds: string[],
+    genreIds: string[], cover: string, photos: string[], videos: string[]) => {
     const response = await axiosInstance.post('/game', {
         name,
         description,
-        genres,
+        genreIds,
         releaseDate,
-        developers,
+        developerIds,
         cover,
         photos,
         videos
