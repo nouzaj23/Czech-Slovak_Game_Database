@@ -51,7 +51,8 @@ export function makeRouter(context: Context) {
     .delete(makeAdminAuthMiddleware())
     .delete(async (req, res, next) => {
       try {
-        await context.controllers.developer.delete({...req.params, ...req.body}, req.session.auth?.userId)
+        const developer = await context.controllers.developer.delete({...req.params, ...req.body}, req.session.auth?.userId)
+        res.json(developer)
       }
       catch (error) {
         next(error)
