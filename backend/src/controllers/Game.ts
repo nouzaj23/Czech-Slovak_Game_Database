@@ -30,8 +30,8 @@ export class Game extends Base {
       developerId: z.string().uuid().optional(),
       genreId: z.string().optional(),
       releaseDate: z.object({
-        from: z.date().optional(),
-        to: z.date().optional(),
+        from: z.coerce.date().optional(),
+        to: z.coerce.date().optional(),
       }).optional(),
       order: z.object({
         name: z.enum(['ASC', 'DESC']).optional(),
@@ -53,7 +53,7 @@ export class Game extends Base {
     const schema = z.object({
       name: z.string(),
       description: z.string(),
-      releaseDate: z.date().optional(),
+      releaseDate: z.coerce.date().optional(),
       cover: z.string().optional(),
       developerIds: z.array(z.string().uuid()),
       genreIds: z.array(z.string()),
@@ -74,7 +74,7 @@ export class Game extends Base {
       name: z.string().optional(),
       description: z.string().optional(),
       genres: z.array(z.string()).optional(),
-      releaseDate: z.date().optional(),
+      releaseDate: z.coerce.date().optional(),
       developer: z.string().optional(),
       cover: z.string().optional(),
       photos: z.array(z.string()).optional(),
