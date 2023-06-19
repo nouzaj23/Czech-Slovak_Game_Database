@@ -23,8 +23,8 @@ export const SearchResults = () => {
             .sort((a, b) => a.name.localeCompare(b.name));
 
         const genres = genresData
-            .filter(genre => genre.type.toLowerCase().includes(query.toLowerCase()))
-            .sort((a, b) => a.type.localeCompare(b.type));
+            .filter(genre => genre.name.toLowerCase().includes(query.toLowerCase()))
+            .sort((a, b) => a.name.localeCompare(b.name));
 
         setResults({
             games: games,
@@ -81,7 +81,7 @@ export const SearchResults = () => {
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                         {results.genres.map(genre => (
                             <Link to={`/games?genre=${genre.id}`} key={genre.id} className="p-4 border border-gray-200 rounded-lg hover:bg-gray-100 transition-colors duration-200">
-                                <h3 className="text-lg font-semibold mb-1">{genre.type}</h3>
+                                <h3 className="text-lg font-semibold mb-1">{genre.name}</h3>
                                 <p className="text-gray-600 text-sm">{genre.description.substring(0, 100)}...</p>
                             </Link>
                         ))}

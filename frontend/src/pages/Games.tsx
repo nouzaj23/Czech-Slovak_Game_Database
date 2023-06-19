@@ -109,7 +109,7 @@ export const Games = () => {
           >
             <option value="">Všechny žánry</option>
             {genres.map(gen => (
-              <option key={gen.id} value={gen.id}>{gen.type}</option>
+              <option key={gen.id} value={gen.id}>{gen.name}</option>
             ))}
           </select>
           <input

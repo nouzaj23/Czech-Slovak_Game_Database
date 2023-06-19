@@ -49,7 +49,7 @@ export const GameItem: React.FC<GameItemProps> = ({ game, developers, genres, re
                         <b>Vývojáři:</b> {gameDevelopers.map((developer, index) => <Link to={`/developers/${developer.id}`} key={index} className="text-blue-500 hover:underline">{developer.name}{index !== gameDevelopers.length - 1 && ', '}</Link>)}
                     </p>
                     <p className="text-gray-700 text-sm">
-                        <b>Žánry:</b> {gameGenres.map((genre, index) => <Link reloadDocument to={`/games?genre=${genre.id}`} key={index} className="text-blue-500 hover:underline">{genre.type}{index !== gameGenres.length - 1 && ', '}</Link>)}
+                        <b>Žánry:</b> {gameGenres.map((genre, index) => <Link reloadDocument to={`/games?genre=${genre.id}`} key={index} className="text-blue-500 hover:underline">{genre.name}{index !== gameGenres.length - 1 && ', '}</Link>)}
                     </p>
                 </div>
                 <div className="flex items-center">

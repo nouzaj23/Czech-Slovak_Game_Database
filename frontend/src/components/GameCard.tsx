@@ -55,7 +55,7 @@ export const GameCard: React.FC<GameCardProps> = ({ developers, game, genres }) 
                 </Link>
                 <p className="pr-10 mt-2 text-gray-600"><b>Vývojáři:</b> {gameDevelopers.map((developer, index) => <Link to={`/developers/${developer.id}`} key={index} className="text-blue-500 hover:underline">{developer.name}{index !== gameDevelopers.length - 1 && ', '}</Link>)}</p>
                 <p className="mt-2 text-gray-600"><b>Datum vydání:</b> {game.releaseDate}</p>
-                <p className="mt-2 text-gray-600"><b>Žánry:</b> {gameGenres.map((genre, index) => <Link to={`/games?genre=${genre.id}`} key={index} className="text-blue-500 hover:underline">{genre.type}{index !== gameGenres.length - 1 && ', '}</Link>)}</p>
+                <p className="mt-2 text-gray-600"><b>Žánry:</b> {gameGenres.map((genre, index) => <Link to={`/games?genre=${genre.id}`} key={index} className="text-blue-500 hover:underline">{genre.name}{index !== gameGenres.length - 1 && ', '}</Link>)}</p>
                 <p className="mt-4 text-gray-700">
                     {game.description}
                 </p>
