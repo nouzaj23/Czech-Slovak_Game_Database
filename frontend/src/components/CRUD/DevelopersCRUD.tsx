@@ -1,7 +1,7 @@
 import { MouseEventHandler, useState } from 'react';
-import developersList from '../../assets/developers.json';
 import { Developer } from '../../models';
 import { EditDeveloper } from '../Editors/EditDeveloper';
+import { DeveloperApi } from '../../services';
 
 interface DeleteDeveloperProps {
     handleClose: MouseEventHandler;
@@ -28,7 +28,11 @@ export const DeleteDevConfirm: React.FC<DeleteDeveloperProps> = ({ handleClose, 
     );
 };
 
-export const DevelopersCRUD = () => {
+interface DevelopersCRUDProps {
+    developersList: Developer[];
+}
+
+export const DevelopersCRUD: React.FC<DevelopersCRUDProps> = ({developersList}) => {
     const [searchTerm, setSearchTerm] = useState("");
     const [editedDeveloperId, setEditedDeveloperId] = useState<string | null>(null);
     const [developerToDelete, setDeveloperToDelete] = useState<string | null>(null);
@@ -38,10 +42,21 @@ export const DevelopersCRUD = () => {
         dev.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
-    const addGenre = () => {
-        const newId = "noveId"; // backend udělá nové ID
-        const newDeveloper: Developer = {avatar: "", description: "Nové studio popis", games: [], id: newId, name: "Nové studio"}
-        setDevelopers([newDeveloper, ...developers])
+    // const addDeveloper = () => {
+    //     const newId = "noveId"; // backend udělá nové ID
+    //     const newDeveloper: Developer = {avatar: "", description: "Nové studio popis", games: [], id: newId, name: "Nové studio"}
+    //     setDevelopers([newDeveloper, ...developers])
+    // }
+
+    const addDeveloper = async () => {
+        const name = 'New Developer';
+        const description = 'Describtion';
+        try {
+            const newDeveloper = await DeveloperApi.add(name, description, "");
+            setDevelopers([newDeveloper, ...developers]);
+        } catch (error) {
+            console.error('Failed to add the developer:', error);
+        }
     }
 
     return (
@@ -49,7 +64,7 @@ export const DevelopersCRUD = () => {
             <div className="p-6 space-y-4 w-full md:w-3/4">
                 <div className="flex justify-between">
                     <h1 className="text-2xl font-semibold">Studia</h1>
-                    <button className="px-4 py-2 text-white bg-gray-600 hover:bg-gray-800 rounded-md" onClick={addGenre}>Přidat studio</button>
+                    <button className="px-4 py-2 text-white bg-gray-600 hover:bg-gray-800 rounded-md" onClick={addDeveloper}>Přidat studio</button>
                 </div>
                 <input
                     className="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none"
