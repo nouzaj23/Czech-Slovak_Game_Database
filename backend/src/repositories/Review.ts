@@ -35,7 +35,8 @@ export function getRepository(dataSource: DataSource) {
 
         await checkPermissions(manager.getRepository(User), authorId, data.userId)
       
-        return repository.create(data)
+        const review = repository.create(data)
+        return repository.save(review)
       })
     },
 

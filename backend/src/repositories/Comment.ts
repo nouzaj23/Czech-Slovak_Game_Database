@@ -85,12 +85,14 @@ export function getRepository(dataSource: DataSource) {
         if (data.replyTo && !replyTo?.replyTo)
           throw new NotFound("Comment")
 
-        return commentRepository.create({
+        const comment = commentRepository.create({
           commenter: commenter,
           game: game,
           content: data.content,
           ...replyTo
         })
+
+        return await commentRepository.save(comment)
       })
     },
 

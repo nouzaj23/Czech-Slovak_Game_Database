@@ -34,11 +34,12 @@ export function getRepository(dataSource: DataSource) {
       return this.manager.transaction(async manager => {
         const repository = manager.withRepository(this)
 
-        const wishlist = await repository.findOneBy(data)
-        if (wishlist)
+        const conflict = await repository.findOneBy(data)
+        if (conflict)
           throw new AlreadyExists("Wishlist")
 
-        return repository.create(data)
+        const wishlist = repository.create(data)
+        return repository.save(wishlist)
       })
     },
 

@@ -34,7 +34,8 @@ export function getRepository(dataSource: DataSource) {
 
         await checkPermissions(manager.getRepository(User), authorId)
 
-        return repository.create(data)
+        const genre = repository.create(data)
+        return repository.save(genre)
       })
     },
 

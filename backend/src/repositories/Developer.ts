@@ -35,7 +35,10 @@ export function getRepository(dataSource: DataSource) {
         if (!isAdmin(manager.getRepository(User), authorId))
           throw new InsufficientPermissions()
 
-        return manager.withRepository(this).create(data)
+        const repository = manager.withRepository(this)
+        const developer = repository.create(data)
+        
+        return repository.save(developer)
       })
     },
 
