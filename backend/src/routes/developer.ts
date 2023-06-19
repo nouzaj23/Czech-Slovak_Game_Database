@@ -1,7 +1,7 @@
 import { Context } from '@/context'
 
 import Express from 'express'
-import { makeUserAuthMiddleware } from '@/middleware'
+import { makeAdminAuthMiddleware, makeUserAuthMiddleware } from '@/middleware'
 import { NotLoggedIn, SystemError } from '@/errors'
 
 export function makeRouter(context: Context) {
@@ -26,7 +26,7 @@ export function makeRouter(context: Context) {
       }
     })
 
-  router.route('/:developerId')
+  router.route('/:id')
     .get(async (req, res, next) => {
       try {
         const developer = await context.controllers.developer.readSingle({...req.params, ...req.body}, req.session.auth?.userId)
@@ -35,6 +35,7 @@ export function makeRouter(context: Context) {
         next(error)
       }
     })
+    .patch(makeAdminAuthMiddleware())
     .patch(async (req, res, next) => {
       try {
         const userId = req.session.auth?.userId
@@ -44,6 +45,15 @@ export function makeRouter(context: Context) {
         const developer = await context.controllers.developer.update({...req.params, ...req.body}, req.session.auth?.userId)
         res.json(developer)
       } catch (error) {
+        next(error)
+      }
+    })
+    .delete(makeAdminAuthMiddleware())
+    .delete(async (req, res, next) => {
+      try {
+        await context.controllers.developer.delete({...req.params, ...req.body}, req.session.auth?.userId)
+      }
+      catch (error) {
         next(error)
       }
     })
