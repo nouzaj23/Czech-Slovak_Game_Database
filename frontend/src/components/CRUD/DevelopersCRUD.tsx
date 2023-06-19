@@ -1,35 +1,27 @@
-import { useState } from 'react';
+import { MouseEventHandler, useState } from 'react';
 import { Developer } from '../../models';
 import { EditDeveloper } from '../Editors/EditDeveloper';
 import { DeveloperApi } from '../../services';
 
+
 interface DeleteDeveloperProps {
-    handleClose: Function;
+    handleClose: MouseEventHandler;
     developerId: string,
     updateDevelopers: Function,
     developers: Developer[],
 }
 
 export const DeleteDevConfirm: React.FC<DeleteDeveloperProps> = ({ handleClose, developerId, updateDevelopers, developers }) => {
-    // const deleteDev = async () => { 
-    //     try {
-    //         await DeveloperApi.remove(developerId);
-    //         updateDevelopers(developers.filter(dev => dev.id !== developerId));
-    //     } catch (error) {
-    //         console.error('Failed to add the developer:', error);
-    //     }
-    // };
-
-
-    const deleteDev = async () => { 
+    const deleteDev = (event: React.MouseEvent) => {
         try {
-            await DeveloperApi.remove(developerId);
+
             updateDevelopers(developers.filter(dev => dev.id !== developerId));
-        } catch (error) {
-            console.error('Failed to delete the developer:', error);
-        } 
+        }
+        catch (error) {
+            console.log("Developer cannot be deleted", error)
+        }
         finally {
-            handleClose();
+            handleClose(event);
         }
     };
 
@@ -39,13 +31,14 @@ export const DeleteDevConfirm: React.FC<DeleteDeveloperProps> = ({ handleClose, 
             <form className="p-6 bg-white rounded shadow-md">
                 <p>Opravdu chcete smazat žánr?</p>
                 <div className="flex items-center justify-between mt-4">
-                    <button className="bg-gray-600 hover:bg-gray-800 text-white font-bold py-2 px-4 rounded" type="button" onClick={deleteDev}  >Potvrdit</button>
-                    <button className="ml-5 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" type="button" onClick={handleClose()}>Storno</button>
+                    <button className="bg-gray-600 hover:bg-gray-800 text-white font-bold py-2 px-4 rounded" type="button" onClick={(event) => { deleteDev(event);}}  >Potvrdit</button>
+                    <button className="ml-5 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" type="button" onClick={handleClose}>Storno</button>
                 </div>
             </form>
         </div>
     );
 };
+
 
 interface DevelopersCRUDProps {
     developersList: Developer[];
