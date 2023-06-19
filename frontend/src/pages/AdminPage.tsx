@@ -59,7 +59,7 @@ export const AdminPage = () => {
             {visibleComponent === 'Games' ? <GamesCRUD developers={developers} games={games} genres={genres} setGames={setGames}/> : null}
             {visibleComponent === 'Developers' ? <DevelopersCRUD developers={developers} setDevelopers={setDevelopers}/> : null}
             {visibleComponent === 'Users' ? <UsersCRUD /> : null}
-            {visibleComponent === 'Genres' ? <GenresCRUD /> : null}
+            {visibleComponent === 'Genres' ? <GenresCRUD genres={genres} setGenres={setGenres}/> : null}
         </div>
     );
 }

@@ -1,7 +1,8 @@
 import { MouseEventHandler, useState } from 'react';
-import genresList from '../../assets/genres.json';
+// import genresList from '../../assets/genres.json';
 import { Genre } from '../../models';
 import { EditGenre } from '../Editors/EditGenres';
+import { GenreApi } from '../../services';
 
 interface DeleteGenreProps {
     handleClose: MouseEventHandler;
@@ -28,20 +29,36 @@ export const DeleteGenreConfirm: React.FC<DeleteGenreProps> = ({ handleClose, ge
     );
 };
 
-export const GenresCRUD = () => {
+interface GenresCRUDProps {
+    genres: Genre[];
+    setGenres: Function;
+}
+
+
+export const GenresCRUD: React.FC<GenresCRUDProps> = ({genres, setGenres}) => {
     const [searchTerm, setSearchTerm] = useState("");
     const [editedGenreId, setEditedGenreId] = useState<string | null>(null);
     const [genreToDelete, setGenreToDelete] = useState<string | null>(null);
-    const [genres, setGenres] = useState(genresList);
 
     const filteredGenres = genres.filter(genre =>
         genre.type.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
-    const addGenre = () => {
-        const newId = "noveId"; // backend udělá nové ID
-        const newGenre: Genre = {description: "Popis nového žánru", games: [], id: newId, type: "Nový žánr"}
-        setGenres([newGenre, ...genres])
+    // const addGenre = () => {
+    //     const newId = "noveId"; // backend udělá nové ID
+    //     const newGenre: Genre = {description: "Popis nového žánru", games: [], id: newId, type: "Nový žánr"}
+    //     setGenres([newGenre, ...genres])
+    // }
+
+    const addGenre = async () => {
+        const name = 'New Genre';
+        const description = 'Description';
+        try {
+            const newGenre = await GenreApi.add(name, description);
+            setGenres([newGenre, ...genres]);
+        } catch (error) {
+            console.error('Failed to add the developer:', error);
+        }
     }
 
     return (
