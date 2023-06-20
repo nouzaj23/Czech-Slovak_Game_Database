@@ -139,7 +139,7 @@ interface EditGameGenresProps {
 }
 
 export const EditGameGenres: React.FC<EditGameGenresProps> = ({ game, updateGame,  genresList}) => {
-    const [genres, setGenres] = useState(genresList);
+    // const [genres, setGenres] = useState(genresList);
 
     // const handleGenreChange = (genreId: string) => {
     //     const genreIds: string[] = game.genres.map(g => g.id);
@@ -155,17 +155,17 @@ export const EditGameGenres: React.FC<EditGameGenresProps> = ({ game, updateGame
     const handleGenreChange = (genreId: string) => {
         const genreIds = game.genres.map(g => g.id);
         if (genreIds.includes(genreId)) {
-            setGenres(genres.map(genre =>
-                genre.id === genreId ? { ...genre, games: genre.games.filter(g => g != game.id) } : genre
-            ));
+            // setGenres(genres.map(genre =>
+            //     genre.id === genreId ? { ...genre, games: genre.games.filter(g => g != game.id) } : genre
+            // ));
             updateGame({ ...game, genres: game.genres.filter(g => g.id !== genreId) });
         }
         else {
-            const newGenre = genres.find(g => g.id == genreId);
+            const newGenre = genresList.find(g => g.id == genreId);
             if (newGenre) {
-                setGenres(genres.map(genre =>
-                    genre.id === genreId ? { ...genre, games: [...genre.games, game.id] } : genre
-                ));
+                // setGenres(genres.map(genre =>
+                //     genre.id === genreId ? { ...genre, games: [...genre.games, game.id] } : genre
+                // ));
                 updateGame({ ...game, genres: [...game.genres, genreId] });
             }
         }
