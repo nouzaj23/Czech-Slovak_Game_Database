@@ -26,7 +26,7 @@ export function makeRouter(context: Context) {
       }
     })
 
-  router.route('/:genreId')
+  router.route('/:id')
     .get(async (req, res, next) => {
       try {
         const genre = await context.controllers.genre.readSingle({...req.params, ...req.body}, req.session.auth?.userId)

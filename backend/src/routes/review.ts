@@ -26,7 +26,7 @@ export function makeRouter(context: Context) {
       }
     })
 
-  router.route('/:reviewId')
+  router.route('/:id')
     .get(async (req, res, next) => {
       try {
         const review = await context.controllers.review.readSingle({...req.params, ...req.body}, req.session.auth?.userId)
