@@ -26,7 +26,8 @@ export const GamePage = () => {
         return <div>Hra není k dispozici</div>;
     }
 
-    const rating: number = reviews.filter(review => game.reviews.map(r => r.id).includes(review.id)).reduce((accumulator, currentValue) => accumulator + currentValue.rating, 0) / game.reviews.length;
+    const rating = 10;
+    // const rating: number = reviews.filter(review => game.reviews.map(r => r.id).includes(review.id)).reduce((accumulator, currentValue) => accumulator + currentValue.rating, 0) / game.reviews.length;
     const [selectedTab, setSelectedTab] = useState('reviews');
 
     const [isOpen, setIsOpen] = useState(false);
