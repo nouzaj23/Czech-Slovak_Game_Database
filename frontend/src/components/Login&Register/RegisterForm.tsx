@@ -1,5 +1,5 @@
 import { FormEventHandler, MouseEventHandler, useState } from 'react';
-// import useLogin from '../../hooks/useLogin';
+import useLogin from '../../hooks/useLogin';
 import { UserApi } from '../../services';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
@@ -8,7 +8,7 @@ interface RegisterFormProps {
 }
 
 export const RegisterForm: React.FC<RegisterFormProps> = ({ handleClose }) => {
-    // const { login } = useLogin({ redirect: '/' });
+    const { login } = useLogin({ redirect: '/' });
     const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
     const [username, setUsername] = useState("");
@@ -25,7 +25,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ handleClose }) => {
         },
         onSuccess: () => {
             queryClient.invalidateQueries(['games']);
-            // login({password: password, username: username});
+            login({password: password, username: username});
         },
     });
 
