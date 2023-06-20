@@ -6,16 +6,6 @@ import { DeveloperApi, GameApi, GenreApi } from '../services';
 import { useQuery } from '@tanstack/react-query';
 
 export const Games = () => {
-  const { data: games } = useQuery<Game[]>(['games'], GameApi.retrieveAllGames);
-  const { data: developers } = useQuery<Developer[]>(['developers'], DeveloperApi.retrieveAllDevelopers);
-  const { data: genres } = useQuery<Genre[]>(['genres'], GenreApi.retrieveAllGenres);
-
-  if (!games || !developers || !genres) {
-    return (
-    <div>Fetching error</div>
-    );
-  }
-
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const genre = queryParams.get('genre');
@@ -25,6 +15,14 @@ export const Games = () => {
   const [developerFilter, setDeveloperFilter] = useState('');
   const [genreFilter, setGenreFilter] = useState(genre || '');
   const [sortType, setSortType] = useState('name-asc');
+  
+  const { data: gamesData } = useQuery<Game[]>(['games'], GameApi.retrieveAllGames);
+  const { data: developersData } = useQuery<Developer[]>(['developers'], DeveloperApi.retrieveAllDevelopers);
+  const { data: genresData } = useQuery<Genre[]>(['genres'], GenreApi.retrieveAllGenres);
+  
+  const games = gamesData ?? [];
+  const developers = developersData ?? [];
+  const genres = genresData ?? [];
 
   let filteredGames = games.filter(game => {
     const matchesName = game.name.toLowerCase().includes(filter.toLowerCase());
@@ -63,7 +61,6 @@ export const Games = () => {
     return result;
   });
   
-
   return (
     <div>
       <div className="p-4 bg-white shadow rounded-lg mb-6">
