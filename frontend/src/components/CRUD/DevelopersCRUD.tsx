@@ -54,8 +54,6 @@ export const DevelopersCRUD: React.FC<DevelopersCRUDProps> = ({ developers }) =>
 
     const queryClient = useQueryClient();
 
-
-
     const mutation = useMutation(() => DeveloperApi.add("New Developer", "Description", ""), {
         onError: (error) => {
             console.error('Failed to add the developer:', error);
@@ -68,17 +66,6 @@ export const DevelopersCRUD: React.FC<DevelopersCRUDProps> = ({ developers }) =>
     const addDeveloper = () => {
         mutation.mutate();
     }
-
-    // const addDeveloper = async () => {
-    //     const name = 'New Developer';
-    //     const description = 'Describtion';
-    //     try {
-    //         await DeveloperApi.add(name, description, "");
-    //         // setDevelopers([newDeveloper, ...developers]);
-    //     } catch (error) {
-    //         console.error('Failed to add the developer:', error);
-    //     }
-    // }
 
     return (
         <div className='flex justify-center'>

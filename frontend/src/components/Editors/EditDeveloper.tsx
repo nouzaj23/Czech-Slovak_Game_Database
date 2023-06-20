@@ -1,7 +1,8 @@
-import { useCallback, useState } from "react";
+import { useState } from "react";
 import { Developer } from "../../models";
 import { EditDeveloperAvatar, EditDeveloperDescribtion, EditDeveloperName } from "./EditDeveloperOperations";
 import { DeveloperApi } from "../../services";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 interface EditDeveloperProps {
     developerProp: Developer;
@@ -11,14 +12,29 @@ interface EditDeveloperProps {
 export const EditDeveloper: React.FC<EditDeveloperProps> = ({ developerProp, editedDeveloperId }) => {
     const [developer, setDeveloper] = useState(developerProp);
 
-    const updateDeveloper = useCallback(async () => {
-        try {
-            await DeveloperApi.update(developer.id, developer.name, developer.description, developer.avatar);
-            // setDevelopers((devs: Developer[]) => devs.map(dev => dev.id === developer.id ? { ...dev, name: developer.name, avatar: developer.avatar } : dev));
-        } catch (error) {
-            console.error('Failed to update the developer:', error);
-        }
-    }, [developer]);
+    const queryClient = useQueryClient();
+    
+    const mutation = useMutation(() => DeveloperApi.update(developer.id, developer.name, developer.description, developer.avatar), {
+        onError: (error) => {
+            console.error('Failed to add the developer:', error);
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries(['developers']);
+        },
+    });
+
+    const updateDeveloper = () => {
+        mutation.mutate();
+    }
+
+    // const updateDeveloper = useCallback(async () => {
+    //     try {
+    //         await DeveloperApi.update(developer.id, developer.name, developer.description, developer.avatar);
+    //         // setDevelopers((devs: Developer[]) => devs.map(dev => dev.id === developer.id ? { ...dev, name: developer.name, avatar: developer.avatar } : dev));
+    //     } catch (error) {
+    //         console.error('Failed to update the developer:', error);
+    //     }
+    // }, [developer]);
 
     return (
         <div>
