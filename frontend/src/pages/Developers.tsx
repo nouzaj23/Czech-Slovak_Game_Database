@@ -1,25 +1,15 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { DeveloperItem } from '../components/DeveloperItem';
 import { Developer } from '../models';
 import { DeveloperApi } from '../services';
+import { useQuery } from '@tanstack/react-query';
 
 export const Developers = () => {
     const [filter, setFilter] = useState('');
     const [sortType, setSortType] = useState('name-asc');
 
-    const [developers, setDevelopers] = useState<Developer[]>([]);
-
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                setDevelopers(await DeveloperApi.retrieveAllDevelopers());
-            }
-            catch (error) {
-                console.log("Games was not loaded");
-            }
-        }
-        fetchData();
-    }, []);
+    const { data: developersData } = useQuery<Developer[]>(['developers'], DeveloperApi.retrieveAllDevelopers);
+    const developers = developersData ?? [];
 
     let filteredDevelopers = developers.filter(dev => dev.name.toLowerCase().includes(filter.toLowerCase()));
 
