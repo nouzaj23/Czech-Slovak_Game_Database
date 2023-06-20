@@ -1,7 +1,7 @@
 import { FormEventHandler, MouseEventHandler, useCallback } from 'react';
 import useLogin from '../../hooks/useLogin';
 import { UserApi } from '../../services';
-import { useMutation, useQueryClient } from 'react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 interface RegisterFormProps {
     handleClose: MouseEventHandler;
@@ -35,6 +35,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ handleClose }) => {
             //     errorLabel.textContent = "Uživatel s touto přezdívkou existuje";
             // }
             else {
+                console.log("zacatek registrace");
                 const queryClient = useQueryClient();
                 useMutation({
                     mutationFn: () => UserApi.register(username.value, password.value, email.value),
@@ -42,6 +43,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ handleClose }) => {
                         queryClient.invalidateQueries(['users']);
                     },
                 });
+                console.log("OK");
             }
         }
     }, [login]);
