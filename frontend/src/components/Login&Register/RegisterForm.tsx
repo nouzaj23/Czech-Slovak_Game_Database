@@ -35,6 +35,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ handleClose }) => {
             //     errorLabel.textContent = "Uživatel s touto přezdívkou existuje";
             // }
             else {
+                console.log("zacatek registrace");
                 const queryClient = useQueryClient();
                 useMutation({
                     mutationFn: () => UserApi.register(username.value, password.value, email.value),
@@ -42,6 +43,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ handleClose }) => {
                         queryClient.invalidateQueries(['users']);
                     },
                 });
+                console.log("OK");
             }
         }
     }, [login]);
