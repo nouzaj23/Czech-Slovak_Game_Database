@@ -20,11 +20,15 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ handleClose }) => {
     const queryClient = useQueryClient();
 
     const mutation = useMutation(() => UserApi.register(username, password, email), {
+        onError: (error) => {
+            console.error('Failed to edit the game:', error);
+        },
         onSuccess: () => {
-            queryClient.invalidateQueries(['users']);
+            queryClient.invalidateQueries(['games']);
             // login({password: password, username: username});
         },
     });
+
 
     const handleSubmit: FormEventHandler<HTMLFormElement> = useCallback(async (e) => {
         e.preventDefault();
