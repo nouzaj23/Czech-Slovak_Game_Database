@@ -8,21 +8,12 @@ if (!env.NODE_ENV)
 const entitiesPath = cwd() + '/dist/entities/*.{js,ts}'
 const migrationsPath = cwd() + '/dist/migrations/*.{js,ts}'
 
-export const production = new DataSource({
+export const dataSource = new DataSource({
   type: 'postgres',
   url: env.DATABASE_URL,
   username: env.DB_USER,
   password: env.DB_PASSWORD,
   database: env.DB_DATABASE,
-  entities: [entitiesPath],
-  migrations: [migrationsPath],
-  migrationsTableName: 'migrations',
-  migrationsRun: true,
-})
-
-export const development = new DataSource({
-  type: 'sqlite',
-  database: 'database.sqlite',
   entities: [entitiesPath],
   migrations: [migrationsPath],
   migrationsTableName: 'migrations',

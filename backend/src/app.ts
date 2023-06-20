@@ -1,5 +1,5 @@
 import 'reflect-metadata'
-import * as ormconfig from './ormconfig.js'
+import { dataSource } from './ormconfig.js'
 
 import { Context, Enviroment as Environment } from '@/context'
 import { getRepositories } from '@/repositories'
@@ -20,11 +20,6 @@ if (!process.env.NODE_ENV)
   configEnv()
 
 const enviroment: Environment = Environment[env.NODE_ENV as keyof typeof Environment] || Environment.development
-
-const dataSource
-  = enviroment === Environment.production
-    ? ormconfig.production
-    : ormconfig.development
 
 console.log(`starting in ${enviroment} mode`)
 
@@ -47,10 +42,12 @@ await context.dataSource.initialize()
 
 context.app.use(Express.json())
 context.app.set('trust proxy', true)
+
 context.app.use(cors({
-  origin: 'cshd.gwenlian.eu',
+  origin: env.CORS_ORIGIN,
   credentials: true,
 }))
+
 context.app.use(Session({
   store: new TypeormStore({
     cleanupLimit: 2,
