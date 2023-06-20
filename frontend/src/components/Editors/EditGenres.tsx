@@ -1,7 +1,8 @@
-import { useCallback, useState } from "react";
+import { useState } from "react";
 import { Genre } from "../../models";
 import { EditGenreDescribtion, EditGenreName } from "./EditGenreOperations";
 import { GenreApi } from "../../services";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 interface EditGenreProps {
     genreProp: Genre;
@@ -11,14 +12,20 @@ interface EditGenreProps {
 export const EditGenre: React.FC<EditGenreProps> = ({ genreProp, editedGenreId }) => {
     const [genre, setGenre] = useState(genreProp);
 
-    const updateGenre = useCallback(async () => {
-        try {
-            await GenreApi.update(genre.id, genre.name, genre.description);
-            // setGenres((genres: Genre[]) => genres.map(g => g.id === genre.id ? { ...g, name: genre.name, description: genre.description } : g));
-        } catch (error) {
-            console.error('Failed to update the developer:', error);
-        }
-    }, [genre]);
+    const queryClient = useQueryClient();
+    
+    const mutation = useMutation(() => GenreApi.update(genre.id, genre.name, genre.description), {
+        onError: (error) => {
+            console.error('Failed to add the genre:', error);
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries(['genres']);
+        },
+    });
+
+    const updateGenre = () => {
+        mutation.mutate();
+    }
 
     return (
         <div>
