@@ -58,7 +58,7 @@ export const GamesCRUD: React.FC<GamesCRUDProps> = ({ developers, games, genres 
 
     const queryClient = useQueryClient();
 
-    const mutation = useMutation(() => GameApi.add("New Game", "Describtion", "2000-01-01", [], [], "", [], []), {
+    const mutation = useMutation(() => GameApi.add("New Game", "Describtion", "2024-05-05", [], [], "", [], []), {
         onError: (error) => {
             console.error('Failed to add the game:', error);
         },
@@ -70,24 +70,6 @@ export const GamesCRUD: React.FC<GamesCRUDProps> = ({ developers, games, genres 
     const addGame = () => {
         mutation.mutate();
     }
-
-    // const addGame = async () => {
-    //     const name = 'New Game';
-    //     const description = 'Describtion';
-    //     const releaseDate = '2023-06-19';
-    //     const developers: string[] = [];
-    //     const genres: string[] = [];
-    //     const cover = "";
-    //     const photos: string[] = [];
-    //     const videos: string[] = [];
-
-    //     try {
-    //         await GameApi.add(name, description, releaseDate, developers, genres, cover, photos, videos);
-    //         // setGames([newGame, ...games]);
-    //     } catch (error) {
-    //         console.error('Failed to add the game:', error);
-    //     }
-    // }
 
     return (
         <div className='flex justify-center'>
