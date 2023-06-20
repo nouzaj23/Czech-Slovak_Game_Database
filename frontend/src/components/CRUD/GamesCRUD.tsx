@@ -3,6 +3,7 @@ import { MouseEventHandler, useState } from 'react';
 import { EditGame } from '../Editors/EditGame';
 import { Developer, Game, Genre } from '../../models';
 import { GameApi } from '../../services';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 interface DeleteGameProps {
     handleClose: MouseEventHandler;
@@ -10,12 +11,21 @@ interface DeleteGameProps {
     games: Game[],
 }
 
-export const DeleteGameConfirm: React.FC<DeleteGameProps> = ({ handleClose, gameId, games }) => {
-    const deleteGame = () => {
-        if (games && gameId) {
+export const DeleteGameConfirm: React.FC<DeleteGameProps> = ({ handleClose, gameId }) => {
+    const queryClient = useQueryClient();
 
-        } 
-        // updateGames(games.filter(game => game.id !== gameId));
+    const mutation = useMutation(() => GameApi.remove(gameId), {
+        onError: (error) => {
+            console.error('Failed to delete the game:', error);
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries(['games']);
+        },
+    });
+
+    const deleteGame = async (event: React.MouseEvent) => {
+        mutation.mutate();
+        handleClose(event);
     };
 
     return (
@@ -23,7 +33,7 @@ export const DeleteGameConfirm: React.FC<DeleteGameProps> = ({ handleClose, game
             <form className="p-6 bg-white rounded shadow-md">
                 <p>Opravdu chcete smazat hru?</p>
                 <div className="flex items-center justify-between mt-4">
-                    <button className="bg-gray-600 hover:bg-gray-800 text-white font-bold py-2 px-4 rounded" type="button" onClick={(event) => { deleteGame(); handleClose(event); }}  >Potvrdit</button>
+                    <button className="bg-gray-600 hover:bg-gray-800 text-white font-bold py-2 px-4 rounded" type="button" onClick={(event) => { deleteGame(event); }}  >Potvrdit</button>
                     <button className="ml-5 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" type="button" onClick={handleClose}>Storno</button>
                 </div>
             </form>
@@ -46,29 +56,38 @@ export const GamesCRUD: React.FC<GamesCRUDProps> = ({ developers, games, genres 
         game.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
-    // const addGame = () => {
-    //     const newId = "noveId"; // backend udělá nové ID
-    //     const newGame: Game = { comments: [], cover: "", description: "New Game Describtion", developers: [], genres: [], id: newId, name: "New Game", photos: [], releaseDate: "", reviews: [], videos: [] }
-    //     setGames([newGame, ...games])
-    // }
+    const queryClient = useQueryClient();
 
-    const addGame = async () => {
-        const name = 'New Game';
-        const description = 'Describtion';
-        const releaseDate = '2023-06-19';
-        const developers: string[] = [];
-        const genres: string[] = [];
-        const cover = "";
-        const photos: string[] = [];
-        const videos: string[] = [];
-
-        try {
-            await GameApi.add(name, description, releaseDate, developers, genres, cover, photos, videos);
-            // setGames([newGame, ...games]);
-        } catch (error) {
+    const mutation = useMutation(() => GameApi.add("New Game", "Describtion", "2000-01-01", [], [], "", [], []), {
+        onError: (error) => {
             console.error('Failed to add the game:', error);
-        }
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries(['games']);
+        },
+    });
+
+    const addGame = () => {
+        mutation.mutate();
     }
+
+    // const addGame = async () => {
+    //     const name = 'New Game';
+    //     const description = 'Describtion';
+    //     const releaseDate = '2023-06-19';
+    //     const developers: string[] = [];
+    //     const genres: string[] = [];
+    //     const cover = "";
+    //     const photos: string[] = [];
+    //     const videos: string[] = [];
+
+    //     try {
+    //         await GameApi.add(name, description, releaseDate, developers, genres, cover, photos, videos);
+    //         // setGames([newGame, ...games]);
+    //     } catch (error) {
+    //         console.error('Failed to add the game:', error);
+    //     }
+    // }
 
     return (
         <div className='flex justify-center'>
