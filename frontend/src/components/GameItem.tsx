@@ -55,7 +55,7 @@ export const GameItem: React.FC<GameItemProps> = ({ game }) => {
                         </RemoveFromFavourite>
                     </div>
                     <div className="ml-2 text-white rounded-full px-3 py-1 shadow-md" style={{ background: ratingBg() }}>
-                        <p className="font-bold text-lg">{game.rating.toFixed(1)}</p>
+                        <p className="font-bold text-lg">{game.rating?.toFixed(1)}</p>
                     </div>
                 </div>
             </div>
