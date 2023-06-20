@@ -21,10 +21,10 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ handleClose }) => {
 
     const mutation = useMutation(() => UserApi.register(username, password, email), {
         onError: (error) => {
-            console.error('Failed to edit the game:', error);
+            console.error('Failed to register user:', error);
         },
         onSuccess: () => {
-            queryClient.invalidateQueries(['games']);
+            queryClient.invalidateQueries(['users']);
             // login({password: password, username: username});
         },
     });
