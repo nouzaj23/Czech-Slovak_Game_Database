@@ -1,7 +1,4 @@
 import { Developer, Game, Genre } from "../models";
-// import developers from '../assets/developers.json';
-// import genres from '../assets/genres.json';
-// import reviews from '../assets/reviews.json';
 import { Link } from "react-router-dom";
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -15,13 +12,11 @@ interface GameCardProps {
     genres: Genre[];
 }
 
-// type GameCardProps = Game;
-
 export const GameCard: React.FC<GameCardProps> = ({ developers, game, genres }) => {
     const { auth } = useAuth();
 
-    let gameDevelopers = developers.filter(developer => game.developers.includes(developer.id));
-    let gameGenres = genres.filter(genre => game.genres.includes(genre.id));
+    let gameDevelopers = developers.filter(developer => game.developers.map(d => d.id).includes(developer.id));
+    let gameGenres = genres.filter(genre => game.genres.map(g => g.id).includes(genre.id));
 
     const rating: number = 10;
 

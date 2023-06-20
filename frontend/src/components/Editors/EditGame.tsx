@@ -23,7 +23,9 @@ export const EditGame: React.FC<EditGameProps> = ({ gameProp, editedGameId, deve
 
     const updateGame = useCallback(async () => {
         try {
-            await GameApi.update(game.id, game.name, game.description, game.releaseDate, game.developers, game.genres, game.cover, game.photos, game.videos);
+            const developersIds = game.developers.map(developer => developer.id);
+            const genresIds = game.genres.map(genre => genre.id);
+            await GameApi.update(game.id, game.name, game.description, game.releaseDate, developersIds, genresIds, game.cover, game.photos, game.videos);
         } catch (error) {
             console.error('Failed to update the game:', error);
         }

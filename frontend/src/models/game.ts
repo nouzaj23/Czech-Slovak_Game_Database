@@ -1,4 +1,4 @@
-import { Developer, Genre } from ".";
+import { Developer, Genre, Review, Comment } from ".";
 
 export interface Game {
     id: string;
@@ -7,9 +7,9 @@ export interface Game {
     rating: number;
     releaseDate: string;
     developers: Developer[];
-    genres: Genre[]; // Genre IDs
-    reviews: string[]; // Review IDs
-    comments: string[]; // Comment IDs
+    genres: Genre[];
+    reviews: Review[];
+    comments: Comment[]; 
     cover: string;
     photos: string[];
     videos: string[];

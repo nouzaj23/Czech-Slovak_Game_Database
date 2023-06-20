@@ -1,7 +1,5 @@
 import { Developer, Game, Genre } from "../../models";
-// import genresList from "../../assets/genres.json"
 import { useEffect, useState } from "react";
-// import developers from "../../assets/developers.json"
 
 interface EditGameProps {
     game: Game;
@@ -144,11 +142,12 @@ export const EditGameGenres: React.FC<EditGameGenresProps> = ({ game, updateGame
     const [genres, setGenres] = useState(genresList);
 
     const handleGenreChange = (genreId: string) => {
-        if (game.genres.includes(genreId)) {
+        const genreIds = game.genres.map(g => g.id);
+        if (genreIds.includes(genreId)) {
             setGenres(genres.map(genre =>
                 genre.id === genreId ? { ...genre, games: genre.games.filter(g => g != game.id) } : genre
             ));
-            updateGame({ ...game, genres: game.genres.filter(g => g !== genreId) });
+            updateGame({ ...game, genres: game.genres.filter(g => g.id !== genreId) });
         }
         else {
             const newGenre = genresList.find(g => g.id == genreId);
@@ -170,7 +169,7 @@ export const EditGameGenres: React.FC<EditGameGenresProps> = ({ game, updateGame
                         <div key={genre.id}>
                             {genre.name} <input
                                 type="checkbox"
-                                checked={game.genres.includes(genre.id)}
+                                checked={game.genres.map(g => g.id).includes(genre.id)}
                                 onChange={() => handleGenreChange(genre.id)}
                             />
                         </div>
@@ -190,7 +189,7 @@ export const EditGameDevelopers: React.FC<EditGameDevelopersProps> = ({ game, up
     const addDeveloper = () => {
         const devName = (document.getElementById("newDeveloper") as HTMLInputElement);
         const newDev = developers.find(dev => dev.name == devName.value);
-        if (newDev && !game.developers.includes(newDev.id)) {
+        if (newDev && !game.developers.map(d => d.id).includes(newDev.id)) {
             updateGame({ ...game, developers: [...game.developers, newDev.id] });
             developerNames.filter(devName => devName != newDev.name);
         }
@@ -198,14 +197,14 @@ export const EditGameDevelopers: React.FC<EditGameDevelopersProps> = ({ game, up
     }
 
     const deleteDeveloper = (id: string) => {
-        updateGame({ ...game, developers: game.developers.filter(dev => dev != id) })
+        updateGame({ ...game, developers: game.developers.filter(dev => dev.id != id) })
         const devName = developers.find(dev => dev.id == id)?.name;
         if (devName) {
             developerNames.push(devName);
         }
     }
 
-    const developerNames = developers.filter(dev => !game.developers.includes(dev.id)).map(developer => developer.name);
+    const developerNames = developers.filter(dev => !game.developers.map(d => d.id).includes(dev.id)).map(developer => developer.name);
 
     const [inputValue, setInputValue] = useState("");
     const [suggestion, setSuggestion] = useState("");
@@ -231,12 +230,12 @@ export const EditGameDevelopers: React.FC<EditGameDevelopersProps> = ({ game, up
             <label className="font-bold text-gray-600">Vývojáři</label>
             <div className="grid sm:grid-cols-2 md:grid-cols-3">
                 {game.developers.map(dev => (
-                    <div key={dev}>
-                        {developers.find(d => d.id === dev)?.name}
+                    <div key={dev.id}>
+                        {developers.find(d => d.id === dev.id)?.name}
                         <button
                             type="button"
                             className="ml-5 mt-3 px-4 py-1 bg-red-500 text-white rounded-md hover:bg-red-600 transition-colors duration-200"
-                            onClick={() => deleteDeveloper(dev)}
+                            onClick={() => deleteDeveloper(dev.id)}
                         >
                             X
                         </button>
