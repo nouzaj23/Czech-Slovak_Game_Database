@@ -52,7 +52,7 @@ export const GameCard: React.FC<GameCardProps> = ({ game }) => {
                 </p>
             </div>
             <div className="absolute top-2 right-2 text-white rounded-full px-3 py-1 shadow-md" style={{ background: ratingBg() }}>
-                <p className="font-bold text-lg">{game.rating.toFixed(1)}</p>
+                <p className="font-bold text-lg">{game.rating?.toFixed(1)}</p>
             </div>
             <div className="absolute top-12 right-4">
                 <AddToFavourite id={game.id}>
