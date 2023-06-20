@@ -25,7 +25,7 @@ export async function isOwner(userId: UUID, authorId: UUID) : Promise<boolean> {
 }
 
 export async function isOwnerOrAdmin(repository: Repository<User>, authorId: UUID, userId?: UUID) : Promise<boolean> {
-  return (!!(userId) && isOwner(userId, authorId)) || isAdmin(repository, authorId)
+  return (!!(userId) && await isOwner(userId, authorId)) || await isAdmin(repository, authorId)
 }
 
 /**
