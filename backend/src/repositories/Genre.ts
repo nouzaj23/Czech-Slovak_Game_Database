@@ -8,7 +8,7 @@ import { GenreCreationData, GenreDeleteData, GenreReadMultipleData, GenreReadSin
 export function getRepository(dataSource: DataSource) {
   return makeRepository(dataSource, Genre, {
     async readSingle(data: GenreReadSingleData, authorId: UUID | undefined): Promise<Genre> {
-      const genre = await this.findOneBy({ id: data.id })
+      const genre = await this.findOne({ where: data, relations: ['games'] })
       if (!genre)
         throw new NotFound()
       return genre
@@ -18,6 +18,7 @@ export function getRepository(dataSource: DataSource) {
       const query = this.createQueryBuilder('genre')
         .where(data.ids ? { id: data.ids } : {})
         .orderBy(data.order || {})
+        .leftJoinAndSelect('genre.games', 'games')
       
       // TODO: use full-text search
       if (data.nameContains)
