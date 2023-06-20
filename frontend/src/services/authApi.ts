@@ -10,7 +10,6 @@ export const auth = async () => {
 }
 
 export const logout = async () => {
-    console.log("LogOut1");
     await axiosInstance.delete('/auth', {});
-    console.log("LogOut2");
+
 }

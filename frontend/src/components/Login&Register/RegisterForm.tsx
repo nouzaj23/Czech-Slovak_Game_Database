@@ -38,12 +38,15 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ handleClose }) => {
         setEmail((document.getElementById("email") as HTMLInputElement).value);
         if (password !== confirmPassword) {
             setErrorMessage("Hesla se neshodují");
+            console.log("ERROR 1");
         }
         else if (!email.match(emailPattern)) {
             setErrorMessage("E-mail je v nesprávném formátu");
+            console.log("ERROR 2");
         }
         else if (password.length < 8) {
             setErrorMessage("Heslo je příliš krátké");
+            console.log("ERROR 3");
         }
         else {
             console.log("registrace");
