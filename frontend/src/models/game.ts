@@ -1,10 +1,13 @@
+import { Developer, Genre } from ".";
+
 export interface Game {
     id: string;
     name: string;
     description: string;
+    rating: number;
     releaseDate: string;
-    developers: string[]; // Developer IDs
-    genres: string[]; // Genre IDs
+    developers: Developer[];
+    genres: Genre[]; // Genre IDs
     reviews: string[]; // Review IDs
     comments: string[]; // Comment IDs
     cover: string;

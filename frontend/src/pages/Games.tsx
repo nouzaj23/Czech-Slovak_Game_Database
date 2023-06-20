@@ -1,8 +1,4 @@
 import { useEffect, useState } from 'react';
-// import games from '../assets/games.json';
-// import developers from '../assets/developers.json';
-// import genres from '../assets/genres.json';
-import reviews from '../assets/reviews.json';
 import { GameItem } from '../components/GameItem';
 import { useLocation } from 'react-router-dom';
 import { Developer, Game, Genre } from '../models';
@@ -16,8 +12,7 @@ export const Games = () => {
   useEffect(() => {
     const fetchData = async () => {
         try {
-            const loadedGames = await GameApi.retrieveAllGames();
-            setGames(loadedGames);
+            setGames(await GameApi.retrieveAllGames());
             setDevelopers(await DeveloperApi.retrieveAllDevelopers());
             setGenres(await GenreApi.retrieveAllGenres());
         }
@@ -49,11 +44,6 @@ export const Games = () => {
   filteredGames.sort((a, b) => {
     let result = 0;
   
-    const getAverageRating = (gameId: string) => {
-      const gameReviews = reviews.filter(review => review.game === gameId);
-      return gameReviews.reduce((total, review) => total + review.rating, 0) / gameReviews.length;
-    };
-  
     switch (sortType) {
       case 'name-asc':
         result = a.name.localeCompare(b.name);
@@ -68,10 +58,10 @@ export const Games = () => {
         result = b.releaseDate.localeCompare(a.releaseDate);
         break;
       case 'rating-asc':
-        result = getAverageRating(a.id) - getAverageRating(b.id);
+        result = a.rating - b.rating;
         break;
       case 'rating-desc':
-        result = getAverageRating(b.id) - getAverageRating(a.id);
+        result = b.rating - a.rating;
         break;
       default:
         result = 0;
@@ -139,9 +129,6 @@ export const Games = () => {
           <GameItem
             key={game.id}
             game={game}
-            developers={developers}
-            genres={genres}
-            reviews={reviews.filter(review => review.game === game.id)}
           />
         ))}
       </div>

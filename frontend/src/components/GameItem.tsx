@@ -1,4 +1,4 @@
-import { Game, Developer, Genre, Review } from '../models';
+import { Game } from '../models';
 import { Link } from 'react-router-dom';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -6,22 +6,15 @@ import { AddToFavourite, RemoveFromFavourite } from './Authorized';
 
 interface GameItemProps {
     game: Game;
-    developers: Developer[];
-    genres: Genre[];
-    reviews: Review[];
 }
 
-export const GameItem: React.FC<GameItemProps> = ({ game, developers, genres, reviews }) => {
-    const gameDevelopers = developers.filter(developer => game.developers.includes(developer.id));
-    const gameGenres = genres.filter(genre => game.genres.includes(genre.id));
-
-    const rating: number = reviews.filter(review => game.reviews.includes(review.id)).reduce((accumulator, currentValue) => accumulator + currentValue.rating, 0) / game.reviews.length;
+export const GameItem: React.FC<GameItemProps> = ({ game }) => {
 
     const ratingBg = () => {
-        if (rating > 7) {
+        if (game.rating > 7) {
             return '#ad0e30';
         }
-        else if (rating > 3) {
+        else if (game.rating > 3) {
             return '#3690eb';
         }
         return '#010203';
@@ -46,10 +39,10 @@ export const GameItem: React.FC<GameItemProps> = ({ game, developers, genres, re
                         <b>Datum vydání:</b> {game.releaseDate}
                     </p>
                     <p className="text-gray-700 text-sm">
-                        <b>Vývojáři:</b> {gameDevelopers.map((developer, index) => <Link to={`/developers/${developer.id}`} key={index} className="text-blue-500 hover:underline">{developer.name}{index !== gameDevelopers.length - 1 && ', '}</Link>)}
+                        <b>Vývojáři:</b> {game.developers.map((developer, index) => <Link to={`/developers/${developer.id}`} key={index} className="text-blue-500 hover:underline">{developer.name}{index !== game.developers.length - 1 && ', '}</Link>)}
                     </p>
                     <p className="text-gray-700 text-sm">
-                        <b>Žánry:</b> {gameGenres.map((genre, index) => <Link reloadDocument to={`/games?genre=${genre.id}`} key={index} className="text-blue-500 hover:underline">{genre.name}{index !== gameGenres.length - 1 && ', '}</Link>)}
+                        <b>Žánry:</b> {game.genres.map((genre, index) => <Link reloadDocument to={`/games?genre=${genre.id}`} key={index} className="text-blue-500 hover:underline">{genre.name}{index !== game.genres.length - 1 && ', '}</Link>)}
                     </p>
                 </div>
                 <div className="flex items-center">
@@ -62,7 +55,7 @@ export const GameItem: React.FC<GameItemProps> = ({ game, developers, genres, re
                         </RemoveFromFavourite>
                     </div>
                     <div className="ml-2 text-white rounded-full px-3 py-1 shadow-md" style={{ background: ratingBg() }}>
-                        <p className="font-bold text-lg">{rating.toFixed(1)}</p>
+                        <p className="font-bold text-lg">{game.rating.toFixed(1)}</p>
                     </div>
                 </div>
             </div>
