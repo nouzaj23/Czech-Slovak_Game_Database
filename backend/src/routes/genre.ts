@@ -1,7 +1,7 @@
 import { Context } from '@/context'
 
 import Express from 'express'
-import { makeUserAuthMiddleware } from '@/middleware'
+import { makeAdminAuthMiddleware, makeUserAuthMiddleware } from '@/middleware'
 import { NotLoggedIn, SystemError } from '@/errors'
 
 export function makeRouter(context: Context) {
@@ -35,6 +35,7 @@ export function makeRouter(context: Context) {
         next(error)
       }
     })
+    .patch(makeAdminAuthMiddleware())
     .patch(async (req, res, next) => {
       try {
         const userId = req.session.auth?.userId
@@ -44,6 +45,16 @@ export function makeRouter(context: Context) {
         const genre = await context.controllers.genre.update({...req.params, ...req.body}, req.session.auth?.userId)
         res.json(genre)
       } catch (error) {
+        next(error)
+      }
+    })
+    .delete(makeAdminAuthMiddleware())
+    .delete(async (req, res, next) => {
+      try {
+        const genre = await context.controllers.genre.delete({...req.params, ...req.body}, req.session.auth?.userId)
+        res.json(genre)
+      }
+      catch (error) {
         next(error)
       }
     })

@@ -35,6 +35,7 @@ export function makeRouter(context: Context) {
         next(error)
       }
     })
+    .patch(makeUserAuthMiddleware((req) => req.body.userId))
     .patch(async (req, res, next) => {
       try {
         const userId = req.session.auth?.userId
@@ -44,6 +45,16 @@ export function makeRouter(context: Context) {
         const review = await context.controllers.review.update({...req.params, ...req.body}, req.session.auth?.userId)
         res.json(review)
       } catch (error) {
+        next(error)
+      }
+    })
+    .delete(makeUserAuthMiddleware((req) => req.body.userId))
+    .delete(async (req, res, next) => {
+      try {
+        const review = await context.controllers.review.delete({...req.params, ...req.body}, req.session.auth?.userId)
+        res.json(review)
+      }
+      catch (error) {
         next(error)
       }
     })
