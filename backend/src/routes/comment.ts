@@ -26,7 +26,7 @@ export function makeRouter(context: Context) {
       }
     })
 
-  router.route('/:commentId')
+  router.route('/:id')
     .get(async (req, res, next) => {
       try {
         const comment = await context.controllers.comment.readSingle({...req.params, ...req.body}, req.session.auth?.userId)
