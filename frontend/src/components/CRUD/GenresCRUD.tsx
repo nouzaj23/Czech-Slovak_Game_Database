@@ -3,6 +3,7 @@ import { MouseEventHandler, useState } from 'react';
 import { Genre } from '../../models';
 import { EditGenre } from '../Editors/EditGenres';
 import { GenreApi } from '../../services';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 interface DeleteGenreProps {
     handleClose: MouseEventHandler;
@@ -51,16 +52,31 @@ export const GenresCRUD: React.FC<GenresCRUDProps> = ({genres}) => {
         genre.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
-    const addGenre = async () => {
-        const name = 'New Genre';
-        const description = 'Description';
-        try {
-            await GenreApi.add(name, description);
-            // setGenres([newGenre, ...genres]);
-        } catch (error) {
-            console.error('Failed to add the developer:', error);
-        }
+    const queryClient = useQueryClient();
+    
+    const mutation = useMutation(() => GenreApi.add("New Genre", "Description"), {
+        onError: (error) => {
+            console.error('Failed to add the genre:', error);
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries(['genres']);
+        },
+    });
+
+    const addGenre = () => {
+        mutation.mutate();
     }
+
+    // const addGenre = async () => {
+    //     const name = 'New Genre';
+    //     const description = 'Description';
+    //     try {
+    //         await GenreApi.add(name, description);
+    //         // setGenres([newGenre, ...genres]);
+    //     } catch (error) {
+    //         console.error('Failed to add the developer:', error);
+    //     }
+    // }
 
     return (
         <div className='flex justify-center'>
