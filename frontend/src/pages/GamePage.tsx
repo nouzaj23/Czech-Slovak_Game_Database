@@ -26,7 +26,7 @@ export const GamePage = () => {
         return <div>Hra není k dispozici</div>;
     }
 
-    const rating = 10;
+
     // const rating: number = reviews.filter(review => game.reviews.map(r => r.id).includes(review.id)).reduce((accumulator, currentValue) => accumulator + currentValue.rating, 0) / game.reviews.length;
     const [selectedTab, setSelectedTab] = useState('reviews');
 
@@ -126,7 +126,7 @@ export const GamePage = () => {
                                     <ReviewItem
                                         reviewId={reviewId.id}
                                         key={key}
-                                        rating={rating}
+                                        rating={game.rating}
                                         reviews={allReviews}
                                         setGameReviews={setGameReviews}
                                         setReviews={setAllReviews}
@@ -202,7 +202,7 @@ export const GamePage = () => {
         }
     };
 
-    const ratingBg = () => rating > 7 ? '#ad0e30' : rating > 3 ? '#3690eb' : '#010203';
+    const ratingBg = () => game.rating > 7 ? '#ad0e30' : game.rating > 3 ? '#3690eb' : '#010203';
 
     return (
         <div className="w-full md:w-3/4 mx-auto p-4 bg-white shadow rounded">
