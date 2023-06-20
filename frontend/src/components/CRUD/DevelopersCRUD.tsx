@@ -2,6 +2,7 @@ import { MouseEventHandler, useState } from 'react';
 import { Developer } from '../../models';
 import { EditDeveloper } from '../Editors/EditDeveloper';
 import { DeveloperApi } from '../../services';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 
 interface DeleteDeveloperProps {
@@ -51,16 +52,33 @@ export const DevelopersCRUD: React.FC<DevelopersCRUDProps> = ({ developers }) =>
         dev.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
-    const addDeveloper = async () => {
-        const name = 'New Developer';
-        const description = 'Describtion';
-        try {
-            await DeveloperApi.add(name, description, "");
-            // setDevelopers([newDeveloper, ...developers]);
-        } catch (error) {
+    const queryClient = useQueryClient();
+
+
+
+    const mutation = useMutation(() => DeveloperApi.add("New Developer", "Description", ""), {
+        onError: (error) => {
             console.error('Failed to add the developer:', error);
-        }
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries(['developers']);
+        },
+    });
+
+    const addDeveloper = () => {
+        mutation.mutate;
     }
+
+    // const addDeveloper = async () => {
+    //     const name = 'New Developer';
+    //     const description = 'Describtion';
+    //     try {
+    //         await DeveloperApi.add(name, description, "");
+    //         // setDevelopers([newDeveloper, ...developers]);
+    //     } catch (error) {
+    //         console.error('Failed to add the developer:', error);
+    //     }
+    // }
 
     return (
         <div className='flex justify-center'>
