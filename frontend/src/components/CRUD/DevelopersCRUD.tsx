@@ -12,17 +12,20 @@ interface DeleteDeveloperProps {
 }
 
 export const DeleteDevConfirm: React.FC<DeleteDeveloperProps> = ({ handleClose, developerId }) => {
+    const queryClient = useQueryClient();
+
+    const mutation = useMutation(() => DeveloperApi.remove(developerId), {
+        onError: (error) => {
+            console.error('Failed to add the developer:', error);
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries(['developers']);
+        },
+    });
+
     const deleteDev = async (event: React.MouseEvent) => {
-        try {
-            await DeveloperApi.remove(developerId);
-            // updateDevelopers(developers.filter(dev => dev.id !== developerId)); 
-        }
-        catch (error) {
-            console.log("Developer cannot be deleted", error)
-        }
-        finally {
-            handleClose(event);
-        }
+        mutation.mutate();
+        handleClose(event);
     };
 
     return (
