@@ -66,7 +66,7 @@ export const DevelopersCRUD: React.FC<DevelopersCRUDProps> = ({ developers }) =>
     });
 
     const addDeveloper = () => {
-        mutation.mutate;
+        mutation.mutate();
     }
 
     // const addDeveloper = async () => {
