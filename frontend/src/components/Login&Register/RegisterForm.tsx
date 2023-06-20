@@ -1,7 +1,8 @@
-import { FormEventHandler, MouseEventHandler, useCallback, useEffect, useState } from 'react';
+import { FormEventHandler, MouseEventHandler, useCallback } from 'react';
 import useLogin from '../../hooks/useLogin';
 import { UserApi } from '../../services';
 import { User } from '../../models';
+import { useQuery } from '@tanstack/react-query';
 
 interface RegisterFormProps {
     handleClose: MouseEventHandler;
@@ -12,18 +13,8 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ handleClose }) => {
     const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
     const handleSubmit: FormEventHandler<HTMLFormElement> = useCallback(async (e) => {
-        const [users, setUsers] = useState<User[]>([]);
-        useEffect(() => {
-            const fetchData = async () => {
-                try {
-                    setUsers(await UserApi.retrieveAllUsers());
-                }
-                catch (error) {
-                    console.log("Games was not loaded");
-                }
-            }
-            fetchData();
-        }, []);
+        const { data: usersData } = useQuery<User[]>(['users'], UserApi.retrieveAllUsers);
+        const users = usersData ?? [];
 
         e.preventDefault();
         const username = document.getElementById("nickname") as HTMLInputElement;
@@ -45,13 +36,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ handleClose }) => {
                 errorLabel.textContent = "Uživatel s touto přezdívkou existuje";
             }
             else {
-                try {
-                    await UserApi.register(username.value, password.value, email.value);
-                    login({ username: username.value, password: password.value });
-                }
-                catch (error) {
-                    console.error("Nelze registrovat nebo přihlásit", error);
-                }
+                useQuery<User>(['users'], () => UserApi.register(username.value, password.value, email.value));
             }
         }
     }, [login]);
