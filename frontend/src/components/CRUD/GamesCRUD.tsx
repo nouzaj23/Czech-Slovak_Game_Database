@@ -7,13 +7,15 @@ import { GameApi } from '../../services';
 interface DeleteGameProps {
     handleClose: MouseEventHandler;
     gameId: string,
-    updateGames: Function,
     games: Game[],
 }
 
-export const DeleteGameConfirm: React.FC<DeleteGameProps> = ({ handleClose, gameId, updateGames, games }) => {
+export const DeleteGameConfirm: React.FC<DeleteGameProps> = ({ handleClose, gameId, games }) => {
     const deleteGame = () => {
-        updateGames(games.filter(game => game.id !== gameId));
+        if (games && gameId) {
+
+        } 
+        // updateGames(games.filter(game => game.id !== gameId));
     };
 
     return (
@@ -31,12 +33,11 @@ export const DeleteGameConfirm: React.FC<DeleteGameProps> = ({ handleClose, game
 
 interface GamesCRUDProps {
     games: Game[];
-    setGames: Function;
     developers: Developer[];
     genres: Genre[];
 }
 
-export const GamesCRUD: React.FC<GamesCRUDProps> = ({ developers, games, genres, setGames }) => {
+export const GamesCRUD: React.FC<GamesCRUDProps> = ({ developers, games, genres }) => {
     const [searchTerm, setSearchTerm] = useState("");
     const [editedGameId, setEditedGameId] = useState<string | null>(null);
     const [gameToDelete, setGameToDelete] = useState<string | null>(null);
@@ -62,8 +63,8 @@ export const GamesCRUD: React.FC<GamesCRUDProps> = ({ developers, games, genres,
         const videos: string[] = [];
 
         try {
-            const newGame = await GameApi.add(name, description, releaseDate, developers, genres, cover, photos, videos);
-            setGames([newGame, ...games]);
+            await GameApi.add(name, description, releaseDate, developers, genres, cover, photos, videos);
+            // setGames([newGame, ...games]);
         } catch (error) {
             console.error('Failed to add the game:', error);
         }
@@ -98,7 +99,7 @@ export const GamesCRUD: React.FC<GamesCRUDProps> = ({ developers, games, genres,
                             <button className="w-auto px-4 py-2 text-white bg-red-500 rounded-md border-red-800" onClick={() => setGameToDelete(game.id)}>Smazat</button>
                             {gameToDelete === game.id && (
                                 <div className="fixed top-0 bottom-0 left-0 right-0 flex items-center justify-center z-50">
-                                    <DeleteGameConfirm handleClose={() => setGameToDelete(null)} gameId={game.id} updateGames={setGames} games={games} />
+                                    <DeleteGameConfirm handleClose={() => setGameToDelete(null)} gameId={game.id} games={games} />
                                 </div>
                             )}
                         </div>

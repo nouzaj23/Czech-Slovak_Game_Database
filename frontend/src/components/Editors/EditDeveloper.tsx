@@ -6,16 +6,15 @@ import { DeveloperApi } from "../../services";
 interface EditDeveloperProps {
     developerProp: Developer;
     editedDeveloperId: string;
-    setDevelopers: Function;
 }
 
-export const EditDeveloper: React.FC<EditDeveloperProps> = ({ developerProp, editedDeveloperId, setDevelopers }) => {
+export const EditDeveloper: React.FC<EditDeveloperProps> = ({ developerProp, editedDeveloperId }) => {
     const [developer, setDeveloper] = useState(developerProp);
 
     const updateDeveloper = useCallback(async () => {
         try {
             await DeveloperApi.update(developer.id, developer.name, developer.description, developer.avatar);
-            setDevelopers((devs: Developer[]) => devs.map(dev => dev.id === developer.id ? { ...dev, name: developer.name, avatar: developer.avatar } : dev));
+            // setDevelopers((devs: Developer[]) => devs.map(dev => dev.id === developer.id ? { ...dev, name: developer.name, avatar: developer.avatar } : dev));
         } catch (error) {
             console.error('Failed to update the developer:', error);
         }

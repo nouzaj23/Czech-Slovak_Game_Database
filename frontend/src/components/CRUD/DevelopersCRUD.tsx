@@ -7,15 +7,14 @@ import { DeveloperApi } from '../../services';
 interface DeleteDeveloperProps {
     handleClose: MouseEventHandler;
     developerId: string,
-    updateDevelopers: Function,
     developers: Developer[],
 }
 
-export const DeleteDevConfirm: React.FC<DeleteDeveloperProps> = ({ handleClose, developerId, updateDevelopers, developers }) => {
+export const DeleteDevConfirm: React.FC<DeleteDeveloperProps> = ({ handleClose, developerId }) => {
     const deleteDev = async (event: React.MouseEvent) => {
         try {
             await DeveloperApi.remove(developerId);
-            updateDevelopers(developers.filter(dev => dev.id !== developerId)); 
+            // updateDevelopers(developers.filter(dev => dev.id !== developerId)); 
         }
         catch (error) {
             console.log("Developer cannot be deleted", error)
@@ -41,10 +40,9 @@ export const DeleteDevConfirm: React.FC<DeleteDeveloperProps> = ({ handleClose, 
 
 interface DevelopersCRUDProps {
     developers: Developer[];
-    setDevelopers: Function;
 }
 
-export const DevelopersCRUD: React.FC<DevelopersCRUDProps> = ({ developers, setDevelopers }) => {
+export const DevelopersCRUD: React.FC<DevelopersCRUDProps> = ({ developers }) => {
     const [searchTerm, setSearchTerm] = useState("");
     const [editedDeveloperId, setEditedDeveloperId] = useState<string | null>(null);
     const [developerToDelete, setDeveloperToDelete] = useState<string | null>(null);
@@ -57,8 +55,8 @@ export const DevelopersCRUD: React.FC<DevelopersCRUDProps> = ({ developers, setD
         const name = 'New Developer';
         const description = 'Describtion';
         try {
-            const newDeveloper = await DeveloperApi.add(name, description, "");
-            setDevelopers([newDeveloper, ...developers]);
+            await DeveloperApi.add(name, description, "");
+            // setDevelopers([newDeveloper, ...developers]);
         } catch (error) {
             console.error('Failed to add the developer:', error);
         }
@@ -93,13 +91,13 @@ export const DevelopersCRUD: React.FC<DevelopersCRUDProps> = ({ developers, setD
                             <button className="w-auto px-4 py-2 text-white bg-red-500 rounded-md border-red-800" onClick={() => setDeveloperToDelete(dev.id)}>Smazat</button>
                             {developerToDelete === dev.id && (
                                 <div className="fixed top-0 bottom-0 left-0 right-0 flex items-center justify-center z-50">
-                                    <DeleteDevConfirm handleClose={() => setDeveloperToDelete(null)} developerId={dev.id} updateDevelopers={setDevelopers} developers={developers} />
+                                    <DeleteDevConfirm handleClose={() => setDeveloperToDelete(null)} developerId={dev.id} developers={developers} />
                                 </div>
                             )}
                         </div>
                         {editedDeveloperId === dev.id && (
                             <div className='mt-5'>
-                                <EditDeveloper editedDeveloperId={dev.id} developerProp={dev} setDevelopers={setDevelopers} />
+                                <EditDeveloper editedDeveloperId={dev.id} developerProp={dev} />
                             </div>
                         )}
                     </div>

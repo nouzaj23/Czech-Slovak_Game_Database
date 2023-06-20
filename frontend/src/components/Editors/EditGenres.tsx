@@ -6,16 +6,15 @@ import { GenreApi } from "../../services";
 interface EditGenreProps {
     genreProp: Genre;
     editedGenreId: string;
-    setGenres: Function;
 }
 
-export const EditGenre: React.FC<EditGenreProps> = ({ genreProp, editedGenreId, setGenres }) => {
+export const EditGenre: React.FC<EditGenreProps> = ({ genreProp, editedGenreId }) => {
     const [genre, setGenre] = useState(genreProp);
 
     const updateGenre = useCallback(async () => {
         try {
             await GenreApi.update(genre.id, genre.name, genre.description);
-            setGenres((genres: Genre[]) => genres.map(g => g.id === genre.id ? { ...g, name: genre.name, description: genre.description } : g));
+            // setGenres((genres: Genre[]) => genres.map(g => g.id === genre.id ? { ...g, name: genre.name, description: genre.description } : g));
         } catch (error) {
             console.error('Failed to update the developer:', error);
         }
