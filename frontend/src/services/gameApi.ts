@@ -1,14 +1,14 @@
 import { Developer, Genre } from "../models";
 import axiosInstance from "./base";
 
-export const add = async (name: string, description: string, releaseDate: string, developerIds: string[],
-    genreIds: string[], cover: string, photos: string[], videos: string[]) => {
+export const add = async (name: string, description: string, releaseDate: string, developers: Developer[],
+    genres: Genre[], cover: string, photos: string[], videos: string[]) => {
     const response = await axiosInstance.post('/game', {
         name,
         description,
-        genreIds,
+        genres,
         releaseDate,
-        developerIds,
+        developers,
         cover,
         photos,
         videos
