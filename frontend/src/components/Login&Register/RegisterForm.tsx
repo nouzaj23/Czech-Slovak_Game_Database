@@ -1,4 +1,4 @@
-import { FormEventHandler, MouseEventHandler, useCallback, useState } from 'react';
+import { FormEventHandler, MouseEventHandler, useState } from 'react';
 // import useLogin from '../../hooks/useLogin';
 import { UserApi } from '../../services';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
@@ -30,7 +30,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ handleClose }) => {
     });
 
 
-    const handleSubmit: FormEventHandler<HTMLFormElement> = useCallback(async (e) => {
+    const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
         e.preventDefault();
         setUsername((document.getElementById("nickname") as HTMLInputElement).value);
         setPassword((document.getElementById("password") as HTMLInputElement).value);
@@ -51,11 +51,11 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ handleClose }) => {
             }
             else {
                 console.log("registrace");
-                // mutation.mutate();
+                mutation.mutate();
                 console.log("konec");
             }
         }
-    }, [email, username, password, confirmPassword, mutation]);
+    };
 
 
     return (
