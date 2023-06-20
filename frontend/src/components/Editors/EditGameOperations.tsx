@@ -261,7 +261,7 @@ export const EditGameDevelopers: React.FC<EditGameDevelopersProps> = ({ game, up
             </div>
             <div className="mt-10">
                 <button
-                    onClick={() => { addDeveloper(); }}
+                    onClick={addDeveloper}
                     type="button"
                     className="mt-8 px-4 py-1 text-white rounded-md bg-gray-600 hover:bg-gray-800 transition-colors duration-200"
                 >

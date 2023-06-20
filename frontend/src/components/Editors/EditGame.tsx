@@ -1,7 +1,8 @@
-import { useCallback, useState } from "react";
+import { useState } from "react";
 import { Developer, Game, Genre } from "../../models";
 import { EditGameCover, EditGameDescribtion, EditGameDevelopers, EditGameGenres, EditGameName, EditGamePhotos, EditGameVideos } from "./EditGameOperations";
 import { GameApi } from "../../services";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 interface EditGameProps {
     gameProp: Game;
@@ -21,15 +22,43 @@ export const EditGame: React.FC<EditGameProps> = ({ gameProp, editedGameId, deve
     //     }
     // }
 
-    const updateGame = useCallback(async () => {
-        try {
-            const developersIds = game.developers.map(developer => developer.id);
-            const genresIds = game.genres.map(genre => genre.id);
-            await GameApi.update(game.id, game.name, game.description, game.releaseDate, developersIds, genresIds, game.cover, game.photos, game.videos);
-        } catch (error) {
-            console.error('Failed to update the game:', error);
-        }
-    }, [game]);
+    // useQuery<Game[]>(['games', game.id], GameApi.update());
+    const queryClient = useQueryClient();
+
+    const mutation = useMutation(() => GameApi.update(game.id, game.name, game.description, game.releaseDate, game.developers, game.genres, game.cover, game.photos, game.videos), {
+        onSuccess: () => {
+            queryClient.invalidateQueries(['game', game.id]);
+        },
+    });
+
+    const updateGame = () => {
+        mutation.mutate();
+    };
+
+    // const mutation = useMutation(
+    //     gameData => GameApi.update(gameData.id, gameData.name, gameData.description, gameData.releaseDate, gameData.developers, gameData.genres, gameData.cover, gameData.photos, gameData.videos),
+    //     {
+    //         onSuccess: () => {
+    //             queryClient.invalidateQueries(['game', game.id]);
+    //         },
+    //     }
+    // );
+    
+    // const updateGame = () => {
+    //     mutation.mutate(game);
+    // };
+    
+    
+
+    // const updateGame = useCallback(async () => {
+    //     try {
+    //         const developersIds = game.developers.map(developer => developer.id);
+    //         const genresIds = game.genres.map(genre => genre.id);
+    //         await GameApi.update(game.id, game.name, game.description, game.releaseDate, developersIds, genresIds, game.cover, game.photos, game.videos);
+    //     } catch (error) {
+    //         console.error('Failed to update the game:', error);
+    //     }
+    // }, [game]);
 
     return (
         <div>

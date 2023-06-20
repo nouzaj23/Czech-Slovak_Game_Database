@@ -7,15 +7,14 @@ import { GenreApi } from '../../services';
 interface DeleteGenreProps {
     handleClose: MouseEventHandler;
     genreId: string,
-    updateGenres: Function,
     genres: Genre[],
 }
 
-export const DeleteGenreConfirm: React.FC<DeleteGenreProps> = ({ handleClose, genreId, updateGenres, genres }) => {
+export const DeleteGenreConfirm: React.FC<DeleteGenreProps> = ({ handleClose, genreId }) => {
     const deleteGenre = async (event: React.MouseEvent) => {
         try {
             await GenreApi.remove(genreId);
-            updateGenres(genres.filter(genre => genre.id !== genreId)); 
+            // updateGenres(genres.filter(genre => genre.id !== genreId)); 
         }
         catch (error) {
             console.log("Genre cannot be deleted", error)
@@ -40,11 +39,10 @@ export const DeleteGenreConfirm: React.FC<DeleteGenreProps> = ({ handleClose, ge
 
 interface GenresCRUDProps {
     genres: Genre[];
-    setGenres: Function;
 }
 
 
-export const GenresCRUD: React.FC<GenresCRUDProps> = ({genres, setGenres}) => {
+export const GenresCRUD: React.FC<GenresCRUDProps> = ({genres}) => {
     const [searchTerm, setSearchTerm] = useState("");
     const [editedGenreId, setEditedGenreId] = useState<string | null>(null);
     const [genreToDelete, setGenreToDelete] = useState<string | null>(null);
@@ -57,8 +55,8 @@ export const GenresCRUD: React.FC<GenresCRUDProps> = ({genres, setGenres}) => {
         const name = 'New Genre';
         const description = 'Description';
         try {
-            const newGenre = await GenreApi.add(name, description);
-            setGenres([newGenre, ...genres]);
+            await GenreApi.add(name, description);
+            // setGenres([newGenre, ...genres]);
         } catch (error) {
             console.error('Failed to add the developer:', error);
         }
@@ -93,13 +91,13 @@ export const GenresCRUD: React.FC<GenresCRUDProps> = ({genres, setGenres}) => {
                             <button className="w-auto px-4 py-2 text-white bg-red-500 rounded-md border-red-800" onClick={() => setGenreToDelete(genre.id)}>Smazat</button>
                             {genreToDelete === genre.id && (
                                 <div className="fixed top-0 bottom-0 left-0 right-0 flex items-center justify-center z-50">
-                                    <DeleteGenreConfirm handleClose={() => setGenreToDelete(null)} genreId={genre.id} updateGenres={setGenres} genres={genres} />
+                                    <DeleteGenreConfirm handleClose={() => setGenreToDelete(null)} genreId={genre.id} genres={genres} />
                                 </div>
                             )}
                         </div>
                         {editedGenreId === genre.id && (
                             <div className='mt-5'>
-                                <EditGenre editedGenreId={genre.id} genreProp={genre} setGenres={setGenres} />
+                                <EditGenre editedGenreId={genre.id} genreProp={genre} />
                             </div>
                         )}
                     </div>
