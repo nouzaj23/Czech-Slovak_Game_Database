@@ -1,6 +1,6 @@
 import axiosInstance from "./base";
 
-export const add = async (name: string, description: string, avatar:string) => {
+export const add = async (name: string, description: string, avatar: string) => {
     const response = await axiosInstance.post('/developer', {
         name,
         description,
@@ -15,12 +15,21 @@ export const retrieveAllDevelopers = async () => {
     return response.data;
 }
 
+export const retrieveDevelopersByName = async (name: string) => {
+    const response = await axiosInstance.get(`/developer`, {
+        params: {
+            nameContains: name,
+        }
+    });
+    return response.data;
+}
+
 export const retrieveDeveloper = async (id: string) => {
     const response = await axiosInstance.get(`/developer/${id}`);
     return response.data;
 }
 
-export const update = async (id: string, name: string, description: string, avatar:string) => {
+export const update = async (id: string, name: string, description: string, avatar: string) => {
     const response = await axiosInstance.patch(`/developer/${id}`, {
         name,
         description,

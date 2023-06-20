@@ -1,14 +1,10 @@
-/* import { Link, useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import gamesData from '../assets/games.json';
-import developersData from '../assets/developers.json';
-import genresData from '../assets/genres.json';
 import { Developer, Game, Genre } from '../models';
-*/
+import { useQuery } from '@tanstack/react-query';
+import { DeveloperApi, GameApi, GenreApi } from '../services';
 
 export const SearchResults = () => {
-    return <div>404</div>;
-    /*
     const { query } = useParams();
     const [results, setResults] = useState<{ games: Game[]; developers: Developer[]; genres: Genre[] }>({ games: [], developers: [], genres: [] });
 
@@ -17,23 +13,13 @@ export const SearchResults = () => {
     }
 
     useEffect(() => {
-        const games = gamesData
-            .filter(game => game.name.toLowerCase().includes(query.toLowerCase()))
-            .sort((a, b) => a.name.localeCompare(b.name))
-
-        const developers = developersData
-            .filter(developer => developer.name.toLowerCase().includes(query.toLowerCase()))
-            .sort((a, b) => a.name.localeCompare(b.name));
-
-        const genres = genresData
-            .filter(genre => genre.name.toLowerCase().includes(query.toLowerCase()))
-            .sort((a, b) => a.name.localeCompare(b.name));
-
-        setResults({
-            games: games,
-            developers: developers,
-            genres: genres
-        });
+        const { data: gamesData } = useQuery<Game[]>(['games', query], () => GameApi.retrieveGamesByName(query));
+        const games = gamesData ?? [];
+        const { data: developersData } = useQuery<Developer[]>(['developers', query], () => DeveloperApi.retrieveDevelopersByName(query));
+        const developers = developersData ?? [];
+        const { data: genresData } = useQuery<Genre[]>(['genres', query], () => GenreApi.retrieveGenresByName(query));
+        const genres = genresData ?? [];
+        setResults({ games, developers, genres });
     }, [query]);
 
     return (
@@ -94,5 +80,4 @@ export const SearchResults = () => {
             }
         </div>
     );
-    */
 };
