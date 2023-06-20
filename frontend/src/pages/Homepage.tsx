@@ -2,17 +2,21 @@ import { Game } from '../models';
 import { GameCard } from '../components/GameCard';
 import { GameApi } from '../services';
 import { useQuery } from '@tanstack/react-query';
+import { useEffect, useState } from 'react';
 
 export const Homepage = () => {
     const { data: games } = useQuery<Game[]>(['games'], GameApi.retrieveAllGames);
+    const [recentGames, setRecentGames] = useState<Game[]>([]);
 
-    let recentGames: Game[] = [];
-
-    if (games) {
-        recentGames = [...games].sort((a, b) => {
-            return new Date(b.releaseDate).getTime() - new Date(a.releaseDate).getTime();
-        }).slice(0, 4);
-    }
+    useEffect(() => {
+        if (games) {
+            setRecentGames(
+                [...games].sort((a, b) => {
+                    return new Date(b.releaseDate).getTime() - new Date(a.releaseDate).getTime();
+                }).slice(0, 4)
+            );
+        }
+    }, [games]);
 
     return (
         <div className="flex flex-col h-full w-full p-8 bg-gray-100">
