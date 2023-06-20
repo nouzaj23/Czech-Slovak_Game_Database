@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { useParams } from "react-router-dom";
-import games from '../assets/games.json';
 import reviews from '../assets/reviews.json';
 import comments from '../assets/comments.json';
 import { ReviewItem } from '../components/Review';
@@ -10,18 +9,23 @@ import { AddCommentForm } from '../components/AddCommentForm';
 import { Game, Review, Comment, Developer, Genre } from '../models';
 import ReactPlayer from 'react-player';
 import { GameCard } from '../components/GameCard';
-import { DeveloperApi, GenreApi } from '../services';
+import { DeveloperApi, GameApi, GenreApi } from '../services';
 
 
-export const GamePage = () => {
+export const GamePage = async () => {
     const { id } = useParams<{ id: string }>();
-    const game: Game | undefined = games.find(game => game.id === id);
+
+    if (!id) {
+        return <div>Chybí ID hry</div>;
+    }
+
+    const game: Game = await GameApi.retrieveGame(id);
 
     if (!game) {
         return <div>Hra není k dispozici</div>;
     }
 
-    const rating: number = reviews.filter(review => game.reviews.includes(review.id)).reduce((accumulator, currentValue) => accumulator + currentValue.rating, 0) / game.reviews.length;
+    const rating: number = reviews.filter(review => game.reviews.map(r => r.id).includes(review.id)).reduce((accumulator, currentValue) => accumulator + currentValue.rating, 0) / game.reviews.length;
     const [selectedTab, setSelectedTab] = useState('reviews');
 
     const [isOpen, setIsOpen] = useState(false);
@@ -82,8 +86,8 @@ export const GamePage = () => {
         return gridItems;
     }
 
-    const [gameReviews, setGameReviews] = useState<string[]>(game.reviews);
-    const [gameComments, setGameComments] = useState<string[]>(game.comments);
+    const [gameReviews, setGameReviews] = useState<Review[]>(game.reviews);
+    const [gameComments, setGameComments] = useState<Comment[]>(game.comments);
     const [allReviews, setAllReviews] = useState<Review[]>(reviews);
     const [allComments, setAllComments] = useState<Comment[]>(comments);
 
@@ -118,13 +122,13 @@ export const GamePage = () => {
                             <div className="review-list space-y-4">
                                 {gameReviews.slice(page * itemsPerPage, (page + 1) * itemsPerPage).map((reviewId, key) => (
                                     <ReviewItem
-                                        reviewId={reviewId}
+                                        reviewId={reviewId.id}
                                         key={key}
                                         rating={rating}
                                         reviews={allReviews}
                                         setGameReviews={setGameReviews}
                                         setReviews={setAllReviews}
-                                        gameReviews={gameReviews}
+                                        gameReviews={gameReviews.map(r => r.id)}
                                     />
                                 ))}
                             </div>
@@ -159,7 +163,7 @@ export const GamePage = () => {
                             )}
                         </div>
                         <div className="review-list space-y-4">
-                            {gameComments.map((commentId, index) => <CommentItem commentId={commentId} key={index} comments={allComments} gameComments={gameComments} setComments={setAllComments} setGameComments={setGameComments} />)}
+                            {gameComments.map((commentId, index) => <CommentItem commentId={commentId.id} key={index} comments={allComments} gameComments={gameComments.map(c => c.id)} setComments={setAllComments} setGameComments={setGameComments} />)}
                         </div>
                     </div>
                 );

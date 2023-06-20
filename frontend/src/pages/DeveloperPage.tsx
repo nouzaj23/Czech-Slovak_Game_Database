@@ -1,6 +1,4 @@
 import { Link, useParams } from "react-router-dom";
-// import developers from '../assets/developers.json';
-// import games from '../assets/games.json';
 import { Developer, Game } from "../models";
 import { useEffect, useState } from "react";
 import { DeveloperApi, GameApi } from "../services";
@@ -20,7 +18,7 @@ export const DeveloperPage = () => {
                 }
                 if (developer !== undefined) {
                     const allGames: Game[] = await GameApi.retrieveAllGames();
-                    setGames(allGames.filter(game => game.developers.includes(developer.id)))
+                    setGames(allGames.filter(game => game.developers.map(d => d.id).includes(developer.id)))
                 }
             }
             catch (error) {
@@ -30,7 +28,7 @@ export const DeveloperPage = () => {
         fetchData();
     }, []);
 
-    const devGames: Game[] = games.filter(game => game.developers.includes(id!));
+    const devGames: Game[] = games.filter(game => game.developers.map(d => d.id).includes(id!));
 
     if (!developer) {
         return <div>Vývojář není k dispozici</div>;

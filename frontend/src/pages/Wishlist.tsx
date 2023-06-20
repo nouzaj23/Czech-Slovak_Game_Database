@@ -14,6 +14,7 @@ export const WishList = () => {
 
     const [wishlist, setWishlist] = useState<Game[]>([]);
 
+    /*
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -27,6 +28,7 @@ export const WishList = () => {
         }
         fetchData();
     }, []);
+    */
 
     function removeGameFromWishlist(index: number) {
         if (index == 0) {
@@ -49,8 +51,8 @@ export const WishList = () => {
                                 <div className="font-bold text-xl text-center mt-4">{game.name}</div>
                             </Link>
                             <div className="flex justify-center px-6 py-4 min-w-0">
-                                <div className="w-1/3 inline-block text-white rounded-full px-3 py-1 shadow-md mb-2 text-center" style={{ background: ratingBg(reviews.filter(rev => game.reviews.includes(rev.id)).reduce((ac, cur) => ac + cur.rating, 0)) }}>
-                                    <p className="font-bold text-lg">{(reviews.filter(review => game.reviews.includes(review.id)).reduce((accumulator, currentValue) => accumulator + currentValue.rating, 0) / game.reviews.length).toFixed(1)}</p>
+                                <div className="w-1/3 inline-block text-white rounded-full px-3 py-1 shadow-md mb-2 text-center" style={{ background: ratingBg(reviews.filter(rev => game.reviews.map(r => r.id).includes(rev.id)).reduce((ac, cur) => ac + cur.rating, 0)) }}>
+                                    <p className="font-bold text-lg">{(reviews.filter(review => game.reviews.map(r => r.id).includes(review.id)).reduce((accumulator, currentValue) => accumulator + currentValue.rating, 0) / game.reviews.length).toFixed(1)}</p>
                                 </div>
                             </div>
                         </div>

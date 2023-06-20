@@ -16,7 +16,7 @@ export const SearchResults = () => {
     useEffect(() => {
         const games = gamesData
             .filter(game => game.name.toLowerCase().includes(query.toLowerCase()))
-            .sort((a, b) => a.name.localeCompare(b.name));
+            .sort((a, b) => a.name.localeCompare(b.name))
 
         const developers = developersData
             .filter(developer => developer.name.toLowerCase().includes(query.toLowerCase()))
@@ -26,11 +26,12 @@ export const SearchResults = () => {
             .filter(genre => genre.name.toLowerCase().includes(query.toLowerCase()))
             .sort((a, b) => a.name.localeCompare(b.name));
 
-        setResults({
+        /* setResults({
             games: games,
             developers: developers,
             genres: genres
         });
+        */
     }, [query]);
 
     return (

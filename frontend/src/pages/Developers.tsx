@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-// import developers from '../assets/developers.json';
 import { DeveloperItem } from '../components/DeveloperItem';
 import { Developer } from '../models';
 import { DeveloperApi } from '../services';

@@ -36,8 +36,8 @@ export const Games = () => {
   let filteredGames = games.filter(game => {
     const matchesName = game.name.toLowerCase().includes(filter.toLowerCase());
     const matchesYear = game.releaseDate.includes(yearFilter);
-    const matchesDeveloper = developerFilter === '' || game.developers.includes(developerFilter);
-    const matchesGenre = genreFilter === '' || game.genres.includes(genreFilter);
+    const matchesDeveloper = developerFilter === '' || game.developers.map(d => d.id).includes(developerFilter);
+    const matchesGenre = genreFilter === '' || game.genres.map(g => g.id).includes(genreFilter);
     return matchesName && matchesYear && matchesDeveloper && matchesGenre;
   });
 
