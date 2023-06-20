@@ -10,10 +10,10 @@ import { useQuery } from "@tanstack/react-query";
 export const AdminPage = () => {
     const [visibleComponent, setVisibleComponent] = useState('');
 
-    const { data: gamesData } = useQuery<Game[]>(['gamesAdminPage'], GameApi.retrieveAllGames);
-    const { data: developersData } = useQuery<Developer[]>(['developersAdminPage'], DeveloperApi.retrieveAllDevelopers);
-    const { data: genresData } = useQuery<Genre[]>(['genresAdminPage'], GenreApi.retrieveAllGenres);
-    const { data: usersData } = useQuery<User[]>(['usersAdminPage'], UserApi.retrieveAllUsers);
+    const { data: gamesData } = useQuery<Game[]>(['games'], GameApi.retrieveAllGames);
+    const { data: developersData } = useQuery<Developer[]>(['developers'], DeveloperApi.retrieveAllDevelopers);
+    const { data: genresData } = useQuery<Genre[]>(['genres'], GenreApi.retrieveAllGenres);
+    const { data: usersData } = useQuery<User[]>(['users'], UserApi.retrieveAllUsers);
 
     const games = gamesData ?? [];
     const developers = developersData ?? [];
