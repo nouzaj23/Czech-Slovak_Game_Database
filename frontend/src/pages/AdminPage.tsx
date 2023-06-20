@@ -1,33 +1,24 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { GamesCRUD } from "../components/CRUD/GamesCRUD";
 import { DevelopersCRUD } from "../components/CRUD/DevelopersCRUD";
 import { UsersCRUD } from "../components/CRUD/UsersCRUD";
 import { GenresCRUD } from "../components/CRUD/GenresCRUD";
 import { Developer, Game, Genre, User } from "../models";
 import { DeveloperApi, GameApi, GenreApi, UserApi } from "../services";
+import { useQuery } from "@tanstack/react-query";
 
 export const AdminPage = () => {
     const [visibleComponent, setVisibleComponent] = useState('');
 
-    const [games, setGames] = useState<Game[]>([]);
-    const [developers, setDevelopers] = useState<Developer[]>([]);
-    const [genres, setGenres] = useState<Genre[]>([]);
-    const [users, setUsers] = useState<User[]>([]);
+    const { data: gamesData } = useQuery<Game[]>(['games'], GameApi.retrieveAllGames);
+    const { data: developersData } = useQuery<Developer[]>(['developers'], DeveloperApi.retrieveAllDevelopers);
+    const { data: genresData } = useQuery<Genre[]>(['genres'], GenreApi.retrieveAllGenres);
+    const { data: usersData } = useQuery<User[]>(['users'], UserApi.retrieveAllUsers);
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                setGames(await GameApi.retrieveAllGames());
-                setDevelopers(await DeveloperApi.retrieveAllDevelopers());
-                setGenres(await GenreApi.retrieveAllGenres());
-                setUsers(await UserApi.retrieveAllUsers());
-            }
-            catch (error) {
-                console.log("Games was not loaded");
-            }
-        }
-        fetchData();
-    }, []);
+    const [games, setGames] = useState<Game[]>(gamesData ?? []);
+    const [developers, setDevelopers] = useState<Developer[]>(developersData ?? []);
+    const [genres, setGenres] = useState<Genre[]>(genresData ?? []);
+    const [users, setUsers] = useState<User[]>(usersData ?? []);
 
     return (
         <div className="p-6 max-w-screen overflow-x-hidden">
