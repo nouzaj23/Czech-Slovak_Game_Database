@@ -4,11 +4,21 @@ import { useQuery } from '@tanstack/react-query';
 import { DeveloperApi, GameApi, GenreApi } from '../services';
 
 export const SearchResults = () => {
-    const { query = '' } = useParams();
+    const { query } = useParams();
 
-    const { data: gamesData } = useQuery<Game[]>(['games', query], () => GameApi.retrieveGamesByName(query));
-    const { data: developersData } = useQuery<Developer[]>(['developers', query], () => DeveloperApi.retrieveDevelopersByName(query));
-    const { data: genresData } = useQuery<Genre[]>(['genres', query], () => GenreApi.retrieveGenresByName(query));
+    if (!query) {
+        return <div>404</div>;
+    }
+
+    const { data: gamesData } = useQuery<Game[]>(['games', query], () => GameApi.retrieveGamesByName(query), {
+        enabled: !!query,
+    });
+    const { data: developersData } = useQuery<Developer[]>(['developers', query], () => DeveloperApi.retrieveDevelopersByName(query), {
+        enabled: !!query,
+    });
+    const { data: genresData } = useQuery<Genre[]>(['genres', query], () => GenreApi.retrieveGenresByName(query), {
+        enabled: !!query,
+    });
 
     const games = gamesData ?? [];
     const developers = developersData ?? [];
