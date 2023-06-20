@@ -1,4 +1,4 @@
-import { Developer, Game, Genre } from "../models";
+import { Game } from "../models";
 import { Link } from "react-router-dom";
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -8,25 +8,16 @@ import useAuth from "../hooks/useAuth";
 
 interface GameCardProps {
     game: Game;
-    developers: Developer[];
-    genres: Genre[];
 }
 
-export const GameCard: React.FC<GameCardProps> = ({ developers, game, genres }) => {
+export const GameCard: React.FC<GameCardProps> = ({ game }) => {
     const { auth } = useAuth();
 
-    let gameDevelopers = developers.filter(developer => game.developers.map(d => d.id).includes(developer.id));
-    let gameGenres = genres.filter(genre => game.genres.map(g => g.id).includes(genre.id));
-
-    const rating: number = 10;
-
-    // const rating: number = reviews.filter(review => game.reviews.includes(review.id)).reduce((accumulator, currentValue) => accumulator + currentValue.rating, 0) / game.reviews.length;
-
     const ratingBg = () => {
-        if (rating > 7) {
+        if (game.rating > 7) {
             return '#ad0e30';
         }
-        else if (rating > 3) {
+        else if (game.rating > 3) {
             return '#3690eb';
         }
         return '#010203';
@@ -48,15 +39,15 @@ export const GameCard: React.FC<GameCardProps> = ({ developers, game, genres }) 
                 <Link to={`/games/${game.id}`}>
                     <h2 className="pr-10 text-xl font-bold hover:underline">{game.name}</h2>
                 </Link>
-                <p className="pr-10 mt-2 text-gray-600"><b>Vývojáři:</b> {gameDevelopers.map((developer, index) => <Link to={`/developers/${developer.id}`} key={index} className="text-blue-500 hover:underline">{developer.name}{index !== gameDevelopers.length - 1 && ', '}</Link>)}</p>
+                <p className="pr-10 mt-2 text-gray-600"><b>Vývojáři:</b> {game.developers.map((developer, index) => <Link to={`/developers/${developer.id}`} key={index} className="text-blue-500 hover:underline">{developer.name}{index !== game.developers.length - 1 && ', '}</Link>)}</p>
                 <p className="mt-2 text-gray-600"><b>Datum vydání:</b> {game.releaseDate}</p>
-                <p className="mt-2 text-gray-600"><b>Žánry:</b> {gameGenres.map((genre, index) => <Link to={`/games?genre=${genre.id}`} key={index} className="text-blue-500 hover:underline">{genre.name}{index !== gameGenres.length - 1 && ', '}</Link>)}</p>
+                <p className="mt-2 text-gray-600"><b>Žánry:</b> {game.genres.map((genre, index) => <Link to={`/games?genre=${genre.id}`} key={index} className="text-blue-500 hover:underline">{genre.name}{index !== game.genres.length - 1 && ', '}</Link>)}</p>
                 <p className="mt-4 text-gray-700">
                     {game.description}
                 </p>
             </div>
             <div className="absolute top-2 right-2 text-white rounded-full px-3 py-1 shadow-md" style={{ background: ratingBg() }}>
-                <p className="font-bold text-lg">{rating.toFixed(1)}</p>
+                <p className="font-bold text-lg">{game.rating.toFixed(1)}</p>
             </div>
             <div className="absolute top-12 right-4">
                 <AddToFavourite id={game.id}>
