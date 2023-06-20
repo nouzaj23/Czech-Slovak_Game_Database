@@ -38,5 +38,5 @@ export async function isOwnerOrAdmin(repository: Repository<User>, authorId: UUI
  */
 export async function checkPermissions(repository: Repository<User>, authorId: UUID, userId?: UUID) : Promise<void> {
   if (!await isOwnerOrAdmin(repository, authorId, userId))
-    throw new InsufficientPermissions(`author: ${authorId} (${await isAdmin(repository, authorId)}), owner: ${userId} (${userId ? await isOwner(authorId, userId) : 'undefined'})`)
+    throw new InsufficientPermissions(`full: ${await isOwnerOrAdmin(repository, authorId, userId)} author: ${authorId} (${await isAdmin(repository, authorId)}), owner: ${userId} (${userId ? await isOwner(authorId, userId) : 'undefined'})`)
 }
