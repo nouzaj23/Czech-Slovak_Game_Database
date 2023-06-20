@@ -1,27 +1,20 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { GameItem } from '../components/GameItem';
 import { useLocation } from 'react-router-dom';
 import { Developer, Game, Genre } from '../models';
 import { DeveloperApi, GameApi, GenreApi } from '../services';
+import { useQuery } from '@tanstack/react-query';
 
 export const Games = () => {
-  const [games, setGames] = useState<Game[]>([]);
-  const [developers, setDevelopers] = useState<Developer[]>([]);
-  const [genres, setGenres] = useState<Genre[]>([]);
+  const { data: games } = useQuery<Game[]>(['games'], GameApi.retrieveAllGames);
+  const { data: developers } = useQuery<Developer[]>(['developers'], DeveloperApi.retrieveAllDevelopers);
+  const { data: genres } = useQuery<Genre[]>(['genres'], GenreApi.retrieveAllGenres);
 
-  useEffect(() => {
-    const fetchData = async () => {
-        try {
-            setGames(await GameApi.retrieveAllGames());
-            setDevelopers(await DeveloperApi.retrieveAllDevelopers());
-            setGenres(await GenreApi.retrieveAllGenres());
-        }
-        catch (error) {
-            console.log("Games was not loaded");
-        }
-    }
-    fetchData();
-}, []);
+  if (!games || !developers || !genres) {
+    return (
+    <div>Fetching error</div>
+    );
+  }
 
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
