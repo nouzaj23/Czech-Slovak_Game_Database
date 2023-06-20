@@ -25,18 +25,30 @@ export const EditGame: React.FC<EditGameProps> = ({ gameProp, editedGameId, deve
     // useQuery<Game[]>(['games', game.id], GameApi.update());
     const queryClient = useQueryClient();
 
-    const mutation = useMutation(
-        () => GameApi.update(game.id, game.name, game.description, game.releaseDate, game.developers, game.genres, game.cover, game.photos, game.videos),
-        {
-            onSuccess: () => {
-                queryClient.invalidateQueries(['game', game.id]);
-            },
-        }
-    );
+    const mutation = useMutation(() => GameApi.update(game.id, game.name, game.description, game.releaseDate, game.developers, game.genres, game.cover, game.photos, game.videos), {
+        onSuccess: () => {
+            queryClient.invalidateQueries(['game', game.id]);
+        },
+    });
 
     const updateGame = () => {
         mutation.mutate();
     };
+
+    // const mutation = useMutation(
+    //     gameData => GameApi.update(gameData.id, gameData.name, gameData.description, gameData.releaseDate, gameData.developers, gameData.genres, gameData.cover, gameData.photos, gameData.videos),
+    //     {
+    //         onSuccess: () => {
+    //             queryClient.invalidateQueries(['game', game.id]);
+    //         },
+    //     }
+    // );
+    
+    // const updateGame = () => {
+    //     mutation.mutate(game);
+    // };
+    
+    
 
     // const updateGame = useCallback(async () => {
     //     try {
