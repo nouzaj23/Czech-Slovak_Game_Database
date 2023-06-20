@@ -8,7 +8,7 @@ import { GameCreationData, GameDeleteData, GameReadMultipleData, GameReadSingleD
 export function getRepository(dataSource: DataSource) {
   return makeRepository(dataSource, Game, {
     async readSingle(data: GameReadSingleData, authorId: UUID | undefined): Promise<Game> {
-      const game = await this.findOne({where: data, relations: ['developers', 'genres']})
+      const game = await this.findOne({ where: data, relations: ['developers', 'genres'] })
       if (!game)
         throw new NotFound()
       return game
@@ -19,15 +19,9 @@ export function getRepository(dataSource: DataSource) {
         .where(data.ids ? { id: data.ids } : {})
         .andWhere(data.developerId ? { developer: data.developerId } : {})
         .andWhere(data.genreId ? { genre: data.genreId } : {})
-        .leftJoinAndSelect('game.developers', 'developers')
-        .leftJoinAndSelect('game.genres', 'genres')
-        .orderBy(data.order || {})
 
       if (data.nameContains)
         query.andWhere(`game.name LIKE :name`, { name: `%${data.nameContains}%` })
-      
-      if (data.groupBy)
-        query.groupBy(`game.${data.groupBy}`)
 
       if (data.releaseDate?.from)
         query.andWhere(`game.releaseDate >= :from`, { from: data.releaseDate.from })
@@ -35,9 +29,17 @@ export function getRepository(dataSource: DataSource) {
       if (data.releaseDate?.to)
         query.andWhere(`game.releaseDate <= :to`, { to: data.releaseDate.to })
 
+      if (data.groupBy)
+        query.groupBy(`game.${data.groupBy}`)
+
+      query
+        .leftJoinAndSelect('game.developers', 'developers')
+        .leftJoinAndSelect('game.genres', 'genres')
+        .orderBy(data.order || {})
+
       return query.getMany()
     },
-    
+
     async createGame(data: GameCreationData, authorId: UUID | undefined): Promise<Game> {
       if (!authorId)
         throw new NotLoggedIn()
@@ -48,7 +50,7 @@ export function getRepository(dataSource: DataSource) {
         const developerRepository = manager.getRepository(Developer)
         const genreRepository = manager.getRepository(Genre)
 
-        const {genreIds, developerIds, ...rest} = data
+        const { genreIds, developerIds, ...rest } = data
 
         const genres = genreIds ? await genreRepository.findBy({ id: In(genreIds) }) : undefined
         if (genres?.length !== genreIds?.length)
@@ -105,11 +107,11 @@ export function getRepository(dataSource: DataSource) {
         const repository = manager.withRepository(this)
         const game = await repository.findOne({
           where: { id: data.id },
-          relations: [ 'comments', 'reviews', 'wishlists' ]
+          relations: ['comments', 'reviews', 'wishlists']
         })
         if (!game)
           throw new NotFound("Game")
-        
+
         return await repository.softRemove(game)
       })
     }
