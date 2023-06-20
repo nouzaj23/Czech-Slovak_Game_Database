@@ -23,7 +23,7 @@ export class Game extends Base {
   @Column()
   description!: string
 
-  @Column()
+  @Column('date')
   releaseDate!: Date
 
   @Column()
@@ -50,7 +50,7 @@ export class Game extends Base {
     query: (alias: string) =>
       `SELECT AVG(rating) FROM "review" WHERE "gameId" = ${alias}.id`
   })
-  score!: number
+  rating!: number
 
   @Column({ type: 'simple-array' })
   photos!: string[]
