@@ -1,3 +1,4 @@
+/*
 import { Game } from '../models';
 import games from '../assets/games.json';
 import { AiFillCloseCircle } from "react-icons/ai";
@@ -14,7 +15,6 @@ export const WishList = () => {
 
     const [wishlist, setWishlist] = useState<Game[]>([]);
 
-    /*
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -28,7 +28,6 @@ export const WishList = () => {
         }
         fetchData();
     }, []);
-    */
 
     function removeGameFromWishlist(index: number) {
         if (index == 0) {
@@ -62,3 +61,4 @@ export const WishList = () => {
         </div>
     );
 }
+*/

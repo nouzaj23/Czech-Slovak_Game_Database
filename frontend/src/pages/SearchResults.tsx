@@ -1,4 +1,4 @@
-import { Link, useParams } from 'react-router-dom';
+/* import { Link, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import gamesData from '../assets/games.json';
 import developersData from '../assets/developers.json';
@@ -26,12 +26,11 @@ export const SearchResults = () => {
             .filter(genre => genre.name.toLowerCase().includes(query.toLowerCase()))
             .sort((a, b) => a.name.localeCompare(b.name));
 
-        /* setResults({
+        setResults({
             games: games,
             developers: developers,
             genres: genres
         });
-        */
     }, [query]);
 
     return (
@@ -93,3 +92,4 @@ export const SearchResults = () => {
         </div>
     );
 };
+*/
