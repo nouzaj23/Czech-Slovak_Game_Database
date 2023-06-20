@@ -1,8 +1,7 @@
 import { FormEventHandler, MouseEventHandler, useCallback } from 'react';
 import useLogin from '../../hooks/useLogin';
 import { UserApi } from '../../services';
-import { User } from '../../models';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from 'react-query';
 
 interface RegisterFormProps {
     handleClose: MouseEventHandler;
@@ -13,8 +12,8 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ handleClose }) => {
     const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
     const handleSubmit: FormEventHandler<HTMLFormElement> = useCallback(async (e) => {
-        const { data: usersData } = useQuery<User[]>(['users'], UserApi.retrieveAllUsers);
-        const users = usersData ?? [];
+        // const { data: usersData } = useQuery<User[]>(['users'], UserApi.retrieveAllUsers);
+        // const users = usersData ?? [];
 
         e.preventDefault();
         const username = document.getElementById("nickname") as HTMLInputElement;
@@ -32,11 +31,17 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ handleClose }) => {
             else if (password.value.length < 8) {
                 errorLabel.textContent = "Heslo je příliš krátké";
             }
-            else if (users.some((user: User) => user.username == username.value)) {
-                errorLabel.textContent = "Uživatel s touto přezdívkou existuje";
-            }
+            // else if (users.some((user: User) => user.username == username.value)) {
+            //     errorLabel.textContent = "Uživatel s touto přezdívkou existuje";
+            // }
             else {
-                useQuery<User>(['users'], () => UserApi.register(username.value, password.value, email.value));
+                const queryClient = useQueryClient();
+                useMutation({
+                    mutationFn: () => UserApi.register(username.value, password.value, email.value),
+                    onSuccess: () => {
+                        queryClient.invalidateQueries(['users']);
+                    },
+                });
             }
         }
     }, [login]);
