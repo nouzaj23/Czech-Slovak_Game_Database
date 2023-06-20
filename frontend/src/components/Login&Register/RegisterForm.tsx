@@ -8,7 +8,7 @@ interface RegisterFormProps {
 }
 
 export const RegisterForm: React.FC<RegisterFormProps> = ({ handleClose }) => {
-    const { login } = useLogin({ redirect: '/' });
+    // const { login } = useLogin({ redirect: '/' });
     const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
     const [username, setUsername] = useState("");
@@ -22,7 +22,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ handleClose }) => {
     const mutation = useMutation(() => UserApi.register(username, password, email), {
         onSuccess: () => {
             queryClient.invalidateQueries(['users']);
-            login({password: password, username: username});
+            // login({password: password, username: username});
         },
     });
 
@@ -42,7 +42,9 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ handleClose }) => {
             setErrorMessage("Heslo je příliš krátké");
         }
         else {
+            console.log("registrace");
             mutation.mutate();
+            console.log("konec");
         }
     }, [email, username, password, confirmPassword, mutation]);
 
