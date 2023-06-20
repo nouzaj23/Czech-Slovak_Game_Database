@@ -96,10 +96,10 @@ export function getRepository(dataSource: DataSource) {
       })
     },
 
-    async deleteGame(data: GameDeleteData, authorId: UUID | undefined): Promise<void> {
+    async deleteGame(data: GameDeleteData, authorId: UUID | undefined): Promise<Game> {
       if (!authorId)
         throw new NotLoggedIn()
-      this.manager.transaction(async manager => {
+      return this.manager.transaction(async manager => {
         await checkPermissions(manager.getRepository(User), authorId)
 
         const repository = manager.withRepository(this)
@@ -110,7 +110,7 @@ export function getRepository(dataSource: DataSource) {
         if (!game)
           throw new NotFound("Game")
         
-        repository.softRemove(game)
+        return await repository.softRemove(game)
       })
     }
   })
