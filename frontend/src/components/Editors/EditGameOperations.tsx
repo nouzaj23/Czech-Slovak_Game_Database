@@ -166,7 +166,7 @@ export const EditGameGenres: React.FC<EditGameGenresProps> = ({ game, updateGame
                 // setGenres(genres.map(genre =>
                 //     genre.id === genreId ? { ...genre, games: [...genre.games, game.id] } : genre
                 // ));
-                updateGame({ ...game, genres: [...game.genres, genreId] });
+                updateGame({ ...game, genres: [...game.genres, newGenre] });
             }
         }
     };
