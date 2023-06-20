@@ -1,3 +1,4 @@
+import { Developer, Genre } from "../models";
 import axiosInstance from "./base";
 
 export const add = async (name: string, description: string, releaseDate: string, developerIds: string[],
@@ -34,8 +35,8 @@ export const retrieveGame = async (id: string) => {
     return response.data;
 }
 
-export const update = async (id: string, name: string, description: string, releaseDate: string, developers: string[],
-    genres: string[], cover: string, photos: string[], videos: string[]) => {
+export const update = async (id: string, name: string, description: string, releaseDate: string, developers: Developer[],
+    genres: Genre[], cover: string, photos: string[], videos: string[]) => {
     const response = await axiosInstance.patch(`/game/${id}`, {
         name,
         description,
