@@ -1,22 +1,11 @@
 import { Link } from "react-router-dom";
 import { Genre } from "../models";
-import { useEffect, useState } from "react";
 import { GenreApi } from "../services";
+import { useQuery } from "@tanstack/react-query";
 
 export const Genres = () => {
-  const [genres, setGenres] = useState<Genre[]>([]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setGenres(await GenreApi.retrieveAllGenres());
-      }
-      catch (error) {
-        console.log("Games was not loaded");
-      }
-    }
-    fetchData();
-  }, []);
+  const { data: genresData } = useQuery<Genre[]>(['genres'], GenreApi.retrieveAllGenres);
+  const genres = genresData ?? [];
 
   return (
     <div className="p-4 bg-white shadow rounded-lg mb-6">
