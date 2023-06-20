@@ -15,10 +15,15 @@ export const AdminPage = () => {
     const { data: genresData } = useQuery<Genre[]>(['genresAdminPage'], GenreApi.retrieveAllGenres);
     const { data: usersData } = useQuery<User[]>(['usersAdminPage'], UserApi.retrieveAllUsers);
 
-    const [games, setGames] = useState<Game[]>(gamesData ?? []);
-    const [developers, setDevelopers] = useState<Developer[]>(developersData ?? []);
-    const [genres, setGenres] = useState<Genre[]>(genresData ?? []);
-    const [users, setUsers] = useState<User[]>(usersData ?? []);
+    const [games, setGames] = useState<Game[]>([]);
+    const [developers, setDevelopers] = useState<Developer[]>([]);
+    const [genres, setGenres] = useState<Genre[]>([]);
+    const [users, setUsers] = useState<User[]>([]);
+
+    setGames(gamesData ?? []);
+    setDevelopers(developersData ?? []);
+    setGenres(genresData ?? []);
+    setUsers(usersData ?? []);
 
     return (
         <div className="p-6 max-w-screen overflow-x-hidden">
