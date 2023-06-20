@@ -10,16 +10,17 @@ import { Game, Review, Comment, Developer, Genre } from '../models';
 import ReactPlayer from 'react-player';
 import { GameCard } from '../components/GameCard';
 import { DeveloperApi, GameApi, GenreApi } from '../services';
+import { useQuery } from '@tanstack/react-query';
 
 
-export const GamePage = async () => {
+export const GamePage = () => {
     const { id } = useParams<{ id: string }>();
 
     if (!id) {
         return <div>Chybí ID hry</div>;
     }
 
-    const game: Game = await GameApi.retrieveGame(id);
+    const { data: game } = useQuery<Game>(['games', id], () => GameApi.retrieveGame(id));
 
     if (!game) {
         return <div>Hra není k dispozici</div>;
