@@ -36,7 +36,7 @@ export const GameItem: React.FC<GameItemProps> = ({ game }) => {
             <div className="px-6 pt-4 pb-2 flex items-center">
                 <div className="flex-grow">
                     <p className="text-gray-700 text-sm">
-                        <b>Datum vydání:</b> {game.releaseDate}
+                        <b>Datum vydání:</b> {new Date(game.releaseDate).toISOString().slice(0,10)}
                     </p>
                     <p className="text-gray-700 text-sm">
                         <b>Vývojáři:</b> {game.developers.map((developer, index) => <Link to={`/developers/${developer.id}`} key={index} className="text-blue-500 hover:underline">{developer.name}{index !== game.developers.length - 1 && ', '}</Link>)}
