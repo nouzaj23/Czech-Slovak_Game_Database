@@ -4,8 +4,11 @@ import gamesData from '../assets/games.json';
 import developersData from '../assets/developers.json';
 import genresData from '../assets/genres.json';
 import { Developer, Game, Genre } from '../models';
+*/
 
 export const SearchResults = () => {
+    return <div>404</div>;
+    /*
     const { query } = useParams();
     const [results, setResults] = useState<{ games: Game[]; developers: Developer[]; genres: Genre[] }>({ games: [], developers: [], genres: [] });
 
@@ -91,5 +94,5 @@ export const SearchResults = () => {
             }
         </div>
     );
+    */
 };
-*/

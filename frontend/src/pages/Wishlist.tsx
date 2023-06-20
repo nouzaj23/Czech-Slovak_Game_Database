@@ -7,10 +7,12 @@ import { Link } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
 import { UserApi } from '../services';
 import { useEffect, useState } from 'react';
-
-
+*/
 
 export const WishList = () => {
+    return <div>404</div>;
+
+    /*
     const { auth } = useAuth();
 
     const [wishlist, setWishlist] = useState<Game[]>([]);
@@ -60,5 +62,5 @@ export const WishList = () => {
             </div>
         </div>
     );
+    */
 }
-*/
