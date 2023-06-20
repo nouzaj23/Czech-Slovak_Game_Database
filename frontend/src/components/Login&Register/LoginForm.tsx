@@ -7,7 +7,7 @@ interface LoginFormProps {
 }
 
 export const LoginForm: React.FC<LoginFormProps> = ({ handleClose }) => {
-    const { login } = useLogin({ redirect: '/games' })
+    const { login } = useLogin({ redirect: '/' })
 
     const handleSubmit: FormEventHandler<HTMLFormElement> = useCallback((e) => {
         e.preventDefault();
