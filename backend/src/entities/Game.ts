@@ -32,7 +32,7 @@ export class Game extends Base {
   @ManyToMany(() => Developer, (developer: Developer) => developer.developed)
   developers!: Relation<Developer>[]
 
-  @ManyToOne(() => Genre, (genre: Genre) => genre.games)
+  @ManyToMany(() => Genre, (genre: Genre) => genre.games)
   genres!: Relation<Genre>[]
 
   @OneToMany(() => Comment, (comment: Comment) => comment.commenter, {cascade: true})
@@ -50,7 +50,7 @@ export class Game extends Base {
     query: (alias: string) =>
       `SELECT AVG(rating) FROM "review" WHERE "gameId" = ${alias}.id`
   })
-  readonly score!: number
+  score!: number
 
   @Column({ type: 'simple-array' })
   photos!: string[]
