@@ -29,7 +29,7 @@ export const EditGame: React.FC<EditGameProps> = ({ gameProp, editedGameId, deve
         () => GameApi.update(game.id, game.name, game.description, game.releaseDate, game.developers, game.genres, game.cover, game.photos, game.videos),
         {
             onSuccess: () => {
-                queryClient.invalidateQueries(['games', game.id]);
+                queryClient.invalidateQueries(['game', game.id]);
             },
         }
     );
