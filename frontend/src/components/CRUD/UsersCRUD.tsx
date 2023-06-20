@@ -2,6 +2,7 @@ import { MouseEventHandler, useState } from 'react';
 // import usersList from '../../assets/users.json';
 import { User } from '../../models';
 import { UserApi } from '../../services';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 interface DeleteUserProps {
     handleClose: MouseEventHandler;
@@ -10,14 +11,20 @@ interface DeleteUserProps {
 }
 
 export const DeleteUserConfirm: React.FC<DeleteUserProps> = ({ handleClose, userId }) => {
-    const deleteUser = async () => {
-        try {
-            await UserApi.remove(userId);
-            // updateUsers(users.filter(user => user.id !== userId));
-        }
-        catch (error) {
-            console.error("Not possible to delete user", error);
-        }
+    const queryClient = useQueryClient();
+
+    const mutation = useMutation(() => UserApi.remove(userId), {
+        onError: (error) => {
+            console.error('Failed to add the developer:', error);
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries(['developers']);
+        },
+    });
+
+    const deleteUser = async (event: React.MouseEvent) => {
+        mutation.mutate();
+        handleClose(event);
     };
 
     return (
@@ -25,7 +32,7 @@ export const DeleteUserConfirm: React.FC<DeleteUserProps> = ({ handleClose, user
             <form className="p-6 bg-white rounded shadow-md">
                 <p>Opravdu chcete smazat uživatele?</p>
                 <div className="flex items-center justify-between mt-4">
-                    <button className="bg-gray-600 hover:bg-gray-800 text-white font-bold py-2 px-4 rounded" type="button" onClick={(event) => { deleteUser(); handleClose(event); }}  >Potvrdit</button>
+                    <button className="bg-gray-600 hover:bg-gray-800 text-white font-bold py-2 px-4 rounded" type="button" onClick={(event) => { deleteUser(event);}}  >Potvrdit</button>
                     <button className="ml-5 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" type="button" onClick={handleClose}>Storno</button>
                 </div>
             </form>
