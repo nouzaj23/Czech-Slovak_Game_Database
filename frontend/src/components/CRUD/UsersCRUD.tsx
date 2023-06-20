@@ -15,10 +15,10 @@ export const DeleteUserConfirm: React.FC<DeleteUserProps> = ({ handleClose, user
 
     const mutation = useMutation(() => UserApi.remove(userId), {
         onError: (error) => {
-            console.error('Failed to add the developer:', error);
+            console.error('Failed to remove the user:', error);
         },
         onSuccess: () => {
-            queryClient.invalidateQueries(['developers']);
+            queryClient.invalidateQueries(['users']);
         },
     });
 
