@@ -15,10 +15,10 @@ export const retrieveAllDevelopers = async () => {
     return response.data;
 }
 
-export const retrieveDevelopersByName = async (name: string) => {
+export const retrieveDevelopersByName = async (nameContains: string) => {
     const response = await axiosInstance.get(`/developer`, {
         params: {
-            nameContains: name,
+            nameContains,
         }
     });
     return response.data;

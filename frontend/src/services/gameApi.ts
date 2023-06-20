@@ -20,10 +20,10 @@ export const retrieveAllGames = async () => {
     return response.data;
 }
 
-export const retrieveGamesByName = async (name: string) => {
+export const retrieveGamesByName = async (nameContains: string) => {
     const response = await axiosInstance.get(`/game`, {
         params: {
-            nameContains: name,
+            nameContains,
         }
     });
     return response.data;

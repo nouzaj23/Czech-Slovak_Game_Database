@@ -13,10 +13,10 @@ export const retrieveAllGenres = async () => {
     return response.data;
 }
 
-export const retrieveGenresByName = async (name: string) => {
+export const retrieveGenresByName = async (nameContains: string) => {
     const response = await axiosInstance.get(`/genre`, {
         params: {
-            nameContains: name,
+            nameContains,
         },
     });
     return response.data;
