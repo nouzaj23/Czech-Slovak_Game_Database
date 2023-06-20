@@ -12,17 +12,20 @@ interface DeleteGenreProps {
 }
 
 export const DeleteGenreConfirm: React.FC<DeleteGenreProps> = ({ handleClose, genreId }) => {
+    const queryClient = useQueryClient();
+
+    const mutation = useMutation(() => GenreApi.remove(genreId), {
+        onError: (error) => {
+            console.error('Failed to delete the genre:', error);
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries(['genres']);
+        },
+    });
+
     const deleteGenre = async (event: React.MouseEvent) => {
-        try {
-            await GenreApi.remove(genreId);
-            // updateGenres(genres.filter(genre => genre.id !== genreId)); 
-        }
-        catch (error) {
-            console.log("Genre cannot be deleted", error)
-        }
-        finally {
-            handleClose(event);
-        }
+        mutation.mutate();
+        handleClose(event);
     };
 
     return (
@@ -66,17 +69,6 @@ export const GenresCRUD: React.FC<GenresCRUDProps> = ({genres}) => {
     const addGenre = () => {
         mutation.mutate();
     }
-
-    // const addGenre = async () => {
-    //     const name = 'New Genre';
-    //     const description = 'Description';
-    //     try {
-    //         await GenreApi.add(name, description);
-    //         // setGenres([newGenre, ...genres]);
-    //     } catch (error) {
-    //         console.error('Failed to add the developer:', error);
-    //     }
-    // }
 
     return (
         <div className='flex justify-center'>
