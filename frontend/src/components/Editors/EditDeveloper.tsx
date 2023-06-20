@@ -27,15 +27,6 @@ export const EditDeveloper: React.FC<EditDeveloperProps> = ({ developerProp, edi
         mutation.mutate();
     }
 
-    // const updateDeveloper = useCallback(async () => {
-    //     try {
-    //         await DeveloperApi.update(developer.id, developer.name, developer.description, developer.avatar);
-    //         // setDevelopers((devs: Developer[]) => devs.map(dev => dev.id === developer.id ? { ...dev, name: developer.name, avatar: developer.avatar } : dev));
-    //     } catch (error) {
-    //         console.error('Failed to update the developer:', error);
-    //     }
-    // }, [developer]);
-
     return (
         <div>
             {editedDeveloperId === developer.id && (

@@ -13,52 +13,21 @@ interface EditGameProps {
 
 export const EditGame: React.FC<EditGameProps> = ({ gameProp, editedGameId, developers, genres }) => {
     const [game, setGame] = useState(gameProp);
-
-    // const updateGame = async () => {
-    //     try {
-    //         await GameApi.update(game.id, game.name, game.description, game.releaseDate, game.developers, game.genres, game.cover, game.photos, game.videos);
-    //     } catch (error) {
-    //         console.error('Failed to update the game:', error);
-    //     }
-    // }
-
-    // useQuery<Game[]>(['games', game.id], GameApi.update());
     const queryClient = useQueryClient();
 
     const mutation = useMutation(() => GameApi.update(game.id, game.name, game.description, game.releaseDate, game.developers, game.genres, game.cover, game.photos, game.videos), {
+        onError: (error) => {
+            console.error('Failed to edit the game:', error);
+        },
         onSuccess: () => {
-            queryClient.invalidateQueries(['game', game.id]);
+            queryClient.invalidateQueries(['games']);
         },
     });
+
 
     const updateGame = () => {
         mutation.mutate();
     };
-
-    // const mutation = useMutation(
-    //     gameData => GameApi.update(gameData.id, gameData.name, gameData.description, gameData.releaseDate, gameData.developers, gameData.genres, gameData.cover, gameData.photos, gameData.videos),
-    //     {
-    //         onSuccess: () => {
-    //             queryClient.invalidateQueries(['game', game.id]);
-    //         },
-    //     }
-    // );
-    
-    // const updateGame = () => {
-    //     mutation.mutate(game);
-    // };
-    
-    
-
-    // const updateGame = useCallback(async () => {
-    //     try {
-    //         const developersIds = game.developers.map(developer => developer.id);
-    //         const genresIds = game.genres.map(genre => genre.id);
-    //         await GameApi.update(game.id, game.name, game.description, game.releaseDate, developersIds, genresIds, game.cover, game.photos, game.videos);
-    //     } catch (error) {
-    //         console.error('Failed to update the game:', error);
-    //     }
-    // }, [game]);
 
     return (
         <div>

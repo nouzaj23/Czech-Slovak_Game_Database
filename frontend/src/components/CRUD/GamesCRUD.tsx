@@ -8,7 +8,6 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 interface DeleteGameProps {
     handleClose: MouseEventHandler;
     gameId: string,
-    games: Game[],
 }
 
 export const DeleteGameConfirm: React.FC<DeleteGameProps> = ({ handleClose, gameId }) => {
@@ -100,7 +99,7 @@ export const GamesCRUD: React.FC<GamesCRUDProps> = ({ developers, games, genres 
                             <button className="w-auto px-4 py-2 text-white bg-red-500 rounded-md border-red-800" onClick={() => setGameToDelete(game.id)}>Smazat</button>
                             {gameToDelete === game.id && (
                                 <div className="fixed top-0 bottom-0 left-0 right-0 flex items-center justify-center z-50">
-                                    <DeleteGameConfirm handleClose={() => setGameToDelete(null)} gameId={game.id} games={games} />
+                                    <DeleteGameConfirm handleClose={() => setGameToDelete(null)} gameId={game.id} />
                                 </div>
                             )}
                         </div>
