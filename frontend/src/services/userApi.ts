@@ -14,6 +14,11 @@ export const retrieve = async (id: string) => {
     return response.data;
 }
 
+export const retrieveAllUsers = async () => {
+    const response = await axiosInstance.get(`/user`);
+    return response.data;
+}
+
 export const update = async (id: string, username: string, avatar: string) => {
     const response = await axiosInstance.patch(`/user/${id}`, {
         username,

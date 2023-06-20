@@ -1,6 +1,7 @@
 import { MouseEventHandler, useState } from 'react';
-import usersList from '../../assets/users.json';
+// import usersList from '../../assets/users.json';
 import { User } from '../../models';
+import { UserApi } from '../../services';
 
 interface DeleteUserProps {
     handleClose: MouseEventHandler;
@@ -10,8 +11,14 @@ interface DeleteUserProps {
 }
 
 export const DeleteUserConfirm: React.FC<DeleteUserProps> = ({ handleClose, userId, updateUsers, users }) => {
-    const deleteUser = () => {
-        updateUsers(users.filter(user => user.id !== userId));
+    const deleteUser = async () => {
+        try {
+            await UserApi.remove(userId);
+            updateUsers(users.filter(user => user.id !== userId));
+        }
+        catch (error) {
+            console.error("Not possible to delete user", error);
+        }
     };
 
     return (
@@ -27,10 +34,15 @@ export const DeleteUserConfirm: React.FC<DeleteUserProps> = ({ handleClose, user
     );
 };
 
-export const UsersCRUD = () => {
+
+interface UsersCRUDProps {
+    users: User[];
+    setUsers: Function;
+}
+
+export const UsersCRUD: React.FC<UsersCRUDProps> = ({ setUsers, users }) => {
     const [searchTerm, setSearchTerm] = useState("");
     const [userToDelete, setUserToDelete] = useState<string | null>(null);
-    const [users, setUsers] = useState(usersList);
 
     const filteredUsers = users.filter(user =>
         user.username.toLowerCase().includes(searchTerm.toLowerCase())

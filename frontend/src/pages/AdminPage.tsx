@@ -3,8 +3,8 @@ import { GamesCRUD } from "../components/CRUD/GamesCRUD";
 import { DevelopersCRUD } from "../components/CRUD/DevelopersCRUD";
 import { UsersCRUD } from "../components/CRUD/UsersCRUD";
 import { GenresCRUD } from "../components/CRUD/GenresCRUD";
-import { Developer, Game, Genre } from "../models";
-import { DeveloperApi, GameApi, GenreApi } from "../services";
+import { Developer, Game, Genre, User } from "../models";
+import { DeveloperApi, GameApi, GenreApi, UserApi } from "../services";
 
 export const AdminPage = () => {
     const [visibleComponent, setVisibleComponent] = useState('');
@@ -12,6 +12,7 @@ export const AdminPage = () => {
     const [games, setGames] = useState<Game[]>([]);
     const [developers, setDevelopers] = useState<Developer[]>([]);
     const [genres, setGenres] = useState<Genre[]>([]);
+    const [users, setUsers] = useState<User[]>([]);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -19,6 +20,7 @@ export const AdminPage = () => {
                 setGames(await GameApi.retrieveAllGames());
                 setDevelopers(await DeveloperApi.retrieveAllDevelopers());
                 setGenres(await GenreApi.retrieveAllGenres());
+                setUsers(await UserApi.retrieveAllUsers());
             }
             catch (error) {
                 console.log("Games was not loaded");
@@ -58,7 +60,7 @@ export const AdminPage = () => {
 
             {visibleComponent === 'Games' ? <GamesCRUD developers={developers} games={games} genres={genres} setGames={setGames}/> : null}
             {visibleComponent === 'Developers' ? <DevelopersCRUD developers={developers} setDevelopers={setDevelopers}/> : null}
-            {visibleComponent === 'Users' ? <UsersCRUD /> : null}
+            {visibleComponent === 'Users' ? <UsersCRUD users={users} setUsers={setUsers}/> : null}
             {visibleComponent === 'Genres' ? <GenresCRUD genres={genres} setGenres={setGenres}/> : null}
         </div>
     );
