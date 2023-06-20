@@ -38,5 +38,5 @@ export async function isOwnerOrAdmin(repository: Repository<User>, authorId: UUI
  */
 export async function checkPermissions(repository: Repository<User>, authorId: UUID, userId?: UUID) : Promise<void> {
   if (!await isOwnerOrAdmin(repository, authorId, userId))
-    throw new InsufficientPermissions()
+    throw new InsufficientPermissions(`author: ${authorId}, owner: ${userId}`)
 }

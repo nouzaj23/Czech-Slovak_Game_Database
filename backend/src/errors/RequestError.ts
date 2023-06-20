@@ -27,8 +27,8 @@ export class AlreadyLoggedIn extends RequestError {
 }
 
 export class InsufficientPermissions extends RequestError {
-  constructor() {
-    super('Insufficient permissions!', 403)
+  constructor(public aditionalMsg?: string) {
+    super('Insufficient permissions!' , 403)
   }
 }
 

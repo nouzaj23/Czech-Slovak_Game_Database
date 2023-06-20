@@ -1,5 +1,5 @@
 import { checkPermissions, makeRepository } from './Base.js'
-import { UUID, UserCreationData, UserLoginData, UserPublic, UserReadMultipleData, UserReadSingleData, UserUpdateAuthData, UserUpdateData } from './types.js'
+import { UUID, UserCreationData, UserDeleteData, UserLoginData, UserPublic, UserReadMultipleData, UserReadSingleData, UserUpdateAuthData, UserUpdateData } from './types.js'
 
 import { User, Game } from '@/entities'
 import { AlreadyExists, InsufficientPermissions, InvalidData, NotFound, NotLoggedIn, RequestError } from '@/errors'
@@ -100,7 +100,7 @@ export function getRepository(dataSource: DataSource) {
       })
     },
 
-    async deleteUser(data: UserUpdateData, authorId: UUID | undefined): Promise<void> {
+    async deleteUser(data: UserDeleteData, authorId: UUID | undefined): Promise<void> {
       if (!authorId)
         throw new NotLoggedIn()
       return this.manager.transaction(async manager => {

@@ -35,7 +35,7 @@ export function makeRouter(context: Context) {
         next(error)
       }
     })
-    .patch(makeUserAuthMiddleware((req) => req.params.userId))
+    .patch(makeUserAuthMiddleware((req) => req.params.id))
     .patch(async (req, res, next) => {
       try {
         const user = await context.controllers.user.update({ ...req.params, ...req.body }, req.session.auth?.userId)
@@ -45,7 +45,7 @@ export function makeRouter(context: Context) {
       }
 
     })
-    .delete(makeUserAuthMiddleware((req) => req.params.userId))
+    .delete(makeUserAuthMiddleware((req) => req.params.id))
     .delete(async (req, res, next) => {
       try {
         const user = await context.controllers.user.delete({ ...req.params, ...req.body }, req.session.auth?.userId)
@@ -56,7 +56,7 @@ export function makeRouter(context: Context) {
     })
 
   router.route('/:id/auth')
-    .all(makeUserAuthMiddleware((req) => req.params.userId))
+    .all(makeUserAuthMiddleware((req) => req.params.id))
     .get(async (req, res, next) => {
       try {
         const user = await context.controllers.user.readSingleFull({ ...req.params, ...req.body }, req.session.auth?.userId)

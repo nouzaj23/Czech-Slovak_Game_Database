@@ -10,6 +10,8 @@ export function makeErrorMiddleware(context: Context) {
     if (error instanceof Errs.RequestError) {
       if (error instanceof Errs.InvalidData)
         res.status(error.status).json({ error: error.message, ...stack, original: error.original })
+      else if (error instanceof Errs.InsufficientPermissions)
+        res.status(error.status).json({ error: error.message, ...stack, aditionalMsg: error.aditionalMsg })
       else
         res.status(error.status).json({ error: error.message, ...stack })
     } else if (error instanceof Errs.SystemError) {
