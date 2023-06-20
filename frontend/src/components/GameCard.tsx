@@ -11,6 +11,11 @@ interface GameCardProps {
 }
 
 export const GameCard: React.FC<GameCardProps> = ({ game }) => {
+
+    if (!game) {
+        return <div>Chyba v načítání hry</div>;
+    }
+
     const { auth } = useAuth();
 
     const ratingBg = () => {
