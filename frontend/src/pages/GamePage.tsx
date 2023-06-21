@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useParams } from "react-router-dom";
 // import comments from '../assets/comments.json';
 import { ReviewItem } from '../components/Review';
-import { AddReviewForm } from '../components/AddReviewForm'
+// import { AddReviewForm } from '../components/AddReviewForm'
 // import { CommentItem } from '../components/CommentItem';
 // import { AddCommentForm } from '../components/AddCommentForm';
 import { Game, Review } from '../models';
@@ -17,7 +17,7 @@ export const GamePage = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [selectedImage, setSelectedImage] = useState<string | null>(null);
     const [page, setPage] = useState(0);
-    const [stars, setStars] = useState(3);
+    // const [stars, setStars] = useState(3);
 
     //     const [gameComments, setGameComments] = useState<Comment[]>(game.comments);
     // const [allComments, setAllComments] = useState<Comment[]>(comments);
@@ -112,11 +112,11 @@ export const GamePage = () => {
                 return (
                     <div>
                         <button onClick={handleAddReview} style={{ background: ratingBg() }} className="px-3 py-2 mb-5 mt-5 text-white rounded">Přidat recenzi</button>
-                        <div>
+                        {/* <div>
                             {isOpen && (
                                 <AddReviewForm gameId={game.id} game={game} setStars={setStars} stars={stars}/>
                             )}
-                        </div>
+                        </div> */}
                         <div>
                             <div className="review-list space-y-4">
                                 {gameReviews.slice(page * itemsPerPage, (page + 1) * itemsPerPage).map((review, key) => (
