@@ -1,4 +1,4 @@
-import { useState } from 'react';
+// import { useState } from 'react';
 import { useParams } from "react-router-dom";
 // import comments from '../assets/comments.json';
 // import { ReviewItem } from '../components/Review';
@@ -26,7 +26,7 @@ export const GamePage = () => {
         return <div>Hra není k dispozici</div>;
     }
 
-    const [selectedTab, setSelectedTab] = useState('reviews');
+    // const [selectedTab, setSelectedTab] = useState('reviews');
 
     // const [isOpen, setIsOpen] = useState(false);
 
@@ -105,102 +105,102 @@ export const GamePage = () => {
     //     }
     // };
 
-    const renderContent = () => {
-        switch (selectedTab) {
-            case 'reviews':
-                return (
-                    <div>
-                        {/* <button onClick={handleAddReview} style={{ background: ratingBg() }} className="px-3 py-2 mb-5 mt-5 text-white rounded">Přidat recenzi</button>
-                        <div>
-                            {isOpen && (
-                                <AddReviewForm gameId={game.id} game={game} />
-                            )}
-                        </div>
-                        <div>
-                            <div className="review-list space-y-4">
-                                {gameReviews.slice(page * itemsPerPage, (page + 1) * itemsPerPage).map((review, key) => (
-                                    <ReviewItem
-                                        review={review}
-                                        key={key}
-                                        rating={game.rating}
-                                    />
-                                ))}
-                            </div>
-                            <div className="flex justify-between mt-4">
-                                <button
-                                    onClick={handlePreviousPage}
-                                    style={{ background: ratingBg()}}
-                                    className={`px-4 py-2 text-white rounded ${page === 0 && 'opacity-50 cursor-not-allowed'}`}
-                                    disabled={page === 0}
-                                >
-                                    Předchozí
-                                </button>
-                                <button
-                                    onClick={handleNextPage}
-                                    style={{ background: ratingBg()}}
-                                    className={`px-4 py-2 text-white rounded ${gameReviews.length <= (page + 1) * itemsPerPage && 'opacity-50 cursor-not-allowed'}`}
-                                    disabled={gameReviews.length <= (page + 1) * itemsPerPage}
-                                >
-                                    Další
-                                </button>
-                            </div>
-                        </div> */}
-                    </div>
-                );
-            case 'comments':
-                return (
-                    <div>
-                        {/* <button onClick={handleAddReview} style={{ background: ratingBg() }} className="px-3 py-2 mb-5 mt-5 bg-blue-500 text-white rounded">Přidat komentář</button>
-                        <div>
-                            {isOpen && (
-                                <AddCommentForm comments={allComments} game={game} setComments={setAllComments} setGameComments={setGameComments} />
-                            )}
-                        </div>
-                        <div className="review-list space-y-4">
-                            {gameComments.map((commentId, index) => <CommentItem commentId={commentId.id} key={index} comments={allComments} gameComments={gameComments.map(c => c.id)} setComments={setAllComments} setGameComments={setGameComments} />)}
-                        </div> */}
-                    </div>
-                );
-            case 'photos':
-                return (
-                    <div className="container">
-                        {/* Hidden on small screens - photos in grid
-                        <div className="hidden sm:block">
-                            <div className={`grid grid-cols-${3} gap-2`}>{ImagesGrid(3)}</div>
-                        </div>
-                        Hidden on big screens - photos in one column
-                        <div className='block sm:hidden'>
-                            <div className={`grid grid-cols-${1} gap-2`}>{ImagesGrid(1)}</div>
-                        </div> */}
-                    </div>
-                );
-            case 'videos':
-                return (
-                    <div className='container'>
-                        {/* {game.videos.map((video, index) =>
-                            <div key={index} className="w-full h-screen flex items-center justify-center mt-5">
-                                <ReactPlayer
-                                    url={video}
-                                    controls={true}
-                                    width='100%'
-                                    height='100%'
-                                />
-                            </div>
-                        )} */}
-                    </div>
-                );
-            default:
-                return <p></p>;
-        }
-    };
+    // const renderContent = () => {
+    //     switch (selectedTab) {
+    //         case 'reviews':
+    //             return (
+    //                 <div>
+    //                     <button onClick={handleAddReview} style={{ background: ratingBg() }} className="px-3 py-2 mb-5 mt-5 text-white rounded">Přidat recenzi</button>
+    //                     <div>
+    //                         {isOpen && (
+    //                             <AddReviewForm gameId={game.id} game={game} />
+    //                         )}
+    //                     </div>
+    //                     <div>
+    //                         <div className="review-list space-y-4">
+    //                             {gameReviews.slice(page * itemsPerPage, (page + 1) * itemsPerPage).map((review, key) => (
+    //                                 <ReviewItem
+    //                                     review={review}
+    //                                     key={key}
+    //                                     rating={game.rating}
+    //                                 />
+    //                             ))}
+    //                         </div>
+    //                         <div className="flex justify-between mt-4">
+    //                             <button
+    //                                 onClick={handlePreviousPage}
+    //                                 style={{ background: ratingBg()}}
+    //                                 className={`px-4 py-2 text-white rounded ${page === 0 && 'opacity-50 cursor-not-allowed'}`}
+    //                                 disabled={page === 0}
+    //                             >
+    //                                 Předchozí
+    //                             </button>
+    //                             <button
+    //                                 onClick={handleNextPage}
+    //                                 style={{ background: ratingBg()}}
+    //                                 className={`px-4 py-2 text-white rounded ${gameReviews.length <= (page + 1) * itemsPerPage && 'opacity-50 cursor-not-allowed'}`}
+    //                                 disabled={gameReviews.length <= (page + 1) * itemsPerPage}
+    //                             >
+    //                                 Další
+    //                             </button>
+    //                         </div>
+    //                     </div>
+    //                 </div>
+    //             );
+    //         case 'comments':
+    //             return (
+    //                 <div>
+    //                     <button onClick={handleAddReview} style={{ background: ratingBg() }} className="px-3 py-2 mb-5 mt-5 bg-blue-500 text-white rounded">Přidat komentář</button>
+    //                     <div>
+    //                         {isOpen && (
+    //                             <AddCommentForm comments={allComments} game={game} setComments={setAllComments} setGameComments={setGameComments} />
+    //                         )}
+    //                     </div>
+    //                     <div className="review-list space-y-4">
+    //                         {gameComments.map((commentId, index) => <CommentItem commentId={commentId.id} key={index} comments={allComments} gameComments={gameComments.map(c => c.id)} setComments={setAllComments} setGameComments={setGameComments} />)}
+    //                     </div>
+    //                 </div>
+    //             );
+    //         case 'photos':
+    //             return (
+    //                 <div className="container">
+    //                     {/* Hidden on small screens - photos in grid */}
+    //                     <div className="hidden sm:block">
+    //                         <div className={`grid grid-cols-${3} gap-2`}>{ImagesGrid(3)}</div>
+    //                     </div>
+    //                     {/* Hidden on big screens - photos in one column */}
+    //                     <div className='block sm:hidden'>
+    //                         <div className={`grid grid-cols-${1} gap-2`}>{ImagesGrid(1)}</div>
+    //                     </div>
+    //                 </div>
+    //             );
+    //         case 'videos':
+    //             return (
+    //                 <div className='container'>
+    //                     {game.videos.map((video, index) =>
+    //                         <div key={index} className="w-full h-screen flex items-center justify-center mt-5">
+    //                             <ReactPlayer
+    //                                 url={video}
+    //                                 controls={true}
+    //                                 width='100%'
+    //                                 height='100%'
+    //                             />
+    //                         </div>
+    //                     )}
+    //                 </div>
+    //             );
+    //         default:
+    //             return <p></p>;
+    //     }
+    // };
 
-    const ratingBg = () => game.rating > 7 ? '#ad0e30' : game.rating > 3 ? '#3690eb' : '#010203';
+    // const ratingBg = () => game.rating > 7 ? '#ad0e30' : game.rating > 3 ? '#3690eb' : '#010203';
 
     return (
         <div className="w-full md:w-3/4 mx-auto p-4 bg-white shadow rounded">
             {/* <div className="bg-white shadow-lg rounded-lg">
                 <GameCard game={game}/>
-            </div> */}
+            </div>
             <div className="mt-4 flex justify-around gap-1 sm:gap-4">
                 <button onClick={() => setSelectedTab('reviews')} style={{ background: ratingBg() }} className="px-3 py-2 text-sm sm:text-lg text-white w-full hover:bg-blue-600 transition-all duration-300 ease-in-out shadow-md hover:shadow-lg">
                     Recenze
@@ -218,7 +218,7 @@ export const GamePage = () => {
             <div className="mt-4">
                 {renderContent()}
             </div>
-            {/* {renderEnlargedImage()} */}
+            {renderEnlargedImage()} */}
         </div>
     );
 };
