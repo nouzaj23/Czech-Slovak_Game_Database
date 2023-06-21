@@ -32,14 +32,27 @@ export function getRepository(dataSource: DataSource) {
       if (!authorId)
         throw new NotLoggedIn()
       return this.manager.transaction(async manager => {
-        const repository = manager.withRepository(this)
+        const wishlistRepository = manager.withRepository(this)
+        const userRepository = manager.getRepository(User)
+        const gameRepository = manager.getRepository(User)
 
-        const conflict = await repository.findOneBy(data)
+        const user = await userRepository.findOneBy({id: data.userId})
+        if (!user)
+          throw new NotFound("User")
+
+        const game = await gameRepository.findOneBy({id: data.gameId})
+        if (!game)
+          throw new NotFound("Game")
+
+        const conflict = await wishlistRepository.createQueryBuilder('wishlist')
+          .innerJoinAndSelect('wishlist.user', 'user')
+          .innerJoinAndSelect('wishlist.game', 'game')
+          .getExists()
         if (conflict)
           throw new AlreadyExists("Wishlist")
 
-        const wishlist = repository.create(data)
-        return await repository.save(wishlist)
+        const wishlist = wishlistRepository.create(data)
+        return await wishlistRepository.save(wishlist)
       })
     },
 
