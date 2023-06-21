@@ -52,7 +52,10 @@ export function getRepository(dataSource: DataSource) {
         if (conflict)
           throw new AlreadyExists("Wishlist")
 
-        const wishlist = wishlistRepository.create(data)
+        const wishlist = wishlistRepository.create({
+          user,
+          game,
+        })
         return await wishlistRepository.save(wishlist)
       })
     },
