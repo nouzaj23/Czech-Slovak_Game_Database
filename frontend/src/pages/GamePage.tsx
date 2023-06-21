@@ -29,7 +29,7 @@ export const GamePage = () => {
     const { data: gameData } = useQuery<Game>(['games', id], () => GameApi.retrieveGame(id), { enabled: !!id });
     const game = gameData;
     
-    const {data: gameReviewsData} = useQuery<Review[]>(['games', id], () => GameApi.retrieveGameReviews(id));
+    const {data: gameReviewsData} = useQuery<Review[]>(['gameReviews', id], () => GameApi.retrieveGameReviews(id));
     const gameReviews: Review[] = gameReviewsData ?? [];
 
     const {data: usersData} = useQuery<User[]>(['users'], () => UserApi.retrieveAllUsers());
