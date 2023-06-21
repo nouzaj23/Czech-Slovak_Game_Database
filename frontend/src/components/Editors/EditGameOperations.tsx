@@ -155,8 +155,8 @@ export const EditGameGenres: React.FC<EditGameGenresProps> = ({ game, updateGame
                 // setGenres(genres.map(genre =>
                 //     genre.id === genreId ? { ...genre, games: [...genre.games, game.id] } : genre
                 // ));
-                console.log("nalezeno");
                 updateGame({ ...game, genres: [...game.genres, newGenre] });
+                console.log(game.genres.length);
             }
         }
     };
