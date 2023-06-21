@@ -79,8 +79,10 @@ export const Header = () => {
                     </Link>
                 </CanManageCSHD>
             </div>
-            <div className={`${isOpen ? 'flex' : 'hidden'} sm:flex flex-col sm:flex-row justify-center items-center w-full sm:w-1/3 mt-2 sm:mt-0 bg-transparent`}>
-                <IsNotLogged>
+
+
+            <IsNotLogged>
+                <div className={`${isOpen ? 'flex' : 'hidden'} sm:flex flex-col h-full justify-between w-full sm:w-auto items-center pl-2 pr-2 ${isOpen ? '' : 'sm:border-l-0'} mb-2 sm:mb-0`}>
                     <div className={`sm:flex flex-col h-full justify-between w-full sm:w-auto items-center pl-2 pr-2 mb-2 sm:mb-0`}>
                         <button className="sm:w-auto py-1 sm:py-0 w-full h-full flex items-center justify-center hover:text-gray-300 transition-colors duration-300 ease-in-out" onClick={() => setShowLogin(true)}>Přihlásit se</button>
                         {showLogin ? (
@@ -99,10 +101,12 @@ export const Header = () => {
                         ) : null
                         }
                     </div>
-                </IsNotLogged>
-            </div>
-            <div className={`${isOpen ? 'flex' : 'hidden'} sm:flex flex-col sm:flex-row justify-center items-center w-full sm:w-1/3 mt-2 sm:mt-0 bg-transparent`}>
-                <IsLogged>
+                </div>
+            </IsNotLogged>
+
+
+            <IsLogged>
+                <div className={`${isOpen ? 'flex' : 'hidden'} sm:flex flex-col h-full justify-between w-full sm:w-auto items-center pl-2 pr-2 ${isOpen ? '' : 'sm:border-l-0'} mb-2 sm:mb-0`}>
                     <div className={`sm:flex flex-col h-full justify-between w-full sm:w-auto items-center pl-2 pr-2 mb-2 sm:mb-0`}>
                         <Link to="/wishlist">
                             <button className="sm:w-auto py-1 sm:py-0 w-full h-full flex items-center justify-center hover:text-gray-300 transition-colors duration-300 ease-in-out">
@@ -115,8 +119,8 @@ export const Header = () => {
                             </button>
                         </form>
                     </div>
-                </IsLogged>
-            </div>
+                </div>
+            </IsLogged>
         </div>
     )
 }
