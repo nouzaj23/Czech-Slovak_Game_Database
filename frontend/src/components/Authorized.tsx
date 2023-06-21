@@ -40,7 +40,7 @@ export const AddToFavourite: FC<CanDeleteReviewAuthorizedProps> = ({ children, i
     });
 
     if (!auth || !user) return null;
-    if (user.wishlist.includes(id)) return <>{children}</>;
+    if (!user.wishlist.includes(id)) return <>{children}</>;
     return null;
 }
 
@@ -51,7 +51,7 @@ export const RemoveFromFavourite: FC<CanDeleteReviewAuthorizedProps> = ({ childr
     });
 
     if (!auth || !user) return null;
-    if (!user.wishlist.includes(id)) return <>{children}</>;
+    if (user.wishlist.includes(id)) return <>{children}</>;
     return null;
 }
 
