@@ -17,6 +17,7 @@ export const WishList = () => {
 
     const { data: wishListData } = useQuery<WList[]>(['users'], () => UserApi.getWishlist(auth.userId));
     const wishlistGames = wishListData?.map(wishlist => wishlist.game) ?? [];
+    console.log(wishlistGames);
 
     const queryClient = useQueryClient();
 
