@@ -13,6 +13,7 @@ import { useQuery } from '@tanstack/react-query';
 
 export const GamePage = () => {
     const { id } = useParams<{ id: string }>();
+    const [_, setSelectedTab] = useState('reviews');
 
     if (!id) {
         return <div>Chybí ID hry</div>;
@@ -25,7 +26,6 @@ export const GamePage = () => {
         return <div>Hra není k dispozici</div>;
     }
 
-    const [_, setSelectedTab] = useState('reviews');
 
     // const [isOpen, setIsOpen] = useState(false);
 
