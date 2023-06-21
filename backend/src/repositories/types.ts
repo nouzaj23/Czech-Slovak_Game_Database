@@ -247,7 +247,8 @@ export interface UserDeleteData {
 }
 
 export interface WishlistReadSingleData {
-  id: UUID
+  userId: UUID
+  gameId: UUID
 }
 
 export interface WishlistReadMultipleData {
@@ -266,5 +267,6 @@ export interface WishlistCreationData {
 }
 
 export interface WishlistDeleteData {
-  id: UUID
+  userId: UUID
+  gameId: UUID
 }

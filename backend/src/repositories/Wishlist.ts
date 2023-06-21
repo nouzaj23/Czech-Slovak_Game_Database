@@ -4,11 +4,11 @@ import { User, Wishlist } from '@/entities'
 import { AlreadyExists, NotFound, NotLoggedIn } from '@/errors'
 
 import { DataSource, FindOptionsWhere } from 'typeorm'
-import { UUID, WishlistCreationData, WishlistDeleteData, WishlistReadMultipleData } from './types.js'
+import { UUID, WishlistCreationData, WishlistDeleteData, WishlistReadMultipleData, WishlistReadSingleData } from './types.js'
 
 export function getRepository(dataSource: DataSource) {
   return makeRepository(dataSource, Wishlist, {
-    async readSingle(data: WishlistDeleteData, authorId: UUID | undefined): Promise<Wishlist> {
+    async readSingle(data: WishlistReadSingleData, authorId: UUID | undefined): Promise<Wishlist> {
       const wishlist = await this.findOneBy(data)
       if (!wishlist)
         throw new NotFound()
@@ -51,7 +51,12 @@ export function getRepository(dataSource: DataSource) {
 
         await checkPermissions(manager.getRepository(User), authorId)
 
-        await repository.softDelete(data)
+        const wishlist = await repository.findOneBy(data)
+
+        if (!wishlist)
+          throw new NotFound("Wishlist")
+
+        await repository.softRemove(wishlist)
       })
     },
   })
