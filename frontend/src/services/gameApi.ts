@@ -75,6 +75,7 @@ export const addReview = async (title: string, text: string, rating: number, gam
         rating,
         text,
         title,
+        gameId,
     });
     return response.data;
 }
