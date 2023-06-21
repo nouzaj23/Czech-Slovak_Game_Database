@@ -1,5 +1,4 @@
 import { Review, User } from "../models";
-import users from '../assets/users.json';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar, faPoop, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { CanDeleteReview } from '../components/Authorized'
@@ -9,15 +8,15 @@ import { GameApi } from "../services";
 interface ReviewProps {
     review: Review;
     rating: number;
+    users: User[];
 }
 
-export const ReviewItem: React.FC<ReviewProps> = ({ review, rating }) => {
+export const ReviewItem: React.FC<ReviewProps> = ({ review, rating, users }) => {
     if (!review) {
         return <div>Recenze není k dispozici</div>;
     }
 
-    const usersCopy: User[] = users;
-    const user = usersCopy.find(user => user.id === review.user);
+    const user = users.find(user => user.id == review.user);
 
     if (!user) {
         return <div>User není k dispozici</div>;
