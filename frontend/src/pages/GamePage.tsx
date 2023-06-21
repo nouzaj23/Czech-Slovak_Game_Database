@@ -17,6 +17,7 @@ export const GamePage = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [selectedImage, setSelectedImage] = useState<string | null>(null);
     const [page, setPage] = useState(0);
+    const [stars, setStars] = useState(3);
 
     //     const [gameComments, setGameComments] = useState<Comment[]>(game.comments);
     // const [allComments, setAllComments] = useState<Comment[]>(comments);
@@ -113,7 +114,7 @@ export const GamePage = () => {
                         <button onClick={handleAddReview} style={{ background: ratingBg() }} className="px-3 py-2 mb-5 mt-5 text-white rounded">Přidat recenzi</button>
                         <div>
                             {isOpen && (
-                                <AddReviewForm gameId={game.id} game={game} />
+                                <AddReviewForm gameId={game.id} game={game} setStars={setStars} stars={stars}/>
                             )}
                         </div>
                         <div>

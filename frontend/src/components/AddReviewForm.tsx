@@ -9,12 +9,13 @@ import useAuth from '../hooks/useAuth';
 interface AddReviewProps {
     gameId: string;
     game: Game;
+    stars: number;
+    setStars: Function;
 }
 
 
-export const AddReviewForm: React.FC<AddReviewProps> = ({ gameId, game }) => {
+export const AddReviewForm: React.FC<AddReviewProps> = ({ gameId, game, stars, setStars }) => {
     const { auth } = useAuth();
-    const [stars, setStars] = useState(3);
 
     if (gameId == "") {
 
