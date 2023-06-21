@@ -38,9 +38,11 @@ export const AddToFavourite: FC<CanDeleteReviewAuthorizedProps> = ({ children, i
     const { data: user } = useQuery(['user', auth?.userId], () => UserApi.retrieve(auth?.userId), {
         enabled: !!auth,
     });
+    const { data: wishListData } = useQuery<string[]>(['users'], () => UserApi.getWishlist(auth.userId));
+    const wishlistGameIds: string[] = wishListData ?? [];
 
     if (!auth || !user) return null;
-    if (!user.wishlist.includes(id)) return <>{children}</>;
+    if (!wishlistGameIds.includes(id)) return <>{children}</>;
     return null;
 }
 
@@ -49,9 +51,11 @@ export const RemoveFromFavourite: FC<CanDeleteReviewAuthorizedProps> = ({ childr
     const { data: user } = useQuery(['user', auth?.userId], () => UserApi.retrieve(auth?.userId), {
         enabled: !!auth,
     });
+    const { data: wishListData } = useQuery<string[]>(['users'], () => UserApi.getWishlist(auth.userId));
+    const wishlistGameIds: string[] = wishListData ?? [];
 
     if (!auth || !user) return null;
-    if (user.wishlist.includes(id)) return <>{children}</>;
+    if (wishlistGameIds.includes(id)) return <>{children}</>;
     return null;
 }
 
