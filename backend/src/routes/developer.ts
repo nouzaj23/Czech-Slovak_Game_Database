@@ -10,7 +10,7 @@ export function makeRouter(context: Context) {
   router.route('/')
     .get(async (req, res, next) => {
       try {
-        const developers = await context.controllers.developer.readMultiple({...req.params, ...req.body}, req.session.auth?.userId)
+        const developers = await context.controllers.developer.readMultiple({...req.params, ...req.body, ...req.query}, req.session.auth?.userId)
         res.json(developers)
       } catch (error) {
         next(error)

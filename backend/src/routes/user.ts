@@ -11,7 +11,7 @@ export function makeRouter(context: Context) {
     .get(makeAdminAuthMiddleware())
     .get(async (req, res, next) => {
       try {
-        const users = await context.controllers.user.readMultiple({ ...req.params, ...req.body }, req.session.auth?.userId)
+        const users = await context.controllers.user.readMultiple({ ...req.params, ...req.body, ...req.query }, req.session.auth?.userId)
         res.json(users)
       } catch (error) {
         next(error)

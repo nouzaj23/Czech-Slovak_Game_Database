@@ -10,7 +10,7 @@ export function makeRouter(context: Context) {
   router.route('/')
     .get(async (req, res, next) => {
       try {
-        const genres = await context.controllers.genre.readMultiple({...req.params, ...req.body}, req.session.auth?.userId)
+        const genres = await context.controllers.genre.readMultiple({...req.params, ...req.body, ...req.query}, req.session.auth?.userId)
         res.json(genres)
       } catch (error) {
         next(error)

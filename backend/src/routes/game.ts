@@ -21,7 +21,7 @@ export function makeRouter(context: Context) {
     })
     .get(async (req, res, next) => {
       try {
-        const games = await context.controllers.game.readMultiple({...req.params, ...req.body}, req.session.auth?.userId)
+        const games = await context.controllers.game.readMultiple({...req.params, ...req.body, ...req.query}, req.session.auth?.userId)
         res.json(games)
       } catch (error) {
         next(error)

@@ -18,7 +18,7 @@ export function makeRouter(context: Context) {
     })
     .get(async (req, res, next) => {
       try {
-        const wishlists = await context.controllers.wishlist.readMultiple({...req.params, ...req.body}, req.session.auth?.userId)
+        const wishlists = await context.controllers.wishlist.readMultiple({...req.params, ...req.body, ...req.query}, req.session.auth?.userId)
         res.json(wishlists)
       } catch (error) {
         next(error)

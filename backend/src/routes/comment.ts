@@ -10,7 +10,7 @@ export function makeRouter(context: Context) {
   router.route('/')
     .get(async (req, res, next) => {
       try {
-        const comments = await context.controllers.comment.readMultiple({...req.params, ...req.body}, req.session.auth?.userId)
+        const comments = await context.controllers.comment.readMultiple({...req.params, ...req.body, ...req.query}, req.session.auth?.userId)
         res.status(200).json(comments)
       } catch (error) {
         next(error)
