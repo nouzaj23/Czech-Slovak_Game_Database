@@ -178,7 +178,7 @@ export interface ReviewCreationData {
   userId: UUID
   gameId: UUID
   rating: number
-  content: string
+  text: string
   title: string
 }
 

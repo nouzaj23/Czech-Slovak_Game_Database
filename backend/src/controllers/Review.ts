@@ -53,7 +53,7 @@ export class Review extends Base {
       userId: z.string().uuid(),
       rating: z.number().min(0).max(10),
       title: z.string(),
-      content: z.string(),
+      text: z.string(),
     })
 
     const parsed = schema.safeParse(data)
