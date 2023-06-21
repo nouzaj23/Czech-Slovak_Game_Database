@@ -51,7 +51,7 @@ export class Review extends Base {
     const schema = z.object({
       gameId: z.string().uuid(),
       userId: z.string().uuid(),
-      rating: z.number().min(1).max(5),
+      rating: z.number().min(0).max(10),
       title: z.string(),
       content: z.string(),
     })
