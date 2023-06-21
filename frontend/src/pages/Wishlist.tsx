@@ -3,21 +3,20 @@ import { AiFillCloseCircle } from "react-icons/ai";
 import reviews from '../assets/reviews.json';
 import { Link } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
-import { UserApi } from '../services';
+import { GameApi, UserApi } from '../services';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
-interface WList {
-    gameId: string,
-    userId: string,
-    game: Game,
-}
 
 export const WishList = () => {
     const { auth } = useAuth();
 
-    const { data: wishListData } = useQuery<WList[]>(['users'], () => UserApi.getWishlist(auth.userId));
-    console.log(wishListData);
-    const wishlistGames = wishListData?.map(wishlist => wishlist.game) ?? [];
+    const { data: wishListData } = useQuery<String[]>(['users'], () => UserApi.getWishlist(auth.userId));
+    const wishlistGameIds = wishListData ?? [];
+    
+    const { data: gamesData } = useQuery<Game[]>(['games'], GameApi.retrieveAllGames);
+    const games = gamesData ?? [];
+
+    const wishlistGames = games.filter(game => wishlistGameIds.includes(game.id));
 
     const queryClient = useQueryClient();
 
