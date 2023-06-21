@@ -10,8 +10,8 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 export const WishList = () => {
     const { auth } = useAuth();
 
-    const { data: gamesData } = useQuery<Game[]>(['users'], () => UserApi.getWishlist(auth.userId));
-    const wishlist = gamesData ?? [];
+    const { data: wishListData } = useQuery<Game[]>(['users'], () => UserApi.getWishlist(auth.userId));
+    const wishlist = wishListData ?? [];
 
     const queryClient = useQueryClient();
 
