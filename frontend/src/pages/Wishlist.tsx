@@ -13,13 +13,12 @@ export const WishList = () => {
     const { data: wishListData } = useQuery<string[]>(['users'], () => UserApi.getWishlist(auth.userId));
     const wishlistGameIds: string[] = wishListData ?? [];
 
-    // const { data: gamesData } = useQuery<Game[]>(['games'], GameApi.retrieveAllGames);
-    // const games = gamesData ?? [];
+    const { data: gamesData } = useQuery<Game[]>(['games'], GameApi.retrieveAllGames);
+    const games = gamesData ?? [];
+    const wishlistGames = games.filter(game => wishlistGameIds.includes(game.id));
 
-    const wishlistGames = wishlistGameIds.map(id => (useQuery<Game>(['games'], () => GameApi.retrieveGame(id))).data ?? undefined);
+    // const wishlistGames = wishlistGameIds.map(id => (useQuery<Game>(['games'], () => GameApi.retrieveGame(id))).data ?? undefined);
 
-
-    // const wishlistGames = games.filter(game => wishlistGameIds.includes(game.id));
 
     const queryClient = useQueryClient();
 
