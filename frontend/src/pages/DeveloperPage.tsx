@@ -1,34 +1,25 @@
 import { Link, useParams } from "react-router-dom";
 import { Developer, Game } from "../models";
-import { useEffect, useState } from "react";
 import { DeveloperApi, GameApi } from "../services";
+import { useQuery } from "@tanstack/react-query";
 
 
 export const DeveloperPage = () => {
     const { id } = useParams<{ id: string }>();
 
-    const [games, setGames] = useState<Game[]>([]);
-    const [developer, setDeveloper] = useState<Developer | undefined>(undefined);
+    if (!id) {
+        return <div>404</div>;
+    }
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                if (id !== undefined) {
-                    setDeveloper(await DeveloperApi.retrieveDeveloper(id));
-                }
-                if (developer !== undefined) {
-                    const allGames: Game[] = await GameApi.retrieveAllGames();
-                    setGames(allGames.filter(game => game.developers.map(d => d.id).includes(developer.id)))
-                }
-            }
-            catch (error) {
-                console.log("Games was not loaded");
-            }
-        }
-        fetchData();
-    }, []);
+    const { data: developerData } = useQuery<Developer>(['developers', id], () => DeveloperApi.retrieveDeveloper(id), {
+        enabled: !!id,
+    });
+    const { data: gamesData } = useQuery<Game[]>(['games', id], () => GameApi.retrieveGamesByDeveloper(id), {
+        enabled: !!id,
+    });
 
-    const devGames: Game[] = games.filter(game => game.developers.map(d => d.id).includes(id!));
+    const developer = developerData;
+    const devGames = gamesData ?? [];
 
     if (!developer) {
         return <div>Vývojář není k dispozici</div>;
