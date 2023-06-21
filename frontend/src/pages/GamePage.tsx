@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { useParams } from "react-router-dom";
 // import comments from '../assets/comments.json';
-import { ReviewItem } from '../components/Review';
-import { AddReviewForm } from '../components/AddReviewForm'
+// import { ReviewItem } from '../components/Review';
+// import { AddReviewForm } from '../components/AddReviewForm'
 // import { CommentItem } from '../components/CommentItem';
 // import { AddCommentForm } from '../components/AddCommentForm';
-import { Game, Review } from '../models';
+import { Game } from '../models';
 import ReactPlayer from 'react-player';
 import { GameCard } from '../components/GameCard';
 import { GameApi } from '../services';
@@ -27,11 +27,11 @@ export const GamePage = () => {
 
     const [selectedTab, setSelectedTab] = useState('reviews');
 
-    const [isOpen, setIsOpen] = useState(false);
+    // const [isOpen, setIsOpen] = useState(false);
 
-    const handleAddReview = () => {
-        setIsOpen(!isOpen);
-    }
+    // const handleAddReview = () => {
+    //     setIsOpen(!isOpen);
+    // }
 
     const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
@@ -88,28 +88,28 @@ export const GamePage = () => {
     // const [gameComments, setGameComments] = useState<Comment[]>(game.comments);
     // const [allComments, setAllComments] = useState<Comment[]>(comments);
 
-    const {data: gameReviewsData} = useQuery<Review[]>(['games', id], () => GameApi.retrieveGameReviews(id));
-    const gameReviews: Review[] = gameReviewsData ?? [];
+    // const {data: gameReviewsData} = useQuery<Review[]>(['games', id], () => GameApi.retrieveGameReviews(id));
+    // const gameReviews: Review[] = gameReviewsData ?? [];
 
-    const itemsPerPage = 5;
-    const [page, setPage] = useState(0);
-    const handleNextPage = () => {
-        setPage(page + 1);
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    };
-    const handlePreviousPage = () => {
-        if (page > 0) {
-            setPage(page - 1);
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-    };
+    // const itemsPerPage = 5;
+    // const [page, setPage] = useState(0);
+    // const handleNextPage = () => {
+    //     setPage(page + 1);
+    //     window.scrollTo({ top: 0, behavior: 'smooth' });
+    // };
+    // const handlePreviousPage = () => {
+    //     if (page > 0) {
+    //         setPage(page - 1);
+    //         window.scrollTo({ top: 0, behavior: 'smooth' });
+    //     }
+    // };
 
     const renderContent = () => {
         switch (selectedTab) {
             case 'reviews':
                 return (
                     <div>
-                        <button onClick={handleAddReview} style={{ background: ratingBg() }} className="px-3 py-2 mb-5 mt-5 text-white rounded">Přidat recenzi</button>
+                        {/* <button onClick={handleAddReview} style={{ background: ratingBg() }} className="px-3 py-2 mb-5 mt-5 text-white rounded">Přidat recenzi</button>
                         <div>
                             {isOpen && (
                                 <AddReviewForm gameId={game.id} game={game} />
@@ -143,7 +143,7 @@ export const GamePage = () => {
                                     Další
                                 </button>
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                 );
             case 'comments':
