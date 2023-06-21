@@ -82,19 +82,25 @@ export function getRepository(dataSource: DataSource) {
 
         const { id, genreIds: genres, developerIds: developers, ...change } = data
 
-        const genresResolved = genres ? await genreRepository.findBy({ id: In(genres) }) : undefined
-        if (genres && genresResolved && genres.length !== genresResolved.length)
-          throw new NotFound("Genre")
+        const game = await gameRepository.findOne({ where: { id }, relations: ['genres', 'developers'] })
+        if (!game)
+          throw new NotFound("Game")
 
-        const developersResolved = developers ? await developerRepository.findBy({ id: In(developers) }) : undefined
-        if (developers && developersResolved && developers.length !== developersResolved.length)
-          throw new NotFound("Developer")
+        if (genres) {
+          const genresResolved = genres ? await genreRepository.findBy({ id: In(genres) }) : undefined
+          if (!genresResolved || genres.length !== genresResolved.length)
+            throw new NotFound("Genre")
+          game.genres = genresResolved
+        }
 
-        await gameRepository.update({ id: data.id }, {
-          genres: genresResolved,
-          developers: developersResolved,
-          ...change
-        })
+        if (developers) {
+          const developersResolved = developers ? await developerRepository.findBy({ id: In(developers) }) : undefined
+          if (!developersResolved || developers.length !== developersResolved.length)
+            throw new NotFound("Developer")
+          game.developers = developersResolved
+        }
+
+        await gameRepository.save(gameRepository.merge(game, change ))
       })
     },
 
