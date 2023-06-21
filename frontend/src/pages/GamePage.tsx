@@ -19,7 +19,7 @@ export const GamePage = () => {
         return <div>Chybí ID hry</div>;
     }
 
-    const { data: game } = useQuery<Game>(['games', id], () => GameApi.retrieveGame(id));
+    const { data: game } = useQuery<Game>(['games', id], () => GameApi.retrieveGame(id), {enabled: !!id});
 
     if (!game) {
         return <div>Hra není k dispozici</div>;
