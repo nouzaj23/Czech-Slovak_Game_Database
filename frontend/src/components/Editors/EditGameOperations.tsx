@@ -191,7 +191,7 @@ export const EditGameDevelopers: React.FC<EditGameDevelopersProps> = ({ game, up
         const devName = (document.getElementById("newDeveloper") as HTMLInputElement);
         const newDev = developers.find(dev => dev.name == devName.value);
         if (newDev && !game.developers.map(d => d.id).includes(newDev.id)) {
-            updateGame({ ...game, developers: [...game.developers, newDev.id] });
+            updateGame({ ...game, developers: [...game.developers, newDev] });
             developerNames.filter(devName => devName != newDev.name);
         }
         setInputValue("");
