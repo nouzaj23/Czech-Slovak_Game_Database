@@ -46,12 +46,18 @@ export function getRepository(dataSource: DataSource) {
 
         const query = commentRepository.createQueryBuilder('comment')
           .where(data.ids ? { id: data.ids } : {})
-          .innerJoinAndSelect('comment.commenter', 'commenter')
-          .innerJoinAndSelect('comment.game', 'game')
-          .andWhere(data.gameId ? { gameId: data.gameId } : {})
-          .andWhere(data.userId ? { commenterId: data.userId } : {})
-          .andWhere(data.replyToId ? { replyTo: data.replyToId } : {})
-          .orderBy(data.order || {})
+
+        if (data.gameId)
+          query.andWhere('comment.gameId = :gameId', { gameId: data.gameId })
+
+        if (data.userId)
+          query.andWhere('comment.commenterId = :commenterId', { commenterId: data.userId })
+
+        if (data.replyToId)
+          query.andWhere('comment.replyToId = :replyToId', { replyToId: data.replyToId })
+
+        if (data.order)
+          query.orderBy(data.order)
 
         if (data.groupBy)
           query.groupBy(`comment.${data.groupBy}`)
