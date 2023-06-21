@@ -100,7 +100,7 @@ export function getRepository(dataSource: DataSource) {
           game.developers = developersResolved
         }
 
-        await gameRepository.save(gameRepository.merge(game, change ))
+        await gameRepository.save(gameRepository.merge(game, change))
       })
     },
 

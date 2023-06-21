@@ -3,9 +3,9 @@ import { useParams } from "react-router-dom";
 // import comments from '../assets/comments.json';
 import { ReviewItem } from '../components/Review';
 import { AddReviewForm } from '../components/AddReviewForm'
-// import { CommentItem } from '../components/CommentItem';
-// import { AddCommentForm } from '../components/AddCommentForm';
-import { Game, Review, User } from '../models';
+import { CommentItem } from '../components/CommentItem';
+import { AddCommentForm } from '../components/AddCommentForm';
+import { Game, Review, User, Comment } from '../models';
 import ReactPlayer from 'react-player';
 import { GameCard } from '../components/GameCard';
 import { GameApi, UserApi } from '../services';
@@ -19,9 +19,6 @@ export const GamePage = () => {
     const [page, setPage] = useState(0);
     const [stars, setStars] = useState(3);
 
-    //     const [gameComments, setGameComments] = useState<Comment[]>(game.comments);
-    // const [allComments, setAllComments] = useState<Comment[]>(comments);
-
     if (!id) {
         return <div>Chybí ID hry</div>;
     }
@@ -31,6 +28,9 @@ export const GamePage = () => {
     
     const {data: gameReviewsData} = useQuery<Review[]>(['gameReviews', id], () => GameApi.retrieveGameReviews(id));
     const gameReviews: Review[] = gameReviewsData ?? [];
+
+    const {data: gameCommentsData} = useQuery<Comment[]>(['gameComments', id], () => GameApi.retrieveGameComments(id));
+    const gameComments: Comment[] = gameCommentsData ?? [];
 
     const {data: usersData} = useQuery<User[]>(['users'], () => UserApi.retrieveAllUsers());
     const users: User[] = usersData ?? [];
@@ -42,7 +42,6 @@ export const GamePage = () => {
     const handleAddReview = () => {
         setIsOpen(!isOpen);
     }
-
 
     const handleImageClick = (image: string) => {
         setSelectedImage(image);
@@ -152,15 +151,15 @@ export const GamePage = () => {
             case 'comments':
                 return (
                     <div>
-                        {/* <button onClick={handleAddReview} style={{ background: ratingBg() }} className="px-3 py-2 mb-5 mt-5 bg-blue-500 text-white rounded">Přidat komentář</button>
+                        <button onClick={handleAddReview} style={{ background: ratingBg() }} className="px-3 py-2 mb-5 mt-5 bg-blue-500 text-white rounded">Přidat komentář</button>
                         <div>
                             {isOpen && (
-                                <AddCommentForm comments={allComments} game={game} setComments={setAllComments} setGameComments={setGameComments} />
+                                <AddCommentForm game={game} />
                             )}
                         </div>
                         <div className="review-list space-y-4">
-                            {gameComments.map((commentId, index) => <CommentItem commentId={commentId.id} key={index} comments={allComments} gameComments={gameComments.map(c => c.id)} setComments={setAllComments} setGameComments={setGameComments} />)}
-                        </div> */}
+                            {gameComments.map((comment, index) => <CommentItem key={index} users={users} comment={comment}/>)}
+                        </div>
                     </div>
                 );
             case 'photos':

@@ -1,40 +1,37 @@
-/*
 import { Game } from '../models';
-import games from '../assets/games.json';
 import { AiFillCloseCircle } from "react-icons/ai";
 import reviews from '../assets/reviews.json';
 import { Link } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
 import { UserApi } from '../services';
-import { useEffect, useState } from 'react';
-*/
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+
+interface WList {
+    gameId: string,
+    userId: string,
+    game: Game,
+}
 
 export const WishList = () => {
-    return <div>404</div>;
-
-    /*
     const { auth } = useAuth();
 
-    const [wishlist, setWishlist] = useState<Game[]>([]);
+    const { data: wishListData } = useQuery<WList[]>(['users'], () => UserApi.getWishlist(auth.userId));
+    console.log(wishListData);
+    const wishlistGames = wishListData?.map(wishlist => wishlist.game) ?? [];
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const gamesInWishlistIds = await UserApi.getWishlist(auth.userId);
-                const gamesInWishlist: Game[] = games.filter(game => gamesInWishlistIds.includes(game.id));
-                setWishlist(gamesInWishlist);
-            }
-            catch (error) {
-                console.log("WishList was not loaded");
-            }
-        }
-        fetchData();
-    }, []);
+    const queryClient = useQueryClient();
 
-    function removeGameFromWishlist(index: number) {
-        if (index == 0) {
-            // TODO: Remove game from wishlist
-        }
+    const mutation = useMutation((game: Game) => UserApi.removeFromWishlist(auth.userId, game.id), {
+        onError: (error) => {
+            console.error('Failed to remove the game from wishlist:', error);
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries(['users']);
+        },
+    });
+
+    function removeGameFromWishlist(game: Game) {
+        mutation.mutate(game);
     }
 
     const ratingBg = (rating: number) => rating > 7 ? '#ad0e30' : rating > 3 ? '#3690eb' : '#010203';
@@ -44,9 +41,9 @@ export const WishList = () => {
             <div className="w-full md:w-3/4">
                 <h1 className="text-4xl m-6">WishList</h1>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 m-6">
-                    {wishlist.map((game, index) => (
+                    {wishlistGames.map((game, index) => (
                         <div key={index} className="relative rounded overflow-hidden shadow-lg p-6 bg-white">
-                            <AiFillCloseCircle className="absolute bottom-2 right-2 text-2xl cursor-pointer" onClick={() => removeGameFromWishlist(index)} />
+                            <AiFillCloseCircle className="absolute bottom-2 right-2 text-2xl cursor-pointer" onClick={() => removeGameFromWishlist(game)} />
                             <img className="w-full h-auto object-cover" src={game.cover} alt={game.name} />
                             <Link to={`/games/${game.id}`}>
                                 <div className="font-bold text-xl text-center mt-4">{game.name}</div>
@@ -62,5 +59,5 @@ export const WishList = () => {
             </div>
         </div>
     );
-    */
+
 }

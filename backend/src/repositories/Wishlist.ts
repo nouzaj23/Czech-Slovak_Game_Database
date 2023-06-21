@@ -1,14 +1,14 @@
 import { checkPermissions, makeRepository } from './Base.js'
 
-import { User, Wishlist } from '@/entities'
+import { Game, User, Wishlist } from '@/entities'
 import { AlreadyExists, NotFound, NotLoggedIn } from '@/errors'
 
 import { DataSource, FindOptionsWhere } from 'typeorm'
-import { UUID, WishlistCreationData, WishlistDeleteData, WishlistReadMultipleData } from './types.js'
+import { UUID, WishlistCreationData, WishlistDeleteData, WishlistReadMultipleData, WishlistReadSingleData } from './types.js'
 
 export function getRepository(dataSource: DataSource) {
   return makeRepository(dataSource, Wishlist, {
-    async readSingle(data: WishlistDeleteData, authorId: UUID | undefined): Promise<Wishlist> {
+    async readSingle(data: WishlistReadSingleData, authorId: UUID | undefined): Promise<Wishlist> {
       const wishlist = await this.findOneBy(data)
       if (!wishlist)
         throw new NotFound()
@@ -32,14 +32,28 @@ export function getRepository(dataSource: DataSource) {
       if (!authorId)
         throw new NotLoggedIn()
       return this.manager.transaction(async manager => {
-        const repository = manager.withRepository(this)
+        const wishlistRepository = manager.withRepository(this)
+        const userRepository = manager.getRepository(User)
+        const gameRepository = manager.getRepository(Game)
 
-        const conflict = await repository.findOneBy(data)
+        const user = await userRepository.findOneBy({id: data.userId})
+        if (!user)
+          throw new NotFound("User")
+
+        const game = await gameRepository.findOneBy({id: data.gameId})
+        if (!game)
+          throw new NotFound("Game")
+
+        const conflict = await wishlistRepository.createQueryBuilder('wishlist')
+          .innerJoinAndSelect('wishlist.user', 'user')
+          .innerJoinAndSelect('wishlist.game', 'game')
+          .getExists()
+  
         if (conflict)
           throw new AlreadyExists("Wishlist")
 
-        const wishlist = repository.create(data)
-        return await repository.save(wishlist)
+        const wishlist = wishlistRepository.create(data)
+        return await wishlistRepository.save(wishlist)
       })
     },
 
@@ -51,7 +65,12 @@ export function getRepository(dataSource: DataSource) {
 
         await checkPermissions(manager.getRepository(User), authorId)
 
-        await repository.softDelete(data)
+        const wishlist = await repository.findOneBy(data)
+
+        if (!wishlist)
+          throw new NotFound("Wishlist")
+
+        await repository.softRemove(wishlist)
       })
     },
   })

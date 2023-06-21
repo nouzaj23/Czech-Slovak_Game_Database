@@ -36,10 +36,10 @@ export const ReviewItem: React.FC<ReviewProps> = ({ review, rating, users }) => 
 
     const mutation = useMutation(() => GameApi.deleteReview(review.id, review.game), {
         onError: (error) => {
-            console.error('Failed to add the developer:', error);
+            console.error('Failed to delete the review:', error);
         },
         onSuccess: () => {
-            queryClient.invalidateQueries(['developers']);
+            queryClient.invalidateQueries(['games']);
         },
     });
 

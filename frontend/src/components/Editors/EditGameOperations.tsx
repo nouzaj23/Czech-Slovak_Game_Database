@@ -46,6 +46,19 @@ export const EditGameCover: React.FC<EditGameProps> = ({ game, updateGame }) => 
     )
 }
 
+export const EditGameReleaseDate: React.FC<EditGameProps> = ({ game, updateGame }) => {
+    return (
+        <div>
+            <label className="font-bold text-gray-800">Datum vydání</label>
+            <input
+                className="block w-full mt-1 px-4 py-2 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+                value={game.releaseDate}
+                onChange={(event) => updateGame({ ...game, releaseDate: event.target.value })}
+            />
+        </div>
+    )
+}
+
 export const EditGamePhotos: React.FC<EditGameProps> = ({ game, updateGame }) => {
     const addPhoto = () => {
         updateGame({ ...game, photos: [...game.photos, ""] });
@@ -249,7 +262,7 @@ export const EditGameDevelopers: React.FC<EditGameDevelopersProps> = ({ game, up
                     value={suggestion}
                     id="newDeveloperSuggestion"
                     disabled
-                    className="absolute w-full z-1 text-gray-300 flex-grow px-4 py-2 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-5"
+                    className="absolute w-full z-1 bg-white text-gray-300 flex-grow px-4 py-2 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-5"
                 />
                 <input
                     type="text"

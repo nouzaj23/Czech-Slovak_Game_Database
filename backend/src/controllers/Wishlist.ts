@@ -26,7 +26,8 @@ export class Wishlist extends Base {
 
   async removeFromWishlist(data: any, authorId: UUID | undefined) {
     const schema = z.object({
-      id: z.string().uuid(),
+      gameId: z.string().uuid(),
+      userId: z.string().uuid(),
     })
 
     const parsed = schema.safeParse(data)
@@ -38,7 +39,8 @@ export class Wishlist extends Base {
 
   async readSingle(data: any, authorId: UUID | undefined) {
     const schema = z.object({
-      id: z.string().uuid(),
+      gameId: z.string().uuid(),
+      userId: z.string().uuid(),
     })
 
     const parsed = schema.safeParse(data)

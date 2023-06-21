@@ -1,34 +1,41 @@
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Game, Comment } from "../models";
+import { GameApi } from "../services";
+import { useState } from "react";
+import useAuth from "../hooks/useAuth";
 
 interface AddCommentProps {
-    setComments: Function;
-    setGameComments: Function;
-    comments: Comment[];
     game: Game;
 }
 
-export const AddCommentForm: React.FC<AddCommentProps> = ({ setComments, game, setGameComments, comments }) => {
-    const handleSubmitComment = async () => {
-        try {
-            const text = document.getElementById('text') as HTMLTextAreaElement;
-            if (text) {
-                const newComment: Comment = { content: text.value, createdAt: new Date().toISOString(), game: game.id, id: "21", user: "1" };
-                if (game) {
-                    setGameComments([newComment.id, ...game.comments]);
-                    setComments([newComment, ...comments]);
-                }
-                text.value = '';
-            }
-        } catch (error) {
-            console.error("Chyba při přidávání/odebírání komentáře: ", error);
+export const AddCommentForm: React.FC<AddCommentProps> = ({ game }) => {
+    const { auth } = useAuth();
+
+    const queryClient = useQueryClient();
+    const mutation = useMutation(() => GameApi.addComment(comment.content, comment.user, comment.game), {
+        onError: (error) => {
+            console.error('Failed to add the comment:', error);
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries(['games']);
+        },
+    });
+
+    const [comment, setComment] = useState<Comment>({ content: "", createdAt: "", game: game.id, id: "", user: auth.userId});
+
+    const handleSubmitComment = () => {
+        if (comment.content != "") {
+            mutation.mutate();
+            (document.getElementById('text') as HTMLTextAreaElement).value = '';
         }
-    };
+    }
+
     return (
         <div className="flex flex-col space-y-4 w-full md:max-w-[500px] mx-auto bg-gray-200 p-4 rounded-md">
             <div>
                 <label className="flex flex-col space-y-2">
                     Komentář:
-                    <textarea name="comment" id="text" className="p-2 rounded border-gray-300 min-h-[100px]"></textarea>
+                    <textarea name="comment" id="text" className="p-2 rounded border-gray-300 min-h-[100px]" onChange={(event) => setComment({...comment, content: event.target.value})}></textarea>
                 </label>
             </div>
             <div>
