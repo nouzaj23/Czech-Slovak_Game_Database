@@ -35,9 +35,9 @@ export const GamePage = () => {
 
     const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
-    const handleImageClick = (image: string) => {
-        setSelectedImage(image);
-    };
+    // const handleImageClick = (image: string) => {
+    //     setSelectedImage(image);
+    // };
 
     const handleModalClose = () => {
         setSelectedImage(null);
