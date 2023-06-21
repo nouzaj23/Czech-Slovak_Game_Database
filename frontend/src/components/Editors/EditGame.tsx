@@ -15,7 +15,7 @@ export const EditGame: React.FC<EditGameProps> = ({ gameProp, editedGameId, deve
     const [game, setGame] = useState(gameProp);
     const queryClient = useQueryClient();
 
-    const mutation = useMutation(() => GameApi.update(game.id, game.name, game.description, game.releaseDate, game.developers, game.genres, game.cover, game.photos, game.videos), {
+    const mutation = useMutation(() => GameApi.update(game.id, game.name, game.description, game.releaseDate, game.developers.map(d => d.id), game.genres.map(g => g.id), game.cover, game.photos, game.videos), {
         onError: (error) => {
             console.error('Failed to edit the game:', error);
         },

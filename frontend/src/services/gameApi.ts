@@ -44,14 +44,14 @@ export const retrieveGame = async (id: string) => {
     return response.data;
 }
 
-export const update = async (id: string, name: string, description: string, releaseDate: string, developers: Developer[],
-    genres: Genre[], cover: string, photos: string[], videos: string[]) => {
+export const update = async (id: string, name: string, description: string, releaseDate: string, developersIds: string[],
+    genreIds: string[], cover: string, photos: string[], videos: string[]) => {
     const response = await axiosInstance.patch(`/game/${id}`, {
         name,
         description,
-        genres,
+        genreIds,
         releaseDate,
-        developers,
+        developersIds,
         cover,
         photos,
         videos

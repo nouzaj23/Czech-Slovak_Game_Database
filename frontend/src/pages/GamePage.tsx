@@ -93,6 +93,8 @@ export const GamePage = () => {
     const [allReviews, setAllReviews] = useState<Review[]>(reviews);
     const [allComments, setAllComments] = useState<Comment[]>(comments);
 
+    
+
     const itemsPerPage = 5;
     const [page, setPage] = useState(0);
     const handleNextPage = () => {
