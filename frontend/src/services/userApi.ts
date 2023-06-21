@@ -51,14 +51,15 @@ export const getWishlist = async (id: string) => {
     return response.data;
 }
 
-export const addToWishlist = async (id: string, gameId: string) => {
-    const response = await axiosInstance.post(`/user/${id}/wishlist`, {
+export const addToWishlist = async (userId: string, gameId: string) => {
+    const response = await axiosInstance.post(`/user/${userId}/wishlist`, {
+        userId,
         gameId,
     });
     return response.data;
 }
 
-export const removeFromWishlist = async (id: string, gameId: string) => {
-    const response = await axiosInstance.delete(`/user/${id}/wishlist/${gameId}`);
+export const removeFromWishlist = async (userId: string, id: string) => {
+    const response = await axiosInstance.delete(`/user/${userId}/wishlist/${id}`);
     return response.data;
 }
