@@ -19,7 +19,7 @@ export function makeRouter(context: Context) {
     .get(async (req, res, next) => {
       try {
         const wishlists = await context.controllers.wishlist.readMultiple({...req.params, ...req.body, ...req.query}, req.session.auth?.userId)
-        res.json(wishlists)
+        res.json(wishlists.map(wishlist => wishlist.gameId)) // This is a bit hacky but the FE guys want it like this
       } catch (error) {
         next(error)
       }
