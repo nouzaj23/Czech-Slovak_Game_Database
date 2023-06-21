@@ -57,7 +57,7 @@ export const WishList = () => {
                                     </div>
                                 </div>
                             )
-                    })};
+                    })}
                 </div>
             </div>
         </div>

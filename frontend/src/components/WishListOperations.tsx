@@ -32,11 +32,13 @@ export const WishListOperations: React.FC<WishListOperationsProps> = ({gameId}) 
         },
     });
 
-    const addToWishList = () => {
+    const addToWishList = (event: React.MouseEvent) => {
+        event.preventDefault();
         mutationAddToWishList.mutate();
     }
 
-    const removeFromWishList = () => {
+    const removeFromWishList = (event: React.MouseEvent) => {
+        event.preventDefault();
         mutationRemoveFromWishList.mutate();
     }
 
@@ -44,10 +46,10 @@ export const WishListOperations: React.FC<WishListOperationsProps> = ({gameId}) 
     return (
         <div>
             <AddToFavourite id={gameId}>
-                <FontAwesomeIcon icon={faHeart} size='2x' className='text-red-500' onClick={() => addToWishList()} />
+                <FontAwesomeIcon icon={faHeart} size='2x' className='text-red-500' onClick={(event) => addToWishList(event)} />
             </AddToFavourite>
             <RemoveFromFavourite id={gameId}>
-                <FontAwesomeIcon icon={faHeart} size='2x' className='text-black-500' onClick={() => removeFromWishList()} />
+                <FontAwesomeIcon icon={faHeart} size='2x' className='text-black-500' onClick={(event) => removeFromWishList(event)} />
             </RemoveFromFavourite>
         </div>
     );
