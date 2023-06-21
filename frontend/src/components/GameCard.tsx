@@ -1,10 +1,6 @@
 import { Game } from "../models";
 import { Link } from "react-router-dom";
-import { faHeart } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { AddToFavourite, RemoveFromFavourite } from './Authorized';
-import { UserApi } from "../services";
-import useAuth from "../hooks/useAuth";
+import { WishListOperations } from "./WishListOperations";
 
 interface GameCardProps {
     game: Game;
@@ -16,8 +12,6 @@ export const GameCard: React.FC<GameCardProps> = ({ game }) => {
         return <div>Chyba v načítání hry</div>;
     }
 
-    const { auth } = useAuth();
-
     const ratingBg = () => {
         if (game.rating > 7) {
             return '#ad0e30';
@@ -26,14 +20,6 @@ export const GameCard: React.FC<GameCardProps> = ({ game }) => {
             return '#3690eb';
         }
         return '#010203';
-    }
-
-    const addToWishList = (gameId: string) => {
-        UserApi.addToWishlist(auth.userId, gameId);
-    }
-
-    const removeFromWishList = (gameId: string) => {
-        UserApi.removeFromWishlist(auth.userId, gameId);
     }
 
     return (
@@ -55,12 +41,7 @@ export const GameCard: React.FC<GameCardProps> = ({ game }) => {
                 <p className="font-bold text-lg">{game.rating?.toFixed(1)}</p>
             </div>
             <div className="absolute top-12 right-4">
-                <AddToFavourite id={game.id}>
-                    <FontAwesomeIcon icon={faHeart} size='2x' className='text-red-500' onClick={() => addToWishList(game.id)}/>
-                </AddToFavourite>
-                <RemoveFromFavourite id={game.id}>
-                    <FontAwesomeIcon icon={faHeart} size='2x' className='text-black-500' onClick={() => removeFromWishList(game.id)}/>
-                </RemoveFromFavourite>
+                <WishListOperations gameId={game.id} />
             </div>
         </div >
     )
