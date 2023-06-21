@@ -77,7 +77,7 @@ export const AddReviewForm: React.FC<AddReviewProps> = ({ gameId, game, stars, s
             console.error('Failed to edit the game:', error);
         },
         onSuccess: () => {
-            queryClient.invalidateQueries(['games']);
+            queryClient.invalidateQueries(['games', gameId]);
         },
     });
 
