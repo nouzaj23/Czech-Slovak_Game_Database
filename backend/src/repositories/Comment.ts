@@ -42,10 +42,12 @@ export function getRepository(dataSource: DataSource) {
 
     async readMultipleComments(data: CommentReadMultipleData, authorId: UUID | undefined): Promise<CommentReadSingleResult[]> {
       return this.manager.transaction(async manager => {
-        const repository = manager.getTreeRepository(Comment)
+        const commentRepository = manager.getTreeRepository(Comment)
 
-        const query = repository.createQueryBuilder('comment')
+        const query = commentRepository.createQueryBuilder('comment')
           .where(data.ids ? { id: data.ids } : {})
+          .innerJoinAndSelect('comment.commenter', 'commenter')
+          .innerJoinAndSelect('comment.game', 'game')
           .andWhere(data.gameId ? { gameId: data.gameId } : {})
           .andWhere(data.userId ? { commenterId: data.userId } : {})
           .andWhere(data.replyToId ? { replyTo: data.replyToId } : {})
@@ -57,7 +59,7 @@ export function getRepository(dataSource: DataSource) {
         let comments = await query.getMany()
 
         if (data.recurse)
-          comments = await Promise.all(comments.flatMap((comment) => repository.findDescendantsTree(comment)))
+          comments = await Promise.all(comments.flatMap((comment) => commentRepository.findDescendantsTree(comment)))
 
 
         return comments.map(filter)
@@ -80,8 +82,10 @@ export function getRepository(dataSource: DataSource) {
 
         if (!commenter)
           throw new NotFound("User")
+
         if (!game)
           throw new NotFound("Game")
+
         if (data.replyTo && !replyTo?.replyTo)
           throw new NotFound("Comment")
 
