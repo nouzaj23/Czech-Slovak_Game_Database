@@ -20,7 +20,7 @@ export function getRepository(dataSource: DataSource) {
 
       // TODO: Make this use fulltext search
       if (data.nameContains)
-        query.andWhere(`developer.name LIKE :name`, { name: `%${data.nameContains}%` })
+        query.andWhere(`developer.name ILIKE :name`, { name: `%${data.nameContains}%` })
 
       if (data.groupBy)
         query.groupBy(`developer.${data.groupBy}`)

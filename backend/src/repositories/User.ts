@@ -24,7 +24,7 @@ export function getRepository(dataSource: DataSource) {
         .orderBy(data.order || {})
 
       if (data.usernameContains)
-        query.andWhere(`user.username LIKE :usernameContains`, { usernameContains: `%${data.usernameContains}%` })
+        query.andWhere(`user.username ILIKE :usernameContains`, { usernameContains: `%${data.usernameContains}%` })
 
       return query.getMany()
     },

@@ -21,7 +21,7 @@ export function getRepository(dataSource: DataSource) {
         .andWhere(data.genreId ? { genre: data.genreId } : {})
 
       if (data.nameContains)
-        query.andWhere(`game.name LIKE :name`, { name: `%${data.nameContains}%` })
+        query.andWhere(`game.name ILIKE :name`, { name: `%${data.nameContains}%` })
 
       if (data.releaseDate?.from)
         query.andWhere(`game.releaseDate >= :from`, { from: data.releaseDate.from })

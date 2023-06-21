@@ -22,7 +22,7 @@ export function getRepository(dataSource: DataSource) {
       
       // TODO: use full-text search
       if (data.nameContains)
-        query.andWhere(`genre.name LIKE :name`, { name: `%${data.nameContains}%` })
+        query.andWhere(`genre.name ILIKE :name`, { name: `%${data.nameContains}%` })
 
       return query.getMany()
     },
