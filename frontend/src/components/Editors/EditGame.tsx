@@ -20,7 +20,7 @@ export const EditGame: React.FC<EditGameProps> = ({ gameProp, editedGameId, deve
             console.error('Failed to edit the game:', error);
         },
         onSuccess: () => {
-            queryClient.invalidateQueries(['games']);
+            queryClient.invalidateQueries(['games', game.id]);
         },
     });
 
