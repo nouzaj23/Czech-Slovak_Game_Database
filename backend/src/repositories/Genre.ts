@@ -24,7 +24,7 @@ export function getRepository(dataSource: DataSource) {
       if (data.nameContains)
         query.andWhere(`genre.name ILIKE :name`, { name: `%${data.nameContains}%` })
 
-      return query.getMany()
+      return await query.getMany()
     },
     
     async createGenre(data: GenreCreationData, authorId: UUID | undefined): Promise<Genre> {
@@ -36,7 +36,7 @@ export function getRepository(dataSource: DataSource) {
         await checkPermissions(manager.getRepository(User), authorId)
 
         const genre = repository.create(data)
-        return repository.save(genre)
+        return await repository.save(genre)
       })
     },
 
@@ -49,7 +49,7 @@ export function getRepository(dataSource: DataSource) {
         await checkPermissions(manager.getRepository(User), authorId)
 
         const { id, ...change } = data
-        repository.update(id, change)
+        await repository.update(id, change)
       })
     },
 
@@ -61,7 +61,7 @@ export function getRepository(dataSource: DataSource) {
 
         await checkPermissions(manager.getRepository(User), authorId)
 
-        repository.softDelete(data)
+        await repository.softDelete(data)
       })
     }
     

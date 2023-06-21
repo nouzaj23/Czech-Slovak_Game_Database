@@ -37,7 +37,7 @@ export function getRepository(dataSource: DataSource) {
         .leftJoinAndSelect('game.genres', 'genres')
         .orderBy(data.order || {})
 
-      return query.getMany()
+      return await query.getMany()
     },
 
     async createGame(data: GameCreationData, authorId: UUID | undefined): Promise<Game> {
@@ -66,7 +66,7 @@ export function getRepository(dataSource: DataSource) {
           ...rest
         })
 
-        return gameRepository.save(game)
+        return await gameRepository.save(game)
       })
     },
 
@@ -90,7 +90,7 @@ export function getRepository(dataSource: DataSource) {
         if (developers && developersResolved && developers.length !== developersResolved.length)
           throw new NotFound("Developer")
 
-        gameRepository.update({ id: data.id }, {
+        await gameRepository.update({ id: data.id }, {
           genres: genresResolved,
           developers: developersResolved,
           ...change

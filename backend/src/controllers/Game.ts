@@ -20,7 +20,7 @@ export class Game extends Base {
     if (!parsed.success)
       throw new InvalidData(parsed.error)
 
-    return this.repositories.game.readSingle(parsed.data, authorId)
+    return await this.repositories.game.readSingle(parsed.data, authorId)
   }
 
   async readMultiple(data: any, authorId: UUID | undefined) {
@@ -46,7 +46,7 @@ export class Game extends Base {
 
     assertSameType<typeof parsed.data, GameReadMultipleData>(parsed.data)
 
-    return this.repositories.game.readMultiple(parsed.data, authorId)
+    return await this.repositories.game.readMultiple(parsed.data, authorId)
   }
 
   async create(data: any, authorId: UUID | undefined) {
@@ -65,7 +65,7 @@ export class Game extends Base {
     if (!parsed.success)
       throw new InvalidData(parsed.error)
 
-    return this.repositories.game.createGame(parsed.data, authorId)
+    return await this.repositories.game.createGame(parsed.data, authorId)
   }
 
   async update(data: any, authorId: UUID | undefined) {

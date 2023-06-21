@@ -26,7 +26,7 @@ export function getRepository(dataSource: DataSource) {
       if (data.usernameContains)
         query.andWhere(`user.username ILIKE :usernameContains`, { usernameContains: `%${data.usernameContains}%` })
 
-      return query.getMany()
+      return await query.getMany()
     },
 
     async readSingleFull(data: UserReadSingleData, authorId: UUID | undefined): Promise<User> {

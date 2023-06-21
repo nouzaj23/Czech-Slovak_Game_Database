@@ -25,7 +25,7 @@ export function getRepository(dataSource: DataSource) {
       if (data.groupBy)
         query.groupBy(`wishlist.${data.groupBy}`)
 
-      return query.getMany()
+      return await query.getMany()
     },
 
     async createWishlist(data: WishlistCreationData, authorId: UUID | undefined): Promise<Wishlist> {
@@ -39,7 +39,7 @@ export function getRepository(dataSource: DataSource) {
           throw new AlreadyExists("Wishlist")
 
         const wishlist = repository.create(data)
-        return repository.save(wishlist)
+        return await repository.save(wishlist)
       })
     },
 
@@ -51,7 +51,7 @@ export function getRepository(dataSource: DataSource) {
 
         await checkPermissions(manager.getRepository(User), authorId)
 
-        repository.softDelete(data)
+        await repository.softDelete(data)
       })
     },
   })

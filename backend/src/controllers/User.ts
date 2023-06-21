@@ -20,7 +20,7 @@ export class User extends Base {
     if (!parsed.success)
       throw new InvalidData(parsed.error)
 
-    return this.repositories.user.readSingle(parsed.data, authorId)
+    return await this.repositories.user.readSingle(parsed.data, authorId)
   }
 
   async readSingleFull(data: any, authorId: UUID | undefined) {
@@ -32,7 +32,7 @@ export class User extends Base {
     if (!parsed.success)
       throw new InvalidData(parsed.error)
 
-    return this.repositories.user.readSingleFull(parsed.data, authorId)
+    return await this.repositories.user.readSingleFull(parsed.data, authorId)
   }
 
   async readMultiple(data: any, authorId: UUID | undefined) {
@@ -52,7 +52,7 @@ export class User extends Base {
 
     assertSameType<typeof parsed.data, UserReadMultipleData>(parsed.data)
 
-    return this.repositories.user.readMultiple(parsed.data, authorId)
+    return await this.repositories.user.readMultiple(parsed.data, authorId)
   }
 
   async create(data: any, authorId: UUID | undefined) {
@@ -83,7 +83,7 @@ export class User extends Base {
     if (!parsed.success)
       throw new InvalidData(parsed.error)
 
-    return this.repositories.user.login(parsed.data, authorId)
+    return await this.repositories.user.login(parsed.data, authorId)
   }
 
   async update(data: any, authorId: UUID | undefined) {
@@ -124,6 +124,6 @@ export class User extends Base {
     if (!parsed.success)
       throw new InvalidData(parsed.error)
 
-    return this.repositories.user.updateUserAuth(parsed.data, authorId)
+    return await this.repositories.user.updateUserAuth(parsed.data, authorId)
   }
 }

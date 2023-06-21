@@ -25,7 +25,7 @@ export function getRepository(dataSource: DataSource) {
       if (data.groupBy)
         query.groupBy(`developer.${data.groupBy}`)
 
-      return query.getMany()
+      return await query.getMany()
     },
 
     async createDeveloper(data: DeveloperCreationData, authorId: UUID | undefined): Promise<Developer> {
@@ -38,7 +38,7 @@ export function getRepository(dataSource: DataSource) {
         const repository = manager.withRepository(this)
         const developer = repository.create(data)
         
-        return repository.save(developer)
+        return await repository.save(developer)
       })
     },
 
@@ -50,7 +50,7 @@ export function getRepository(dataSource: DataSource) {
         if (!isAdmin(manager.getRepository(User), authorId))
           throw new InsufficientPermissions()
         const { id, ...change } = data
-        manager.withRepository(this).update(id, change)
+        await manager.withRepository(this).update(id, change)
       })
     },
 
@@ -60,7 +60,7 @@ export function getRepository(dataSource: DataSource) {
       return this.manager.transaction(async manager => {
         if (!isAdmin(manager.getRepository(User), authorId))
           throw new InsufficientPermissions()
-        this.softDelete({ id: data.id })
+        await this.softDelete({ id: data.id })
       })
     },
   })

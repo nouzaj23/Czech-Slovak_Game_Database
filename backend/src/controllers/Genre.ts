@@ -20,7 +20,7 @@ export class Genre extends Base {
     if (!parsed.success)
       throw new InvalidData(parsed.error)
 
-    return this.repositories.genre.readSingle(parsed.data, authorId)
+    return await this.repositories.genre.readSingle(parsed.data, authorId)
   }
 
   async readMultiple(data: any, authorId: UUID | undefined) {
@@ -38,7 +38,7 @@ export class Genre extends Base {
 
     assertSameType<typeof parsed.data, GenreReadMultipleData>(parsed.data)
 
-    return this.repositories.genre.readMultiple(parsed.data, authorId)
+    return await this.repositories.genre.readMultiple(parsed.data, authorId)
   }
 
   async create(data: any, authorId: UUID | undefined) {
@@ -51,7 +51,7 @@ export class Genre extends Base {
     if (!parsed.success)
       throw new InvalidData(parsed.error)
 
-    return this.repositories.genre.createGenre(parsed.data, authorId)
+    return await this.repositories.genre.createGenre(parsed.data, authorId)
   }
 
   async update(data: any, authorId: UUID | undefined) {
@@ -65,7 +65,7 @@ export class Genre extends Base {
     if (!parsed.success)
       throw new InvalidData(parsed.error)
 
-    return this.repositories.genre.updateGenre(parsed.data, authorId)
+    return await this.repositories.genre.updateGenre(parsed.data, authorId)
   }
 
   async delete(data: any, authorId: UUID | undefined) {
@@ -77,6 +77,6 @@ export class Genre extends Base {
     if (!parsed.success)
       throw new InvalidData(parsed.error)
 
-    return this.repositories.genre.deleteGenre(parsed.data, authorId)
+    return await this.repositories.genre.deleteGenre(parsed.data, authorId)
   }
 }

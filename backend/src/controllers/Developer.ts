@@ -20,7 +20,7 @@ export class Developer extends Base {
     if (!parsed.success)
       throw new InvalidData(parsed.error)
 
-    return this.repositories.developer.readSingle(parsed.data, authorId)
+    return await this.repositories.developer.readSingle(parsed.data, authorId)
   }
 
   async readMultiple(data: any, authorId: UUID | undefined) {
@@ -39,7 +39,7 @@ export class Developer extends Base {
 
     assertSameType<typeof parsed.data, DeveloperReadMultipleData>(parsed.data)
 
-    return this.repositories.developer.readMultiple(parsed.data, authorId)
+    return await this.repositories.developer.readMultiple(parsed.data, authorId)
   }
 
   async create(data: any, authorId: UUID | undefined) {
@@ -54,7 +54,7 @@ export class Developer extends Base {
     if (!parsed.success)
       throw new InvalidData(parsed.error)
 
-    return this.repositories.developer.createDeveloper(parsed.data, authorId)
+    return await this.repositories.developer.createDeveloper(parsed.data, authorId)
   }
 
   async update(data: any, authorId: UUID | undefined) {
@@ -70,10 +70,10 @@ export class Developer extends Base {
     if (!parsed.success)
       throw new InvalidData(parsed.error)
 
-    return this.repositories.developer.updateDeveloper(parsed.data, authorId)
+    return await this.repositories.developer.updateDeveloper(parsed.data, authorId)
   }
 
   async delete(data: any, authorId: UUID | undefined) {
-    return this.repositories.developer.deleteDeveloper(data, authorId)
+    return await this.repositories.developer.deleteDeveloper(data, authorId)
   }
 }

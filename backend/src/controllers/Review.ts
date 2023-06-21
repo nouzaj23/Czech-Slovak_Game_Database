@@ -20,7 +20,7 @@ export class Review extends Base {
     if (!parsed.success)
       throw new InvalidData(parsed.error)
 
-    return this.repositories.review.readSingle(parsed.data, authorId)
+    return await this.repositories.review.readSingle(parsed.data, authorId)
   }
 
   async readMultiple(data: any, authorId: UUID | undefined) {
@@ -42,7 +42,7 @@ export class Review extends Base {
 
     assertSameType<typeof parsed.data, ReviewReadMultipleData>(parsed.data)
     
-    return this.repositories.review.readMultiple(
+    return await this.repositories.review.readMultiple(
       parsed.data,
       authorId)
   }
@@ -60,7 +60,7 @@ export class Review extends Base {
     if (!parsed.success)
       throw new InvalidData(parsed.error)
 
-    return this.repositories.review.createReview(parsed.data, authorId)
+    return await this.repositories.review.createReview(parsed.data, authorId)
   }
 
   async update(data: any, authorId: UUID | undefined) {
@@ -75,7 +75,7 @@ export class Review extends Base {
     if (!parsed.success)
       throw new InvalidData(parsed.error)
 
-    return this.repositories.review.updateReview(parsed.data, authorId)
+    return await this.repositories.review.updateReview(parsed.data, authorId)
   }
 
   async delete(data: any, authorId: UUID | undefined) {
@@ -87,6 +87,6 @@ export class Review extends Base {
     if (!parsed.success)
       throw new InvalidData(parsed.error)
 
-    return this.repositories.review.deleteReview(parsed.data, authorId)
+    return await this.repositories.review.deleteReview(parsed.data, authorId)
   }
 }

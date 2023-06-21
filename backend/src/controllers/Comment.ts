@@ -44,7 +44,7 @@ export class Comment extends Base {
     
     assertSameType<typeof parsed.data, CommentReadMultipleData>(parsed.data)
     
-    return this.repositories.comment.readMultipleComments(parsed.data, authorId)
+    return await this.repositories.comment.readMultipleComments(parsed.data, authorId)
   }
 
   async create(data: any, authorId: UUID | undefined) {
@@ -58,7 +58,7 @@ export class Comment extends Base {
     if (!parsed.success)
       throw new InvalidData(parsed.error)
 
-    return this.repositories.comment.createComment(parsed.data, authorId)
+    return await this.repositories.comment.createComment(parsed.data, authorId)
   }
 
   async update(data: any, authorId: UUID | undefined) {
@@ -72,7 +72,7 @@ export class Comment extends Base {
     if (!parsed.success)
       throw new InvalidData(parsed.error)
 
-    return this.repositories.comment.updateComment(parsed.data, authorId)
+    return await this.repositories.comment.updateComment(parsed.data, authorId)
   }
 
   async delete(data: any, authorId: UUID | undefined) {
@@ -84,6 +84,6 @@ export class Comment extends Base {
     if (!parsed.success)
       throw new InvalidData(parsed.error)
 
-    return this.repositories.comment.deleteComment(parsed.data, authorId)
+    return await this.repositories.comment.deleteComment(parsed.data, authorId)
   }
 }

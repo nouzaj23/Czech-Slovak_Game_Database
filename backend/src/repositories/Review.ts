@@ -24,7 +24,7 @@ export function getRepository(dataSource: DataSource) {
       if (data.groupBy)
         query.groupBy(`review.${data.groupBy}`)
 
-      return query.getMany()
+      return await query.getMany()
     },
 
     async createReview(data: ReviewCreationData, authorId: UUID | undefined): Promise<Review> {
@@ -36,7 +36,7 @@ export function getRepository(dataSource: DataSource) {
         await checkPermissions(manager.getRepository(User), authorId, data.userId)
       
         const review = repository.create(data)
-        return repository.save(review)
+        return await repository.save(review)
       })
     },
 
@@ -54,7 +54,7 @@ export function getRepository(dataSource: DataSource) {
       
         const { id, ...change } = data
 
-        repository.update(id, change)
+        await repository.update(id, change)
       })
     },
 
@@ -70,7 +70,7 @@ export function getRepository(dataSource: DataSource) {
 
         await checkPermissions(manager.getRepository(User), authorId, review.user.id)
 
-        repository.softRemove(review)
+        await repository.softRemove(review)
       })
     }
   })
