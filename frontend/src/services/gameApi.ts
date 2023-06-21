@@ -69,11 +69,11 @@ export const retrieveGameReviews = async (id: string) => {
     return response.data
 }
 
-export const addReview = async (title: string, content: string, rating: number, gameId: string, userId: string) => {
+export const addReview = async (title: string, text: string, rating: number, gameId: string, userId: string) => {
     const response = await axiosInstance.post(`/game/${gameId}/review`, {
         userId,
         rating,
-        content,
+        text,
         title,
         gameId,
     });
