@@ -6,7 +6,7 @@ import { useParams } from "react-router-dom";
 // import { CommentItem } from '../components/CommentItem';
 // import { AddCommentForm } from '../components/AddCommentForm';
 import { Game } from '../models';
-import ReactPlayer from 'react-player';
+// import ReactPlayer from 'react-player';
 import { GameCard } from '../components/GameCard';
 import { GameApi } from '../services';
 import { useQuery } from '@tanstack/react-query';
@@ -58,32 +58,32 @@ export const GamePage = () => {
         );
     };
 
-    const ImagesGrid = (numColumns: number) => {
-        const numRows: number = Math.ceil(game.photos.length / numColumns);
+    // const ImagesGrid = (numColumns: number) => {
+    //     const numRows: number = Math.ceil(game.photos.length / numColumns);
 
-        const gridItems = [];
+    //     const gridItems = [];
 
-        for (let row: number = 0; row < numRows; row++) {
-            for (let col = 0; col < numColumns; col++) {
-                const index = row * numColumns + col;
-                if (index < game.photos.length) {
-                    const image = game.photos[index];
-                    gridItems.push(
-                        <div className="col-span-1 p-2 border-4 flex items-center justify-center" key={index}>
-                            <div
-                                className={`aspect-w-1 aspect-h-1 cursor-pointer`}
-                                onClick={() => handleImageClick(image)}
-                            >
-                                <img src={image} alt={`Obrázek ${index + 1}`} className="object-cover max-w-full max-h-full" />
-                            </div>
-                        </div>
+    //     for (let row: number = 0; row < numRows; row++) {
+    //         for (let col = 0; col < numColumns; col++) {
+    //             const index = row * numColumns + col;
+    //             if (index < game.photos.length) {
+    //                 const image = game.photos[index];
+    //                 gridItems.push(
+    //                     <div className="col-span-1 p-2 border-4 flex items-center justify-center" key={index}>
+    //                         <div
+    //                             className={`aspect-w-1 aspect-h-1 cursor-pointer`}
+    //                             onClick={() => handleImageClick(image)}
+    //                         >
+    //                             <img src={image} alt={`Obrázek ${index + 1}`} className="object-cover max-w-full max-h-full" />
+    //                         </div>
+    //                     </div>
 
-                    );
-                }
-            }
-        }
-        return gridItems;
-    }
+    //                 );
+    //             }
+    //         }
+    //     }
+    //     return gridItems;
+    // }
 
     // const [gameComments, setGameComments] = useState<Comment[]>(game.comments);
     // const [allComments, setAllComments] = useState<Comment[]>(comments);
@@ -163,20 +163,20 @@ export const GamePage = () => {
             case 'photos':
                 return (
                     <div className="container">
-                        {/* Hidden on small screens - photos in grid */}
+                        {/* Hidden on small screens - photos in grid
                         <div className="hidden sm:block">
                             <div className={`grid grid-cols-${3} gap-2`}>{ImagesGrid(3)}</div>
                         </div>
-                        {/* Hidden on big screens - photos in one column */}
+                        Hidden on big screens - photos in one column
                         <div className='block sm:hidden'>
                             <div className={`grid grid-cols-${1} gap-2`}>{ImagesGrid(1)}</div>
-                        </div>
+                        </div> */}
                     </div>
                 );
             case 'videos':
                 return (
                     <div className='container'>
-                        {game.videos.map((video, index) =>
+                        {/* {game.videos.map((video, index) =>
                             <div key={index} className="w-full h-screen flex items-center justify-center mt-5">
                                 <ReactPlayer
                                     url={video}
@@ -185,7 +185,7 @@ export const GamePage = () => {
                                     height='100%'
                                 />
                             </div>
-                        )}
+                        )} */}
                     </div>
                 );
             default:
