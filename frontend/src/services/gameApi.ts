@@ -102,6 +102,7 @@ export const retrieveGameComments = async (id: string) => {
 export const addComment = async (content: string, userId: string, gameId: string) => {
     const response = await axiosInstance.post(`/game/${gameId}/comment`, {
         userId,
+        gameId,
         content,
     });
     return response.data;
