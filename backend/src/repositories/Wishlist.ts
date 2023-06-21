@@ -1,6 +1,6 @@
 import { checkPermissions, makeRepository } from './Base.js'
 
-import { User, Wishlist } from '@/entities'
+import { Game, User, Wishlist } from '@/entities'
 import { AlreadyExists, NotFound, NotLoggedIn } from '@/errors'
 
 import { DataSource, FindOptionsWhere } from 'typeorm'
@@ -34,7 +34,7 @@ export function getRepository(dataSource: DataSource) {
       return this.manager.transaction(async manager => {
         const wishlistRepository = manager.withRepository(this)
         const userRepository = manager.getRepository(User)
-        const gameRepository = manager.getRepository(User)
+        const gameRepository = manager.getRepository(Game)
 
         const user = await userRepository.findOneBy({id: data.userId})
         if (!user)
@@ -48,6 +48,7 @@ export function getRepository(dataSource: DataSource) {
           .innerJoinAndSelect('wishlist.user', 'user')
           .innerJoinAndSelect('wishlist.game', 'game')
           .getExists()
+  
         if (conflict)
           throw new AlreadyExists("Wishlist")
 
