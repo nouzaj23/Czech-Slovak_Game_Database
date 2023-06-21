@@ -2,17 +2,18 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar, faPoop } from '@fortawesome/free-solid-svg-icons';
 import { useEffect, useState } from 'react';
 import { Game, Review } from '../models';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { GameApi } from '../services';
+import useAuth from '../hooks/useAuth';
 
 interface AddReviewProps {
     gameId: string;
     game: Game;
-    setGameReviews: Function;
-    setReviews: Function;
-    reviews: Review[];
 }
 
 
-export const AddReviewForm: React.FC<AddReviewProps> = ({ gameId, game, setGameReviews, setReviews, reviews }) => {
+export const AddReviewForm: React.FC<AddReviewProps> = ({ gameId, game }) => {
+    const { auth } = useAuth();
     const [stars, setStars] = useState(3);
 
     if (gameId == "") {
@@ -25,6 +26,7 @@ export const AddReviewForm: React.FC<AddReviewProps> = ({ gameId, game, setGameR
 
     function handleStarClick(rating: number) {
         setStars(rating);
+        setReview({ ...review, rating: stars * 2 });
     }
 
     useEffect(() => {
@@ -68,36 +70,46 @@ export const AddReviewForm: React.FC<AddReviewProps> = ({ gameId, game, setGameR
         return stars >= starNum ? ratingBg(stars) : '#92a1b0';
     }
 
-    const handleSubmitReview = async () => {
-        try {
-            const nameElement = document.getElementById('title') as HTMLTextAreaElement;
-            const contentElement = document.getElementById('reviewText') as HTMLTextAreaElement;
-            if (nameElement && contentElement) {
-                const newReview: Review = { createdAt: new Date().toISOString(), game: gameId, id: "101", rating: stars * 2, text: contentElement.value, title: nameElement.value, user: "1" };
-                if (game) {
-                    setGameReviews([newReview.id, ...game.reviews]);
-                    setReviews([newReview, ...reviews]);
-                }
-                contentElement.value = '';
-                nameElement.value = '';
-            }
-        } catch (error) {
-            console.error("Chyba při přidávání/odebírání recenze: ", error);
+    const queryClient = useQueryClient();
+    const mutation = useMutation(() => GameApi.addReview(review.title, review.text, review.rating, review.game, review.user), {
+        onError: (error) => {
+            console.error('Failed to edit the game:', error);
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries(['games']);
+        },
+    });
+
+    const [review, setReview] = useState<Review>({ createdAt: "", game: gameId, id: "", rating: stars * 2, text: "", title: "", user: auth.userId });
+
+    const handleSubmitReview = () => {
+        if (review.text != "" && review.title != "") {
+            mutation.mutate();
+            (document.getElementById('title') as HTMLTextAreaElement).value = '';
+            (document.getElementById('reviewText') as HTMLTextAreaElement).value = '';
         }
-    };
+    }
 
     return (
         <div className="flex flex-col space-y-4 w-full md:w-1/2 mx-auto bg-gray-200 p-4 rounded-md">
             <div>
                 <label className="flex flex-col space-y-2">
                     Nadpis:
-                    <input type="text" name="name" className="p-2 rounded border-gray-300" id="title" />
+                    <input type="text"
+                        name="name"
+                        className="p-2 rounded border-gray-300"
+                        id="title"
+                        onChange={(event) => setReview({ ...review, title: event.target.value })} />
                 </label>
             </div>
             <div>
                 <label className="flex flex-col space-y-2">
                     Recenze:
-                    <textarea name="review" id="reviewText" className="p-2 rounded border-gray-300 min-h-[100px]"></textarea>
+                    <textarea name="review"
+                        id="reviewText"
+                        className="p-2 rounded border-gray-300 min-h-[100px]"
+                        onChange={(event) => setReview({ ...review, text: event.target.value })}>
+                    </textarea>
                 </label>
             </div>
             <div>

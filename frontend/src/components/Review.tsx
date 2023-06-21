@@ -3,19 +3,15 @@ import users from '../assets/users.json';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar, faPoop, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { CanDeleteReview } from '../components/Authorized'
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { GameApi } from "../services";
 
 interface ReviewProps {
-    reviewId: string;
+    review: Review;
     rating: number;
-    reviews: Review[];
-    setReviews: Function;
-    setGameReviews: Function;
-    gameReviews: string[];
 }
 
-export const ReviewItem: React.FC<ReviewProps> = ({ reviewId, rating, reviews, setGameReviews, setReviews, gameReviews }) => {
-    const review = reviews.find(rev => rev.id === reviewId);
-
+export const ReviewItem: React.FC<ReviewProps> = ({ review, rating }) => {
     if (!review) {
         return <div>Recenze není k dispozici</div>;
     }
@@ -37,9 +33,19 @@ export const ReviewItem: React.FC<ReviewProps> = ({ reviewId, rating, reviews, s
         return '#010203';
     }
 
+    const queryClient = useQueryClient();
+
+    const mutation = useMutation(() => GameApi.deleteReview(review.id, review.game), {
+        onError: (error) => {
+            console.error('Failed to add the developer:', error);
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries(['developers']);
+        },
+    });
+
     const handleDelete = () => {
-        setGameReviews(gameReviews.filter(revId => revId != review.id));
-        setReviews(reviews.filter(rev => rev.id != review.id));
+        mutation.mutate();
     }
 
     return (
@@ -60,7 +66,7 @@ export const ReviewItem: React.FC<ReviewProps> = ({ reviewId, rating, reviews, s
                 <div className="font-medium text-gray-500">
                     Created At: <span className="font-bold text-gray-900">{new Date(review.createdAt).toLocaleDateString()}</span>
                 </div>
-                <CanDeleteReview id={reviewId} >
+                <CanDeleteReview id={review.id} >
                     <FontAwesomeIcon icon={faTimes} className="absolute top-2 right-2 cursor-pointer" onClick={() => handleDelete()} />
                 </CanDeleteReview>
             </div>
