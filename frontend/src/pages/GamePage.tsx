@@ -28,10 +28,15 @@ export const GamePage = () => {
 
     const { data: gameData } = useQuery<Game>(['games', id], () => GameApi.retrieveGame(id), { enabled: !!id });
     const game = gameData;
+    
+    const {data: gameReviewsData} = useQuery<Review[]>(['games', id], () => GameApi.retrieveGameReviews(id));
+    const gameReviews: Review[] = gameReviewsData ?? [];
 
     if (!game) {
         return <div>Hra není k dispozici</div>;
     }
+
+    
 
     
 
@@ -89,10 +94,6 @@ export const GamePage = () => {
         }
         return gridItems;
     }
-
-
-    const {data: gameReviewsData} = useQuery<Review[]>(['games', id], () => GameApi.retrieveGameReviews(id));
-    const gameReviews: Review[] = gameReviewsData ?? [];
 
     const itemsPerPage = 5;
     const handleNextPage = () => {
