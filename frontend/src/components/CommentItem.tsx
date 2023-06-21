@@ -1,33 +1,38 @@
 import { Comment, User } from "../models";
-import users from '../assets/users.json';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { GameApi } from "../services";
 
 interface CommentProps {
-    commentId: string;
-    comments: Comment[];
-    setComments: Function;
-    setGameComments: Function;
-    gameComments: string[];
+    comment: Comment;
+    users: User[];
 }
 
-export const CommentItem: React.FC<CommentProps> = ({ commentId, comments, setComments, setGameComments, gameComments }) => {
-    const comment = comments.find(comment => comment.id === commentId);
-
+export const CommentItem: React.FC<CommentProps> = ({ comment, users}) => {
     if (!comment) {
         return <div>Recenze není k dispozici</div>;
     }
 
-    const usersCopy: User[] = users;
-    const user = usersCopy.find(user => user.id === comment.user);
+    const user = users.find(user => user.id == comment.user);
 
     if (!user) {
         return <div>User není k dispozici</div>;
     }
 
+    const queryClient = useQueryClient();
+
+    const mutation = useMutation(() => GameApi.deleteComment(comment.id, comment.game), {
+        onError: (error) => {
+            console.error('Failed to delete the comment:', error);
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries(['games']);
+        },
+    });
+
     const handleDelete = () => {
-        setGameComments(gameComments.filter(com => com != comment.id));
-        setComments(comments.filter(com => com.id != comment.id));
+        mutation.mutate();
     }
 
     return (
