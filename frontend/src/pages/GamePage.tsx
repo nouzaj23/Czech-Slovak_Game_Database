@@ -33,30 +33,30 @@ export const GamePage = () => {
     //     setIsOpen(!isOpen);
     // }
 
-    const [selectedImage, setSelectedImage] = useState<string | null>(null);
+    // const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
     // const handleImageClick = (image: string) => {
     //     setSelectedImage(image);
     // };
 
-    const handleModalClose = () => {
-        setSelectedImage(null);
-    };
+    // const handleModalClose = () => {
+    //     setSelectedImage(null);
+    // };
 
-    const renderEnlargedImage = () => {
-        if (!selectedImage) return null;
+    // const renderEnlargedImage = () => {
+    //     if (!selectedImage) return null;
 
-        return (
-            <div
-                className="fixed inset-0 flex items-center justify-center z-50 bg-gray-900 bg-opacity-50"
-                onClick={handleModalClose}
-            >
-                <div className="max-w-5xl max-h-5xl bg-white p-4 flex justify-center items-center">
-                    <img src={selectedImage} alt="Zvětšený obrázek" className="w-auto h-auto max-w-full max-h-full" />
-                </div>
-            </div>
-        );
-    };
+    //     return (
+    //         <div
+    //             className="fixed inset-0 flex items-center justify-center z-50 bg-gray-900 bg-opacity-50"
+    //             onClick={handleModalClose}
+    //         >
+    //             <div className="max-w-5xl max-h-5xl bg-white p-4 flex justify-center items-center">
+    //                 <img src={selectedImage} alt="Zvětšený obrázek" className="w-auto h-auto max-w-full max-h-full" />
+    //             </div>
+    //         </div>
+    //     );
+    // };
 
     // const ImagesGrid = (numColumns: number) => {
     //     const numRows: number = Math.ceil(game.photos.length / numColumns);
@@ -217,7 +217,7 @@ export const GamePage = () => {
             <div className="mt-4">
                 {renderContent()}
             </div>
-            {renderEnlargedImage()}
+            {/* {renderEnlargedImage()} */}
         </div>
     );
 };
