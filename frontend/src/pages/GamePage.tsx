@@ -16,6 +16,7 @@ export const GamePage = () => {
     const [selectedTab, setSelectedTab] = useState('reviews');
     const [isOpen, setIsOpen] = useState(false);
     const [selectedImage, setSelectedImage] = useState<string | null>(null);
+    const [page, setPage] = useState(0);
 
     //     const [gameComments, setGameComments] = useState<Comment[]>(game.comments);
     // const [allComments, setAllComments] = useState<Comment[]>(comments);
@@ -93,7 +94,6 @@ export const GamePage = () => {
     const gameReviews: Review[] = gameReviewsData ?? [];
 
     const itemsPerPage = 5;
-    const [page, setPage] = useState(0);
     const handleNextPage = () => {
         setPage(page + 1);
         window.scrollTo({ top: 0, behavior: 'smooth' });
