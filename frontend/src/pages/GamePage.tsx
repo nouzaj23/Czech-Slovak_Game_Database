@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import { useParams } from "react-router-dom";
 // import comments from '../assets/comments.json';
-import { ReviewItem } from '../components/Review';
+// import { ReviewItem } from '../components/Review';
 // import { AddReviewForm } from '../components/AddReviewForm'
 // import { CommentItem } from '../components/CommentItem';
 // import { AddCommentForm } from '../components/AddCommentForm';
 import { Game, Review } from '../models';
 import ReactPlayer from 'react-player';
-import { GameCard } from '../components/GameCard';
+// import { GameCard } from '../components/GameCard';
 import { GameApi } from '../services';
 import { useQuery } from '@tanstack/react-query';
 
@@ -118,7 +118,7 @@ export const GamePage = () => {
                             )}
                         </div> */}
                         <div>
-                            <div className="review-list space-y-4">
+                            {/* <div className="review-list space-y-4">
                                 {gameReviews.slice(page * itemsPerPage, (page + 1) * itemsPerPage).map((review, key) => (
                                     <ReviewItem
                                         review={review}
@@ -126,7 +126,7 @@ export const GamePage = () => {
                                         rating={game.rating}
                                     />
                                 ))}
-                            </div>
+                            </div> */}
                             <div className="flex justify-between mt-4">
                                 <button
                                     onClick={handlePreviousPage}
@@ -200,7 +200,7 @@ export const GamePage = () => {
     return (
         <div className="w-full md:w-3/4 mx-auto p-4 bg-white shadow rounded">
             <div className="bg-white shadow-lg rounded-lg">
-                <GameCard game={game}/>
+                {/* <GameCard game={game}/> */}
             </div>
             <div className="mt-4 flex justify-around gap-1 sm:gap-4">
                 <button onClick={() => setSelectedTab('reviews')} style={{ background: ratingBg() }} className="px-3 py-2 text-sm sm:text-lg text-white w-full hover:bg-blue-600 transition-all duration-300 ease-in-out shadow-md hover:shadow-lg">
