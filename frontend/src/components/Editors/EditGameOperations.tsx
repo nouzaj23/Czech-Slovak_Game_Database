@@ -270,7 +270,7 @@ export const EditGameDevelopers: React.FC<EditGameDevelopersProps> = ({ game, up
                     id="newDeveloper"
                     onChange={handleInputChange}
                     onKeyDown={handleKeyDown}
-                    className="absolute z-2 bg-transparent text-black w-full flex-grow px-4 py-2 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-5"
+                    className="absolute z-2 bg-white text-black w-full flex-grow px-4 py-2 border-gray-300 rounded-md shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-5"
                 />
             </div>
             <div className="mt-10">
