@@ -29,6 +29,8 @@ export const GamePage = () => {
     const {data: gameReviewsData} = useQuery<Review[]>(['gameReviews', id], () => GameApi.retrieveGameReviews(id));
     const gameReviews: Review[] = gameReviewsData ?? [];
 
+    console.log(gameReviews.length)
+
     const {data: gameCommentsData} = useQuery<Comment[]>(['gameComments', id], () => GameApi.retrieveGameComments(id));
     const gameComments: Comment[] = gameCommentsData ?? [];
 
