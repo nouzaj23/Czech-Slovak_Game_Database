@@ -1,8 +1,6 @@
 import { Game } from '../models';
 import { Link } from 'react-router-dom';
-import { faHeart } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { AddToFavourite, RemoveFromFavourite } from './Authorized';
+import { WishListOperations } from './WishListOperations';
 
 interface GameItemProps {
     game: Game;
@@ -47,12 +45,13 @@ export const GameItem: React.FC<GameItemProps> = ({ game }) => {
                 </div>
                 <div className="flex items-center">
                     <div>
-                        <AddToFavourite id={game.id}>
+                        {/* <AddToFavourite id={game.id}>
                             <FontAwesomeIcon icon={faHeart} size='2x' className='text-red-500' />
                         </AddToFavourite>
                         <RemoveFromFavourite id={game.id}>
                             <FontAwesomeIcon icon={faHeart} size='2x' className='text-black-500' />
-                        </RemoveFromFavourite>
+                        </RemoveFromFavourite> */}
+                        <WishListOperations gameId={game.id} />
                     </div>
                     <div className="ml-2 text-white rounded-full px-3 py-1 shadow-md" style={{ background: ratingBg() }}>
                         <p className="font-bold text-lg">{game.rating?.toFixed(1)}</p>

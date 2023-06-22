@@ -46,10 +46,10 @@ export const WishListOperations: React.FC<WishListOperationsProps> = ({gameId}) 
     return (
         <div>
             <AddToFavourite id={gameId}>
-                <FontAwesomeIcon icon={faHeart} size='2x' className='text-red-500' onClick={(event) => addToWishList(event)} />
+                <FontAwesomeIcon icon={faHeart} size='2x' className='text-black-500' onClick={(event) => addToWishList(event)} />
             </AddToFavourite>
             <RemoveFromFavourite id={gameId}>
-                <FontAwesomeIcon icon={faHeart} size='2x' className='text-black-500' onClick={(event) => removeFromWishList(event)} />
+                <FontAwesomeIcon icon={faHeart} size='2x' className='text-red-500' onClick={(event) => removeFromWishList(event)} />
             </RemoveFromFavourite>
         </div>
     );
