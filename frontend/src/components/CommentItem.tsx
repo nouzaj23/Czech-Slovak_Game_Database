@@ -10,6 +10,10 @@ interface CommentProps {
 }
 
 export const CommentItem: React.FC<CommentProps> = ({ comment, users}) => {
+    if (comment.content == undefined) {
+        return null;
+    }
+    
     if (!comment) {
         return <div>Recenze není k dispozici</div>;
     }
