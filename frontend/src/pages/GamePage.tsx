@@ -4,10 +4,10 @@ import { ReviewItem } from '../components/Review';
 import { AddReviewForm } from '../components/AddReviewForm'
 import { CommentItem } from '../components/CommentItem';
 import { AddCommentForm } from '../components/AddCommentForm';
-import { Game, Review, User, Comment } from '../models';
+import { Game, Review, Comment } from '../models';
 import ReactPlayer from 'react-player';
 import { GameCard } from '../components/GameCard';
-import { GameApi, UserApi } from '../services';
+import { GameApi } from '../services';
 import { useQuery } from '@tanstack/react-query';
 
 export const GamePage = () => {
