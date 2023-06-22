@@ -120,7 +120,7 @@ export function getRepository(dataSource: DataSource) {
         if (!comment)
           throw new NotFound()
 
-        await checkPermissions(manager.getRepository(User), comment.commenterId, authorId);
+        await checkPermissions(manager.getRepository(User), authorId, comment.commenterId);
 
         const { id, ...change } = data
         await commentRepository.update({ id }, change)
@@ -136,7 +136,7 @@ export function getRepository(dataSource: DataSource) {
         if (!comment)
           throw new NotFound()
 
-        await checkPermissions(manager.getRepository(User), comment.commenterId, authorId);
+        await checkPermissions(manager.getRepository(User), authorId, comment.commenterId);
         await commentRepository.softDelete({ id: data.id })
       })
     },
