@@ -1,6 +1,6 @@
 import { checkPermissions, makeRepository } from './Base.js'
-import { Review, User } from '@/entities'
-import { NotFound, NotLoggedIn } from '@/errors'
+import { Game, Review, User } from '@/entities'
+import { AlreadyExists, NotFound, NotLoggedIn } from '@/errors'
 
 import { DataSource, FindOptionsWhere, Repository } from 'typeorm'
 import { ReviewCreationData, ReviewReadMultipleData, ReviewReadSingleData, ReviewUpdateData, UUID } from './types.js'
@@ -31,12 +31,33 @@ export function getRepository(dataSource: DataSource) {
       if (!authorId)
         throw new NotLoggedIn()
       return this.manager.transaction(async manager => {
-        const repository = manager.withRepository(this)
+        const reviewRepository = manager.withRepository(this)
+        const userRepository = manager.getRepository(User)
+        const gameRepository = manager.getRepository(Game)
 
         await checkPermissions(manager.getRepository(User), authorId, data.userId)
+
+        const { userId, gameId, ...rest } = data
+
+        const conflict = await reviewRepository.createQueryBuilder('review')
+          .innerJoinAndSelect('review.user', 'user')
+          .innerJoinAndSelect('review.game', 'game')
+          .where({ user: data.userId, game: data.gameId })
+          .getOne()
+        
+        if (conflict)
+          throw new AlreadyExists('Review')
+
+        const user = await userRepository.findOneBy({id: data.userId})
+        if (!user)
+          throw new NotFound('User')
+        
+        const game = await gameRepository.findOneBy({id: data.gameId})
+        if (!game)
+          throw new NotFound('Game')
       
-        const review = repository.create(data)
-        return await repository.save(review)
+        const review = reviewRepository.create({ user, game, ...rest })
+        return await reviewRepository.save(review)
       })
     },
 
