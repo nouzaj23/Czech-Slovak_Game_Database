@@ -21,7 +21,7 @@ export function getRepository(dataSource: DataSource) {
         .andWhere(data.gameId ? { game: data.gameId } : {})
         .andWhere(data.userId ? { user: data.userId } : {})
         .orderBy(data.order || {})
-    
+
       if (data.groupBy)
         query.groupBy(`wishlist.${data.groupBy}`)
 
@@ -36,11 +36,11 @@ export function getRepository(dataSource: DataSource) {
         const userRepository = manager.getRepository(User)
         const gameRepository = manager.getRepository(Game)
 
-        const user = await userRepository.findOneBy({id: data.userId})
+        const user = await userRepository.findOneBy({ id: data.userId })
         if (!user)
           throw new NotFound("User")
 
-        const game = await gameRepository.findOneBy({id: data.gameId})
+        const game = await gameRepository.findOneBy({ id: data.gameId })
         if (!game)
           throw new NotFound("Game")
 
@@ -49,16 +49,22 @@ export function getRepository(dataSource: DataSource) {
           .innerJoinAndSelect('wishlist.game', 'game')
           .where('user.id = :userId', { userId: data.userId })
           .andWhere('game.id = :gameId', { gameId: data.gameId })
-          .getExists()
-  
-        if (conflict)
-          throw new AlreadyExists("Wishlist")
+          .getOne()
+        
+        // TODO: update database to allow non-unique wishlist entries
+        if (conflict) {
+          if (conflict.deletedAt)
+            throw new AlreadyExists("Wishlist") 
+          return await wishlistRepository.recover(conflict)
+        }
+        else {
+          const wishlist = wishlistRepository.create({
+            user,
+            game,
+          })
+          return await wishlistRepository.save(wishlist)
+        }
 
-        const wishlist = wishlistRepository.create({
-          user,
-          game,
-        })
-        return await wishlistRepository.save(wishlist)
       })
     },
 
@@ -72,11 +78,11 @@ export function getRepository(dataSource: DataSource) {
 
         await checkPermissions(manager.getRepository(User), authorId)
 
-        const user = await userRepository.findOneBy({id: data.userId})
+        const user = await userRepository.findOneBy({ id: data.userId })
         if (!user)
           throw new NotFound("User")
-        
-        const game = await gameRepository.findOneBy({id: data.gameId})
+
+        const game = await gameRepository.findOneBy({ id: data.gameId })
         if (!game)
           throw new NotFound("Game")
 
