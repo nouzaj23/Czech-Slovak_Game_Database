@@ -46,6 +46,7 @@ export function getRepository(dataSource: DataSource) {
 
         const query = commentRepository.createQueryBuilder('comment')
           .where(data.ids ? { id: data.ids } : {})
+          .innerJoinAndSelect('comment.commenter', 'commenter')
 
         if (data.gameId)
           query.andWhere('comment.gameId = :gameId', { gameId: data.gameId })
