@@ -9,10 +9,6 @@ interface CommentProps {
 }
 
 export const CommentItem: React.FC<CommentProps> = ({ comment }) => {
-    if (comment.content == undefined) {
-        return null;
-    }
-    
     if (!comment) {
         return <div>Recenze není k dispozici</div>;
     }
@@ -46,7 +42,7 @@ export const CommentItem: React.FC<CommentProps> = ({ comment }) => {
                 <div className="font-medium text-gray-500">
                     Created At: <span className="font-bold text-gray-900">{new Date(comment.createdAt).toLocaleDateString()}</span>
                 </div>
-                <FontAwesomeIcon icon={faTimes} className="absolute top-2 right-2 cursor-pointer" onClick={() => handleDelete()}/>
+                <FontAwesomeIcon icon={faTimes} className="absolute top-2 right-2 cursor-pointer" onClick={() => handleDelete()} />
             </div>
         </div>
     );
