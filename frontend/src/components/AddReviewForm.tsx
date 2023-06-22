@@ -72,7 +72,7 @@ export const AddReviewForm: React.FC<AddReviewProps> = ({ gameId, game, stars, s
     }
 
     const queryClient = useQueryClient();
-    const mutation = useMutation(() => GameApi.addReview(review.title, review.text, stars * 2, review.game.id, review.user.id), {
+    const mutation = useMutation(() => GameApi.addReview(review.title, review.text, stars * 2, review.game.id, auth.userId), {
         onError: (error) => {
             console.error('Failed to edit the game:', error);
         },
