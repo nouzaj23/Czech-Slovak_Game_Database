@@ -120,14 +120,14 @@ export const GamePage = () => {
             case 'reviews':
                 return (
                     <div>
-                        <button onClick={handleAddReview} style={{ background: ratingBg() }} className="px-3 py-2 mb-5 mt-5 text-white rounded">Přidat recenzi</button>
                         <IsLogged>
-                            <div>
-                                {isOpen && (
-                                    <AddReviewForm gameId={game.id} game={game} setStars={setStars} stars={stars} />
-                                )}
-                            </div>
+                            <button onClick={handleAddReview} style={{ background: ratingBg() }} className="px-3 py-2 mb-5 mt-5 text-white rounded">Přidat recenzi</button>
                         </IsLogged>
+                        <div>
+                            {isOpen && (
+                                <AddReviewForm gameId={game.id} game={game} setStars={setStars} stars={stars} />
+                            )}
+                        </div>
                         <div>
                             <div className="review-list space-y-4">
                                 {gameReviews.slice(pageReviews * itemsPerPage, (pageReviews + 1) * itemsPerPage).map((review, key) => (
@@ -162,14 +162,14 @@ export const GamePage = () => {
             case 'comments':
                 return (
                     <div>
-                        <button onClick={handleAddReview} style={{ background: ratingBg() }} className="px-3 py-2 mb-5 mt-5 bg-blue-500 text-white rounded">Přidat komentář</button>
                         <IsLogged>
-                            <div>
-                                {isOpen && (
-                                    <AddCommentForm game={game} />
-                                )}
-                            </div>
+                            <button onClick={handleAddReview} style={{ background: ratingBg() }} className="px-3 py-2 mb-5 mt-5 bg-blue-500 text-white rounded">Přidat komentář</button>
                         </IsLogged>
+                        <div>
+                            {isOpen && (
+                                <AddCommentForm game={game} />
+                            )}
+                        </div>
                         <div className="review-list space-y-4">
                             {gameComments.slice(pageComments * itemsPerPage, (pageComments + 1) * itemsPerPage).map((comment, index) =>
                                 <CommentItem key={index} comment={comment} />)}
@@ -200,7 +200,7 @@ export const GamePage = () => {
                     <div className="container">
                         <div className="hidden sm:block">
                             <div className={`grid grid-cols-${3} gap-2`}>{ImagesGrid(3)}</div>
-                        </div>                        
+                        </div>
                         <div className='block sm:hidden'>
                             <div className={`grid grid-cols-${1} gap-2`}>{ImagesGrid(1)}</div>
                         </div>
