@@ -27,7 +27,7 @@ export const GamePage = () => {
     const game = gameData;
 
     const { data: gameReviewsData } = useQuery<Review[]>(['gameReviews', id], () => GameApi.retrieveGameReviews(id));
-    const gameReviews: Review[] = gameReviewsData ?? [];
+    const gameReviews: Review[] = gameReviewsData?.reverse() ?? [];
 
     console.log(gameReviews.length)
 
