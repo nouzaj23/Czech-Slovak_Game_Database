@@ -64,7 +64,7 @@ export const UsersCRUD: React.FC<UsersCRUDProps> = ({ users }) => {
                     placeholder="Hledat uživatele..."
                     onChange={(event) => setSearchTerm(event.target.value)}
                 />
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"> {/* Added grid layout here */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                     {filteredUsers.map(user => (
                         <div key={user.id} className="p-4 bg-white rounded shadow">
                             <h2 className="text-xl font-semibold">{user.username}</h2>

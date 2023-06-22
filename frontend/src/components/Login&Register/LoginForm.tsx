@@ -1,7 +1,6 @@
 import { FormEventHandler, MouseEventHandler, useCallback } from 'react';
 import useLogin from '../../hooks/useLogin';
 
-
 interface LoginFormProps {
     handleClose: MouseEventHandler;
 }

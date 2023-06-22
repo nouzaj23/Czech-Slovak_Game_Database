@@ -115,8 +115,6 @@ export const GamePage = () => {
         }
     };
 
-
-
     const renderContent = () => {
         switch (selectedTab) {
             case 'reviews':
@@ -200,11 +198,9 @@ export const GamePage = () => {
             case 'photos':
                 return (
                     <div className="container">
-                        {/* Hidden on small screens - photos in grid */}
                         <div className="hidden sm:block">
                             <div className={`grid grid-cols-${3} gap-2`}>{ImagesGrid(3)}</div>
-                        </div>
-                        {/* Hidden on big screens - photos in one column */}
+                        </div>                        
                         <div className='block sm:hidden'>
                             <div className={`grid grid-cols-${1} gap-2`}>{ImagesGrid(1)}</div>
                         </div>

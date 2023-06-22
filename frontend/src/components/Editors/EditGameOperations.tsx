@@ -152,22 +152,14 @@ interface EditGameGenresProps {
 }
 
 export const EditGameGenres: React.FC<EditGameGenresProps> = ({ game, updateGame,  genresList}) => {
-    // const [genres, setGenres] = useState(genresList);
-
     const handleGenreChange = (genreId: string) => {
         const genreIds = game.genres.map(g => g.id);
         if (genreIds.includes(genreId)) {
-            // setGenres(genres.map(genre =>
-            //     genre.id === genreId ? { ...genre, games: genre.games.filter(g => g != game.id) } : genre
-            // ));
             updateGame({ ...game, genres: game.genres.filter(g => g.id !== genreId) });
         }
         else {
             const newGenre = genresList.find(g => g.id == genreId);
             if (newGenre) {
-                // setGenres(genres.map(genre =>
-                //     genre.id === genreId ? { ...genre, games: [...genre.games, game.id] } : genre
-                // ));
                 updateGame({ ...game, genres: [...game.genres, newGenre] });
                 console.log(game.genres.length);
             }

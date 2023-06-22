@@ -16,7 +16,7 @@ export const EditGenre: React.FC<EditGenreProps> = ({ genreProp, editedGenreId }
     
     const mutation = useMutation(() => GenreApi.update(genre.id, genre.name, genre.description), {
         onError: (error) => {
-            console.error('Failed to add the genre:', error);
+            console.error('Failed to edit the genre:', error);
         },
         onSuccess: () => {
             queryClient.invalidateQueries(['genres']);

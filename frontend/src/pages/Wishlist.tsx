@@ -16,9 +16,6 @@ export const WishList = () => {
     const games = gamesData ?? [];
     const wishlistGames = games.filter(game => wishlistGameIds.includes(game.id));
 
-    // const wishlistGames = wishlistGameIds.map(id => (useQuery<Game>(['games'], () => GameApi.retrieveGame(id))).data ?? undefined);
-
-
     const queryClient = useQueryClient();
 
     const mutation = useMutation((game: Game) => UserApi.removeFromWishlist(auth.userId, game.id), {
@@ -51,7 +48,7 @@ export const WishList = () => {
                                         <div className="font-bold text-xl text-center mt-4 hover:underline">{game.name}</div>
                                     </Link>
                                     <div className="flex justify-center px-6 py-4 min-w-0">
-                                        <div className="w-1/3 inline-block text-white rounded-full px-3 py-1 shadow-md mb-2 text-center" style={{ background: ratingBg(game.rating)}}>
+                                        <div className="w-1/3 inline-block text-white rounded-full px-3 py-1 shadow-md mb-2 text-center" style={{ background: ratingBg(game.rating) }}>
                                             <p className="font-bold text-lg">{game.rating}</p>
                                         </div>
                                     </div>

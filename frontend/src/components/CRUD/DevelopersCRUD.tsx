@@ -16,7 +16,7 @@ export const DeleteDevConfirm: React.FC<DeleteDeveloperProps> = ({ handleClose, 
 
     const mutation = useMutation(() => DeveloperApi.remove(developerId), {
         onError: (error) => {
-            console.error('Failed to add the developer:', error);
+            console.error('Failed to delete the developer:', error);
         },
         onSuccess: () => {
             queryClient.invalidateQueries(['developers']);
