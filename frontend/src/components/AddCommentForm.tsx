@@ -17,7 +17,7 @@ export const AddCommentForm: React.FC<AddCommentProps> = ({ game }) => {
             console.error('Failed to add the comment:', error);
         },
         onSuccess: () => {
-            queryClient.invalidateQueries(['games', game.id]);
+            queryClient.invalidateQueries(['gameComments', comment.gameId]);
         },
     });
 

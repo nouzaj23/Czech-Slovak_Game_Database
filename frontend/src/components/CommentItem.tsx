@@ -27,7 +27,7 @@ export const CommentItem: React.FC<CommentProps> = ({ comment, users}) => {
             console.error('Failed to delete the comment:', error);
         },
         onSuccess: () => {
-            queryClient.invalidateQueries(['games']);
+            queryClient.invalidateQueries(['gameComments', comment.gameId]);
         },
     });
 
