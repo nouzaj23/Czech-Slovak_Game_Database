@@ -12,7 +12,7 @@ function filter(comment: Comment): CommentReadSingleResult {
     commenterId: comment.deletedAt ? undefined : comment.commenterId,
     gameId: comment.gameId,
     replyToId: comment.replyTo?.id,
-    replies: comment.replies.map(filter),
+    replies: comment.replies?.map(filter),
     createdAt: comment.createdAt,
     updatedAt: comment.updatedAt,
   }
