@@ -71,4 +71,5 @@ context.app.use(makeErrorMiddleware(context))
 
 context.app.listen(env.PORT, () => {
   console.log(`Server running on port ${env.PORT}`)
+  console.log(`Expecting FE to be running on ${env.CORS_ORIGIN}`)
 })
