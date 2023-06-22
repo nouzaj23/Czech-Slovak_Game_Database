@@ -22,7 +22,9 @@ export const Games = () => {
   
   const games = gamesData ?? [];
   const developers = developersData ?? [];
+  developers.sort((a, b) => a.name.localeCompare(b.name));
   const genres = genresData ?? [];
+  genres.sort((a, b) => a.name.localeCompare(b.name));
 
   let filteredGames = games.filter(game => {
     const matchesName = game.name.toLowerCase().includes(filter.toLowerCase());
