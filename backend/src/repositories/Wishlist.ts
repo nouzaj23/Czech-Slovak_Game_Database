@@ -64,16 +64,30 @@ export function getRepository(dataSource: DataSource) {
       if (!authorId)
         throw new NotLoggedIn()
       this.manager.transaction(async manager => {
-        const repository = manager.withRepository(this)
+        const wishlistRepository = manager.withRepository(this)
+        const userRepository = manager.getRepository(User)
+        const gameRepository = manager.getRepository(Game)
 
         await checkPermissions(manager.getRepository(User), authorId)
 
-        const wishlist = await repository.findOneBy(data)
+        const user = await userRepository.findOneBy({id: data.userId})
+        if (!user)
+          throw new NotFound("User")
+        
+        const game = await gameRepository.findOneBy({id: data.gameId})
+        if (!game)
+          throw new NotFound("Game")
+
+        const wishlist = await wishlistRepository.createQueryBuilder('wishlist')
+          .innerJoinAndSelect('wishlist.user', 'user')
+          .innerJoinAndSelect('wishlist.game', 'game')
+          .where({ user, game })
+          .getOne()
 
         if (!wishlist)
           throw new NotFound("Wishlist")
 
-        await repository.softRemove(wishlist)
+        await wishlistRepository.softRemove(wishlist)
       })
     },
   })
