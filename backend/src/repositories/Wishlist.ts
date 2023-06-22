@@ -47,7 +47,8 @@ export function getRepository(dataSource: DataSource) {
         const conflict = await wishlistRepository.createQueryBuilder('wishlist')
           .innerJoinAndSelect('wishlist.user', 'user')
           .innerJoinAndSelect('wishlist.game', 'game')
-          .where({ user, game })
+          .where('user.id = :userId', { userId: data.userId })
+          .andWhere('game.id = :gameId', { gameId: data.gameId })
           .getExists()
   
         if (conflict)
