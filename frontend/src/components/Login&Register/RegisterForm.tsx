@@ -22,7 +22,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ handleClose }) => {
     const mutation = useMutation((data: mutationData) => UserApi.register(data.username, data.password, data.email), {
         onError: (error) => {
             console.error('Failed to register user:', error);
-            setErrorMessage("Uživatelské údaje už existují nebo jsou vadné");
+            setErrorMessage("Uživatelské údaje už existují nebo jsou nesprávné");
         },
         onSuccess: (_, variables) => {
             queryClient.invalidateQueries(['users']);
