@@ -7,35 +7,45 @@ interface RegisterFormProps {
     handleClose: MouseEventHandler;
 }
 
+interface mutationData {
+    username: string,
+    password: string,
+    email: string,
+}
+
 export const RegisterForm: React.FC<RegisterFormProps> = ({ handleClose }) => {
     const { login } = useLogin({ redirect: '/' });
     const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
-    const [confirmPassword, setConfirmPassword] = useState("");
-    const [email, setEmail] = useState("");
+    // const [username, setUsername] = useState("");
+    // const [password, setPassword] = useState("");
+    // const [confirmPassword, setConfirmPassword] = useState("");
+    // const [email, setEmail] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
 
     const queryClient = useQueryClient();
 
-    const mutation = useMutation(() => UserApi.register(username, password, email), {
+    const mutation = useMutation((data: mutationData) => UserApi.register(data.username, data.password, data.email), {
         onError: (error) => {
             console.error('Failed to register user:', error);
         },
-        onSuccess: () => {
+        onSuccess: (_, variables) => {
             queryClient.invalidateQueries(['users']);
-            login({password: password, username: username});
+            login({password: variables.password, username: variables.username});
         },
     });
 
 
     const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
         e.preventDefault();
-        setUsername((document.getElementById("nickname") as HTMLInputElement).value);
-        setPassword((document.getElementById("password") as HTMLInputElement).value);
-        setConfirmPassword((document.getElementById("confirmPassword") as HTMLInputElement).value);
-        setEmail((document.getElementById("email") as HTMLInputElement).value);
+        // setUsername((document.getElementById("nickname") as HTMLInputElement).value);
+        // setPassword((document.getElementById("password") as HTMLInputElement).value);
+        // setConfirmPassword((document.getElementById("confirmPassword") as HTMLInputElement).value);
+        // setEmail((document.getElementById("email") as HTMLInputElement).value);
+        const username = (document.getElementById("nickname") as HTMLInputElement).value;
+        const password = (document.getElementById("password") as HTMLInputElement).value;
+        const confirmPassword = (document.getElementById("confirmPassword") as HTMLInputElement).value;
+        const email = (document.getElementById("email") as HTMLInputElement).value;
         if (username != "" && password != "" && email != "") {
             if (password !== confirmPassword) {
                 setErrorMessage("Hesla se neshodují");
@@ -51,7 +61,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ handleClose }) => {
             }
             else {
                 console.log("registrace");
-                mutation.mutate();
+                mutation.mutate({email: email, password: password, username: username});
                 console.log("konec");
             }
         }
