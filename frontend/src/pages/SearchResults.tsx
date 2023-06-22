@@ -62,7 +62,7 @@ export const SearchResults = () => {
                                     <img src={developer.avatar} alt={developer.name} className="max-h-48 object-cover rounded-md mb-4 m-auto" />
                                 </div>
                                 <h3 className="text-lg font-semibold mb-1">{developer.name}</h3>
-                                <p className="text-gray-600 text-sm">{developer.description.substring(0, 100)}...</p>
+                                <p className="text-gray-600 text-sm">{developer.description.length > 100 ? `${developer.description.substring(0, 100)}...` : developer.description}</p>
                             </Link>
                         ))}
                     </div>
@@ -77,7 +77,7 @@ export const SearchResults = () => {
                         {genres.map(genre => (
                             <Link to={`/games?genre=${genre.id}`} key={genre.id} className="p-4 border border-gray-200 rounded-lg hover:bg-gray-100 transition-colors duration-200">
                                 <h3 className="text-lg font-semibold mb-1">{genre.name}</h3>
-                                <p className="text-gray-600 text-sm">{genre.description.substring(0, 100)}...</p>
+                                <p className="text-gray-600 text-sm">{genre.description.length > 100 ? `${genre.description.substring(0, 100)}...` : genre.description}</p>
                             </Link>
                         ))}
                     </div>

@@ -20,7 +20,7 @@ export const DeveloperItem: React.FC<DeveloperItemProps> = ({ developer }) => {
                     <div className="font-bold text-xl mb-2 hover:underline">{developer.name}</div>
                 </Link>
                 <p className="text-gray-700 text-base">
-                    {developer.description}
+                    {developer.description.length > 100 ? `${developer.description.substring(0, 100)}...` : developer.description}
                 </p>
             </div>
         </div>

@@ -28,13 +28,13 @@ export const GameItem: React.FC<GameItemProps> = ({ game }) => {
                     <div className="font-bold text-xl mb-2 hover:underline">{game.name}</div>
                 </Link>
                 <p className="text-gray-700 text-base">
-                    {game.description}
+                    {game.description.length > 100 ? `${game.description.substring(0, 100)}...` : game.description}
                 </p>
             </div>
             <div className="px-6 pt-4 pb-2 flex items-center">
                 <div className="flex-grow">
                     <p className="text-gray-700 text-sm">
-                        <b>Datum vydání:</b> {new Date(game.releaseDate).toISOString().slice(0,10)}
+                        <b>Datum vydání:</b> {new Date(game.releaseDate).toISOString().slice(0, 10)}
                     </p>
                     <p className="text-gray-700 text-sm">
                         <b>Vývojáři:</b> {game.developers.map((developer, index) => <Link to={`/developers/${developer.id}`} key={index} className="text-blue-500 hover:underline">{developer.name}{index !== game.developers.length - 1 && ', '}</Link>)}
@@ -45,12 +45,6 @@ export const GameItem: React.FC<GameItemProps> = ({ game }) => {
                 </div>
                 <div className="flex items-center">
                     <div>
-                        {/* <AddToFavourite id={game.id}>
-                            <FontAwesomeIcon icon={faHeart} size='2x' className='text-red-500' />
-                        </AddToFavourite>
-                        <RemoveFromFavourite id={game.id}>
-                            <FontAwesomeIcon icon={faHeart} size='2x' className='text-black-500' />
-                        </RemoveFromFavourite> */}
                         <WishListOperations gameId={game.id} />
                     </div>
                     <div className="ml-2 text-white rounded-full px-3 py-1 shadow-md" style={{ background: ratingBg() }}>
