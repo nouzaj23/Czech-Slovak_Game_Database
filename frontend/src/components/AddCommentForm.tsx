@@ -12,7 +12,7 @@ export const AddCommentForm: React.FC<AddCommentProps> = ({ game }) => {
     const { auth } = useAuth();
 
     const queryClient = useQueryClient();
-    const mutation = useMutation(() => GameApi.addComment(comment.content, comment.user, comment.game), {
+    const mutation = useMutation(() => GameApi.addComment(comment.content, comment.commenterId, comment.gameId), {
         onError: (error) => {
             console.error('Failed to add the comment:', error);
         },
@@ -21,7 +21,7 @@ export const AddCommentForm: React.FC<AddCommentProps> = ({ game }) => {
         },
     });
 
-    const [comment, setComment] = useState<Comment>({ content: "", createdAt: "", game: game.id, id: "", user: auth.userId});
+    const [comment, setComment] = useState<Comment>({ content: "", createdAt: "", gameId: game.id, id: "", commenterId: auth.userId});
 
     const handleSubmitComment = () => {
         if (comment.content != "") {

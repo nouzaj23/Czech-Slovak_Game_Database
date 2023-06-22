@@ -14,7 +14,7 @@ export const CommentItem: React.FC<CommentProps> = ({ comment, users}) => {
         return <div>Recenze není k dispozici</div>;
     }
 
-    const user = users.find(user => user.id == comment.user);
+    const user = users.find(user => user.id == comment.commenterId);
 
     if (!user) {
         return <div>User není k dispozici</div>;
@@ -22,7 +22,7 @@ export const CommentItem: React.FC<CommentProps> = ({ comment, users}) => {
 
     const queryClient = useQueryClient();
 
-    const mutation = useMutation(() => GameApi.deleteComment(comment.id, comment.game), {
+    const mutation = useMutation(() => GameApi.deleteComment(comment.id, comment.gameId), {
         onError: (error) => {
             console.error('Failed to delete the comment:', error);
         },
