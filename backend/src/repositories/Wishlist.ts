@@ -50,20 +50,20 @@ export function getRepository(dataSource: DataSource) {
           .where('user.id = :userId', { userId: data.userId })
           .andWhere('game.id = :gameId', { gameId: data.gameId })
           .getOne()
-        
+
         // TODO: update database to allow non-unique wishlist entries
         if (conflict) {
           if (conflict.deletedAt)
-            throw new AlreadyExists("Wishlist") 
+            throw new AlreadyExists("Wishlist")
           return await wishlistRepository.recover(conflict)
         }
-        else {
-          const wishlist = wishlistRepository.create({
-            user,
-            game,
-          })
-          return await wishlistRepository.save(wishlist)
-        }
+
+        const wishlist = wishlistRepository.create({
+          user,
+          game,
+        })
+        return await wishlistRepository.save(wishlist)
+
 
       })
     },
