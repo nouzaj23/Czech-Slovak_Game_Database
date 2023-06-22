@@ -49,6 +49,7 @@ export function getRepository(dataSource: DataSource) {
           .innerJoinAndSelect('wishlist.game', 'game')
           .where('user.id = :userId', { userId: data.userId })
           .andWhere('game.id = :gameId', { gameId: data.gameId })
+          .withDeleted()
           .getOne()
 
         // TODO: update database to allow non-unique wishlist entries
