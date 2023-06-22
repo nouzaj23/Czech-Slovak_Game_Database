@@ -16,7 +16,7 @@ export const ReviewItem: React.FC<ReviewProps> = ({ review, rating, users }) => 
         return <div>Recenze není k dispozici</div>;
     }
 
-    const user = users.find(user => user.id == review.user);
+    const user = users.find(user => user.id == review.user.id);
 
     if (!user) {
         return <div>User není k dispozici</div>;
@@ -34,7 +34,7 @@ export const ReviewItem: React.FC<ReviewProps> = ({ review, rating, users }) => 
 
     const queryClient = useQueryClient();
 
-    const mutation = useMutation(() => GameApi.deleteReview(review.id, review.game), {
+    const mutation = useMutation(() => GameApi.deleteReview(review.id, review.game.id), {
         onError: (error) => {
             console.error('Failed to delete the review:', error);
         },

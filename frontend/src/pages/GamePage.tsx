@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useParams } from "react-router-dom";
-// import comments from '../assets/comments.json';
 import { ReviewItem } from '../components/Review';
 import { AddReviewForm } from '../components/AddReviewForm'
 import { CommentItem } from '../components/CommentItem';
