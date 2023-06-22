@@ -57,7 +57,7 @@ export const GamesCRUD: React.FC<GamesCRUDProps> = ({ developers, games, genres 
 
     const queryClient = useQueryClient();
 
-    const mutation = useMutation(() => GameApi.add("New Game", "Describtion", "2024-05-05", [], [], "", [], []), {
+    const mutation = useMutation(() => GameApi.add("New Game", "Description", "2024-05-05", [], [], "", [], []), {
         onError: (error) => {
             console.error('Failed to add the game:', error);
         },

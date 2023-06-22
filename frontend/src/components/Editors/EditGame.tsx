@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Developer, Game, Genre } from "../../models";
-import { EditGameCover, EditGameDescribtion, EditGameDevelopers, EditGameGenres, EditGameName, EditGamePhotos, EditGameReleaseDate, EditGameVideos } from "./EditGameOperations";
+import { EditGameCover, EditGameDescription, EditGameDevelopers, EditGameGenres, EditGameName, EditGamePhotos, EditGameReleaseDate, EditGameVideos } from "./EditGameOperations";
 import { GameApi } from "../../services";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
@@ -36,7 +36,7 @@ export const EditGame: React.FC<EditGameProps> = ({ gameProp, editedGameId, deve
                     <h3 className="text-lg font-semibold mb-4 text-black">Upravit hru</h3>
                     <div className="space-y-5">
                         <EditGameName game={game} updateGame={setGame} />
-                        <EditGameDescribtion game={game} updateGame={setGame} />
+                        <EditGameDescription game={game} updateGame={setGame} />
                         <EditGameCover game={game} updateGame={setGame} />
                         <EditGameReleaseDate game={game} updateGame={setGame} />
                         <EditGamePhotos game={game} updateGame={setGame} />

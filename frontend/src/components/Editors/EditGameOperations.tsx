@@ -20,7 +20,7 @@ export const EditGameName: React.FC<EditGameProps> = ({ game, updateGame }) => {
     )
 }
 
-export const EditGameDescribtion: React.FC<EditGameProps> = ({ game, updateGame }) => {
+export const EditGameDescription: React.FC<EditGameProps> = ({ game, updateGame }) => {
     return (
         <div>
             <label className="font-bold text-gray-800">Popis hry</label>

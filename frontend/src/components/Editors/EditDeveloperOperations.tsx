@@ -19,7 +19,7 @@ export const EditDeveloperName: React.FC<EditDeveloperProps> = ({ developer, upd
     )
 }
 
-export const EditDeveloperDescribtion: React.FC<EditDeveloperProps> = ({ developer, updateDeveloper }) => {
+export const EditDeveloperDescription: React.FC<EditDeveloperProps> = ({ developer, updateDeveloper }) => {
     return (
         <div>
             <label className="font-bold text-gray-800">Popis studia</label>

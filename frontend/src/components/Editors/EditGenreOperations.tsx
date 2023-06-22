@@ -19,7 +19,7 @@ export const EditGenreName: React.FC<EditGenreProps> = ({ genre, updateGenre }) 
     )
 }
 
-export const EditGenreDescribtion: React.FC<EditGenreProps> = ({ genre, updateGenre }) => {
+export const EditGenreDescription: React.FC<EditGenreProps> = ({ genre, updateGenre }) => {
     return (
         <div>
             <label className="font-bold text-gray-800">Popis žánru</label>
