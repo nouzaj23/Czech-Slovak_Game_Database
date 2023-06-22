@@ -15,9 +15,9 @@ export const AdminPage = () => {
     const { data: genresData } = useQuery<Genre[]>(['genres'], GenreApi.retrieveAllGenres);
     const { data: usersData } = useQuery<User[]>(['users'], UserApi.retrieveAllUsers);
 
-    const games = gamesData?.reverse() ?? [];
-    const developers = developersData?.reverse() ?? [];
-    const genres = genresData?.reverse() ?? [];
+    const games = gamesData ?? [];
+    const developers = developersData ?? [];
+    const genres = genresData ?? [];
     const users = usersData ?? [];
 
     return (
