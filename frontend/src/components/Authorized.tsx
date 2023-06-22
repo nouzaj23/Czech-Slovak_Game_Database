@@ -2,7 +2,6 @@ import { FC, ReactNode } from 'react';
 import useAuth from '../hooks/useAuth';
 import { useQuery } from '@tanstack/react-query';
 import { UserApi } from '../services';
-import { Review } from '../models';
 
 type AuthorizedProps = {
     children: ReactNode,
@@ -21,16 +20,16 @@ export const IsNotLogged: FC<AuthorizedProps> = ({ children }) => {
     return <>{children}</>;
 }
 
-type CanDeleteReviewAuthorizedProps = {
+type CanDeleteItemAuthorizedProps = {
     children: ReactNode,
-    review: Review,
+    authorId: string,
 }
 
-export const CanDeleteReview: FC<CanDeleteReviewAuthorizedProps> = ({ children, review }) => {
+export const CanDeleteItem: FC<CanDeleteItemAuthorizedProps> = ({ children, authorId }) => {
     const { auth } = useAuth();
 
     if (!auth) return null;
-    if (auth.isAdmin || review.user.id == auth.userId) return <>{children}</>;
+    if (auth.isAdmin || authorId == auth.userId) return <>{children}</>;
     return null;
 }
 

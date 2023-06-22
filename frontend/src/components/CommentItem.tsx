@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { GameApi } from "../services";
+import { CanDeleteItem } from "./Authorized";
 
 interface CommentProps {
     comment: Comment;
@@ -42,7 +43,9 @@ export const CommentItem: React.FC<CommentProps> = ({ comment }) => {
                 <div className="font-medium text-gray-500">
                     Created At: <span className="font-bold text-gray-900">{new Date(comment.createdAt).toLocaleDateString()}</span>
                 </div>
-                <FontAwesomeIcon icon={faTimes} className="absolute top-2 right-2 cursor-pointer" onClick={() => handleDelete()} />
+                <CanDeleteItem authorId={comment.commenter.id}>
+                    <FontAwesomeIcon icon={faTimes} className="absolute top-2 right-2 cursor-pointer" onClick={() => handleDelete()} />
+                </CanDeleteItem>
             </div>
         </div>
     );

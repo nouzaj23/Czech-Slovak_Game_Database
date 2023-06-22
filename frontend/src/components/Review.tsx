@@ -1,7 +1,7 @@
 import { Review } from "../models";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar, faPoop, faTimes } from '@fortawesome/free-solid-svg-icons';
-import { CanDeleteReview } from '../components/Authorized'
+import { CanDeleteItem } from '../components/Authorized'
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { GameApi } from "../services";
 
@@ -63,9 +63,9 @@ export const ReviewItem: React.FC<ReviewProps> = ({ review, rating }) => {
                 <div className="font-medium text-gray-500">
                     Created At: <span className="font-bold text-gray-900">{new Date(review.createdAt).toLocaleDateString()}</span>
                 </div>
-                <CanDeleteReview review={review} >
+                <CanDeleteItem authorId={review.user.id} >
                     <FontAwesomeIcon icon={faTimes} className="absolute top-2 right-2 cursor-pointer" onClick={() => handleDelete()} />
-                </CanDeleteReview>
+                </CanDeleteItem>
             </div>
         </div>
     );

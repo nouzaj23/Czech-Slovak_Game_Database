@@ -9,6 +9,7 @@ import ReactPlayer from 'react-player';
 import { GameCard } from '../components/GameCard';
 import { GameApi } from '../services';
 import { useQuery } from '@tanstack/react-query';
+import { IsLogged } from '../components/Authorized';
 
 export const GamePage = () => {
     const { id } = useParams<{ id: string }>();
@@ -27,7 +28,7 @@ export const GamePage = () => {
     const game = gameData;
 
     const { data: gameReviewsData } = useQuery<Review[]>(['gameReviews', id], () => GameApi.retrieveGameReviews(id));
-    const gameReviews: Review[] = gameReviewsData?.reverse() ?? [];
+    const gameReviews: Review[] = gameReviewsData ?? [];
 
     console.log(gameReviews.length)
 
@@ -124,11 +125,13 @@ export const GamePage = () => {
                 return (
                     <div>
                         <button onClick={handleAddReview} style={{ background: ratingBg() }} className="px-3 py-2 mb-5 mt-5 text-white rounded">Přidat recenzi</button>
-                        <div>
-                            {isOpen && (
-                                <AddReviewForm gameId={game.id} game={game} setStars={setStars} stars={stars} />
-                            )}
-                        </div>
+                        <IsLogged>
+                            <div>
+                                {isOpen && (
+                                    <AddReviewForm gameId={game.id} game={game} setStars={setStars} stars={stars} />
+                                )}
+                            </div>
+                        </IsLogged>
                         <div>
                             <div className="review-list space-y-4">
                                 {gameReviews.slice(pageReviews * itemsPerPage, (pageReviews + 1) * itemsPerPage).map((review, key) => (
@@ -164,11 +167,13 @@ export const GamePage = () => {
                 return (
                     <div>
                         <button onClick={handleAddReview} style={{ background: ratingBg() }} className="px-3 py-2 mb-5 mt-5 bg-blue-500 text-white rounded">Přidat komentář</button>
-                        <div>
-                            {isOpen && (
-                                <AddCommentForm game={game} />
-                            )}
-                        </div>
+                        <IsLogged>
+                            <div>
+                                {isOpen && (
+                                    <AddCommentForm game={game} />
+                                )}
+                            </div>
+                        </IsLogged>
                         <div className="review-list space-y-4">
                             {gameComments.slice(pageComments * itemsPerPage, (pageComments + 1) * itemsPerPage).map((comment, index) =>
                                 <CommentItem key={index} comment={comment} />)}
