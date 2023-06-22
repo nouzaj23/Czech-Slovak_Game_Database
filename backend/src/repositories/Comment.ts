@@ -9,7 +9,7 @@ function filter(comment: Comment): CommentReadSingleResult {
   return {
     id: comment.id,
     content: comment.deletedAt ? undefined : comment.content,
-    commenterId: comment.deletedAt ? undefined : comment.commenterId,
+    commenter: comment.commenter,
     gameId: comment.gameId,
     replyToId: comment.replyTo?.id,
     replies: comment.replies?.map(filter),
@@ -24,12 +24,12 @@ export function getRepository(dataSource: DataSource) {
       return this.manager.transaction(async manager => {
         const repository = manager.getTreeRepository(Comment)
 
-        let comment = await repository.findOne({ where: { id: data.id }, withDeleted: true })
+        let comment = await repository.findOne({ where: { id: data.id }, withDeleted: true, relations: ['commenter'] })
         if (!comment)
           throw new NotFound("Comment")
 
         if (data.recurse) {
-          comment = await repository.findDescendantsTree(comment)
+          comment = await repository.findDescendantsTree(comment, { relations: ['commenter'] })
 
           if (!comment)
             throw new NotFound("Comment")
@@ -45,6 +45,7 @@ export function getRepository(dataSource: DataSource) {
         const commentRepository = manager.getTreeRepository(Comment)
 
         const query = commentRepository.createQueryBuilder('comment')
+          .withDeleted()
           .where(data.ids ? { id: data.ids } : {})
 
         if (data.gameId)

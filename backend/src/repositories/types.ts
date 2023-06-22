@@ -15,7 +15,7 @@ export interface CommentReadSingleData {
 export interface CommentReadSingleResult {
   id: UUID
   gameId: UUID
-  commenterId?: UUID
+  commenter?: UserPublic
   content?: string
   replyToId?: UUID
   replies: CommentReadSingleResult[]
