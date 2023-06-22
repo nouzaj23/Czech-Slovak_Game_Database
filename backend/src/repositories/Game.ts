@@ -16,9 +16,15 @@ export function getRepository(dataSource: DataSource) {
 
     async readMultiple(data: GameReadMultipleData, authorId: UUID | undefined): Promise<Game[]> {
       const query = this.createQueryBuilder('game')
+        .leftJoinAndSelect('game.developers', 'developers')
+        .leftJoinAndSelect('game.genres', 'genres')
         .where(data.ids ? { id: data.ids } : {})
-        .andWhere(data.developerId ? { developer: data.developerId } : {})
-        .andWhere(data.genreId ? { genre: data.genreId } : {})
+        
+      if (data.developerId)
+        query.andWhere(`developers.id = :developerId`, { developerId: data.developerId })
+
+      if (data.genreId)
+        query.andWhere(`genres.id = :genreId`, { genreId: data.genreId })
 
       if (data.nameContains)
         query.andWhere(`game.name ILIKE :name`, { name: `%${data.nameContains}%` })
@@ -33,8 +39,7 @@ export function getRepository(dataSource: DataSource) {
         query.groupBy(`game.${data.groupBy}`)
 
       query
-        .leftJoinAndSelect('game.developers', 'developers')
-        .leftJoinAndSelect('game.genres', 'genres')
+        
         .orderBy(data.order || {})
 
       return await query.getMany()
