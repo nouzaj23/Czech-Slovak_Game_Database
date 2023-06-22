@@ -62,7 +62,7 @@ export const ReviewItem: React.FC<ReviewProps> = ({ review, rating }) => {
                 <div className="font-medium text-gray-500">
                     Created At: <span className="font-bold text-gray-900">{new Date(review.createdAt).toLocaleDateString()}</span>
                 </div>
-                <CanDeleteReview id={review.id} >
+                <CanDeleteReview review={review} >
                     <FontAwesomeIcon icon={faTimes} className="absolute top-2 right-2 cursor-pointer" onClick={() => handleDelete()} />
                 </CanDeleteReview>
             </div>

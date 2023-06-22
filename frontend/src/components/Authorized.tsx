@@ -2,6 +2,7 @@ import { FC, ReactNode } from 'react';
 import useAuth from '../hooks/useAuth';
 import { useQuery } from '@tanstack/react-query';
 import { UserApi } from '../services';
+import { Review } from '../models';
 
 type AuthorizedProps = {
     children: ReactNode,
@@ -22,18 +23,23 @@ export const IsNotLogged: FC<AuthorizedProps> = ({ children }) => {
 
 type CanDeleteReviewAuthorizedProps = {
     children: ReactNode,
-    id: string,
+    review: Review,
 }
 
-export const CanDeleteReview: FC<CanDeleteReviewAuthorizedProps> = ({ children, id }) => {
+export const CanDeleteReview: FC<CanDeleteReviewAuthorizedProps> = ({ children, review }) => {
     const { auth } = useAuth();
 
     if (!auth) return null;
-    if (auth.isAdmin || auth.item.reviews.includes(id)) return <>{children}</>;
+    if (auth.isAdmin || review.user.id == auth.userId) return <>{children}</>;
     return null;
 }
 
-export const AddToFavourite: FC<CanDeleteReviewAuthorizedProps> = ({ children, id }) => {
+type WishListProps = {
+    children: ReactNode,
+    id: string,
+}
+
+export const AddToFavourite: FC<WishListProps> = ({ children, id }) => {
     const { auth } = useAuth();
     const { data: user } = useQuery(['user', auth?.userId], () => UserApi.retrieve(auth?.userId), {
         enabled: !!auth,
@@ -46,7 +52,7 @@ export const AddToFavourite: FC<CanDeleteReviewAuthorizedProps> = ({ children, i
     return null;
 }
 
-export const RemoveFromFavourite: FC<CanDeleteReviewAuthorizedProps> = ({ children, id }) => {
+export const RemoveFromFavourite: FC<WishListProps> = ({ children, id }) => {
     const { auth } = useAuth();
     const { data: user } = useQuery(['user', auth?.userId], () => UserApi.retrieve(auth?.userId), {
         enabled: !!auth,
