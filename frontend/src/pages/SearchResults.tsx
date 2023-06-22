@@ -43,7 +43,7 @@ export const SearchResults = () => {
                                 </div>
                                 <div className=''>
                                     <h3 className="text-lg font-semibold mb-1">{game.name}</h3>
-                                    <p className="text-gray-600 text-sm">{game.description.substring(0, 100)}...</p>
+                                    <p className="text-gray-600 text-sm">{game.description.length > 100 ? `${game.description.substring(0, 100)}...` : game.description}</p>
                                 </div>
                             </Link>
                         ))}
