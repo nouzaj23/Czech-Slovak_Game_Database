@@ -39,7 +39,7 @@ export const ReviewItem: React.FC<ReviewProps> = ({ review, rating, users }) => 
             console.error('Failed to delete the review:', error);
         },
         onSuccess: () => {
-            queryClient.invalidateQueries(['games']);
+            queryClient.invalidateQueries(['gameReviews', review.game.id]);
         },
     });
 
