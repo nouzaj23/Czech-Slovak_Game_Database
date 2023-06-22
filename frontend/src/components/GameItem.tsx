@@ -21,7 +21,7 @@ export const GameItem: React.FC<GameItemProps> = ({ game }) => {
     return (
         <div className="rounded overflow-hidden shadow-lg flex flex-col transform transition duration-500 ease-in-out hover:shadow-2xl hover:scale-105">
             <div className="w-full h-48 bg-gray-300 flex justify-center border-b-2 border-black">
-                <img className="object-cover max-h-full" src={game.cover} alt="Game cover" />
+                <img className="object-fill max-h-full" src={game.cover} alt="Game cover" />
             </div>
             <div className="px-6 py-4 flex-grow">
                 <Link to={`/games/${game.id}`}>
