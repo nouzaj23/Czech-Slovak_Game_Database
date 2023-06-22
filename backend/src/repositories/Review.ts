@@ -19,6 +19,7 @@ export function getRepository(dataSource: DataSource) {
         .where(data.ids ? { id: data.ids } : {})
         .andWhere(data.gameId ? { game: data.gameId } : {})
         .andWhere(data.userId ? { user: data.userId } : {})
+        .select(['title', 'text', 'rating', 'user.id', 'user.username', 'game.id'])
         .orderBy(data.order || {})
     
       if (data.groupBy)
