@@ -46,7 +46,6 @@ export function getRepository(dataSource: DataSource) {
 
         const query = commentRepository.createQueryBuilder('comment')
           .where(data.ids ? { id: data.ids } : {})
-          .innerJoinAndSelect('comment.commenter', 'commenter')
 
         if (data.gameId)
           query.andWhere('comment.gameId = :gameId', { gameId: data.gameId })
@@ -62,6 +61,8 @@ export function getRepository(dataSource: DataSource) {
 
         if (data.groupBy)
           query.groupBy(`comment.${data.groupBy}`)
+
+        query.innerJoinAndSelect('comment.commenter', 'commenter')
 
         let comments = await query.getMany()
         if (!comments.length)
