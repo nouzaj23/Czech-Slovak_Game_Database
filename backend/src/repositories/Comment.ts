@@ -63,6 +63,8 @@ export function getRepository(dataSource: DataSource) {
           query.groupBy(`comment.${data.groupBy}`)
 
         let comments = await query.getMany()
+        if (!comments.length)
+          return []
 
         if (data.recurse)
           comments = await Promise.all(comments.flatMap((comment) => commentRepository.findDescendantsTree(comment)))
