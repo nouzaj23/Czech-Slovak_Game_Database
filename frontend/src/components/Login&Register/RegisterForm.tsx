@@ -25,7 +25,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ handleClose }) => {
         },
         onSuccess: (_, variables) => {
             queryClient.invalidateQueries(['users']);
-            login({password: variables.password, username: variables.username});
+            login({ password: variables.password, username: variables.username });
         },
     });
 
@@ -49,7 +49,12 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ handleClose }) => {
                 setErrorMessage("Musíte souhlasit");
             }
             else {
-                mutation.mutate({email: email, password: password, username: username});
+                try {
+                    mutation.mutate({ email: email, password: password, username: username });
+                }
+                catch (error) {
+                    
+                }
             }
         }
     };
