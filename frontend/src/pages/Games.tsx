@@ -33,32 +33,24 @@ export const Games = () => {
   });
 
   filteredGames.sort((a, b) => {
-    let result = 0;
-  
     switch (sortType) {
       case 'name-asc':
-        result = a.name.localeCompare(b.name);
-        break;
+        return a.name.localeCompare(b.name);
       case 'name-desc':
-        result = b.name.localeCompare(a.name);
-        break;
+        return b.name.localeCompare(a.name);
       case 'year-asc':
-        result = a.releaseDate.localeCompare(b.releaseDate);
-        break;
+        return a.releaseDate.localeCompare(b.releaseDate);
       case 'year-desc':
-        result = b.releaseDate.localeCompare(a.releaseDate);
-        break;
+        return b.releaseDate.localeCompare(a.releaseDate);
       case 'rating-asc':
-        result = a.rating - b.rating;
-        break;
+        if (!b.rating) return 1;
+        return a.rating - b.rating;
       case 'rating-desc':
-        result = b.rating - a.rating;
-        break;
+        if (!a.rating) return 1;
+        return b.rating - a.rating;
       default:
-        result = 0;
+        return 0;
     }
-  
-    return result;
   });
   
   return (
