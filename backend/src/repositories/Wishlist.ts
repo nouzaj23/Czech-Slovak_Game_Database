@@ -54,7 +54,7 @@ export function getRepository(dataSource: DataSource) {
 
         // TODO: update database to allow non-unique wishlist entries
         if (conflict) {
-          if (conflict.deletedAt)
+          if (!conflict.deletedAt)
             throw new AlreadyExists("Wishlist")
           return await wishlistRepository.recover(conflict)
         }
