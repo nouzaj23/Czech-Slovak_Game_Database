@@ -22,6 +22,9 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ handleClose }) => {
     const mutation = useMutation((data: mutationData) => UserApi.register(data.username, data.password, data.email), {
         onError: (error) => {
             console.error('Failed to register user:', error);
+            if (error == 409) {
+                setErrorMessage("Uživatel existuje.");
+            }
         },
         onSuccess: (_, variables) => {
             queryClient.invalidateQueries(['users']);
@@ -49,12 +52,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ handleClose }) => {
                 setErrorMessage("Musíte souhlasit");
             }
             else {
-                try {
-                    mutation.mutate({ email: email, password: password, username: username });
-                }
-                catch (error) {
-                    
-                }
+                mutation.mutate({ email: email, password: password, username: username });
             }
         }
     };
