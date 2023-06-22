@@ -101,7 +101,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ handleClose }) => {
                 <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button" onClick={handleClose}>X</button>
             </div>
             <div className="mb-4 flex items-center">
-                <label id="error">{errorMessage}</label>
+                <label id="error" className='text-black'>{errorMessage}</label>
             </div>
         </form>
     );
