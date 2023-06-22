@@ -1,4 +1,4 @@
-import { Comment, User } from "../models";
+import { Comment } from "../models";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -6,10 +6,9 @@ import { GameApi } from "../services";
 
 interface CommentProps {
     comment: Comment;
-    users: User[];
 }
 
-export const CommentItem: React.FC<CommentProps> = ({ comment, users}) => {
+export const CommentItem: React.FC<CommentProps> = ({ comment }) => {
     if (comment.content == undefined) {
         return null;
     }
@@ -18,9 +17,7 @@ export const CommentItem: React.FC<CommentProps> = ({ comment, users}) => {
         return <div>Recenze není k dispozici</div>;
     }
 
-    const user = users.find(user => user.id == comment.commenter.id);
-
-    if (!user) {
+    if (!comment.commenter) {
         return <div>User není k dispozici</div>;
     }
 
@@ -44,7 +41,7 @@ export const CommentItem: React.FC<CommentProps> = ({ comment, users}) => {
             <div className="review p-4 bg-white rounded shadow-md space-y-2">
                 <p className="text-gray-700">{comment.content}</p>
                 <div className="font-medium text-gray-500">
-                    <span className="font-bold text-gray-900">{user.username}</span>
+                    <span className="font-bold text-gray-900">{comment.commenter.username}</span>
                 </div>
                 <div className="font-medium text-gray-500">
                     Created At: <span className="font-bold text-gray-900">{new Date(comment.createdAt).toLocaleDateString()}</span>

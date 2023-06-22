@@ -1,4 +1,4 @@
-import { Review, User } from "../models";
+import { Review } from "../models";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar, faPoop, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { CanDeleteReview } from '../components/Authorized'
@@ -8,17 +8,14 @@ import { GameApi } from "../services";
 interface ReviewProps {
     review: Review;
     rating: number;
-    users: User[];
 }
 
-export const ReviewItem: React.FC<ReviewProps> = ({ review, rating, users }) => {
+export const ReviewItem: React.FC<ReviewProps> = ({ review, rating }) => {
     if (!review) {
         return <div>Recenze není k dispozici</div>;
     }
 
-    const user = users.find(user => user.id == review.user.id);
-
-    if (!user) {
+    if (!review.user) {
         return <div>User není k dispozici</div>;
     }
 
@@ -60,7 +57,7 @@ export const ReviewItem: React.FC<ReviewProps> = ({ review, rating, users }) => 
                     </div>
                 </div>
                 <div className="font-medium text-gray-500">
-                    <span className="font-bold text-gray-900">{user.username}</span>
+                    <span className="font-bold text-gray-900">{review.user.username}</span>
                 </div>
                 <div className="font-medium text-gray-500">
                     Created At: <span className="font-bold text-gray-900">{new Date(review.createdAt).toLocaleDateString()}</span>

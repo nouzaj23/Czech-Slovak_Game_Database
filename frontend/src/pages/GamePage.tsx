@@ -33,9 +33,6 @@ export const GamePage = () => {
     const {data: gameCommentsData} = useQuery<Comment[]>(['gameComments', id], () => GameApi.retrieveGameComments(id));
     const gameComments: Comment[] = gameCommentsData ?? [];
 
-    const {data: usersData} = useQuery<User[]>(['users'], () => UserApi.retrieveAllUsers());
-    const users: User[] = usersData ?? [];
-
     if (!game) {
         return <div>Hra není k dispozici</div>;
     }
@@ -124,7 +121,6 @@ export const GamePage = () => {
                                         review={review}
                                         key={key}
                                         rating={game.rating}
-                                        users={users}
                                     />
                                 ))}
                             </div>
@@ -159,7 +155,7 @@ export const GamePage = () => {
                             )}
                         </div>
                         <div className="review-list space-y-4">
-                            {gameComments.map((comment, index) => <CommentItem key={index} users={users} comment={comment}/>)}
+                            {gameComments.map((comment, index) => <CommentItem key={index} comment={comment}/>)}
                         </div>
                     </div>
                 );
