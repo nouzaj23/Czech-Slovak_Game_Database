@@ -16,13 +16,7 @@ interface mutationData {
 export const RegisterForm: React.FC<RegisterFormProps> = ({ handleClose }) => {
     const { login } = useLogin({ redirect: '/' });
     const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-
-    // const [username, setUsername] = useState("");
-    // const [password, setPassword] = useState("");
-    // const [confirmPassword, setConfirmPassword] = useState("");
-    // const [email, setEmail] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
-
     const queryClient = useQueryClient();
 
     const mutation = useMutation((data: mutationData) => UserApi.register(data.username, data.password, data.email), {
@@ -35,13 +29,8 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ handleClose }) => {
         },
     });
 
-
     const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
         e.preventDefault();
-        // setUsername((document.getElementById("nickname") as HTMLInputElement).value);
-        // setPassword((document.getElementById("password") as HTMLInputElement).value);
-        // setConfirmPassword((document.getElementById("confirmPassword") as HTMLInputElement).value);
-        // setEmail((document.getElementById("email") as HTMLInputElement).value);
         const username = (document.getElementById("nickname") as HTMLInputElement).value;
         const password = (document.getElementById("password") as HTMLInputElement).value;
         const confirmPassword = (document.getElementById("confirmPassword") as HTMLInputElement).value;
@@ -49,24 +38,21 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ handleClose }) => {
         if (username != "" && password != "" && email != "") {
             if (password !== confirmPassword) {
                 setErrorMessage("Hesla se neshodují");
-                console.log("ERROR 1");
             }
             else if (!email.match(emailPattern)) {
                 setErrorMessage("E-mail je v nesprávném formátu");
-                console.log("ERROR 2");
             }
             else if (password.length < 8) {
                 setErrorMessage("Heslo je příliš krátké");
-                console.log("ERROR 3");
+            }
+            else if ((document.getElementById('agreeCheck') as HTMLInputElement).checked) {
+                setErrorMessage("Musíte souhlasit");
             }
             else {
-                console.log("registrace");
                 mutation.mutate({email: email, password: password, username: username});
-                console.log("konec");
             }
         }
     };
-
 
     return (
         <form className="p-6 bg-white rounded shadow-md" onSubmit={handleSubmit}>
@@ -91,7 +77,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ handleClose }) => {
                 </label>
             </div>
             <div className="mb-4 flex items-center">
-                <input className="mr-2" type="checkbox" name="terms" required />
+                <input id="agreeCheck" className="mr-2" type="checkbox" name="terms" required />
                 <label id="agree" className="text-sm font-bold" htmlFor="terms">
                     <div className='text-black'>Souhlasím</div>
                 </label>
