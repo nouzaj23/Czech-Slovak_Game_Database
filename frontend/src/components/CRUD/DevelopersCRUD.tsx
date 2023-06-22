@@ -57,7 +57,7 @@ export const DevelopersCRUD: React.FC<DevelopersCRUDProps> = ({ developers }) =>
 
     const queryClient = useQueryClient();
 
-    const mutation = useMutation(() => DeveloperApi.add("New Developer", "Description", ""), {
+    const mutation = useMutation(() => DeveloperApi.add("Nový vývojář", "Popis", ""), {
         onError: (error) => {
             console.error('Failed to add the developer:', error);
         },

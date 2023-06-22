@@ -33,7 +33,7 @@ export const AdminPage = () => {
                     className="w-full p-4 text-white bg-gray-800 rounded-md"
                     onClick={() => setVisibleComponent('Developers')}
                 >
-                    Studia
+                    Vývojáři
                 </button>
                 <button
                     className="w-full p-4 text-white bg-gray-800 rounded-md"

@@ -1,5 +1,4 @@
 import { MouseEventHandler, useState } from 'react';
-// import gamesList from '../../assets/games.json';
 import { EditGame } from '../Editors/EditGame';
 import { Developer, Game, Genre } from '../../models';
 import { GameApi } from '../../services';
@@ -57,7 +56,7 @@ export const GamesCRUD: React.FC<GamesCRUDProps> = ({ developers, games, genres 
 
     const queryClient = useQueryClient();
 
-    const mutation = useMutation(() => GameApi.add("New Game", "Description", "2024-05-05", [], [], "", [], []), {
+    const mutation = useMutation(() => GameApi.add("Nová hra", "Popis", "2023-01-01", [], [], "", [], []), {
         onError: (error) => {
             console.error('Failed to add the game:', error);
         },

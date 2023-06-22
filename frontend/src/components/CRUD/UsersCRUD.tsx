@@ -1,5 +1,4 @@
 import { MouseEventHandler, useState } from 'react';
-// import usersList from '../../assets/users.json';
 import { User } from '../../models';
 import { UserApi } from '../../services';
 import { useMutation, useQueryClient } from '@tanstack/react-query';

@@ -1,5 +1,4 @@
 import { MouseEventHandler, useState } from 'react';
-// import genresList from '../../assets/genres.json';
 import { Genre } from '../../models';
 import { EditGenre } from '../Editors/EditGenres';
 import { GenreApi } from '../../services';
@@ -57,7 +56,7 @@ export const GenresCRUD: React.FC<GenresCRUDProps> = ({genres}) => {
 
     const queryClient = useQueryClient();
     
-    const mutation = useMutation(() => GenreApi.add("New Genre", "Description"), {
+    const mutation = useMutation(() => GenreApi.add("Nový žánr", "Popis"), {
         onError: (error) => {
             console.error('Failed to add the genre:', error);
         },
