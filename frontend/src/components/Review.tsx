@@ -37,6 +37,7 @@ export const ReviewItem: React.FC<ReviewProps> = ({ review, rating }) => {
         },
         onSuccess: () => {
             queryClient.invalidateQueries(['gameReviews', review.game.id]);
+            queryClient.invalidateQueries(['games', review.game.id]);
         },
     });
 
