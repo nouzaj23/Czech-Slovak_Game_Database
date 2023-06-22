@@ -19,7 +19,7 @@ export const Homepage = () => {
     }, [games]);
 
     return (
-        <div className="flex flex-col h-full w-full p-8 bg-gray-100">
+        <div className="flex flex-col h-auto w-full p-8 bg-gray-100">
             <h1 className="text-4xl font-semibold mb-8 text-gray-700">Poslední vydané hry:</h1>
             <div className='flex flex-col md:flex-row justify-between items-stretch gap-6 mb-8'>
                 <div className="flex flex-col w-full md:w-1/2 p-4 bg-white shadow rounded">
