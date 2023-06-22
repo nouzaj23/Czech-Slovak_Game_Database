@@ -43,10 +43,10 @@ export const Games = () => {
       case 'year-desc':
         return b.releaseDate.localeCompare(a.releaseDate);
       case 'rating-asc':
-        if (!b.rating) return 1;
+        if (b.rating == null || b.rating == undefined) return 1;
         return a.rating - b.rating;
       case 'rating-desc':
-        if (!a.rating) return 1;
+        if (a.rating == null || a.rating == undefined) return 1;
         return b.rating - a.rating;
       default:
         return 0;
