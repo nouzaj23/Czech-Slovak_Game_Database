@@ -45,7 +45,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ handleClose }) => {
             else if (password.length < 8) {
                 setErrorMessage("Heslo je příliš krátké");
             }
-            else if ((document.getElementById('agreeCheck') as HTMLInputElement).checked) {
+            else if (!(document.getElementById('agreeCheck') as HTMLInputElement).checked) {
                 setErrorMessage("Musíte souhlasit");
             }
             else {
