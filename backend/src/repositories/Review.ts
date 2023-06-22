@@ -87,7 +87,7 @@ export function getRepository(dataSource: DataSource) {
       return this.manager.transaction(async manager => {
         const repository = manager.withRepository(this)
 
-        const review = await repository.findOneBy({id: data.id})
+        const review = await repository.findOne({where: data, relations: ['user']})
         if (!review)
           throw new NotFound("Review")
 
