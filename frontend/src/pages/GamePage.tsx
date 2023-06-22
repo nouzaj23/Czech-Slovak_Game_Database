@@ -28,9 +28,7 @@ export const GamePage = () => {
     const game = gameData;
 
     const { data: gameReviewsData } = useQuery<Review[]>(['gameReviews', id], () => GameApi.retrieveGameReviews(id));
-    const gameReviews: Review[] = gameReviewsData ?? [];
-
-    console.log(gameReviews.length)
+    const gameReviews: Review[] = gameReviewsData?.sort((a, b) => b.createdAt.localeCompare(a.createdAt)) ?? [];
 
     const { data: gameCommentsData } = useQuery<Comment[]>(['gameComments', id], () => GameApi.retrieveGameComments(id));
     const gameComments: Comment[] = gameCommentsData?.filter(comment => comment.content !== undefined).sort((a, b) => b.createdAt.localeCompare(a.createdAt)) ?? [];
