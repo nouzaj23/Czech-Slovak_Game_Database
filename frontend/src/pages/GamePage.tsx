@@ -32,7 +32,7 @@ export const GamePage = () => {
     console.log(gameReviews.length)
 
     const { data: gameCommentsData } = useQuery<Comment[]>(['gameComments', id], () => GameApi.retrieveGameComments(id));
-    const gameComments: Comment[] = gameCommentsData?.filter(comment => comment.content !== undefined) ?? [];
+    const gameComments: Comment[] = gameCommentsData?.filter(comment => comment.content !== undefined).reverse() ?? [];
 
     if (!game) {
         return <div>Hra není k dispozici</div>;
