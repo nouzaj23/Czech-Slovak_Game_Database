@@ -9,7 +9,7 @@ function filter(comment: Comment): CommentReadSingleResult {
   return {
     id: comment.id,
     content: comment.deletedAt ? undefined : comment.content,
-    commenter: comment.commenter,
+    commenter: comment.commenter.public,
     gameId: comment.gameId,
     replyToId: comment.replyTo?.id,
     replies: comment.replies?.map(filter),

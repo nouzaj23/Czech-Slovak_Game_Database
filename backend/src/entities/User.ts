@@ -44,9 +44,13 @@ export class User extends Base {
 
   get public() {
     return {
+      id: this.id,
       username: this.username,
       avatar: this.avatar,
-      bio: this.bio
+      bio: this.bio,
+      reviews: this.reviews,
+      comments: this.comments,
+      wishlist: this.wishlist
     }
   }
 
