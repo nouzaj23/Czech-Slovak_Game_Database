@@ -14,7 +14,7 @@ export const CommentItem: React.FC<CommentProps> = ({ comment, users}) => {
         return <div>Recenze není k dispozici</div>;
     }
 
-    const user = users.find(user => user.id == comment.commenterId);
+    const user = users.find(user => user.id == comment.commenter.id);
 
     if (!user) {
         return <div>User není k dispozici</div>;

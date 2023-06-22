@@ -21,7 +21,7 @@ export const AddCommentForm: React.FC<AddCommentProps> = ({ game }) => {
         },
     });
 
-    const [comment, setComment] = useState<Comment>({ content: "", createdAt: "", gameId: game.id, id: "", commenterId: auth.userId});
+    const [comment, setComment] = useState<Comment>({ content: "", createdAt: "", gameId: game.id, id: "", commenter: auth.userId});
 
     const handleSubmitComment = () => {
         if (comment.content != "") {
