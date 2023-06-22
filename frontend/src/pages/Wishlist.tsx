@@ -48,7 +48,7 @@ export const WishList = () => {
                                     <AiFillCloseCircle className="absolute bottom-2 right-2 text-2xl cursor-pointer" onClick={() => removeGameFromWishlist(game)} />
                                     <img className="w-full h-auto object-cover" src={game.cover} alt={game.name} />
                                     <Link to={`/games/${game.id}`}>
-                                        <div className="font-bold text-xl text-center mt-4">{game.name}</div>
+                                        <div className="font-bold text-xl text-center mt-4 hover:underline">{game.name}</div>
                                     </Link>
                                     <div className="flex justify-center px-6 py-4 min-w-0">
                                         <div className="w-1/3 inline-block text-white rounded-full px-3 py-1 shadow-md mb-2 text-center" style={{ background: ratingBg(game.rating)}}>
