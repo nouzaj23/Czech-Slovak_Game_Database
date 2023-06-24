@@ -1,26 +1,40 @@
 import { GameItem } from '../components/GameItem';
-import { useLocation } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import { Developer, Game, Genre } from '../models';
 import { DeveloperApi, GameApi, GenreApi } from '../services';
 import { useQuery } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
+import { useEffect } from 'react';
 
 export const Games = () => {
-  const location = useLocation();
-  const queryParams = new URLSearchParams(location.search);
-  const genre = queryParams.get('genre');
+  const [searchParams, setSearchParams ] = useSearchParams();
+  const name = searchParams.get('name');
+  const developer = searchParams.get('developer');
+  const genre = searchParams.get('genre');
+  const date = searchParams.get('date');
+  const sort = searchParams.get('sort');
 
   const { register, watch } = useForm({
     defaultValues: {
-      nameFilter: '',
-      developerFilter: '',
+      nameFilter: name ?? '',
+      developerFilter: developer ?? '',
       genreFilter: genre ?? '',
-      dateFilter: '',
-      sortType: 'name-asc'
+      dateFilter: date ?? '',
+      sortType: sort ?? 'name-asc'
     }
   });
 
   const filter = watch();
+
+  useEffect(() => {
+    setSearchParams({
+      name: filter.nameFilter,
+      developer: filter.developerFilter,
+      genre: filter.genreFilter,
+      date: filter.dateFilter,
+      sort: filter.sortType
+    });
+  }, [filter, setSearchParams]);
 
   const { data: gamesData } = useQuery<Game[]>(['games'], GameApi.retrieveAllGames);
   const { data: developersData } = useQuery<Developer[]>(['developers'], DeveloperApi.retrieveAllDevelopers);
