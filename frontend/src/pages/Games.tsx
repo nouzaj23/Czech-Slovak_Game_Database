@@ -1,25 +1,31 @@
-import { useState } from 'react';
 import { GameItem } from '../components/GameItem';
 import { useLocation } from 'react-router-dom';
 import { Developer, Game, Genre } from '../models';
 import { DeveloperApi, GameApi, GenreApi } from '../services';
 import { useQuery } from '@tanstack/react-query';
+import { useForm } from 'react-hook-form';
 
 export const Games = () => {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const genre = queryParams.get('genre');
 
-  const [filter, setFilter] = useState('');
-  const [yearFilter, setYearFilter] = useState('');
-  const [developerFilter, setDeveloperFilter] = useState('');
-  const [genreFilter, setGenreFilter] = useState(genre || '');
-  const [sortType, setSortType] = useState('name-asc');
-  
+  const { register, watch } = useForm({
+    defaultValues: {
+      nameFilter: '',
+      developerFilter: '',
+      genreFilter: genre ?? '',
+      dateFilter: '',
+      sortType: 'name-asc'
+    }
+  });
+
+  const filter = watch();
+
   const { data: gamesData } = useQuery<Game[]>(['games'], GameApi.retrieveAllGames);
   const { data: developersData } = useQuery<Developer[]>(['developers'], DeveloperApi.retrieveAllDevelopers);
   const { data: genresData } = useQuery<Genre[]>(['genres'], GenreApi.retrieveAllGenres);
-  
+
   const games = gamesData ?? [];
   const developers = developersData ?? [];
   developers.sort((a, b) => a.name.localeCompare(b.name));
@@ -27,34 +33,36 @@ export const Games = () => {
   genres.sort((a, b) => a.name.localeCompare(b.name));
 
   let filteredGames = games.filter(game => {
-    const matchesName = game.name.toLowerCase().includes(filter.toLowerCase());
-    const matchesYear = game.releaseDate.includes(yearFilter);
-    const matchesDeveloper = developerFilter === '' || game.developers.map(d => d.id).includes(developerFilter);
-    const matchesGenre = genreFilter === '' || game.genres.map(g => g.id).includes(genreFilter);
-    return matchesName && matchesYear && matchesDeveloper && matchesGenre;
+    const matchesName = game.name.toLowerCase().includes(filter.nameFilter.toLowerCase());
+    const matchesDate = game.releaseDate.includes(filter.dateFilter);
+    const matchesDeveloper = filter.developerFilter === '' || game.developers.map(d => d.id).includes(filter.developerFilter);
+    const matchesGenre = filter.genreFilter === '' || game.genres.map(g => g.id).includes(filter.genreFilter);
+    return matchesName && matchesDate && matchesDeveloper && matchesGenre;
   });
 
   filteredGames.sort((a, b) => {
-    switch (sortType) {
-      case 'name-asc':
-        return a.name.localeCompare(b.name);
-      case 'name-desc':
-        return b.name.localeCompare(a.name);
-      case 'year-asc':
-        return a.releaseDate.localeCompare(b.releaseDate);
-      case 'year-desc':
-        return b.releaseDate.localeCompare(a.releaseDate);
-      case 'rating-asc':
-        if (b.rating == null || b.rating == undefined) return 1;
-        return a.rating - b.rating;
-      case 'rating-desc':
-        if (a.rating == null || a.rating == undefined) return 1;
-        return b.rating - a.rating;
-      default:
-        return 0;
+    const sortType = filter.sortType;
+    if (sortType === 'name-asc') {
+      return a.name.localeCompare(b.name);
     }
+    if (sortType === 'name-desc') {
+      return b.name.localeCompare(a.name);
+    }
+    if (sortType === 'date-asc') {
+      return a.releaseDate.localeCompare(b.releaseDate);
+    }
+    if (sortType === 'date-desc') {
+      return b.releaseDate.localeCompare(a.releaseDate);
+    }
+    if (sortType === 'rating-asc') {
+      return a.rating - b.rating;
+    }
+    if (sortType === 'rating-desc') {
+      return b.rating - a.rating;
+    }
+    return 0;
   });
-  
+
   return (
     <div>
       <div className="p-4 bg-white shadow rounded-lg mb-6">
@@ -62,13 +70,11 @@ export const Games = () => {
           <input
             type="text"
             placeholder="Jméno hry"
-            value={filter}
-            onChange={e => setFilter(e.target.value)}
+            {...register('nameFilter')}
             className="p-2 border-2 border-gray-300 rounded"
           />
           <select
-            value={developerFilter}
-            onChange={e => setDeveloperFilter(e.target.value)}
+            {...register('developerFilter')}
             className="p-2 border-2 border-gray-300 rounded"
           >
             <option value="">Všichni vývojáři</option>
@@ -77,8 +83,7 @@ export const Games = () => {
             ))}
           </select>
           <select
-            value={genreFilter}
-            onChange={e => setGenreFilter(e.target.value)}
+            {...register('genreFilter')}
             className="p-2 border-2 border-gray-300 rounded"
           >
             <option value="">Všechny žánry</option>
@@ -89,19 +94,17 @@ export const Games = () => {
           <input
             type="text"
             placeholder="Datum vydání (YYYY-MM-DD)"
-            value={yearFilter}
-            onChange={e => setYearFilter(e.target.value)}
+            {...register('dateFilter')}
             className="p-2 border-2 border-gray-300 rounded"
           />
           <select
-            value={sortType}
-            onChange={e => setSortType(e.target.value)}
+            {...register('sortType')}
             className="p-2 border-2 border-gray-300 rounded"
           >
             <option value="name-asc">Abecedně (A-Z)</option>
             <option value="name-desc">Abecedně (Z-A)</option>
-            <option value="year-asc">Datum vydání (od nejstarších)</option>
-            <option value="year-desc">Datum vydání (od nejnovějších)</option>
+            <option value="date-asc">Datum vydání (od nejstarších)</option>
+            <option value="date-desc">Datum vydání (od nejnovějších)</option>
             <option value="rating-asc">Hodnocení (od nejhorších)</option>
             <option value="rating-desc">Hodnocení (od nejlepších)</option>
           </select>
