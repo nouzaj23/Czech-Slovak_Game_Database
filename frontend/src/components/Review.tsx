@@ -19,15 +19,7 @@ export const ReviewItem: React.FC<ReviewProps> = ({ review, rating }) => {
         return <div>User není k dispozici</div>;
     }
 
-    const ratingBg = (rating: number) => {
-        if (rating > 7) {
-            return '#ad0e30';
-        }
-        else if (rating > 3) {
-            return '#3690eb';
-        }
-        return '#010203';
-    }
+    const ratingBg = (rating: number) => rating > 7 ? '#ad0e30' : rating > 3 ? '#3690eb' : '#010203';
 
     const queryClient = useQueryClient();
 
