@@ -41,7 +41,7 @@ export const GamePage = () => {
     const [selectedImage, setSelectedImage] = useState<string | null>(null);
     const [pageReviews, setPageReviews] = useState(0);
     const [pageComments, setPageComments] = useState(0);
-    const [stars, setStars] = useState(3);
+    // const [stars, setStars] = useState(3);
 
     if (!id) {
         return <div>Chybí ID hry</div>;
@@ -84,7 +84,7 @@ export const GamePage = () => {
                 </button>
             </div>
             <div className="mt-4">
-                {selectedTab == "reviews" && <Reviews game={game} gameReviews={gameReviews} isOpen={isOpen} itemsPerPage={itemsPerPage} pageReviews={pageReviews} ratingBg={ratingBg} setIsOpen={setIsOpen} setPageReviews={setPageReviews} setStars={setStars} stars={stars} />}
+                {selectedTab == "reviews" && <Reviews game={game} gameReviews={gameReviews} isOpen={isOpen} itemsPerPage={itemsPerPage} pageReviews={pageReviews} ratingBg={ratingBg} setIsOpen={setIsOpen} setPageReviews={setPageReviews} />}
                 {selectedTab == "comments" && <Comments game={game} gameComments={gameComments} isOpen={isOpen} itemsPerPage={itemsPerPage} pageComments={pageComments} ratingBg={ratingBg} setIsOpen={setIsOpen} setPageComments={setPageComments} />}
                 {selectedTab == "photos" && <Photos game={game} setSelectedImage={setSelectedImage} />}
                 {selectedTab == "videos" && <Videos game={game} />}

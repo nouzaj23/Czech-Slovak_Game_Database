@@ -8,15 +8,15 @@ interface ReviewsProps {
     setIsOpen: Function;
     isOpen: boolean;
     game: Game;
-    setStars: Function;
-    stars: number;
+    // setStars: Function;
+    // stars: number;
     gameReviews: Review[];
     pageReviews: number;
     itemsPerPage: number;
     setPageReviews: Function,
 }
 
-export const Reviews: React.FC<ReviewsProps> = ({ ratingBg, setIsOpen, isOpen, game, setStars, stars, gameReviews, pageReviews, itemsPerPage, setPageReviews }) => {
+export const Reviews: React.FC<ReviewsProps> = ({ ratingBg, setIsOpen, isOpen, game, gameReviews, pageReviews, itemsPerPage, setPageReviews }) => {
     const handleAddReview = () => {
         setIsOpen(!isOpen);
     }
@@ -39,7 +39,7 @@ export const Reviews: React.FC<ReviewsProps> = ({ ratingBg, setIsOpen, isOpen, g
             </IsLogged>
             <div>
                 {isOpen && (
-                    <AddReviewForm gameId={game.id} game={game} setStars={setStars} stars={stars} />
+                    <AddReviewForm game={game} />
                 )}
             </div>
             <div>
