@@ -89,8 +89,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ handleClose }) => {
                     <input id="email"
                         className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         type="email"
-                        placeholder="Email"
-                        required
+                        placeholder="Email"                        
                         {...register("email", {
                             pattern: {
                                 value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
@@ -103,8 +102,9 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ handleClose }) => {
                 <input id="agreeCheck"
                     className="mr-2"
                     type="checkbox"
-                    required
-                    {...register("agree")} />
+                    {...register("agree", {
+                        required: "Musíte souhlasit"
+                    })} />
                 <label id="agree"
                     className="text-sm font-bold"
                     htmlFor="terms">
