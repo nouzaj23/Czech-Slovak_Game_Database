@@ -1,7 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar, faPoop } from '@fortawesome/free-solid-svg-icons';
-import { useState } from 'react';
-import { Game, Review } from '../models';
+import { Game } from '../models';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { GameApi } from '../services';
 import useAuth from '../hooks/useAuth';
@@ -10,8 +9,8 @@ import { useForm } from 'react-hook-form';
 
 interface AddReviewProps {
     game: Game;
-    stars: number;
-    setStars: Function;
+    // stars: number;
+    // setStars: Function;
 }
 
 type FormValues = {
@@ -20,23 +19,22 @@ type FormValues = {
     rating: number;
 }
 
-export const AddReviewForm: React.FC<AddReviewProps> = ({ game, stars, setStars }) => {
+export const AddReviewForm: React.FC<AddReviewProps> = ({ game }) => {
     const { auth } = useAuth();
-    const { register, handleSubmit, getValues } = useForm<FormValues>();
+    const { register, handleSubmit, getValues, setValue } = useForm<FormValues>();
 
     if (!game) {
         return <div>Hra není k dispozici</div>;
     }
 
-    function handleStarClick(rating: number) {
-        setStars(rating);
-        setReview({ ...review, rating: stars * 2 });
-    }
+    // function handleStarClick(rating: number) {
+    //     setStars(rating);
+    // }
 
-    const ratingBg = (stars: number) => stars > 3 ? '#ad0e30' : stars > 1 ? '#3690eb' :  '#010203';
+    const ratingBg = () => getValues("rating") > 60 ? '#ad0e30' : getValues("rating") > 20 ? '#3690eb' : '#010203';
 
     function starStyle(starNum: number) {
-        return stars >= starNum ? ratingBg(stars) : '#92a1b0';
+        return getValues("rating") >= starNum * 20 ? ratingBg() : '#92a1b0';
     }
 
     const queryClient = useQueryClient();
@@ -45,11 +43,9 @@ export const AddReviewForm: React.FC<AddReviewProps> = ({ game, stars, setStars 
             console.error('Failed to add the review:', error);
         },
         onSuccess: () => {
-            queryClient.invalidateQueries(['gameReviews', review.game.id]);
+            queryClient.invalidateQueries(['gameReviews', game.id]);
         },
     });
-
-    const [review, setReview] = useState<Review>({ createdAt: "", game: game, id: "", rating: stars * 2, text: "", title: "", user: auth.userId });
 
     const onSumit = () => {
         mutation.mutate();
@@ -78,15 +74,35 @@ export const AddReviewForm: React.FC<AddReviewProps> = ({ game, stars, setStars 
                     </label>
                 </div>
                 <div>
-                    <FontAwesomeIcon icon={faPoop} onClick={() => handleStarClick(0)} style={{color: starStyle(0)}} />
-                    <FontAwesomeIcon icon={faStar} onClick={() => handleStarClick(1)} style={{color: starStyle(1)}} />
-                    <FontAwesomeIcon icon={faStar} onClick={() => handleStarClick(2)} style={{color: starStyle(2)}} />
-                    <FontAwesomeIcon icon={faStar} onClick={() => handleStarClick(3)} style={{color: starStyle(3)}} />
-                    <FontAwesomeIcon icon={faStar} onClick={() => handleStarClick(4)} style={{color: starStyle(4)}} />
-                    <FontAwesomeIcon icon={faStar} onClick={() => handleStarClick(5)} style={{color: starStyle(5)}} />
+                    <FontAwesomeIcon icon={faPoop}
+                        // onClick={() => handleStarClick(0)}
+                        onClick={() => setValue("rating", 0)}
+                        style={{ color: starStyle(0) }} />
+                    <FontAwesomeIcon icon={faStar}
+                        // onClick={() => handleStarClick(1)}
+                        onClick={() => setValue("rating", 20)}
+                        style={{ color: starStyle(1) }} />
+                    <FontAwesomeIcon icon={faStar}
+                        // onClick={() => handleStarClick(2)}
+                        onClick={() => setValue("rating", 40)}
+                        style={{ color: starStyle(2) }} />
+                    <FontAwesomeIcon icon={faStar}
+                        // onClick={() => handleStarClick(3)}
+                        onClick={() => setValue("rating", 60)}
+                        style={{ color: starStyle(3) }} />
+                    <FontAwesomeIcon icon={faStar}
+                        // onClick={() => handleStarClick(4)}
+                        onClick={() => setValue("rating", 80)}
+                        style={{ color: starStyle(4) }} />
+                    <FontAwesomeIcon icon={faStar}
+                        // onClick={() => handleStarClick(5)}
+                        onClick={() => setValue("rating", 100)}
+                        style={{ color: starStyle(5) }} />
                 </div>
                 <div>
-                    <button type="submit" value="Odeslat" className="p-2 bg-blue-500 text-white border-none cursor-pointer rounded">Přidat recenzi
+                    <button type="submit"
+                        value="Odeslat"
+                        className="p-2 bg-blue-500 text-white border-none cursor-pointer rounded">Přidat recenzi
                     </button>
                 </div>
             </form>
