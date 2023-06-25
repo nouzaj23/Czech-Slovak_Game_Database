@@ -39,7 +39,7 @@ export const Reviews: React.FC<ReviewsProps> = ({ ratingBg, setIsOpen, isOpen, g
             </IsLogged>
             <div>
                 {isOpen && (
-                    <AddReviewForm gameId={game.id} game={game} setStars={setStars} stars={stars} />
+                    <AddReviewForm game={game} setStars={setStars} stars={stars} />
                 )}
             </div>
             <div>
