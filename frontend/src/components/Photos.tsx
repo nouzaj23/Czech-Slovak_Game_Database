@@ -16,30 +16,45 @@ const ImagesGrid: React.FC<GridProps> = ({numColumns, game, setSelectedImage}) =
         setSelectedImage(image);
     };
 
-    const numRows: number = Math.ceil(game.photos.length / numColumns);
+    // const numRows: number = Math.ceil(game.photos.length / numColumns);
+    // const gridItems = [];
 
-    const gridItems = [];
+    // for (let row: number = 0; row < numRows; row++) {
+    //     for (let col = 0; col < numColumns; col++) {
+    //         const index = row * numColumns + col;
+    //         if (index < game.photos.length) {
+    //             gridItems.push(
+    //                 <div className="col-span-1 p-2 border-4 flex items-center justify-center" key={index}>
+    //                     <div
+    //                         className={`aspect-w-1 aspect-h-1 cursor-pointer`}
+    //                         onClick={() => handleImageClick(game.photos[index])}
+    //                     >
+    //                         <img src={game.photos[index]} alt={`Obrázek ${index + 1}`} className="object-cover max-w-full max-h-full" />
+    //                     </div>
+    //                 </div>
 
-    for (let row: number = 0; row < numRows; row++) {
-        for (let col = 0; col < numColumns; col++) {
-            const index = row * numColumns + col;
-            if (index < game.photos.length) {
-                const image = game.photos[index];
-                gridItems.push(
-                    <div className="col-span-1 p-2 border-4 flex items-center justify-center" key={index}>
-                        <div
-                            className={`aspect-w-1 aspect-h-1 cursor-pointer`}
-                            onClick={() => handleImageClick(image)}
-                        >
-                            <img src={image} alt={`Obrázek ${index + 1}`} className="object-cover max-w-full max-h-full" />
+    //             );
+    //         }
+    //     }
+    // }
+    // return gridItems;
+    const rows = Array(Math.ceil(game.photos.length / numColumns)).fill('').map((_, rowIndex) => game.photos.slice(rowIndex*numColumns, rowIndex*numColumns + numColumns));
+
+    return (
+        <div className="grid-container">
+            {rows.map((row, rowIndex) => 
+                <div className="row" key={rowIndex}>
+                    {row.map((image, colIndex) => 
+                        <div className="col-span-1 p-2 border-4 flex items-center justify-center" key={rowIndex * numColumns + colIndex}>
+                            <div className="aspect-w-1 aspect-h-1 cursor-pointer" onClick={() => handleImageClick(image)}>
+                                <img src={image} alt={`Obrázek ${rowIndex * numColumns + colIndex + 1}`} className="object-cover max-w-full max-h-full" />
+                            </div>
                         </div>
-                    </div>
-
-                );
-            }
-        }
-    }
-    return gridItems;
+                    )}
+                </div>
+            )}
+        </div>
+    );
 }
 
 
