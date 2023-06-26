@@ -41,8 +41,10 @@ export const SearchResults = () => {
                                 <div className='h-2/3'>
                                     <img src={game.cover} alt={game.name} className="max-h-48 object-fill rounded-md mb-5 m-auto" />
                                 </div>
-                                <h3 className="text-lg font-semibold mb-1">{game.name}</h3>
-                                <p className="text-gray-600 text-sm">{game.description.length > 100 ? `${game.description.substring(0, 100)}...` : game.description} </p>
+                                <div>
+                                    <h3 className="text-lg font-semibold mb-1">{game.name}</h3>
+                                    <p className="text-gray-600 text-sm">{game.description.length > 100 ? `${game.description.substring(0, 100)}...` : game.description} </p>
+                                </div>
                             </Link>
                         ))}
                     </div>
@@ -59,8 +61,10 @@ export const SearchResults = () => {
                                 <div className='h-2/3'>
                                     <img src={developer.avatar} alt={developer.name} className="max-h-48 object-fill rounded-md mb-4 m-auto" />
                                 </div>
-                                <h3 className="text-lg font-semibold mb-1">{developer.name}</h3>
-                                <p className="text-gray-600 text-sm">{developer.description.length > 100 ? `${developer.description.substring(0, 100)}...` : developer.description}</p>
+                                <div>
+                                    <h3 className="text-lg font-semibold mb-1">{developer.name}</h3>
+                                    <p className="text-gray-600 text-sm">{developer.description.length > 100 ? `${developer.description.substring(0, 100)}...` : developer.description}</p>
+                                </div>
                             </Link>
                         ))}
                     </div>
