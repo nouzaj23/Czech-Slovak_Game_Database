@@ -37,14 +37,10 @@ export const SearchResults = () => {
                     <h2 className="text-2xl font-semibold mb-2">Hry</h2>
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                         {games.map(game => (
-                            <Link to={`/games/${game.id}`} key={game.id} className="p-4 border border-gray-200 rounded-lg hover:bg-gray-100 transition-colors duration-200 h-auto" >
-                                <div className='h-2/3'>
-                                    <img src={game.cover} alt={game.name} className="max-h-48 object-fill rounded-md m-auto" />
-                                </div>
-                                <div>
-                                    <h3 className="text-lg font-semibold mb-1">{game.name}</h3>
-                                    <p className="text-gray-600 text-sm">{game.description.length > 100 ? `${game.description.substring(0, 100)}...` : game.description} </p>
-                                </div>
+                            <Link to={`/games/${game.id}`} key={game.id} className="flex flex-col p-4 border border-gray-200 rounded-lg hover:bg-gray-100 transition-colors duration-200 h-auto" >
+                                <img src={game.cover} alt={game.name} className="max-h-48 object-fill rounded-md m-auto" />
+                                <h3 className="text-lg font-semibold mb-1">{game.name}</h3>
+                                <p className="text-gray-600 text-sm">{game.description.length > 100 ? `${game.description.substring(0, 100)}...` : game.description} </p>
                             </Link>
                         ))}
                     </div>
@@ -57,14 +53,10 @@ export const SearchResults = () => {
                     <h2 className="text-2xl font-semibold mb-2">Vývojáři</h2>
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                         {developers.map(developer => (
-                            <Link to={`/developers/${developer.id}`} key={developer.id} className="p-4 border border-gray-200 rounded-lg hover:bg-gray-100 transition-colors duration-200 h-auto">
-                                <div className='h-2/3'>
-                                    <img src={developer.avatar} alt={developer.name} className="max-h-48 object-fill rounded-md m-auto" />
-                                </div>
-                                <div>
-                                    <h3 className="text-lg font-semibold mb-1">{developer.name}</h3>
-                                    <p className="text-gray-600 text-sm">{developer.description.length > 100 ? `${developer.description.substring(0, 100)}...` : developer.description}</p>
-                                </div>
+                            <Link to={`/developers/${developer.id}`} key={developer.id} className="flex flex-col p-4 border border-gray-200 rounded-lg hover:bg-gray-100 transition-colors duration-200 h-auto">
+                                <img src={developer.avatar} alt={developer.name} className="max-h-48 object-fill rounded-md m-auto" />
+                                <h3 className="text-lg font-semibold mb-1">{developer.name}</h3>
+                                <p className="text-gray-600 text-sm">{developer.description.length > 100 ? `${developer.description.substring(0, 100)}...` : developer.description}</p>
                             </Link>
                         ))}
                     </div>
