@@ -9,7 +9,7 @@ import { useForm } from 'react-hook-form';
 
 interface AddReviewProps {
     game: Game;
-    stars: number;
+    stars: number | null;
     setStars: Function;
 }
 
@@ -30,7 +30,7 @@ export const AddReviewForm: React.FC<AddReviewProps> = ({ game, setStars, stars 
     const ratingBg = () => getValues("rating") > 6 ? '#ad0e30' : getValues("rating") > 2 ? '#3690eb' : '#010203';
 
     function starStyle(starNum: number) {
-        return stars >= starNum ? ratingBg() : '#92a1b0';
+        return stars ?? -1 >= starNum ? ratingBg() : '#92a1b0';
     }
 
     const queryClient = useQueryClient();

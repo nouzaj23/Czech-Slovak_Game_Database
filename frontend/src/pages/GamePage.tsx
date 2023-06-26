@@ -41,7 +41,7 @@ export const GamePage = () => {
     const [selectedImage, setSelectedImage] = useState<string | null>(null);
     const [pageReviews, setPageReviews] = useState(0);
     const [pageComments, setPageComments] = useState(0);
-    const [stars, setStars] = useState(3);
+    const [stars, setStars] = useState<number | null>(null);
 
     if (!id) {
         return <div>Chybí ID hry</div>;
