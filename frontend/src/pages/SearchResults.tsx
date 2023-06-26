@@ -39,7 +39,7 @@ export const SearchResults = () => {
                         {games.map(game => (
                             <Link to={`/games/${game.id}`} key={game.id} className="p-4 border border-gray-200 rounded-lg hover:bg-gray-100 transition-colors duration-200 h-auto" >
                                 <div className='h-2/3'>
-                                    <img src={game.cover} alt={game.name} className="h-48 object-cover rounded-md mb-5 m-auto" />
+                                    <img src={game.cover} alt={game.name} className="max-h-48 object-fill rounded-md mb-5 m-auto" />
                                 </div>
                                 <div className=''>
                                     <h3 className="text-lg font-semibold mb-1">{game.name}</h3>
@@ -59,7 +59,7 @@ export const SearchResults = () => {
                         {developers.map(developer => (
                             <Link to={`/developers/${developer.id}`} key={developer.id} className="p-4 border border-gray-200 rounded-lg hover:bg-gray-100 transition-colors duration-200 h-auto">
                                 <div className='h-2/3'>
-                                    <img src={developer.avatar} alt={developer.name} className="max-h-48 object-cover rounded-md mb-4 m-auto" />
+                                    <img src={developer.avatar} alt={developer.name} className="max-h-48 object-fill rounded-md mb-4 m-auto" />
                                 </div>
                                 <h3 className="text-lg font-semibold mb-1">{developer.name}</h3>
                                 <p className="text-gray-600 text-sm">{developer.description.length > 100 ? `${developer.description.substring(0, 100)}...` : developer.description}</p>
