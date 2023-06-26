@@ -19,7 +19,7 @@ type FormValues = {
     rating: number;
 }
 
-export const AddReviewForm: React.FC<AddReviewProps> = ({ game, setStars, stars }) => {
+export const AddReviewForm: React.FC<AddReviewProps> = ({ game, setStars }) => {
     const { auth } = useAuth();
     const { register, handleSubmit, getValues, setValue } = useForm<FormValues>();
 
@@ -76,11 +76,11 @@ export const AddReviewForm: React.FC<AddReviewProps> = ({ game, setStars, stars 
                 <div>
                     <FontAwesomeIcon icon={faPoop}
                         // onClick={() => handleStarClick(0)}
-                        onClick={() => setValue("rating", 0)}
+                        onClick={() => {setValue("rating", 0); setStars(0)}}
                         style={{ color: starStyle(0) }} />
                     <FontAwesomeIcon icon={faStar}
                         // onClick={() => handleStarClick(1)}
-                        onClick={() => setValue("rating", 2)}
+                        onClick={() => {setValue("rating", 2); setStars(1)}}
                         style={{ color: starStyle(1) }} />
                     <FontAwesomeIcon icon={faStar}
                         // onClick={() => handleStarClick(2)}
