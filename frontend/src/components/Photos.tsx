@@ -11,7 +11,7 @@ interface GridProps {
     setSelectedImage: Function;
 }
 
-const ImagesGrid: React.FC<GridProps> = ({ numColumns, game, setSelectedImage }) => {
+const ImagesGrid: React.FC<GridProps> = ({ game, setSelectedImage }) => {
     const handleImageClick = (image: string) => {
         setSelectedImage(image);
     };
@@ -38,15 +38,8 @@ const ImagesGrid: React.FC<GridProps> = ({ numColumns, game, setSelectedImage })
     //     }
     // }
     // return gridItems;
-    const gridStyle = {
-        display: 'grid', 
-        gridTemplateColumns: `repeat(${numColumns}, 1fr)`, 
-        gap: '1em',
-        width: '100%', 
-    };
-
     return (
-        <div className="grid-container" style={gridStyle}>
+        <>
             {game.photos.map((image, index) =>
                 <div
                     className="p-2 border-4 flex items-center justify-center"
@@ -60,7 +53,7 @@ const ImagesGrid: React.FC<GridProps> = ({ numColumns, game, setSelectedImage })
                     />
                 </div>
             )}
-        </div>
+        </>
     );
 }
 
