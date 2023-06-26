@@ -9,12 +9,11 @@ interface CommentsProps {
     ratingBg: Function;
     game: Game;
     gameComments: Comment[];
-    pageComments: number;
-    itemsPerPage: number;
+    pageComments: number; 
     setPageComments: Function;
 }
 
-export const Comments: React.FC<CommentsProps> = ({isOpen, ratingBg, setIsOpen, game, gameComments, pageComments, itemsPerPage, setPageComments}) => {
+export const Comments: React.FC<CommentsProps> = ({isOpen, ratingBg, setIsOpen, game, gameComments, pageComments, setPageComments}) => {
     const handleAddComment = () => {
         setIsOpen(!isOpen);
     }
@@ -23,12 +22,15 @@ export const Comments: React.FC<CommentsProps> = ({isOpen, ratingBg, setIsOpen, 
         setPageComments(pageComments + 1);
         window.scrollTo({ top: 0, behavior: 'smooth' });
     };
+
     const handlePreviousPageComments = () => {
         if (pageComments > 0) {
             setPageComments(pageComments - 1);
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
     };
+
+    const itemsPerPage = 5;
 
     return (
         <div>

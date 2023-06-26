@@ -21,7 +21,8 @@ type FormValues = {
 
 export const AddReviewForm: React.FC<AddReviewProps> = ({ game, setStars, stars }) => {
     const { auth } = useAuth();
-    const { register, handleSubmit, getValues, setValue } = useForm<FormValues>();
+    const form = useForm<FormValues>();
+    const { register, handleSubmit, setValue, getValues } = form;
 
     if (!game) {
         return <div>Hra není k dispozici</div>;

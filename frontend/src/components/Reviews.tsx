@@ -12,11 +12,10 @@ interface ReviewsProps {
     stars: number;
     gameReviews: Review[];
     pageReviews: number;
-    itemsPerPage: number;
     setPageReviews: Function,
 }
 
-export const Reviews: React.FC<ReviewsProps> = ({ ratingBg, setIsOpen, isOpen, game, gameReviews, pageReviews, itemsPerPage, setPageReviews, setStars, stars }) => {
+export const Reviews: React.FC<ReviewsProps> = ({ ratingBg, setIsOpen, isOpen, game, gameReviews, pageReviews, setPageReviews, setStars, stars }) => {
     const handleAddReview = () => {
         setIsOpen(!isOpen);
     }
@@ -31,6 +30,8 @@ export const Reviews: React.FC<ReviewsProps> = ({ ratingBg, setIsOpen, isOpen, g
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
     };
+
+    const itemsPerPage = 5;
 
     return (
         <div>

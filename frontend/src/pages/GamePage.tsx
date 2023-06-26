@@ -37,6 +37,7 @@ const RenderEnlargedImage: React.FC<RenderEnlargedImageProps> = ({selectedImage,
 export const GamePage = () => {
     const { id } = useParams<{ id: string }>();
     const [selectedTab, setSelectedTab] = useState('reviews');
+
     const [isOpen, setIsOpen] = useState(false);
     const [selectedImage, setSelectedImage] = useState<string | null>(null);
     const [pageReviews, setPageReviews] = useState(0);
@@ -60,8 +61,6 @@ export const GamePage = () => {
         return <div>Hra není k dispozici</div>;
     }
 
-    const itemsPerPage = 5;
-
     const ratingBg = () => game.rating > 7 ? '#ad0e30' : game.rating > 3 ? '#3690eb' : '#010203';
 
     return (
@@ -84,8 +83,8 @@ export const GamePage = () => {
                 </button>
             </div>
             <div className="mt-4">
-                {selectedTab == "reviews" && <Reviews setStars={setStars} stars={stars} game={game} gameReviews={gameReviews} isOpen={isOpen} itemsPerPage={itemsPerPage} pageReviews={pageReviews} ratingBg={ratingBg} setIsOpen={setIsOpen} setPageReviews={setPageReviews} />}
-                {selectedTab == "comments" && <Comments game={game} gameComments={gameComments} isOpen={isOpen} itemsPerPage={itemsPerPage} pageComments={pageComments} ratingBg={ratingBg} setIsOpen={setIsOpen} setPageComments={setPageComments} />}
+                {selectedTab == "reviews" && <Reviews setStars={setStars} stars={stars} game={game} gameReviews={gameReviews} isOpen={isOpen} pageReviews={pageReviews} ratingBg={ratingBg} setIsOpen={setIsOpen} setPageReviews={setPageReviews} />}
+                {selectedTab == "comments" && <Comments game={game} gameComments={gameComments} isOpen={isOpen} pageComments={pageComments} ratingBg={ratingBg} setIsOpen={setIsOpen} setPageComments={setPageComments} />}
                 {selectedTab == "photos" && <Photos game={game} setSelectedImage={setSelectedImage} />}
                 {selectedTab == "videos" && <Videos game={game} />}
             </div>

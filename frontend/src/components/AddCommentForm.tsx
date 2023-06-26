@@ -1,45 +1,52 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { Game, Comment } from "../models";
+import { Game } from "../models";
 import { GameApi } from "../services";
-import { useState } from "react";
 import useAuth from "../hooks/useAuth";
+import { useForm } from "react-hook-form";
 
 interface AddCommentProps {
     game: Game;
 }
 
+type FormValues = {
+    content: string;
+}
+
 export const AddCommentForm: React.FC<AddCommentProps> = ({ game }) => {
     const { auth } = useAuth();
+    const form = useForm<FormValues>();
+    const { register, handleSubmit, getValues } = form;
 
     const queryClient = useQueryClient();
-    const mutation = useMutation(() => GameApi.addComment(comment.content, auth.userId, comment.gameId), {
+    const mutation = useMutation(() => GameApi.addComment(getValues("content"), auth.userId, game.id), {
         onError: (error) => {
             console.error('Failed to add the comment:', error);
         },
         onSuccess: () => {
-            queryClient.invalidateQueries(['gameComments', comment.gameId]);
+            queryClient.invalidateQueries(['gameComments', game.id]);
         },
     });
 
-    const [comment, setComment] = useState<Comment>({ content: "", createdAt: "", gameId: game.id, id: "", commenter: auth.userId});
-
-    const handleSubmitComment = () => {
-        if (comment.content != "") {
-            mutation.mutate();
-            (document.getElementById('text') as HTMLTextAreaElement).value = '';
-        }
+    const onSubmit = () => {
+        mutation.mutate();
     }
 
     return (
         <div className="flex flex-col space-y-4 w-full md:max-w-[500px] mx-auto bg-gray-200 p-4 rounded-md">
-            <div>
+            <form onSubmit={handleSubmit(onSubmit)}>
                 <label className="flex flex-col space-y-2">
                     Komentář:
-                    <textarea name="comment" id="text" className="p-2 rounded border-gray-300 min-h-[100px]" onChange={(event) => setComment({...comment, content: event.target.value})}></textarea>
+                    <textarea
+                        className="p-2 rounded border-gray-300 min-h-[100px]"
+                        required
+                        {...register("content")}
+                    ></textarea>
                 </label>
-            </div>
+            </form>
             <div>
-                <input type="submit" value="Přidat komentář" onClick={(event) => { event.preventDefault(); handleSubmitComment(); }} className="p-2 bg-blue-500 text-white border-none cursor-pointer rounded" />
+                <input type="submit"
+                    value="Přidat komentář"
+                    className="p-2 bg-blue-500 text-white border-none cursor-pointer rounded" />
             </div>
         </div>
     );
