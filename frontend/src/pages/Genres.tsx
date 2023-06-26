@@ -28,7 +28,7 @@ export const Genres = () => {
       <div className="grid grid-cols-2 gap-4 md:grid-cols-5">
         <input
           type="text"
-          placeholder="Genre Name"
+          placeholder="Jméno žánru"
           {...register('nameFilter')}
           className="p-2 border-2 border-gray-300 rounded"
         />
@@ -37,8 +37,8 @@ export const Genres = () => {
           {...register('sortType')}
           className="p-2 border-2 border-gray-300 rounded"
         >
-          <option value="name-asc">Name Ascending</option>
-          <option value="name-desc">Name Descending</option>
+          <option value="name-asc">Abecedně A-Z</option>
+          <option value="name-desc">Abecedně Z-A</option>
         </select>
       </div>
 
