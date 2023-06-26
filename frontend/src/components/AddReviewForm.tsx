@@ -19,7 +19,7 @@ type FormValues = {
     rating: number;
 }
 
-export const AddReviewForm: React.FC<AddReviewProps> = ({ game, setStars }) => {
+export const AddReviewForm: React.FC<AddReviewProps> = ({ game, setStars, stars }) => {
     const { auth } = useAuth();
     const { register, handleSubmit, getValues, setValue } = useForm<FormValues>();
 
@@ -27,14 +27,10 @@ export const AddReviewForm: React.FC<AddReviewProps> = ({ game, setStars }) => {
         return <div>Hra není k dispozici</div>;
     }
 
-    // function handleStarClick(rating: number) {
-    //     setStars(rating);
-    // }
-
     const ratingBg = () => getValues("rating") > 6 ? '#ad0e30' : getValues("rating") > 2 ? '#3690eb' : '#010203';
 
     function starStyle(starNum: number) {
-        return getValues("rating") >= starNum * 2 ? ratingBg() : '#92a1b0';
+        return stars >= starNum ? ratingBg() : '#92a1b0';
     }
 
     const queryClient = useQueryClient();
@@ -68,6 +64,7 @@ export const AddReviewForm: React.FC<AddReviewProps> = ({ game, setStars }) => {
                     <label className="flex flex-col space-y-2">
                         Recenze:
                         <textarea className="p-2 rounded border-gray-300 min-h-[100px]"
+                            required
                             {...register("content")}
                         >
                         </textarea>
@@ -75,28 +72,22 @@ export const AddReviewForm: React.FC<AddReviewProps> = ({ game, setStars }) => {
                 </div>
                 <div>
                     <FontAwesomeIcon icon={faPoop}
-                        // onClick={() => handleStarClick(0)}
                         onClick={() => {setValue("rating", 0); setStars(0)}}
                         style={{ color: starStyle(0) }} />
                     <FontAwesomeIcon icon={faStar}
-                        // onClick={() => handleStarClick(1)}
                         onClick={() => {setValue("rating", 2); setStars(1)}}
                         style={{ color: starStyle(1) }} />
                     <FontAwesomeIcon icon={faStar}
-                        // onClick={() => handleStarClick(2)}
-                        onClick={() => setValue("rating", 4)}
+                        onClick={() => {setValue("rating", 4); setStars(2)}}
                         style={{ color: starStyle(2) }} />
-                    <FontAwesomeIcon icon={faStar}
-                        // onClick={() => handleStarClick(3)}
-                        onClick={() => setValue("rating", 6)}
+                    <FontAwesomeIcon icon={faStar}                        
+                        onClick={() => {setValue("rating", 6); setStars(3)}}
                         style={{ color: starStyle(3) }} />
-                    <FontAwesomeIcon icon={faStar}
-                        // onClick={() => handleStarClick(4)}
-                        onClick={() => setValue("rating", 8)}
+                    <FontAwesomeIcon icon={faStar} 
+                        onClick={() => {setValue("rating", 8); setStars(4)}}
                         style={{ color: starStyle(4) }} />
                     <FontAwesomeIcon icon={faStar}
-                        // onClick={() => handleStarClick(5)}
-                        onClick={() => setValue("rating", 10)}
+                        onClick={() => {setValue("rating", 10); setStars(5)}}
                         style={{ color: starStyle(5) }} />
                 </div>
                 <div>
