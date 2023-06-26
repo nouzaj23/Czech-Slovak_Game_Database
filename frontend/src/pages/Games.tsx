@@ -19,7 +19,7 @@ export const Games = () => {
     }
   });
 
-  const filter = watch();
+  const filters = watch();
 
   const { data: gamesData } = useQuery<Game[]>(['games'], GameApi.retrieveAllGames);
   const { data: developersData } = useQuery<Developer[]>(['developers'], DeveloperApi.retrieveAllDevelopers);
@@ -32,15 +32,15 @@ export const Games = () => {
   genres.sort((a, b) => a.name.localeCompare(b.name));
 
   let filteredGames = games.filter(game => {
-    const matchesName = game.name.toLowerCase().includes(filter.nameFilter.toLowerCase());
-    const matchesDate = game.releaseDate.includes(filter.dateFilter);
-    const matchesDeveloper = filter.developerFilter === '' || game.developers.map(d => d.id).includes(filter.developerFilter);
-    const matchesGenre = filter.genreFilter === '' || game.genres.map(g => g.id).includes(filter.genreFilter);
+    const matchesName = game.name.toLowerCase().includes(filters.nameFilter.toLowerCase());
+    const matchesDate = game.releaseDate.includes(filters.dateFilter);
+    const matchesDeveloper = filters.developerFilter === '' || game.developers.map(d => d.id).includes(filters.developerFilter);
+    const matchesGenre = filters.genreFilter === '' || game.genres.map(g => g.id).includes(filters.genreFilter);
     return matchesName && matchesDate && matchesDeveloper && matchesGenre;
   });
 
   filteredGames.sort((a, b) => {
-    const sortType = filter.sortType;
+    const sortType = filters.sortType;
     if (sortType === 'name-asc') {
       return a.name.localeCompare(b.name);
     }
