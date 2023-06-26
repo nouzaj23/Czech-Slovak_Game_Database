@@ -17,19 +17,21 @@ const ImagesGrid: React.FC<GridProps> = ({ game, setSelectedImage }) => {
     };
 
     return (
-        <div>
+        <>
             {game.photos.map((image, index) =>
-                <div className="p-2 border-4 flex items-center justify-center"
+                <div
+                    className="p-2 border-4 flex items-center justify-center"
                     key={index}
                     onClick={() => handleImageClick(image)}
                 >
-                    <img src={image}
+                    <img
+                        src={image}
                         alt={`Obrázek ${index + 1}`}
                         className="object-cover max-w-full max-h-full"
                     />
                 </div>
             )}
-        </div>
+        </>
     );
 }
 
