@@ -9,7 +9,7 @@ interface ReviewsProps {
     isOpen: boolean;
     game: Game;
     setStars: Function;
-    stars: number | null;
+    stars: number;
     gameReviews: Review[];
     pageReviews: number;
     itemsPerPage: number;
