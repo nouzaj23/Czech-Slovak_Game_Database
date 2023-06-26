@@ -31,10 +31,10 @@ export const AddReviewForm: React.FC<AddReviewProps> = ({ game }) => {
     //     setStars(rating);
     // }
 
-    const ratingBg = () => getValues("rating") > 60 ? '#ad0e30' : getValues("rating") > 20 ? '#3690eb' : '#010203';
+    const ratingBg = () => getValues("rating") > 6 ? '#ad0e30' : getValues("rating") > 2 ? '#3690eb' : '#010203';
 
     function starStyle(starNum: number) {
-        return getValues("rating") >= starNum * 20 ? ratingBg() : '#92a1b0';
+        return getValues("rating") >= starNum * 2 ? ratingBg() : '#92a1b0';
     }
 
     const queryClient = useQueryClient();
@@ -80,23 +80,23 @@ export const AddReviewForm: React.FC<AddReviewProps> = ({ game }) => {
                         style={{ color: starStyle(0) }} />
                     <FontAwesomeIcon icon={faStar}
                         // onClick={() => handleStarClick(1)}
-                        onClick={() => setValue("rating", 20)}
+                        onClick={() => setValue("rating", 2)}
                         style={{ color: starStyle(1) }} />
                     <FontAwesomeIcon icon={faStar}
                         // onClick={() => handleStarClick(2)}
-                        onClick={() => setValue("rating", 40)}
+                        onClick={() => setValue("rating", 4)}
                         style={{ color: starStyle(2) }} />
                     <FontAwesomeIcon icon={faStar}
                         // onClick={() => handleStarClick(3)}
-                        onClick={() => setValue("rating", 60)}
+                        onClick={() => setValue("rating", 6)}
                         style={{ color: starStyle(3) }} />
                     <FontAwesomeIcon icon={faStar}
                         // onClick={() => handleStarClick(4)}
-                        onClick={() => setValue("rating", 80)}
+                        onClick={() => setValue("rating", 8)}
                         style={{ color: starStyle(4) }} />
                     <FontAwesomeIcon icon={faStar}
                         // onClick={() => handleStarClick(5)}
-                        onClick={() => setValue("rating", 100)}
+                        onClick={() => setValue("rating", 10)}
                         style={{ color: starStyle(5) }} />
                 </div>
                 <div>
