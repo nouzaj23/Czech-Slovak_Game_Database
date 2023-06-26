@@ -9,8 +9,8 @@ import { useForm } from 'react-hook-form';
 
 interface AddReviewProps {
     game: Game;
-    // stars: number;
-    // setStars: Function;
+    stars: number;
+    setStars: Function;
 }
 
 type FormValues = {
@@ -19,7 +19,7 @@ type FormValues = {
     rating: number;
 }
 
-export const AddReviewForm: React.FC<AddReviewProps> = ({ game }) => {
+export const AddReviewForm: React.FC<AddReviewProps> = ({ game, setStars, stars }) => {
     const { auth } = useAuth();
     const { register, handleSubmit, getValues, setValue } = useForm<FormValues>();
 
