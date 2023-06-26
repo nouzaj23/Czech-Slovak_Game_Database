@@ -11,7 +11,7 @@ interface GridProps {
     setSelectedImage: Function;
 }
 
-const ImagesGrid: React.FC<GridProps> = ({numColumns, game, setSelectedImage}) => {
+const ImagesGrid: React.FC<GridProps> = ({ numColumns, game, setSelectedImage }) => {
     const handleImageClick = (image: string) => {
         setSelectedImage(image);
     };
@@ -38,23 +38,23 @@ const ImagesGrid: React.FC<GridProps> = ({numColumns, game, setSelectedImage}) =
     //     }
     // }
     // return gridItems;
-    const rows = Array(Math.ceil(game.photos.length / numColumns)).fill('').map((_, rowIndex) => game.photos.slice(rowIndex*numColumns, rowIndex*numColumns + numColumns));
-
     return (
-        <div className="grid-container">
-            {rows.map((row, rowIndex) => 
-                <div className="row" key={rowIndex}>
-                    {row.map((image, colIndex) => 
-                        <div className="col-span-1 p-2 border-4 flex items-center justify-center" key={rowIndex * numColumns + colIndex}>
-                            <div className="aspect-w-1 aspect-h-1 cursor-pointer" onClick={() => handleImageClick(image)}>
-                                <img src={image} alt={`Obrázek ${rowIndex * numColumns + colIndex + 1}`} className="object-cover max-w-full max-h-full" />
-                            </div>
-                        </div>
-                    )}
+        <div className="grid-container" style={{ display: 'grid', gridTemplateColumns: `repeat(${numColumns}, 1fr)`, gap: '1em' }}>
+            {game.photos.map((image, index) =>
+                <div
+                    className="p-2 border-4 flex items-center justify-center"
+                    key={index}
+                    onClick={() => handleImageClick(image)}
+                >
+                    <img
+                        src={image}
+                        alt={`Obrázek ${index + 1}`}
+                        className="object-cover max-w-full max-h-full"
+                    />
                 </div>
             )}
         </div>
-    );
+    )
 }
 
 
