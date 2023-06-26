@@ -1,22 +1,22 @@
-import { useState } from 'react';
+import { useForm } from 'react-hook-form';
 import { DeveloperItem } from '../components/DeveloperItem';
 import { Developer } from '../models';
 import { DeveloperApi } from '../services';
 import { useQuery } from '@tanstack/react-query';
 
 export const Developers = () => {
-    const [filter, setFilter] = useState('');
-    const [sortType, setSortType] = useState('name-asc');
+    const { register, watch } = useForm({ defaultValues: { nameFilter: '', sortType: 'name-asc' } });
+    const filters = watch();
 
     const { data: developersData } = useQuery<Developer[]>(['developers'], DeveloperApi.retrieveAllDevelopers);
     const developers = developersData ?? [];
 
-    let filteredDevelopers = developers.filter(dev => dev.name.toLowerCase().includes(filter.toLowerCase()));
+    let filteredDevelopers = developers.filter(dev => dev.name.toLowerCase().includes(filters.nameFilter.toLowerCase()));
 
     filteredDevelopers.sort((a, b) => {
-        if (sortType === 'name-asc') {
+        if (filters.sortType === 'name-asc') {
             return a.name.localeCompare(b.name);
-        } else if (sortType === 'name-desc') {
+        } else if (filters.sortType === 'name-desc') {
             return b.name.localeCompare(a.name);
         } else {
             return 0;
@@ -30,14 +30,12 @@ export const Developers = () => {
                     <input
                         type="text"
                         placeholder="Jméno vývojáře"
-                        value={filter}
-                        onChange={e => setFilter(e.target.value)}
+                        {...register('nameFilter')}
                         className="p-2 border-2 border-gray-300 rounded"
                     />
 
                     <select
-                        value={sortType}
-                        onChange={e => setSortType(e.target.value)}
+                        {...register('sortType')}
                         className="p-2 border-2 border-gray-300 rounded"
                     >
                         <option value="name-asc">Abecedně (A-Z)</option>
