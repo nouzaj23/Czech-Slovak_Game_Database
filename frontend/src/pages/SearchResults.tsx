@@ -37,7 +37,7 @@ export const SearchResults = () => {
                     <h2 className="text-2xl font-semibold mb-2">Hry</h2>
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                         {games.map(game => (
-                            <Link to={`/games/${game.id}`} key={game.id} className="p-4 border border-gray-200 rounded-lg hover:bg-gray-100 transition-colors duration-200" >
+                            <Link to={`/games/${game.id}`} key={game.id} className="p-4 border border-gray-200 rounded-lg hover:bg-gray-100 transition-colors duration-200 h-auto" >
                                 <div className='h-2/3'>
                                     <img src={game.cover} alt={game.name} className="h-48 object-cover rounded-md mb-5 m-auto" />
                                 </div>
@@ -57,7 +57,7 @@ export const SearchResults = () => {
                     <h2 className="text-2xl font-semibold mb-2">Vývojáři</h2>
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                         {developers.map(developer => (
-                            <Link to={`/developers/${developer.id}`} key={developer.id} className="p-4 border border-gray-200 rounded-lg hover:bg-gray-100 transition-colors duration-200">
+                            <Link to={`/developers/${developer.id}`} key={developer.id} className="p-4 border border-gray-200 rounded-lg hover:bg-gray-100 transition-colors duration-200 h-auto">
                                 <div className='h-2/3'>
                                     <img src={developer.avatar} alt={developer.name} className="max-h-48 object-cover rounded-md mb-4 m-auto" />
                                 </div>
@@ -75,7 +75,7 @@ export const SearchResults = () => {
                     <h2 className="text-2xl font-semibold mb-2">Žánry</h2>
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                         {genres.map(genre => (
-                            <Link to={`/games?genre=${genre.id}`} key={genre.id} className="p-4 border border-gray-200 rounded-lg hover:bg-gray-100 transition-colors duration-200">
+                            <Link to={`/games?genre=${genre.id}`} key={genre.id} className="p-4 border border-gray-200 rounded-lg hover:bg-gray-100 transition-colors duration-200 h-auto">
                                 <h3 className="text-lg font-semibold mb-1">{genre.name}</h3>
                                 <p className="text-gray-600 text-sm">{genre.description.length > 100 ? `${genre.description.substring(0, 100)}...` : genre.description}</p>
                             </Link>
