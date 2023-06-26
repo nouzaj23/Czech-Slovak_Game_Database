@@ -38,8 +38,15 @@ const ImagesGrid: React.FC<GridProps> = ({ numColumns, game, setSelectedImage })
     //     }
     // }
     // return gridItems;
+    const gridStyle = {
+        display: 'grid', 
+        gridTemplateColumns: `repeat(${numColumns}, 1fr)`, 
+        gap: '1em',
+        width: '100%', 
+    };
+
     return (
-        <div className="grid-container" style={{ display: 'grid', gridTemplateColumns: `repeat(${numColumns}, 1fr)`, gap: '1em' }}>
+        <div className="grid-container" style={gridStyle}>
             {game.photos.map((image, index) =>
                 <div
                     className="p-2 border-4 flex items-center justify-center"
@@ -54,7 +61,7 @@ const ImagesGrid: React.FC<GridProps> = ({ numColumns, game, setSelectedImage })
                 </div>
             )}
         </div>
-    )
+    );
 }
 
 
