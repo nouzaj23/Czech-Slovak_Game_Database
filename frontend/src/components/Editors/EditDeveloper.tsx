@@ -13,7 +13,7 @@ export const EditDeveloper: React.FC<EditDeveloperProps> = ({ developerProp, edi
     const [developer, setDeveloper] = useState(developerProp);
 
     const queryClient = useQueryClient();
-    
+
     const mutation = useMutation(() => DeveloperApi.update(developer.id, developer.name, developer.description, developer.avatar), {
         onError: (error) => {
             console.error('Failed to edit the developer:', error);
