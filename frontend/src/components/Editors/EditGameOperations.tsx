@@ -193,8 +193,6 @@ interface EditGameDevelopersProps {
 
 export const EditGameDevelopers: React.FC<EditGameDevelopersProps> = ({ game, updateGame, developers }) => {
     const addDeveloper = () => {
-        // const devName = (document.getElementById("newDeveloper") as HTMLInputElement);
-
         const newDev = developers.find(dev => dev.name == inputValue);
         if (newDev && !game.developers.map(d => d.id).includes(newDev.id)) {
             updateGame({ ...game, developers: [...game.developers, newDev] });
