@@ -79,7 +79,7 @@ export const UsersCRUD: React.FC<UsersCRUDProps> = ({ users }) => {
                     onChange={(event) => setSearchTerm(event.target.value)}
                 />
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                    {filteredUsers.map(user => (
+                    {filteredUsers.slice(page * itemsPerPage, (page + 1) * itemsPerPage).map(user => (
                         <div key={user.id} className="p-4 bg-white rounded shadow">
                             <h2 className="text-xl font-semibold">{user.username}</h2>
                             <div className="mt-4 space-x-4">

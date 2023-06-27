@@ -98,7 +98,7 @@ export const GenresCRUD: React.FC<GenresCRUDProps> = ({ genres }) => {
                     placeholder="Hledat žánry..."
                     onChange={(event) => setSearchTerm(event.target.value)}
                 />
-                {filteredGenres.map(genre => (
+                {filteredGenres.slice(page * itemsPerPage, (page + 1) * itemsPerPage).map(genre => (
                     <div key={genre.id} className="p-4 bg-white rounded shadow">
                         <h2 className="text-xl font-semibold">{genre.name}</h2>
                         <div className="mt-2 space-y-2">

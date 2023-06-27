@@ -97,7 +97,7 @@ export const DevelopersCRUD: React.FC<DevelopersCRUDProps> = ({ developers }) =>
                     placeholder="Hledat studio..."
                     onChange={(event) => setSearchTerm(event.target.value)}
                 />
-                {filteredDevelopers.map(dev => (
+                {filteredDevelopers.slice(page * itemsPerPage, (page + 1) * itemsPerPage).map(dev => (
                     <div key={dev.id} className="p-4 bg-white rounded shadow">
                         <h2 className="text-xl font-semibold">{dev.name}</h2>
                         <div className="mt-2 space-y-2">
