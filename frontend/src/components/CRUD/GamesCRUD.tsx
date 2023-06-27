@@ -133,7 +133,7 @@ export const GamesCRUD: React.FC<GamesCRUDProps> = ({ developers, games, genres 
                     </button>
                     <button
                         onClick={handleNextPage}
-                        className={`px-4 py-2 text-white rounded ${filteredGames.length <= (page + 1) * itemsPerPage && 'opacity-50 cursor-not-allowed'}`}
+                        className={`px-4 py-2 text-white bg-gray-600 hover:bg-gray-800 rounded rounded-md ${filteredGames.length <= (page + 1) * itemsPerPage && 'opacity-50 cursor-not-allowed'}`}
                         disabled={filteredGames.length <= (page + 1) * itemsPerPage}
                     >
                         Další
