@@ -126,7 +126,7 @@ export const GamesCRUD: React.FC<GamesCRUDProps> = ({ developers, games, genres 
                 <div className="flex justify-between mt-4">
                     <button
                         onClick={handlePreviousPage}
-                        className={`px-4 py-2 text-white rounded ${page === 0 && 'opacity-50 cursor-not-allowed'}`}
+                        className={`px-4 py-2 text-white bg-gray-600 hover:bg-gray-800 rounded rounded-md ${page === 0 && 'opacity-50 cursor-not-allowed'}`}
                         disabled={page === 0}
                     >
                         Předchozí
