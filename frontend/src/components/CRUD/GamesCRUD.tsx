@@ -49,6 +49,7 @@ export const GamesCRUD: React.FC<GamesCRUDProps> = ({ developers, games, genres 
     const [searchTerm, setSearchTerm] = useState("");
     const [editedGameId, setEditedGameId] = useState<string | null>(null);
     const [gameToDelete, setGameToDelete] = useState<string | null>(null);
+    const [page, setPage] = useState(0);
 
     const filteredGames = games.filter(game =>
         game.name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -69,6 +70,19 @@ export const GamesCRUD: React.FC<GamesCRUDProps> = ({ developers, games, genres 
         mutation.mutate();
     }
 
+    const itemsPerPage = 5;
+
+    const handleNextPage = () => {
+        setPage(page + 1);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+    const handlePreviousPage = () => {
+        if (page > 0) {
+            setPage(page - 1);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    };
+
     return (
         <div className='flex justify-center'>
             <div className="p-6 space-y-4 w-full md:w-3/4">
@@ -82,7 +96,7 @@ export const GamesCRUD: React.FC<GamesCRUDProps> = ({ developers, games, genres 
                     placeholder="Hledat hry..."
                     onChange={(event) => setSearchTerm(event.target.value)}
                 />
-                {filteredGames.map(game => (
+                {filteredGames.slice(page * itemsPerPage, (page + 1) * itemsPerPage).map(game => (
                     <div key={game.id} className="p-4 bg-white rounded shadow">
                         <h2 className="text-xl font-semibold">{game.name}</h2>
                         <div className="mt-2 space-y-2">
@@ -104,11 +118,27 @@ export const GamesCRUD: React.FC<GamesCRUDProps> = ({ developers, games, genres 
                         </div>
                         {editedGameId === game.id && (
                             <div className='mt-5'>
-                                <EditGame gameProp={game} editedGameId={editedGameId} developers={developers} genres={genres}/>
+                                <EditGame gameProp={game} editedGameId={editedGameId} developers={developers} genres={genres} />
                             </div>
                         )}
                     </div>
                 ))}
+                <div className="flex justify-between mt-4">
+                    <button
+                        onClick={handlePreviousPage}
+                        className={`px-4 py-2 text-white rounded ${page === 0 && 'opacity-50 cursor-not-allowed'}`}
+                        disabled={page === 0}
+                    >
+                        Předchozí
+                    </button>
+                    <button
+                        onClick={handleNextPage}
+                        className={`px-4 py-2 text-white rounded ${filteredGames.length <= (page + 1) * itemsPerPage && 'opacity-50 cursor-not-allowed'}`}
+                        disabled={filteredGames.length <= (page + 1) * itemsPerPage}
+                    >
+                        Další
+                    </button>
+                </div>
             </div>
         </div>
     );
