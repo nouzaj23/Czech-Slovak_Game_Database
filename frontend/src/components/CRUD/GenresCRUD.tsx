@@ -27,6 +27,8 @@ export const DeleteGenreConfirm: React.FC<DeleteGenreProps> = ({ handleClose, ge
         handleClose(event);
     };
 
+
+
     return (
         <div className='border-2 border-black-1000'>
             <form className="p-6 bg-white rounded shadow-md">
@@ -45,7 +47,7 @@ interface GenresCRUDProps {
 }
 
 
-export const GenresCRUD: React.FC<GenresCRUDProps> = ({genres}) => {
+export const GenresCRUD: React.FC<GenresCRUDProps> = ({ genres }) => {
     const [searchTerm, setSearchTerm] = useState("");
     const [editedGenreId, setEditedGenreId] = useState<string | null>(null);
     const [genreToDelete, setGenreToDelete] = useState<string | null>(null);
@@ -55,7 +57,7 @@ export const GenresCRUD: React.FC<GenresCRUDProps> = ({genres}) => {
     );
 
     const queryClient = useQueryClient();
-    
+
     const mutation = useMutation(() => GenreApi.add("Nový žánr", "Popis"), {
         onError: (error) => {
             console.error('Failed to add the genre:', error);
@@ -68,6 +70,20 @@ export const GenresCRUD: React.FC<GenresCRUDProps> = ({genres}) => {
     const addGenre = () => {
         mutation.mutate();
     }
+
+    const [page, setPage] = useState(0);
+    const itemsPerPage = 5;
+
+    const handleNextPage = () => {
+        setPage(page + 1);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+    const handlePreviousPage = () => {
+        if (page > 0) {
+            setPage(page - 1);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    };
 
     return (
         <div className='flex justify-center'>
@@ -109,6 +125,22 @@ export const GenresCRUD: React.FC<GenresCRUDProps> = ({genres}) => {
                         )}
                     </div>
                 ))}
+                <div className="flex justify-between mt-4">
+                    <button
+                        onClick={handlePreviousPage}
+                        className={`px-4 py-2 text-white bg-gray-600 hover:bg-gray-800 rounded rounded-md ${page === 0 && 'opacity-50 cursor-not-allowed'}`}
+                        disabled={page === 0}
+                    >
+                        Předchozí
+                    </button>
+                    <button
+                        onClick={handleNextPage}
+                        className={`px-4 py-2 text-white bg-gray-600 hover:bg-gray-800 rounded rounded-md ${filteredGenres.length <= (page + 1) * itemsPerPage && 'opacity-50 cursor-not-allowed'}`}
+                        disabled={filteredGenres.length <= (page + 1) * itemsPerPage}
+                    >
+                        Další
+                    </button>
+                </div>
             </div>
         </div>
     );

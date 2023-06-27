@@ -33,7 +33,7 @@ export const DeleteDevConfirm: React.FC<DeleteDeveloperProps> = ({ handleClose, 
             <form className="p-6 bg-white rounded shadow-md">
                 <p>Opravdu chcete smazat žánr?</p>
                 <div className="flex items-center justify-between mt-4">
-                    <button className="bg-gray-600 hover:bg-gray-800 text-white font-bold py-2 px-4 rounded" type="button" onClick={(event) => { deleteDev(event);}}  >Potvrdit</button>
+                    <button className="bg-gray-600 hover:bg-gray-800 text-white font-bold py-2 px-4 rounded" type="button" onClick={(event) => { deleteDev(event); }}  >Potvrdit</button>
                     <button className="ml-5 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" type="button" onClick={handleClose}>Storno</button>
                 </div>
             </form>
@@ -50,6 +50,7 @@ export const DevelopersCRUD: React.FC<DevelopersCRUDProps> = ({ developers }) =>
     const [searchTerm, setSearchTerm] = useState("");
     const [editedDeveloperId, setEditedDeveloperId] = useState<string | null>(null);
     const [developerToDelete, setDeveloperToDelete] = useState<string | null>(null);
+    const [page, setPage] = useState(0);
 
     const filteredDevelopers = developers.filter(dev =>
         dev.name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -69,6 +70,19 @@ export const DevelopersCRUD: React.FC<DevelopersCRUDProps> = ({ developers }) =>
     const addDeveloper = () => {
         mutation.mutate();
     }
+
+    const itemsPerPage = 5;
+
+    const handleNextPage = () => {
+        setPage(page + 1);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+    const handlePreviousPage = () => {
+        if (page > 0) {
+            setPage(page - 1);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    };
 
     return (
         <div className='flex justify-center'>
@@ -110,6 +124,22 @@ export const DevelopersCRUD: React.FC<DevelopersCRUDProps> = ({ developers }) =>
                         )}
                     </div>
                 ))}
+                <div className="flex justify-between mt-4">
+                    <button
+                        onClick={handlePreviousPage}
+                        className={`px-4 py-2 text-white bg-gray-600 hover:bg-gray-800 rounded rounded-md ${page === 0 && 'opacity-50 cursor-not-allowed'}`}
+                        disabled={page === 0}
+                    >
+                        Předchozí
+                    </button>
+                    <button
+                        onClick={handleNextPage}
+                        className={`px-4 py-2 text-white bg-gray-600 hover:bg-gray-800 rounded rounded-md ${filteredDevelopers.length <= (page + 1) * itemsPerPage && 'opacity-50 cursor-not-allowed'}`}
+                        disabled={filteredDevelopers.length <= (page + 1) * itemsPerPage}
+                    >
+                        Další
+                    </button>
+                </div>
             </div>
         </div>
     );
