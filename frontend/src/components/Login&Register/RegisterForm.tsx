@@ -92,7 +92,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ handleClose }) => {
                     <input id="email"
                         className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         type="email"
-                        placeholder="Email"                        
+                        placeholder="Email"
                         {...register("email", {
                             pattern: {
                                 value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
@@ -100,7 +100,6 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ handleClose }) => {
                             }
                         })} />
                 </label>
-                <label id="error" className='text-black'>{errors.email?.message}</label>
             </div>
             <div className="mb-4 flex items-center">
                 <input id="agreeCheck"
@@ -126,6 +125,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ handleClose }) => {
                 </button>
             </div>
             <div className="mb-4 flex items-center">
+                <label id="error" className='text-black'>{errors.email?.message}</label>
                 <label id="error" className='text-black'>{errorMessage}</label>
             </div>
         </form>
