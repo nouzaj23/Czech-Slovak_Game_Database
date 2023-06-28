@@ -42,13 +42,11 @@ export const AddCommentForm: React.FC<AddCommentProps> = ({ game }) => {
                         {...register("content")}
                     ></textarea>
                 </label>
-            </form>
-            <div>
                 <button type="submit"
                     value="Přidat komentář"
                     className="p-2 bg-blue-500 text-white border-none cursor-pointer rounded">Přidat komentář
                 </button>
-            </div>
+            </form>
         </div>
     );
 }
