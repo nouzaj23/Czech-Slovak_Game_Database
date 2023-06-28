@@ -44,7 +44,7 @@ export const AddCommentForm: React.FC<AddCommentProps> = ({ game }) => {
                 </label>
             </form>
             <div>
-                <input type="submit"
+                <button type="submit"
                     value="Přidat komentář"
                     className="p-2 bg-blue-500 text-white border-none cursor-pointer rounded" />
             </div>
