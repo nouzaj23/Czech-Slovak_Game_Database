@@ -50,7 +50,7 @@ export const DeveloperPage = () => {
                 </div>
             </div>
             <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-4 p-4 mt-4">
-                {devGames.map((game) => (
+                {devGames.slice(page * itemsPerPage, (page + 1) * itemsPerPage).map((game) => (
                     <Link to={`/games/${game.id}`} key={game.id}>
                         <div className="flex flex-col hover:underline">
                             <img src={game.cover} alt="Game cover" className="w-full my-auto" />
