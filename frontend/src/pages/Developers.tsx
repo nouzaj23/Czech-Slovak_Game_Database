@@ -61,7 +61,7 @@ export const Developers = () => {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
-                {filteredDevelopers.map(dev => (
+                {filteredDevelopers.slice(page * itemsPerPage, (page + 1) * itemsPerPage).map(dev => (
                     <DeveloperItem
                         key={dev.id}
                         developer={dev}
