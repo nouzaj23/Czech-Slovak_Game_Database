@@ -9,9 +9,11 @@ import { Genres } from './pages/Genres';
 import { SearchResults } from './pages/SearchResults';
 import { WishList } from './pages/Wishlist';
 import { AdminPage } from './pages/AdminPage';
-import { IsLogged } from './components/Authorized';
+import useAuth from './hooks/useAuth';
 
 function App() {
+  const { auth } = useAuth();
+  
   return (
     <div className="w-screen h-screen">
       <Router>
@@ -25,12 +27,8 @@ function App() {
             <Route path="/genres" element={<Genres />} />
             <Route path="/search/:query" element={<SearchResults />} />
             <Route path="*" element={<div>404</div>} />
-            <Route path="/wishlist" element={
-              <IsLogged>
-                <WishList />
-              </IsLogged>
-            } />
-            <Route path="/adminpage" element={<AdminPage />} />
+            <Route path="/wishlist" element={auth ? <WishList /> : <Homepage />} />
+            <Route path="/adminpage" element={auth?.isAdmin ? <AdminPage /> : <Homepage />} />
           </Routes>
         </Layout>
       </Router>
