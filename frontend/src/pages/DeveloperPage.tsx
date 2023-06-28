@@ -27,7 +27,7 @@ export const DeveloperPage = () => {
         return <div>Vývojář není k dispozici</div>;
     }
 
-    const itemsPerPage = 1;
+    const itemsPerPage = 5;
 
     const handleNextPage = () => {
         setPage(page + 1);

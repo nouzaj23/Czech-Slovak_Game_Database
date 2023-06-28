@@ -35,7 +35,7 @@ export const WishList = () => {
     const ratingBg = (rating: number) => rating > 7 ? '#ad0e30' : rating > 3 ? '#3690eb' : '#010203';
 
     const [page, setPage] = useState(0);
-    const itemsPerPage = 1;
+    const itemsPerPage = 3;
 
     const handleNextPage = () => {
         setPage(page + 1);
