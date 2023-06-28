@@ -112,9 +112,9 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ handleClose }) => {
                 <label id="agree"
                     className="text-sm font-bold"
                     htmlFor="terms">
-                    <div className='text-black'><br/>Souhlasím</div>
+                    <div className='text-black'>Souhlasím</div>
                 </label>
-                <label id="error" className='text-black'>{errors.agree?.message}</label>
+                <label id="error" className='text-black'><br />{errors.agree?.message}</label>
             </div>
             <div className="flex items-center justify-between">
                 <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
