@@ -57,6 +57,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ handleClose }) => {
                         required
                         {...register("username")} />
                 </label>
+                <label id="error" className='text-black'>{errors.username?.message}</label>
             </div>
             <div className="mb-4">
                 <label className="block text-sm font-bold mb-2">
@@ -71,6 +72,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ handleClose }) => {
                             }
                         })} />
                 </label>
+                <label id="error" className='text-black'>{errors.password?.message}</label>
             </div>
             <div className="mb-4">
                 <label className="block text-sm font-bold mb-2">
@@ -83,6 +85,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ handleClose }) => {
                             validate: value => value === getValues("password") || "Hesla se neshodují",
                         })} />
                 </label>
+                <label id="error" className='text-black'>{errors.confirmPassword?.message}</label>
             </div>
             <div className="mb-4">
                 <label className="block text-sm font-bold mb-2">
@@ -97,6 +100,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ handleClose }) => {
                             }
                         })} />
                 </label>
+                <label id="error" className='text-black'>{errors.email?.message}</label>
             </div>
             <div className="mb-4 flex items-center">
                 <input id="agreeCheck"
@@ -110,6 +114,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ handleClose }) => {
                     htmlFor="terms">
                     <div className='text-black'>Souhlasím</div>
                 </label>
+                <label id="error" className='text-black'>{errors.agree?.message}</label>
             </div>
             <div className="flex items-center justify-between">
                 <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
@@ -121,11 +126,6 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ handleClose }) => {
                 </button>
             </div>
             <div className="mb-4 flex items-center">
-                <label id="error" className='text-black'>{errors.username?.message}</label>
-                <label id="error" className='text-black'>{errors.password?.message}</label>
-                <label id="error" className='text-black'>{errors.confirmPassword?.message}</label>
-                <label id="error" className='text-black'>{errors.email?.message}</label>
-                <label id="error" className='text-black'>{errors.agree?.message}</label>
                 <label id="error" className='text-black'>{errorMessage}</label>
             </div>
         </form>
