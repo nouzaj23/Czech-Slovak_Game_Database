@@ -4,9 +4,10 @@ import { Developer, Game, Genre } from '../models';
 import { DeveloperApi, GameApi, GenreApi } from '../services';
 import { useQuery } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
+import { useState } from 'react';
 
 export const Games = () => {
-  const [ searchParams ] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const genre = searchParams.get('genre');
 
   const { register, watch } = useForm({
@@ -62,6 +63,21 @@ export const Games = () => {
     return 0;
   });
 
+  const [page, setPage] = useState(0);
+
+  const itemsPerPage = 6;
+
+  const handleNextPage = () => {
+    setPage(page + 1);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+  const handlePreviousPage = () => {
+    if (page > 0) {
+      setPage(page - 1);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
   return (
     <div>
       <div className="p-4 bg-white shadow rounded-lg mb-6">
@@ -111,12 +127,28 @@ export const Games = () => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
-        {filteredGames.map(game => (
+        {filteredGames.slice(page * itemsPerPage, (page + 1) * itemsPerPage).map(game => (
           <GameItem
             key={game.id}
             game={game}
           />
         ))}
+      </div>
+      <div className="flex justify-between mt-4">
+        <button
+          onClick={handlePreviousPage}
+          className={`px-4 py-2 text-white bg-gray-600 hover:bg-gray-800 rounded rounded-md ${page === 0 && 'opacity-50 cursor-not-allowed'}`}
+          disabled={page === 0}
+        >
+          Předchozí
+        </button>
+        <button
+          onClick={handleNextPage}
+          className={`px-4 py-2 text-white bg-gray-600 hover:bg-gray-800 rounded rounded-md ${filteredGames.length <= (page + 1) * itemsPerPage && 'opacity-50 cursor-not-allowed'}`}
+          disabled={filteredGames.length <= (page + 1) * itemsPerPage}
+        >
+          Další
+        </button>
       </div>
     </div>
   );
