@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
 import { GameApi, UserApi } from '../services';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useState } from 'react';
 
 
 export const WishList = () => {
@@ -33,12 +34,27 @@ export const WishList = () => {
 
     const ratingBg = (rating: number) => rating > 7 ? '#ad0e30' : rating > 3 ? '#3690eb' : '#010203';
 
+    const [page, setPage] = useState(0);
+    const itemsPerPage = 1;
+
+    const handleNextPage = () => {
+        setPage(page + 1);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+    const handlePreviousPage = () => {
+        if (page > 0) {
+            setPage(page - 1);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    };
+
+
     return (
         <div className="flex justify-center min-h-screen bg-gray-100">
             <div className="w-full md:w-3/4">
                 <h1 className="text-4xl m-6">WishList</h1>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 m-6">
-                    {wishlistGames.map((game, index) => {
+                    {wishlistGames.slice(page * itemsPerPage, (page + 1) * itemsPerPage).map((game, index) => {
                         if (game)
                             return (
                                 <div key={index} className="relative rounded overflow-hidden shadow-lg p-6 bg-white">
@@ -55,6 +71,22 @@ export const WishList = () => {
                                 </div>
                             )
                     })}
+                    <div className="flex justify-between mt-4 pb-4">
+                        <button
+                            onClick={handlePreviousPage}
+                            className={`px-4 py-2 ml-5 text-white bg-gray-600 hover:bg-gray-800 rounded rounded-md ${page === 0 && 'opacity-50 cursor-not-allowed'}`}
+                            disabled={page === 0}
+                        >
+                            Předchozí
+                        </button>
+                        <button
+                            onClick={handleNextPage}
+                            className={`px-4 py-2 mr-5 text-white bg-gray-600 hover:bg-gray-800 rounded rounded-md ${wishlistGames.length <= (page + 1) * itemsPerPage && 'opacity-50 cursor-not-allowed'}`}
+                            disabled={wishlistGames.length <= (page + 1) * itemsPerPage}
+                        >
+                            Další
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
